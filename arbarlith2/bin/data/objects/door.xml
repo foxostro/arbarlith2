@@ -1,0 +1,20 @@
+<type>class Engine::Portal</type>
+<name>Door</name>
+
+<model>data/door/model.md3xml</model>
+<height>2.0</height>
+<mass>0.0000</mass>
+<castShadows>false</castShadows>
+
+<showModel>true</showModel>
+<solid>false</solid>
+<floating>false</floating>
+		
+<lockedSound>data/sound/lockedDoor.wav</lockedSound>
+
+<sounds>
+<file>data/sound/door/01.wav</file>
+<file>data/sound/door/02.wav</file>
+</sounds>
+
+<actionLabel>enter.</actionLabel>

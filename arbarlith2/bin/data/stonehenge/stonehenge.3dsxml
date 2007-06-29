@@ -1,0 +1,7 @@
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<fps>1</fps>
+
+	<keyframe>data/stonehenge/stonehenge.3ds</keyframe>
+</animation>

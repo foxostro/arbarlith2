@@ -1,0 +1,11 @@
+<type>class Engine::Actor</type>
+<name>Boulder1</name>
+
+<model>data/boulder1/boulder1.3dsxml</model>
+<height>.75</height>
+<mass>0.0000</mass>
+<castShadows>true</castShadows>
+
+<showModel>true</showModel>
+<solid>true</solid>
+<floating>false</floating>

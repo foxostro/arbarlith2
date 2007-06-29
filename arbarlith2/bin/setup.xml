@@ -1,0 +1,18 @@
+﻿<mouseSensitivity>100</mouseSensitivity>
+<menuMusic>data/music/Rachel01.mp3</menuMusic>
+<performance>
+	<aniostropy>4.0000</aniostropy>
+	<textureFilter>1</textureFilter>
+	<useBlurEffects>true</useBlurEffects>
+	<useParticleEffects>true</useParticleEffects>
+	<useShaders>false</useShaders>
+	<useShadowMaps>false</useShadowMaps>
+</performance>
+<verbose>6</verbose>
+<window>
+	<depth>32</depth>
+	<fullscreen>true</fullscreen>
+	<height>600</height>
+	<width>800</width>
+</window>
+<unlockedWorld>1</unlockedWorld>

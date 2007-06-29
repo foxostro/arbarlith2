@@ -1,0 +1,9 @@
+<forceSkin>data/house3/skin.jpg</forceSkin>
+
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<fps>1</fps>
+
+	<keyframe>data/house3/house3.3ds</keyframe>
+</animation>

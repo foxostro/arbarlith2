@@ -1,0 +1,23 @@
+<name>SPAWN Theodore</name>
+<type>class Arbarlith2::Spawn</type>
+<state>1</state>
+
+<height>2.</height>
+<mass>20.0</mass>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<up>&vec(0.0, 1.0, 0.0)</up>
+<speed>0.0</speed>
+<castShadows>false</castShadows>
+
+<model>data/theodore/model.md3xml</model>
+
+<floating>false</floating>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<showModel>false</showModel>
+<solid>false</solid>
+<up>&vec(0, 1, 0)</up>
+
+<monsterDatafile>data/monsters/theodore.xml</monsterDatafile>
+<minMonsters>2</minMonsters>
+<maxMonsters>4</maxMonsters>
+<separationRadius>1.2</separationRadius>

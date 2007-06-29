@@ -1,0 +1,9 @@
+<forceSkin>data/bush/bush.jpg</forceSkin>
+
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<fps>1</fps>
+
+	<keyframe>data/bush/bush.3ds</keyframe>
+</animation>

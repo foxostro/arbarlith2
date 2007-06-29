@@ -1,0 +1,83 @@
+<md3>data/otis/otis.md3</md3>
+		
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<start>2</start>
+	<length>3</length>
+	<fps>2.0</fps>
+</animation>
+
+<animation>
+	<name>walk</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<uninterruptable>false</uninterruptable>
+	<start>5</start>
+	<length>5</length>
+	<fps>4.0</fps>
+</animation>
+
+<animation>
+	<name>trot</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<start>10</start>
+	<length>5</length>
+	<fps>6.0</fps>
+</animation>
+
+<animation>
+	<name>run</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<start>15</start>
+	<length>6</length>
+	<fps>8.0</fps>
+</animation>
+
+<animation>
+	<name>highhit</name>
+	<priority>0.0</priority>
+	<looping>false</looping>
+	<start>21</start>
+	<length>5</length>
+	<fps>5.0</fps>
+</animation>
+
+<animation>
+	<name>lowhit</name>
+	<priority>0.0</priority>
+	<looping>false</looping>
+	<start>26</start>
+	<length>5</length>
+	<fps>5.0</fps>
+</animation>
+
+<animation>
+	<name>flinch</name>
+	<priority>0.0</priority>
+	<looping>false</looping>
+	<start>31</start>
+	<length>2</length>
+	<fps>6.0</fps>
+</animation>
+
+<animation>
+	<name>dying</name>
+	<priority>2.0</priority>
+	<looping>false</looping>
+	<start>33</start>
+	<length>4</length>
+	<fps>4.0</fps>
+</animation>
+
+<animation>
+	<name>dead</name>
+	<priority>3.0</priority>
+	<looping>true</looping>
+	<start>37</start>
+	<length>2</length>
+	<fps>8.0</fps>
+</animation>

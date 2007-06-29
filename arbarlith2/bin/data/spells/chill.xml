@@ -1,0 +1,16 @@
+<castTime>200.0</castTime>
+<coolDownTime>1200.0</coolDownTime>
+<damageValue>7</damageValue>
+<bulletSpeed>8.0</bulletSpeed>
+<particleFile>data/particle/chill.xml</particleFile>
+<explosionParticleFile>data/particle/chill-explosion.xml</explosionParticleFile>
+<explosionSoundEffectFile>data/sound/s_shattering.wav</explosionSoundEffectFile>
+<causesFreeze>false</causesFreeze>
+<knockbackMagnitude>1000</knockbackMagnitude>
+<height>0.1</height>
+
+
+<activeIcon>data/sprites/spells/sel-chill.png</activeIcon>
+<inactiveIcon>data/sprites/spells/notsel-chill.png</inactiveIcon>
+
+<descriptionText>Drive a pillar of ice towards your foe.</descriptionText>

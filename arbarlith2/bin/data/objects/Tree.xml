@@ -1,0 +1,11 @@
+<type>class Engine::Actor</type>
+<name>Tree</name>
+
+<model>data/tree/tree.3dsxml</model>
+<height>4.0</height>
+<mass>0.0000</mass>
+<castShadows>true</castShadows>
+
+<showModel>true</showModel>
+<solid>true</solid>
+<floating>false</floating>

@@ -1,0 +1,70 @@
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<looping>TRUE</looping>
+	<fps>1.3</fps>
+
+	<keyframe>data/blueWizard/idle0.3ds</keyframe>	
+	<keyframe>data/blueWizard/idle1.3ds</keyframe>
+	<keyframe>data/blueWizard/idle2.3ds</keyframe>
+	<keyframe>data/blueWizard/idle3.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>flinch</name>
+	<priority>0.5</priority>
+	<looping>false</looping>
+	<fps>5.0</fps>
+
+	<keyframe>data/blueWizard/pain0.3ds</keyframe>
+	<keyframe>data/blueWizard/pain1.3ds</keyframe>
+	<keyframe>data/blueWizard/idle3.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>run</name>
+	<priority>0.4</priority>
+	<looping>false</looping>
+	<fps>6.25</fps>
+
+	<keyframe>data/blueWizard/walk0.3ds</keyframe>	
+	<keyframe>data/blueWizard/walk1.3ds</keyframe>
+	<keyframe>data/blueWizard/walk2.3ds</keyframe>
+	<keyframe>data/blueWizard/walk3.3ds</keyframe>
+	<keyframe>data/blueWizard/walk0.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>highhit</name>
+	<priority>0.7</priority>
+	<looping>false</looping>
+	<fps>5.0</fps>
+
+	<keyframe>data/blueWizard/idle0.3ds</keyframe>	
+	<keyframe>data/blueWizard/attack1.3ds</keyframe>
+	<keyframe>data/blueWizard/attack2.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dying</name>
+	<priority>1.0</priority>
+	<looping>false</looping>
+	<fps>4.4</fps>
+
+	<keyframe>data/blueWizard/pain0.3ds</keyframe>	
+	<keyframe>data/blueWizard/die0.3ds</keyframe>
+	<keyframe>data/blueWizard/die1.3ds</keyframe>
+	<keyframe>data/blueWizard/die2.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dead</name>
+	<priority>1.0</priority>
+	<looping>true</looping>
+	<fps>1.0</fps>
+
+	<keyframe>data/blueWizard/die2.3ds</keyframe>
+</animation>
+
+<Truespace>TRUE</Truespace>
+

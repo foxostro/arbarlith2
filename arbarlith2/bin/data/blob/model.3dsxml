@@ -1,0 +1,66 @@
+<forceSkin>data/blob/skin.jpg</forceSkin>
+
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<fps>0.75</fps>
+
+	<keyframe>data/blob/base.3ds</keyframe>
+	<keyframe>data/blob/idle01.3ds</keyframe>
+	<keyframe>data/blob/base.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>flinch</name>
+	<priority>0.5</priority>
+	<looping>false</looping>
+	<fps>5.0</fps>
+
+	<keyframe>data/blob/base.3ds</keyframe>	
+	<keyframe>data/blob/pain01.3ds</keyframe>
+	<keyframe>data/blob/base.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>run</name>
+	<priority>0.4</priority>
+	<looping>true</looping>
+	<fps>3.0</fps>
+
+	<keyframe>data/blob/base.3ds</keyframe>	
+	<keyframe>data/blob/run01.3ds</keyframe>
+	<keyframe>data/blob/base.3ds</keyframe>
+</animation>
+
+
+<animation>
+	<name>highhit</name>
+	<priority>0.7</priority>
+	<looping>false</looping>
+	<fps>3.0</fps>
+
+	<keyframe>data/blob/base.3ds</keyframe>	
+	<keyframe>data/blob/attack01.3ds</keyframe>
+	<keyframe>data/blob/base.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dying</name>
+	<priority>2.0</priority>
+	<looping>false</looping>
+	<fps>1.0</fps>
+
+	<keyframe>data/blob/base.3ds</keyframe>
+	<keyframe>data/blob/death01.3ds</keyframe>
+	<keyframe>data/blob/death02.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dead</name>
+	<priority>3.0</priority>
+	<looping>true</looping>
+	<fps>1.0</fps>
+
+	<keyframe>data/blob/death02.3ds</keyframe>
+</animation>

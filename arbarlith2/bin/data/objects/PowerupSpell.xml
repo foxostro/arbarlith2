@@ -1,0 +1,19 @@
+<name>PowerupSpell</name>
+<type>class Arbarlith2::PowerupSpell</type>
+<state>1</state>
+
+<height>0.1</height>
+<castShadows>false</castShadows>
+<solid>false</solid>
+<floating>true</floating>
+
+<model>data/scroll/model.3dsxml</model>
+
+<actionLabel>learn a new Spell.</actionLabel>
+<triggerRadius>0.8</triggerRadius>
+
+<spellIdx>0</spellIdx>
+
+<sounds>
+<file>data/sound/player/pickup.wav</file>
+</sounds>

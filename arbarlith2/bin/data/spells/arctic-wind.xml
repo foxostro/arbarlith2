@@ -1,0 +1,16 @@
+<castTime>400.0</castTime>
+<coolDownTime>1200.0</coolDownTime>
+<damageValue>7</damageValue>
+<bulletSpeed>4.0</bulletSpeed>
+<particleFile>data/particle/arctic-wind.xml</particleFile>
+<explosionParticleFile>data/particle/ice-explosion.xml</explosionParticleFile>
+<explosionSoundEffectFile>data/sound/s_shattering.wav</explosionSoundEffectFile>
+<causesFreeze>true</causesFreeze>
+<knockbackMagnitude>0</knockbackMagnitude>
+<height>0.5</height>
+
+
+<activeIcon>data/sprites/spells/sel-arcticwind.png</activeIcon>
+<inactiveIcon>data/sprites/spells/notsel-arcticwind.png</inactiveIcon>
+
+<descriptionText>Launch a chilling blast of Arctic Wind.</descriptionText>

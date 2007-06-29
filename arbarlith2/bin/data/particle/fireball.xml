@@ -1,0 +1,204 @@
+<max>512</max>
+
+<material>
+	<name>Smoke</name>
+	<image>data/particle/smoke.png</image>
+	<glow>false</glow>
+</material>
+
+<template>
+	<name>Smoke</name>
+	<material>Smoke</material>
+
+	<size>
+		<point>
+			<x>0.0</x>
+			<y>0.3</y>
+		</point>
+		<point>
+			<x>1.0</x>
+			<y>1.0</y>
+		</point>
+	</size>
+
+	<alpha>
+		<point>
+			<x>0.0</x>
+			<y>0.1</y>
+		</point>
+		
+		<point>
+			<x>1.0</x>
+			<y>0.0</y>
+		</point>
+	</alpha>
+
+	<blue>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</blue>
+
+	<green>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</green>
+
+	<red>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</red>
+
+	<acceleration>&VEC(0.0, 0.1, 0.0)</acceleration>
+	<initialRadialVelocity>0.5</initialRadialVelocity>
+</template>
+
+<emitter>
+	<name>Smoke</name>
+	<template>Smoke</template>
+
+	<falloff>0.1</falloff>
+
+	<length>1000.0</length>
+
+	<looping>TRUE</looping>
+	<cycles>-1</cycles>
+	
+	<sizemul>
+		<point>
+			<x>0.0</x>
+			<y>0.4</y>
+		</point>
+	</sizemul>
+
+	<rate>
+		<point>
+			<x>0.0</x>
+			<y>12</y>
+		</point>
+	</rate>
+
+	<lifespan>		
+		<point>
+			<x>1.0</x>
+			<y>400.0</y>
+		</point>
+	</lifespan>
+</emitter>
+
+
+
+
+
+
+
+
+
+
+
+<material>
+	<name>Flame1</name>
+	<image>data/particle/flame.png</image>
+	<glow>true</glow>
+</material>
+
+<template>
+	<name>Flames</name>
+	<material>Flame1</material>
+
+	<size>
+		<point>
+			<x>0.0</x>
+			<y>0.827</y>
+		</point>
+
+		<point>
+			<x>0.5</x>
+			<y>0.975</y>
+		</point>
+
+		<point>
+			<x>1.0</x>
+			<y>1.0</y>
+		</point>
+	</size>
+
+	<alpha>
+		<point>
+			<x>0.0</x>
+			<y>0.5</y>
+		</point>
+		
+		<point>
+			<x>0.5</x>
+			<y>0.1</y>
+		</point>
+		
+		<point>
+			<x>1.0</x>
+			<y>0.0</y>
+		</point>
+	</alpha>
+
+	<blue>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</blue>
+
+	<green>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</green>
+
+	<red>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</red>
+
+	<acceleration>&VEC(0.0, 1.0, 0.0)</acceleration>
+	<initialRadialVelocity>0.1</initialRadialVelocity>
+</template>
+
+<emitter>
+	<name>Flaming</name>
+	<template>Flames</template>
+
+	<falloff>0.20</falloff>
+
+	<length>1000.0</length>
+
+	<looping>TRUE</looping>
+	<cycles>-1</cycles>
+	
+	<sizemul>
+		<point>
+			<x>0.0</x>
+			<y>0.25</y>
+		</point>
+	</sizemul>
+
+	<rate>
+		<point>
+			<x>0.0</x>
+			<y>16</y>
+		</point>
+	</rate>
+
+	<lifespan>
+		<point>
+			<x>0.0</x>
+			<y>200.0</y>
+		</point>
+	</lifespan>
+</emitter>

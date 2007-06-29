@@ -1,0 +1,11 @@
+<type>class Engine::Actor</type>
+<name>StoneHenge</name>
+
+<model>data/stonehenge/stonehenge.3dsxml</model>
+<height>3.5</height>
+<mass>0.0000</mass>
+<castShadows>true</castShadows>
+
+<showModel>true</showModel>
+<solid>false</solid>
+<floating>false</floating>

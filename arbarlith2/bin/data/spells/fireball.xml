@@ -1,0 +1,15 @@
+<castTime>800.0</castTime>
+<coolDownTime>1000.0</coolDownTime>
+<damageValue>15</damageValue>
+<bulletSpeed>4.0</bulletSpeed>
+<particleFile>data/particle/fireball.xml</particleFile>
+<explosionParticleFile>data/particle/fireball-explosion.xml</explosionParticleFile>
+<explosionSoundEffectFile>data/sound/s_explosion.wav</explosionSoundEffectFile>
+<causesFreeze>false</causesFreeze>
+<knockbackMagnitude>0</knockbackMagnitude>
+<height>0.5</height>
+
+<activeIcon>data/sprites/spells/sel-fireball.png</activeIcon>
+<inactiveIcon>data/sprites/spells/notsel-fireball.png</inactiveIcon>
+
+<descriptionText>Throw a searing ball of fire.</descriptionText>

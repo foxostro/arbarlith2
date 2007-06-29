@@ -1,0 +1,10 @@
+<castTime>800.0</castTime>
+<coolDownTime>10000.0</coolDownTime>
+<damageValue>10</damageValue>
+<spellRadius>8.0</spellRadius>
+
+
+<activeIcon>data/sprites/spells/sel-incinerate.png</activeIcon>
+<inactiveIcon>data/sprites/spells/notsel-incinerate.png</inactiveIcon>
+
+<descriptionText>Catching but a glimpse of your radiance, they were incinerated instantly.</descriptionText>

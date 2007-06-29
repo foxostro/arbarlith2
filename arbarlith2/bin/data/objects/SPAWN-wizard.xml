@@ -1,0 +1,23 @@
+<name>SPAWN Wizard</name>
+<type>class Arbarlith2::Spawn</type>
+<state>1</state>
+
+<height>1.8</height>
+<mass>20.0</mass>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<up>&vec(0.0, 1.0, 0.0)</up>
+<speed>0.0</speed>
+<castShadows>false</castShadows>
+
+<model>data/blueWizard/model.3dsxml</model>
+
+<floating>false</floating>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<showModel>false</showModel>
+<solid>false</solid>
+<up>&vec(0, 1, 0)</up>
+
+<monsterDatafile>data/monsters/wizard.xml</monsterDatafile>
+<minMonsters>1</minMonsters>
+<maxMonsters>2</maxMonsters>
+<separationRadius>2.0</separationRadius>

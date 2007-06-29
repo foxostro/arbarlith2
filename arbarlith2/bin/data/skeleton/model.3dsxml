@@ -1,0 +1,65 @@
+<forceSkin>data/skeleton/bone.jpg</forceSkin>
+
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<looping>TRUE</looping>
+	<fps>2.5</fps>
+
+	<keyframe>data/skeleton/idle01.3DS</keyframe>		
+	<keyframe>data/skeleton/idle01.3DS</keyframe>
+</animation>
+
+<animation>
+	<name>highhit</name>
+	<priority>0.4</priority>
+	<looping>false</looping>
+	<fps>3.3</fps>
+
+	<keyframe>data/skeleton/attack01.3ds</keyframe>
+	<keyframe>data/skeleton/attack02.3ds</keyframe>
+	<keyframe>data/skeleton/attack03.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>flinch</name>
+	<priority>0.5</priority>
+	<looping>false</looping>
+	<fps>8.0</fps>
+
+	<keyframe>data/skeleton/pain01.3ds</keyframe>
+	<keyframe>data/skeleton/pain02.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>run</name>
+	<priority>0.4</priority>
+	<looping>false</looping>
+	<fps>4.2</fps>
+
+	<keyframe>data/skeleton/walk01.3ds</keyframe>	
+	<keyframe>data/skeleton/walk02.3ds</keyframe>
+	<keyframe>data/skeleton/walk03.3ds</keyframe>
+	<keyframe>data/skeleton/walk04.3ds</keyframe>
+	<keyframe>data/skeleton/walk01.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dying</name>
+	<priority>2.0</priority>
+	<looping>false</looping>
+	<fps>3.3</fps>
+
+	<keyframe>data/skeleton/pain02.3ds</keyframe>
+	<keyframe>data/skeleton/death02.3ds</keyframe>
+	<keyframe>data/skeleton/death03.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dead</name>
+	<priority>3.0</priority>
+	<looping>true</looping>
+	<fps>1</fps>
+
+	<keyframe>data/skeleton/death03.3ds</keyframe>
+</animation>

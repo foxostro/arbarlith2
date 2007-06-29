@@ -1,0 +1,20 @@
+<name>Lamp</name>
+<type>class Engine::Lamp</type>
+<state>1</state>
+
+<height>0.5</height>
+<mass>2.0</mass>
+<castShadows>false</castShadows>
+
+<model>data/lamp/model.md3xml</model>
+
+<constant>0.0</constant>
+<linear>0.0</linear>
+<quadratic>0.4</quadratic>
+
+<actionLabel>turn the light on and off.</actionLabel>
+<triggerRadius>2.5</triggerRadius>
+
+<sounds>
+<file>data/sound/flashlight-toggle.wav</file>
+</sounds>

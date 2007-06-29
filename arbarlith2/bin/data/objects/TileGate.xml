@@ -1,0 +1,18 @@
+<type>class Arbarlith2::TileGate</type>
+<name>Tile-Gate</name>
+
+<model>data/cylinder/model.md3xml</model>
+<height>1.0</height>
+<mass>0.0000</mass>
+<castShadows>false</castShadows>
+
+<showModel>false</showModel>
+<solid>false</solid>
+<floating>true</floating>
+
+<signalIndex>5</signalIndex>
+<onlyTripOnce>false</onlyTripOnce>
+
+<lockedHeight>2.4</lockedHeight>
+<unlockedHeight>0.0</unlockedHeight>
+<locked>true</locked>

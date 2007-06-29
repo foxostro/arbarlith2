@@ -1,0 +1,47 @@
+<name>Wizard</name>
+<type>class Arbarlith2::Monster</type>
+<state>1</state>
+<fsm>class Arbarlith2::SpellCasterFSM</fsm>
+
+<height>1.8</height>
+<mass>20.0</mass>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<up>&vec(0.0, 1.0, 0.0)</up>
+<speed>1.8</speed>
+<castShadows>true</castShadows>
+
+<model>data/blueWizard/model.3dsxml</model>
+
+<healthPoints>22</healthPoints>
+<maxHealthPoints>22</maxHealthPoints>
+<attackDamage>15</attackDamage>
+<attackCoolDown>1600</attackCoolDown>
+<attackChargeTime>2000</attackChargeTime>
+<knockBackAcceleration>2000</knockBackAcceleration>
+
+<dyingSounds>
+<file>data/sound/wizard/dying.wav</file>
+</dyingSounds>
+
+<painSounds>
+<file>data/sound/wizard/flinch1.wav</file>
+<file>data/sound/wizard/flinch2.wav</file>
+<file>data/sound/wizard/flinch3.wav</file>
+</painSounds>
+
+<attackSounds>
+<file>data/sound/wizard/attack.wav</file>
+</attackSounds>
+
+<attnSounds>
+</attnSounds>
+
+<armorMultiplier>1</armorMultiplier>
+<attackCoolDownMultiplier>1</attackCoolDownMultiplier>
+<floating>false</floating>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<showModel>true</showModel>
+<solid>true</solid>
+<spellCoolDownMultiplier>0.5</spellCoolDownMultiplier>
+<up>&vec(0, 1, 0)</up>
+<weaponMultiplier>1</weaponMultiplier>

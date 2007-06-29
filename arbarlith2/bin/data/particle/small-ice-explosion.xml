@@ -1,0 +1,93 @@
+<max>256</max>
+
+<material>
+	<name>Snow</name>
+	<image>data/particle/snowflake.png</image>
+	<glow>true</glow>
+</material>
+
+<template>
+	<name>Snow</name>
+	<material>Snow</material>
+
+	<size>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</size>
+
+	<alpha>
+		<point>
+			<x>0.0</x>
+			<y>0.2</y>
+		</point>
+		
+		<point>
+			<x>0.5</x>
+			<y>0.2</y>
+		</point>
+		
+		<point>
+			<x>1.0</x>
+			<y>0.0</y>
+		</point>
+	</alpha>
+
+	<blue>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</blue>
+
+	<green>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</green>
+
+	<red>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</red>
+
+	<acceleration>&VEC(0.0, -3.0, 0.0)</acceleration>
+	<initialRadialVelocity>1.5</initialRadialVelocity>
+</template>
+
+<emitter>
+	<name>Snowing</name>
+	<template>Snow</template>
+
+	<falloff>0.01</falloff>
+
+	<length>150.0</length>
+
+	<looping>FALSE</looping>
+	<cycles>-1</cycles>
+	
+	<sizemul>
+		<point>
+			<x>0.0</x>
+			<y>0.4</y>
+		</point>
+	</sizemul>
+
+	<rate>
+		<point>
+			<x>0.0</x>
+			<y>64</y>
+		</point>
+	</rate>
+
+	<lifespan>		
+		<point>
+			<x>1.0</x>
+			<y>500.0</y>
+		</point>
+	</lifespan>
+</emitter>

@@ -1,0 +1,68 @@
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<looping>TRUE</looping>
+	<fps>0.75</fps>
+
+	<keyframe>data/spider/tsidle1.3DS</keyframe>	
+	<keyframe>data/spider/tsidle2.3DS</keyframe>
+	<keyframe>data/spider/tsidle1.3DS</keyframe>
+</animation>
+
+<animation>
+	<name>flinch</name>
+	<priority>0.5</priority>
+	<looping>TRUE</looping>
+	<fps>3.75</fps>
+
+	<keyframe>data/spider/tsidle0.3ds</keyframe>
+	<keyframe>data/spider/tspain.3ds</keyframe>
+	<keyframe>data/spider/tsidle0.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>run</name>
+	<priority>0.4</priority>
+	<looping>FALSE</looping>
+	<fps>8</fps>
+
+	<keyframe>data/spider/tswalk0.3ds</keyframe>	
+	<keyframe>data/spider/tswalk1.3ds</keyframe>
+	<keyframe>data/spider/tswalk2.3ds</keyframe>
+	<keyframe>data/spider/tswalk3.3ds</keyframe>
+	<keyframe>data/spider/tswalk0.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>highhit</name>
+	<priority>0.7</priority>
+	<looping>FALSE</looping>
+	<fps>3</fps>
+
+	<keyframe>data/spider/tsattack0.3ds</keyframe>
+	<keyframe>data/spider/tsattack1.3ds</keyframe>
+	<keyframe>data/spider/tsattack2.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dying</name>
+	<priority>1.0</priority>
+	<looping>FALSE</looping>
+	<fps>1.7</fps>
+
+	<keyframe>data/spider/tsdeath0.3ds</keyframe>
+	<keyframe>data/spider/tsdeath1.3ds</keyframe>
+	<keyframe>data/spider/tsdeath2.3ds</keyframe>
+	<keyframe>data/spider/tsdeath3.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dead</name>
+	<priority>3.0</priority>
+	<looping>FALSE</looping>
+	<fps>1</fps>
+
+	<keyframe>data/spider/tsdeath3.3ds</keyframe>
+</animation>
+
+<Truespace>TRUE</Truespace>

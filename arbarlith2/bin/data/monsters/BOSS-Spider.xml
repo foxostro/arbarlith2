@@ -1,0 +1,47 @@
+<name>BOSS Spider</name>
+<type>class Arbarlith2::Boss</type>
+<state>1</state>
+<fsm>class Engine::MonsterFSM</fsm>
+
+<height>1.5</height>
+<mass>2000.0</mass>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<up>&vec(0.0, 1.0, 0.0)</up>
+<speed>2.0</speed>
+<castShadows>true</castShadows>
+
+<model>data/spider/model.3dsxml</model>
+
+<healthPoints>150</healthPoints>
+<maxHealthPoints>150</maxHealthPoints>
+<attackDamage>50</attackDamage>
+<attackCoolDown>2000</attackCoolDown>
+<attackChargeTime>6000</attackChargeTime>
+<knockBackAcceleration>500</knockBackAcceleration>
+
+<dyingSounds>
+<file>data/sound/spider/spider_death.wav</file>
+</dyingSounds>
+
+<painSounds>
+<file>data/sound/spider/spider_pain.wav</file>
+</painSounds>
+
+<attackSounds>
+<file>data/sound/monster-share/monster-bite-1.wav</file>
+<file>data/sound/monster-share/monster-bite-2.wav</file>
+</attackSounds>
+
+<attnSounds>
+<file>data/sound/monster-share/monster-attn-1.wav</file>
+</attnSounds>
+
+<armorMultiplier>1</armorMultiplier>
+<attackCoolDownMultiplier>1</attackCoolDownMultiplier>
+<floating>false</floating>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<showModel>true</showModel>
+<solid>true</solid>
+<spellCoolDownMultiplier>1</spellCoolDownMultiplier>
+<up>&vec(0, 1, 0)</up>
+<weaponMultiplier>1</weaponMultiplier>

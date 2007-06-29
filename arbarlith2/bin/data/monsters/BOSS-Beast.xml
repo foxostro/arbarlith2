@@ -1,0 +1,52 @@
+<name>BOSS Beast</name>
+<type>class Arbarlith2::Boss</type>
+<state>1</state>
+<fsm>class Arbarlith2::SpellCasterFSM</fsm>
+
+<height>3.0</height>
+<mass>2000.0</mass>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<up>&vec(0.0, 1.0, 0.0)</up>
+<speed>1.2</speed>
+<castShadows>true</castShadows>
+
+<model>data/beast/model.3dsxml</model>
+
+<healthPoints>200</healthPoints>
+<maxHealthPoints>200</maxHealthPoints>
+<attackDamage>60</attackDamage>
+<attackCoolDown>1500</attackCoolDown>
+<attackChargeTime>6000</attackChargeTime>
+<knockBackAcceleration>500</knockBackAcceleration>
+
+<dyingSounds>
+<file>data/sound/beast/mb_die.wav</file>
+</dyingSounds>
+
+<painSounds>
+<file>data/sound/otis/monster-moan-dog.wav</file>
+<file>data/sound/beast/mb_pain.wav</file>
+</painSounds>
+
+<attackSounds>
+<file>data/sound/monster-share/monster-bite-1.wav</file>
+<file>data/sound/monster-share/monster-bite-2.wav</file>
+<file>data/sound/monster-share/mb_attack.wav</file>
+</attackSounds>
+
+<attnSounds>
+<file>data/sound/monster-share/monster-attn-1.wav</file>
+<file>data/sound/monster-share/monster-attn-2.wav</file>
+<file>data/sound/monster-share/monster-attn-3.wav</file>
+<file>data/sound/beast/monsters_call.wav</file>
+</attnSounds>
+
+<armorMultiplier>1</armorMultiplier>
+<attackCoolDownMultiplier>1</attackCoolDownMultiplier>
+<floating>false</floating>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<showModel>true</showModel>
+<solid>true</solid>
+<spellCoolDownMultiplier>1</spellCoolDownMultiplier>
+<up>&vec(0, 1, 0)</up>
+<weaponMultiplier>1</weaponMultiplier>

@@ -1,0 +1,9 @@
+<md3>data/door/door.md3</md3>
+
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<start>0</start>
+	<length>1</length>
+	<fps>1.0</fps>
+</animation>

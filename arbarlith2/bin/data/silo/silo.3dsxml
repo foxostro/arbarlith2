@@ -1,0 +1,9 @@
+<forceSkin>data/silo/silo.jpg</forceSkin>
+
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<fps>1</fps>
+
+	<keyframe>data/silo/silo.3ds</keyframe>
+</animation>

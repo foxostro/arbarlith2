@@ -1,0 +1,1088 @@
+<ambientLight>0.5</ambientLight>
+<fog>
+	<blue>0.3</blue>
+	<enabled>false</enabled>
+	<far>300</far>
+	<green>0.3</green>
+	<near>1</near>
+	<red>0.3</red>
+</fog>
+<map>
+	<height>128</height>
+	<materialsLegend>
+		<material>data\tiles\floor\black.jpg</material>
+		<material>data\tiles\wall\wall_stone1.jpg</material>
+		<material>data\tiles\floor\floor_stonetile2.jpg</material>
+		<material>data\tiles\floor\floor_stone1.jpg</material>
+		<material>data\tiles\floor\floor.jpg</material>
+		<material>data\tiles\wall\wall.jpg</material>
+		<material>data\tiles\wall\wall_stone2.jpg</material>
+		<material>data\tiles\wall\wall_stone3.jpg</material>
+		<material>data\tiles\floor\floor_darkwood.jpg</material>
+		<material>data\tiles\wall\wall_darkengraved.jpg</material>
+		<material>data\tiles\floor\floor_chesstiles.jpg</material>
+		<material>data\tiles\floor\floor_brick.jpg</material>
+		<material>data\tiles\wall\wall_brick.jpg</material>
+		<material>data\tiles\floor\floor_gravel.jpg</material>
+		<material>data\tiles\floor\floor_greybricks.jpg</material>
+		<material>data\tiles\floor\floor_lighttiles.jpg</material>
+		<material>data\tiles\floor\floor_stone3.jpg</material>
+		<material>data\tiles\floor\floor_woodpanel.jpg</material>
+		<material>data\tiles\floor\floor_finishedwood.jpg</material>
+		<material>data\tiles\floor\floor_oldwood.jpg</material>
+		<material>data\tiles\wall\wall_cracked.jpg</material>
+		<material>data\tiles\wall\wall_dark.jpg</material>
+		<material>data\tiles\floor\floor_stone2.jpg</material>
+		<material>data\tiles\wall\wall_darkwood.jpg</material>
+		<material>data\tiles\floor\floor_stonetile1.jpg</material>
+		<material>data\tiles\wall\wall_painted.jpg</material>
+		<material>data\tiles\wall\wall_oldwood.jpg</material>
+		<material>data\tiles\wall\wall_crackedrock.jpg</material>
+		<material>data\tiles\floor\floor_crackedrock.jpg</material>
+		<material>data\tiles\wall\wall_greybricks.jpg</material>
+		<material>data\tiles\floor\floor_cement.jpg</material>
+		<material>data\tiles\floor\floor_outdoors.jpg</material>
+		<material>data\tiles\floor\floor_planks.jpg</material>
+		<material>data\tiles\floor\floor_dirt.jpg</material>
+		<material>data\tiles\floor\floor_grass.jpg</material>
+	</materialsLegend>
+	<tileDataFileName>data\zones\World3.bin</tileDataFileName>
+	<tileMetersX>1.2</tileMetersX>
+	<width>128</width>
+</map>
+<music>
+	<clips>
+		<clip>data/music/Rachel03.mp3</clip>
+	</clips>
+</music>
+<name>World3</name>
+<objects>
+	<object>
+		<expression>any: 1</expression>
+		<file>data/objects/SPAWN-spider.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(39.33, 2.4, 27.62)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.68</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 2</expression>
+		<file>data/objects/SPAWN-spider.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(17.18, 0, 44.19)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.68</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>false</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>500</lockTime>
+		<look>&vec(0, 0, 1)</look>
+		<name>gate1</name>
+		<pos>&vec(15, 0, 37.75)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>false</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>450</lockTime>
+		<look>&vec(0, 0, 1)</look>
+		<name>gate1</name>
+		<pos>&vec(16.25, 0, 37.75)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>false</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>400</lockTime>
+		<look>&vec(0, 0, 1)</look>
+		<name>gate1</name>
+		<pos>&vec(17.25, 0, 37.75)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>false</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>350</lockTime>
+		<look>&vec(0, 0, 1)</look>
+		<name>gate1</name>
+		<pos>&vec(18.5, 0, 37.75)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>false</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>300</lockTime>
+		<look>&vec(0, 0, 1)</look>
+		<name>gate1</name>
+		<pos>&vec(19.75, 0, 37.75)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>false</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>300</lockTime>
+		<look>&vec(0, 0, 1)</look>
+		<name>gate1</name>
+		<pos>&vec(22.25, 0, 37.75)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>false</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>300</lockTime>
+		<look>&vec(0, 0, 1)</look>
+		<name>gate1</name>
+		<pos>&vec(23.56, 0, 37.71)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>2</expression>
+		<file>data/objects/GateOpener.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<gateName>gate1</gateName>
+		<look>&vec(0, 0, 1)</look>
+		<open>false</open>
+		<pos>&vec(18.75, 0, 39.25)</pos>
+		<speed>2</speed>
+		<triggerRadius>0.4956</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>4</expression>
+		<file>data/objects/GateOpener.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<gateName>gate1</gateName>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(16.25, 0, 39.25)</pos>
+		<speed>2</speed>
+		<triggerRadius>0.4956</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/DetectorProximityMonster.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(19.25, 0, 43.5)</pos>
+		<signalFail>4</signalFail>
+		<signalSuccess>-1</signalSuccess>
+		<speed>2</speed>
+		<triggerRadius>6</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(-0.5842, -1, 1.287)</look>
+		<mass>0</mass>
+		<pos>&vec(39, 0.1605, 45.25)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(-0.5842, -1, 1.287)</look>
+		<mass>0</mass>
+		<pos>&vec(40.25, 0.1605, 34)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(-0.5842, -1, 1.287)</look>
+		<mass>0</mass>
+		<pos>&vec(17.25, 0.1605, 33.75)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(-0.5842, -1, 1.287)</look>
+		<mass>0</mass>
+		<pos>&vec(15.5, 0.1605, 34.75)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(-0.5842, -1, 1.287)</look>
+		<mass>0</mass>
+		<pos>&vec(18.5, 0.1605, 34.5)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 1 ; 2 ; 3 ; 4 ; 5</expression>
+		<file>data/objects/SPAWN-skeleton.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(38.5, 0, 39.5)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5236</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(-0.5842, -1, 1.287)</look>
+		<mass>0</mass>
+		<pos>&vec(37.25, 0.1605, 33.5)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/DetectorProximityPlayer.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<name>null</name>
+		<pos>&vec(22, 0, 22)</pos>
+		<signalFail>-1</signalFail>
+		<signalSuccess>1</signalSuccess>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 1</expression>
+		<file>data/objects/SPAWN-spider.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(45.5, 2.4, 55)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.68</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 1</expression>
+		<file>data/objects/SPAWN-skeleton.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(27, 0, 42.5)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5236</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 5</expression>
+		<file>data/objects/SPAWN-theodore.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(16.25, 0, 22.25)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.1947</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 5</expression>
+		<file>data/objects/SPAWN-theodore.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(23.75, 0, 12.11)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.1947</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>5</expression>
+		<file>data/objects/SPAWN-theodore.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(22.06, 0, 14.9)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.1947</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 1</expression>
+		<file>data/objects/SPAWN-skeleton.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(33.93, 0, 47.89)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5236</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 1</expression>
+		<file>data/objects/SPAWN-otis.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(37.66, 0, 36.53)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.174</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/DetectorProximityPlayer.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(16.12, 0, 28.1)</pos>
+		<signalFail>-1</signalFail>
+		<signalSuccess>5</signalSuccess>
+		<speed>2</speed>
+		<triggerRadius>2.5</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<castShadows>true</castShadows>
+		<file>data/objects/DetectorProximityPlayer.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(21, 0, 41.31)</pos>
+		<signalFail>-1</signalFail>
+		<signalSuccess>2</signalSuccess>
+		<speed>2</speed>
+		<triggerRadius>3</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 1</expression>
+		<file>data/objects/SPAWN-wizard.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(49.75, 2.4, 27.74)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5975</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/StoneHenge.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>5</height>
+		<look>&vec(0.7071, 0, 0.7071)</look>
+		<pos>&vec(35.19, 0, 12.73)</pos>
+		<showModel>false</showModel>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<actionLabel>enter.</actionLabel>
+		<destinationPosition>&vec(100, 0, 100)</destinationPosition>
+		<file>data/objects/Teleporter.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>0.1</height>
+		<look>&vec(0, 0, 1)</look>
+		<model>data/evilbook/model.md3xml</model>
+		<pos>&vec(31.85, 0.1, 15.04)</pos>
+		<speed>2</speed>
+		<time>1000</time>
+		<triggerRadius>0.9913</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/StoneHenge.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>5</height>
+		<look>&vec(0.7071, 0, 0.7071)</look>
+		<pos>&vec(29.81, 0, 17.79)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 2</expression>
+		<file>data/objects/SPAWN-beast.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(16.77, 0, 41.66)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.265</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 2</expression>
+		<file>data/objects/SPAWN-beast.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(22.75, 0, 45.29)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.265</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/StoneHenge.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>5</height>
+		<look>&vec(-0.7996, 0, 0.6005)</look>
+		<pos>&vec(29.02, 0, 11.66)</pos>
+		<showModel>false</showModel>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/StoneHenge.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>5</height>
+		<look>&vec(-0.7835, 0, 0.6214)</look>
+		<pos>&vec(34.52, 0, 18.85)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-BOSS-beast.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(130, 0, 101.8)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.012</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-1</name>
+		<pos>&vec(108.8, 1.776e-015, 101.5)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-2</name>
+		<pos>&vec(108.8, 1.776e-015, 100.3)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-1</name>
+		<pos>&vec(108.8, 0, 99)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-2</name>
+		<pos>&vec(107.5, -1.776e-015, 99)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-1</name>
+		<pos>&vec(107.5, 0, 100.3)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-2</name>
+		<pos>&vec(107.5, 0, 101.5)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-1</name>
+		<pos>&vec(106.3, 1.776e-015, 101.5)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-2</name>
+		<pos>&vec(106.3, 0, 100.3)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>2</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Room-Gate-1</name>
+		<pos>&vec(106.3, 0, 99)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<unlockedHeight>0.1</unlockedHeight>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 6</expression>
+		<file>data/objects/GateOpener.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<gateName>Boss-Room-Gate-1</gateName>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(104.5, 0, 100.8)</pos>
+		<speed>2</speed>
+		<triggerRadius>0.4956</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 7</expression>
+		<file>data/objects/GateOpener.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<gateName>Boss-Room-Gate-2</gateName>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(104.8, 0, 99.25)</pos>
+		<speed>2</speed>
+		<triggerRadius>0.4956</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-wizard.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(113, 0, 89.25)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5975</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-wizard.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(118.8, 0, 88.5)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5975</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-wizard.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(124, 0, 88.75)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5975</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-wizard.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(114, 0, 113.3)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5975</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-wizard.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(118.8, 0, 113.8)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5975</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-wizard.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(123.8, 0, 113.8)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5975</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-beast.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(119.5, 0, 104.8)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.265</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>all 6 7</expression>
+		<file>data/objects/SPAWN-beast.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(120, 0, 96.5)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>1.265</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0.2241, 0, -0.9745)</look>
+		<mass>0</mass>
+		<pos>&vec(97.08, 0.1605, 111.4)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupHeal.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0.2241, 0, -0.9745)</look>
+		<mass>0</mass>
+		<pos>&vec(96.51, 0.1605, 113.4)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 8</expression>
+		<file>data/objects/SPAWN-skeleton.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(98, 0, 117.3)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5236</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 8</expression>
+		<file>data/objects/SPAWN-skeleton.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(103.7, 0, 117.9)</pos>
+		<separationDistance>2</separationDistance>
+		<triggerRadius>0.5236</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/PowerupSpell.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0.2241, 0, -0.9745)</look>
+		<mass>0</mass>
+		<pos>&vec(100.3, 0.4561, 114.5)</pos>
+		<showModel>true</showModel>
+		<sounds>
+			<file>data/sound/player/pickup.wav</file>
+		</sounds>
+		<speed>2</speed>
+		<time>1000</time>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/DetectorProximityPlayer.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<onlyTripOnce>true</onlyTripOnce>
+		<pos>&vec(100, 0, 100)</pos>
+		<signalFail>-1</signalFail>
+		<signalSuccess>8</signalSuccess>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Boulder3.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(89.5, 0, 85)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Boulder2.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(-0.5092, 0, 0.8606)</look>
+		<pos>&vec(90.5, 0, 82.5)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(82.75, 0, 91.75)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(117.3, 0, 79.5)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(113.3, 0, 78.5)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>3.5</height>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(90, 0, 108.3)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(107.5, 0, 91.75)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>4.5</height>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(107, 0, 94.5)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>3.5</height>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(105, 0, 93)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(91.75, 0, 96.25)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Tree.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>4.5</height>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(95, 0, 92.75)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Boulder1.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(105, 0, 107.3)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Boulder3.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(106.5, 0, 106.5)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Boulder1.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(107.5, 0, 108.5)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Boulder1.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(91, 0, 91.5)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Boulder1.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(116, 0, 79.75)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/DetectorProximityPlayer.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>0.25</height>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(100.3, 0, 83.5)</pos>
+		<signalFail>-1</signalFail>
+		<signalSuccess>6</signalSuccess>
+		<speed>2</speed>
+		<triggerRadius>1</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/DetectorProximityPlayer.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>0.2</height>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(84.75, 0, 100.3)</pos>
+		<signalFail>-1</signalFail>
+		<signalSuccess>7</signalSuccess>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>0.25</height>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>0.4</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Switch-1</name>
+		<pos>&vec(84.75, 0, 100.5)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/TileGate.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<height>0.25</height>
+		<initiallyLocked>true</initiallyLocked>
+		<lockSfx>nill</lockSfx>
+		<lockTime>1000</lockTime>
+		<lockedHeight>0.4</lockedHeight>
+		<look>&vec(0, 0, 1)</look>
+		<name>Boss-Switch-2</name>
+		<pos>&vec(100.3, 1.776e-015, 83.75)</pos>
+		<reactionDelay>0</reactionDelay>
+		<speed>2</speed>
+		<unlockSfx>nill</unlockSfx>
+		<unlockTime>1000</unlockTime>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 7</expression>
+		<file>data/objects/GateOpener.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<gateName>Boss-Switch-1</gateName>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(85, 0, 102.3)</pos>
+		<speed>2</speed>
+		<triggerRadius>0.4956</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<expression>any: 6</expression>
+		<file>data/objects/GateOpener.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<gateName>Boss-Switch-2</gateName>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(98.75, 0, 84.5)</pos>
+		<speed>2</speed>
+		<triggerRadius>0.4956</triggerRadius>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Barrel.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(24.85, 0, 8.77)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Barrel.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(23.99, 0, 8.95)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Barrel.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(26.29, 0, 37.57)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Barrel.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(25.95, 0, 38.26)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<file>data/objects/Barrel.xml</file>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>&vec(0, 0, 1)</look>
+		<pos>&vec(25.66, 0, 37.77)</pos>
+		<speed>2</speed>
+		<up>&vec(0, 1, 0)</up>
+	</object>
+</objects>

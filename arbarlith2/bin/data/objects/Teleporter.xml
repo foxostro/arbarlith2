@@ -1,0 +1,13 @@
+<type>class Engine::Teleporter</type>
+<name>Teleporter</name>
+
+<model>data/cylinder/model.md3xml</model>
+<height>2.0</height>
+<mass>0.0000</mass>
+<castShadows>false</castShadows>
+
+<showModel>true</showModel>
+<solid>false</solid>
+<floating>false</floating>
+
+<destinationPosition>&vec3(20,0,20)<destinationPosition>

@@ -1,0 +1,82 @@
+<md3>data/matilda/matilda.md3</md3>
+		
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<start>2</start>
+	<length>5</length>
+	<fps>2.0</fps>
+</animation>
+
+<animation>
+	<name>walk</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<start>7</start>
+	<length>5</length>
+	<fps>2.0</fps>
+</animation>
+
+<animation>
+	<name>trot</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<start>12</start>
+	<length>5</length>
+	<fps>4.5</fps>
+</animation>
+
+<animation>
+	<name>run</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<start>17</start>
+	<length>5</length>
+	<fps>8.0</fps>
+</animation>
+
+<animation>
+	<name>highhit</name>
+	<priority>0.6</priority>
+	<looping>false</looping>
+	<start>22</start>
+	<length>5</length>
+	<fps>5.0</fps>
+</animation>
+
+<animation>
+	<name>lowhit</name>
+	<priority>0.6</priority>
+	<looping>false</looping>
+	<start>27</start>
+	<length>5</length>
+	<fps>5.0</fps>
+</animation>
+
+<animation>
+	<name>flinch</name>
+	<priority>0.5</priority>
+	<looping>false</looping>
+	<start>42</start>
+	<length>2</length>
+	<fps>6.0</fps>
+</animation>
+
+<animation>
+	<name>dying</name>
+	<priority>2.0</priority>
+	<looping>false</looping>
+	<start>44</start>
+	<length>3</length>
+	<fps>3.0</fps>
+</animation>
+
+<animation>
+	<name>dead</name>
+	<priority>3.0</priority>
+	<looping>true</looping>
+	<start>46</start>
+	<length>1</length>
+	<fps>1.0</fps>
+</animation>

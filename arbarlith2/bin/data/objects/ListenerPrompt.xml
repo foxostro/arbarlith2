@@ -1,0 +1,14 @@
+<type>class Engine::ListenerPrompt</type>
+<name>ListenerPrompt</name>
+
+<model>data/cylinder/model.md3xml</model>
+<height>1.0</height>
+<mass>0.0000</mass>
+<castShadows>false</castShadows>
+
+<showModel>false</showModel>
+<solid>false</solid>
+<floating>true</floating>
+
+<message>Enter the message to display.</message>
+<timeOut>3000.0</timeOut>

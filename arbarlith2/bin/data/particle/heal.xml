@@ -1,0 +1,211 @@
+<max>64</max>
+
+<material>
+	<name>FlareMaterial</name>
+	<image>data/particle/flare.png</image>
+	<glow>true</glow>
+</material>
+
+<template>
+	<name>Flare</name>
+	<material>FlareMaterial</material>
+
+	<size>
+		<point>
+			<x>0.0</x>
+			<y>0.8</y>
+		</point>
+
+		<point>
+			<x>1.0</x>
+			<y>0.1</y>
+		</point>
+	</size>
+
+	<alpha>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+		
+		<point>
+			<x>1.0</x>
+			<y>0.5</y>
+		</point>
+	</alpha>
+
+	<blue>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</blue>
+
+	<green>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</green>
+
+	<red>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</red>
+
+	<acceleration>&VEC(0.0, 4.0, 0.0)</acceleration>
+	<initialRadialVelocity>0.0</initialRadialVelocity>
+</template>
+
+<emitter>
+	<name>Flares</name>
+	<template>Flare</template>
+
+	<falloff>1.2</falloff>
+
+	<length>500.0</length>
+
+	<looping>FALSE</looping>
+	<cycles>-1</cycles>
+
+	<speed>
+		<point>
+			<x>0.0</x>
+			<y>0.250</y>
+		</point>
+	</speed>
+
+	<sizemul>
+		<point>
+			<x>0.0</x>
+			<y>0.25</y>
+		</point>
+	</sizemul>
+
+	<rate>
+		<point>
+			<x>0.0</x>
+			<y>16</y>
+		</point>
+	</rate>
+
+	<lifespan>
+		<point>
+			<x>0.0</x>
+			<y>3000.0</y>
+		</point>
+	</lifespan>
+</emitter>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<material>
+	<name>StarMaterial</name>
+	<image>data/particle/star.png</image>
+	<glow>false</glow>
+</material>
+
+<template>
+	<name>Star</name>
+	<material>StarMaterial</material>
+
+	<size>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</size>
+
+	<alpha>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+		
+		<point>
+			<x>1.0</x>
+			<y>0.0</y>
+		</point>
+	</alpha>
+
+	<blue>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</blue>
+
+	<green>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</green>
+
+	<red>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</red>
+
+	<acceleration>&VEC(0.0, 2.0, 0.0)</acceleration>
+	<initialRadialVelocity>0</initialRadialVelocity>
+</template>
+
+<emitter>
+	<name>Stars</name>
+	<template>Star</template>
+
+	<falloff>1.5</falloff>
+
+	<length>100.0</length>
+
+	<looping>FALSE</looping>
+	<cycles>-1</cycles>
+
+	<speed>
+		<point>
+			<x>0.0</x>
+			<y>0.250</y>
+		</point>
+	</speed>
+
+	<sizemul>
+		<point>
+			<x>0.0</x>
+			<y>0.15</y>
+		</point>
+	</sizemul>
+
+	<rate>
+		<point>
+			<x>0.0</x>
+			<y>1</y>
+		</point>
+	</rate>
+
+	<lifespan>
+		<point>
+			<x>0.0</x>
+			<y>3000.0</y>
+		</point>
+	</lifespan>
+</emitter>

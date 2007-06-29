@@ -1,0 +1,195 @@
+<max>512</max>
+
+<material>
+	<name>Smoke</name>
+	<image>data/particle/smoke.png</image>
+	<glow>false</glow>
+</material>
+
+<template>
+	<name>Smoke</name>
+	<material>Smoke</material>
+
+	<size>
+		<point>
+			<x>1.0</x>
+			<y>1.0</y>
+		</point>
+	</size>
+
+	<alpha>
+		<point>
+			<x>0.0</x>
+			<y>0.5</y>
+		</point>
+		
+		<point>
+			<x>1.0</x>
+			<y>0.0</y>
+		</point>
+	</alpha>
+
+	<blue>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</blue>
+
+	<green>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</green>
+
+	<red>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</red>
+
+	<acceleration>&VEC(0.0, 0.5, 0.0)</acceleration>
+	<initialRadialVelocity>0.0</initialRadialVelocity>
+</template>
+
+<emitter>
+	<name>Smoke</name>
+	<template>Smoke</template>
+
+	<falloff>1.5</falloff>
+
+	<length>250.0</length>
+
+	<looping>FALSE</looping>
+	<cycles>-1</cycles>
+	
+	<sizemul>
+		<point>
+			<x>0.0</x>
+			<y>0.8</y>
+		</point>
+	</sizemul>
+
+	<rate>
+		<point>
+			<x>0.0</x>
+			<y>12</y>
+		</point>
+	</rate>
+
+	<lifespan>		
+		<point>
+			<x>1.0</x>
+			<y>2000.0</y>
+		</point>
+	</lifespan>
+</emitter>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<material>
+	<name>Flame1</name>
+	<image>data/particle/explosion1.png</image>
+	<glow>true</glow>
+</material>
+
+<template>
+	<name>Flame1</name>
+	<material>Flame1</material>
+
+	<size>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</size>
+
+	<alpha>
+		<point>
+			<x>0.0</x>
+			<y>0.2</y>
+		</point>
+		
+		<point>
+			<x>0.5</x>
+			<y>0.2</y>
+		</point>
+		
+		<point>
+			<x>1.0</x>
+			<y>0.0</y>
+		</point>
+	</alpha>
+
+	<blue>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</blue>
+
+	<green>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</green>
+
+	<red>
+		<point>
+			<x>0.0</x>
+			<y>1.0</y>
+		</point>
+	</red>
+
+	<acceleration>&VEC(0.0, -2.0, 0.0)</acceleration>
+	<initialRadialVelocity>2.0</initialRadialVelocity>
+</template>
+
+<emitter>
+	<name>Flame1</name>
+	<template>Flame1</template>
+
+	<falloff>0.01</falloff>
+
+	<length>150.0</length>
+
+	<looping>FALSE</looping>
+	<cycles>-1</cycles>
+	
+	<sizemul>
+		<point>
+			<x>0.0</x>
+			<y>0.8</y>
+		</point>
+	</sizemul>
+
+	<rate>
+		<point>
+			<x>0.0</x>
+			<y>64</y>
+		</point>
+	</rate>
+
+	<lifespan>		
+		<point>
+			<x>1.0</x>
+			<y>1000.0</y>
+		</point>
+	</lifespan>
+</emitter>

@@ -1,0 +1,20 @@
+<name>PowerupHeal</name>
+<type>class Arbarlith2::PowerupHeal</type>
+<state>1</state>
+
+<height>0.40</height>
+<castShadows>false</castShadows>
+<solid>false</solid>
+<floating>true</floating>
+
+<model>data/hp/model.3dsxml</model>
+
+<actionLabel>pick up the health potion.</actionLabel>
+<triggerRadius>0.8</triggerRadius>
+
+<healValue>20</healValue>
+<healTime>2000</healTime>
+
+<sounds>
+<file>data/sound/player/pickup.wav</file>
+</sounds>

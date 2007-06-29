@@ -1,0 +1,16 @@
+<type>class Arbarlith2::DetectorProximityMonster</type>
+<name>Proximity-Detector-Monster</name>
+
+<model>data/cylinder/model.md3xml</model>
+<height>1.0</height>
+<triggerRadius>2.0</triggerRadius>
+<mass>0.0000</mass>
+<castShadows>false</castShadows>
+
+<showModel>false</showModel>
+<solid>false</solid>
+<floating>true</floating>
+
+<signalSucess>5</signalSucess>
+<signalFail>6</signalFail>
+<onlyTripOnce>false</onlyTripOnce>

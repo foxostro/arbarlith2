@@ -1,0 +1,103 @@
+Arbarlith 2
+
+
+
+Andrew Fox
+
+    Project Leader
+    Programmer
+    Level Design
+    3D models
+    Animation
+    Textures
+
+
+Michael Collins
+
+    Programmer
+
+
+Tom Cauchois
+
+    Programmer
+
+
+John Nesky
+
+    3D Models
+    Animation
+    Textures
+
+
+Michael Hanley
+
+    3D Models
+    Animation
+    Textures
+
+
+Rachel Berkowitz
+
+    Musician
+
+
+Eric Foote
+
+    Level Design
+
+
+Chelsea Hostetter
+
+    Writer
+
+
+Chris DeLeon
+
+    Sound Effects
+
+
+Justin Lokey
+
+    3D Models
+
+
+Ning Sung Lee
+
+    Artist (GUI artwork)
+
+
+
+
+And a special thanks to
+
+    Jeff Molofee and Gregory Austwick
+
+    Mason McCuskey
+
+    Ben "Digiben" Humphrey
+
+    Paul Baker
+
+    Steve Rabin
+
+    David Gurrea
+	
+	Please see the readme file for details.
+
+
+
+
+
+
+
+
+ Thank you for downloading!
+ 
+ 
+ 
+
+ Please visit our website
+http://www.gamecreation.org
+ to see our other projects
+
+

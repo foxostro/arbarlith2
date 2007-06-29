@@ -1,0 +1,11 @@
+<type>class Engine::Actor</type>
+<name>Barrel</name>
+
+<model>data/barrel/model.3dsxml</model>
+<height>0.80</height>
+<mass>0.00</mass>
+<castShadows>true</castShadows>
+
+<showModel>true</showModel>
+<solid>true</solid>
+<floating>false</floating>

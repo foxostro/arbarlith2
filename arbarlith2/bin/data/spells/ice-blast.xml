@@ -1,0 +1,16 @@
+<castTime>400.0</castTime>
+<coolDownTime>800.0</coolDownTime>
+<damageValue>7</damageValue>
+<bulletSpeed>4.5</bulletSpeed>
+<particleFile>data/particle/ice-blast.xml</particleFile>
+<explosionParticleFile>data/particle/small-ice-explosion.xml</explosionParticleFile>
+<explosionSoundEffectFile>data/sound/s_shattering.wav</explosionSoundEffectFile>
+<causesFreeze>true</causesFreeze>
+<knockbackMagnitude>100</knockbackMagnitude>
+<height>0.5</height>
+
+
+<activeIcon>data/sprites/spells/sel-iceblast.png</activeIcon>
+<inactiveIcon>data/sprites/spells/notsel-iceblast.png</inactiveIcon>
+
+<descriptionText>Toss a stinging ball of ice into their ear.</descriptionText>

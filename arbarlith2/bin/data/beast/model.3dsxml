@@ -1,0 +1,87 @@
+<forceSkin>data/beast/fb_texture.jpg</forceSkin>
+
+<animation>
+	<name>idle</name>
+	<priority>0.0</priority>
+	<looping>true</looping>
+	<fps>1.5</fps>
+
+	<keyframe>data/beast/idle01.3ds</keyframe>
+	<keyframe>data/beast/idle02.3ds</keyframe>
+	<keyframe>data/beast/idle01.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>highhit</name>
+	<priority>0.6</priority>
+	<looping>false</looping>
+	<fps>2.4</fps>
+
+	<keyframe>data/beast/cast01.3ds</keyframe>
+	<keyframe>data/beast/cast02.3ds</keyframe>
+	<keyframe>data/beast/cast03.3ds</keyframe>
+	<keyframe>data/beast/cast03.3ds</keyframe>
+	<keyframe>data/beast/cast01.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>cast</name>
+	<priority>0.5</priority>
+	<looping>false</looping>
+	<fps>2.4</fps>
+
+	<keyframe>data/beast/cast01.3ds</keyframe>
+	<keyframe>data/beast/cast02.3ds</keyframe>
+	<keyframe>data/beast/cast03.3ds</keyframe>
+	<keyframe>data/beast/cast03.3ds</keyframe>
+	<keyframe>data/beast/cast01.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>flinch</name>
+	<priority>0.4</priority>
+	<looping>false</looping>
+	<fps>5.0</fps>
+
+	<keyframe>data/beast/pain01.3ds</keyframe>
+	<keyframe>data/beast/pain02.3ds</keyframe>
+	<keyframe>data/beast/pain01.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>run</name>
+	<priority>0.3</priority>
+	<looping>true</looping>
+	<fps>4.17</fps>
+	
+	<keyframe>data/beast/walk01.3ds</keyframe>
+	<keyframe>data/beast/walk02.3ds</keyframe>
+	<keyframe>data/beast/walk03.3ds</keyframe>
+	<keyframe>data/beast/walk04.3ds</keyframe>
+	<keyframe>data/beast/walk01.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dying</name>
+	<priority>1.0</priority>
+	<looping>false</looping>
+	<fps>2.5</fps>
+
+	<keyframe>data/beast/die01.3ds</keyframe>
+	<keyframe>data/beast/die02.3ds</keyframe>
+	<keyframe>data/beast/die03.3ds</keyframe>
+	<keyframe>data/beast/die04.3ds</keyframe>
+	<keyframe>data/beast/die05.3ds</keyframe>
+	<keyframe>data/beast/die05.3ds</keyframe>
+	<keyframe>data/beast/die06.3ds</keyframe>
+	<keyframe>data/beast/die07.3ds</keyframe>
+</animation>
+
+<animation>
+	<name>dead</name>
+	<priority>1.0</priority>
+	<looping>true</looping>
+	<fps>1</fps>
+
+	<keyframe>data/beast/die07.3ds</keyframe>
+</animation>

@@ -1,0 +1,51 @@
+<name>Matilda</name>
+<type>class Arbarlith2::Monster</type>
+<state>1</state>
+<fsm>class Engine::MonsterFSM</fsm>
+
+<height>0.6</height>
+<mass>50.0</mass>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<up>&vec(0.0, 1.0, 0.0)</up>
+<speed>2.5</speed>
+<castShadows>true</castShadows>
+
+<model>data/matilda/model.md3xml</model>
+
+<healthPoints>30</healthPoints>
+<maxHealthPoints>30</maxHealthPoints>
+<attackDamage>10</attackDamage>
+<attackCoolDown>1600</attackCoolDown>
+<attackChargeTime>2000</attackChargeTime>
+<knockBackAcceleration>1000</knockBackAcceleration>
+
+<dyingSounds>
+<file>data/sound/monster-share/monster-moan-1.wav</file>
+<file>data/sound/monster-share/monster-moan-2.wav</file>
+</dyingSounds>
+
+<painSounds>
+<file>data/sound/monster-share/monster-moan-1.wav</file>
+<file>data/sound/monster-share/monster-moan-2.wav</file>
+</painSounds>
+
+<attackSounds>
+<file>data/sound/monster-share/monster-bite-1.wav</file>
+<file>data/sound/monster-share/monster-bite-2.wav</file>
+</attackSounds>
+
+<attnSounds>
+<file>data/sound/monster-share/monster-attn-1.wav</file>
+<file>data/sound/monster-share/monster-attn-2.wav</file>
+<file>data/sound/monster-share/monster-attn-3.wav</file>
+</attnSounds>
+
+<armorMultiplier>1</armorMultiplier>
+<attackCoolDownMultiplier>1</attackCoolDownMultiplier>
+<floating>false</floating>
+<look>&vec(0.0, 0.0, 1.0)</look>
+<showModel>true</showModel>
+<solid>true</solid>
+<spellCoolDownMultiplier>1</spellCoolDownMultiplier>
+<up>&vec(0, 1, 0)</up>
+<weaponMultiplier>1</weaponMultiplier>
