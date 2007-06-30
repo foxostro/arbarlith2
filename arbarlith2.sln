@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "arbarlith2", "arbarlith2\arbarlith2.vcproj", "{2B42D21C-6DAB-4400-AC66-EF303F6485CE}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Arbarlith2 Setup", "setup\setup.vdproj", "{DC022AED-98F1-4129-925E-E63FB5903C04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,8 +13,6 @@ Global
 		{2B42D21C-6DAB-4400-AC66-EF303F6485CE}.Debug|Win32.Build.0 = Debug|Win32
 		{2B42D21C-6DAB-4400-AC66-EF303F6485CE}.Release|Win32.ActiveCfg = Release|Win32
 		{2B42D21C-6DAB-4400-AC66-EF303F6485CE}.Release|Win32.Build.0 = Release|Win32
-		{DC022AED-98F1-4129-925E-E63FB5903C04}.Debug|Win32.ActiveCfg = Debug
-		{DC022AED-98F1-4129-925E-E63FB5903C04}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
