@@ -28,7 +28,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#pragma once
+#ifndef PERFORMANCE_LABEL_H
+#define PERFORMANCE_LABEL_H
 
 #include "LabelWidget.h"
 
@@ -53,3 +54,5 @@ public:
 };
 
 }; // namespace
+
+#endif

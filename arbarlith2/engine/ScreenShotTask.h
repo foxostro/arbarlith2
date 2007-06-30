@@ -28,7 +28,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#pragma once
+#ifndef _SCREENSHOT_TASK_H_
+#define _SCREENSHOT_TASK_H_
 
 #include "Task.h"
 
@@ -62,3 +63,5 @@ private:
 };
 
 }; //namespace
+
+#endif

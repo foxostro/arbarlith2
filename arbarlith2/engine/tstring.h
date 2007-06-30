@@ -31,11 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef TSTRING_H
 #define TSTRING_H
 
-#if _MSC_VER > 1000
-#pragma once
-#endif
-
-
 
 #include <string>
 using std::string;

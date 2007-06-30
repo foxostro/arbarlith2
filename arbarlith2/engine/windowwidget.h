@@ -31,10 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef WINDOW_WIDGET_H
 #define WINDOW_WIDGET_H
 
-#if _MSC_VER > 1000
-#pragma once
-#endif
-
 #include "Widget.h"
 #include "Material.h"
 
