@@ -6,7 +6,7 @@ Modified by Andrew Fox in Apr-2007 to be more generic towards other types of pow
 E-Mail: mailto:andrewfox@cmu.edu
 
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

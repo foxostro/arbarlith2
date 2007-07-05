@@ -41,11 +41,13 @@ using std::vector;
 
 namespace Engine { 
 
-/** pi */
-const double M_PI(4.0 * std::atan2(1.0, 1.0));
+#ifndef M_PI
+#define M_PI ((double)3.14159265)
+#endif
 
-/** e */
-const double M_E = 2.71828183;
+#ifndef M_E
+#define M_E ((double)2.71828183)
+#endif
 
 /** Functor that deletes the 2nd part of the pair */
 struct delete_second {
@@ -66,6 +68,13 @@ struct delete_arg {
 		delete a;
 	}
 };
+
+/**
+Converts a value from a string to a float
+@param s The _tstring representation of the number
+@return Some numerical value
+*/
+float stof(const _tstring &s);
 
 /**
 Represents some value as a _tstring

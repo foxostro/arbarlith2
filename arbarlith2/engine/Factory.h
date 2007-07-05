@@ -66,15 +66,33 @@ Allocates specific objects when passed the type name of the desired object.
 Parameters for constructors are assumed to be very uniform, only accepting
 a copy of its own handle within the factory.
 */
-template<class TYPE> class Factory : public map<OBJECT_ID, TYPE*>
+template<class TYPE> class Factory
 {
+private:
+	/** Tracks the incrementing unique ID for the next object to be created */
+	static OBJECT_ID uniqueID;
+	
+	/** Prototype for the allocator function */
+	typedef TYPE* (*AllocatorFn)(OBJECT_ID);
+	
+	typedef map<_tstring, OBJECT_TYPE> mapStringToType;
+	typedef map<OBJECT_TYPE, AllocatorFn> mapTypeToAlloc;
+	typedef map<OBJECT_ID, TYPE*> mapHandleToObject;
+
+	/** Maps from the type name to the type ID */
+	mapStringToType toTypeID;
+
+	/** Maps from the type to the allocator function */
+	mapTypeToAlloc toAllocator;
+	
+	/** Stores objects that have been allocated */
+	mapHandleToObject objects;
+	
 public:
 	/** Default constructor */
 	Factory(void)
-	{
-		clear();
-	}
-
+	{}
+	
 	/** Destructor */
 	~Factory(void)
 	{
@@ -84,12 +102,10 @@ public:
 	/** Cleanly destroys the objects before clearing the records of them */
 	void destroy(void)
 	{
-		while(!empty())
+		while(!objects.empty())
 		{
-			iterator i = begin();
-			TYPE *a = i->second;
-			delete(a);
-			erase(i);
+			delete(objects.begin()->second);
+			erase(objects.begin());
 		}
 	}
 
@@ -99,11 +115,8 @@ public:
 	*/
 	void remove(OBJECT_ID handle)
 	{
-		iterator i = find(handle);
-		ASSERT(i != end(), _T("Failed to find object by handle"));
-		TYPE *a = i->second;
-		delete(a);
-		erase(i);
+		delete(objects.find(handle)->second);
+		erase(objects.find(handle));
 	}
 
 	/** Registers a type with the factory database */
@@ -131,7 +144,7 @@ public:
 	*/
 	TYPE* createPtr(const _tstring &type)
 	{
-		map<_tstring, OBJECT_TYPE>::iterator iter = toTypeID.find(type);
+		mapStringToType::iterator iter = toTypeID.find(type);
 
 		if(iter == toTypeID.end())
 		{
@@ -139,7 +152,7 @@ public:
 		}
 
 		OBJECT_ID handle = create(iter->second);
-		return find(handle)->second;
+		return objects.find(handle)->second;
 	}
 
 	/**
@@ -149,7 +162,7 @@ public:
 	*/
 	OBJECT_ID create(const _tstring &type)
 	{
-		map<_tstring, OBJECT_TYPE>::iterator iter = toTypeID.find(type);
+		mapStringToType::iterator iter = toTypeID.find(type);
 
 		return (iter == toTypeID.end()) ? INVALID_ID : create(iter->second);
 	}
@@ -161,32 +174,19 @@ public:
 	*/
 	OBJECT_ID create(OBJECT_TYPE type)
 	{
-		OBJECT_ID handle = uniqueID++;
-
-		map<OBJECT_TYPE, AllocatorFn>::iterator iter = toAllocator.find(type);
+		mapTypeToAlloc::iterator iter = toAllocator.find(type);
 		ASSERT(iter!=toAllocator.end(), _T("The specified type was not found"));
 
-		AllocatorFn allocatorFn = iter->second;
-		TYPE *o = allocatorFn(handle);
+		OBJECT_ID handle = uniqueID;
+		uniqueID++;
+		
+		TYPE *o = (iter->second)(handle);
 		ASSERT(o!=0, _T("Allocator failed"));
 
-		insert(make_pair(handle, o));
+		objects.insert(make_pair(handle, o));
 
 		return handle;
 	}
-
-private:
-	/** Prototype for the allocator function */
-	typedef TYPE* (*AllocatorFn)(OBJECT_ID);
-
-	/** Tracks the incrementing unique ID for the next object to be created */
-	static OBJECT_ID uniqueID;
-
-	/** Maps from the type name to the type ID */
-	map<_tstring, OBJECT_TYPE> toTypeID;
-
-	/** Maps from the type to the allocator function */
-	map<OBJECT_TYPE, AllocatorFn> toAllocator;
 };
 
 }; // namespace

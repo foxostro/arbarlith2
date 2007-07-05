@@ -39,7 +39,9 @@ using std::wstring;
 
 #include <sstream>
 using std::stringstream;
-using std::wstringstream;
+
+typedef basic_stringstream<wchar_t> wstringstream;
+//using std::wstringstream;
 
 
 
