@@ -36,9 +36,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "MyPlayer.h"
 #include "PowerUp.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(Powerup)
+GEN_ACTOR_RTTI_CPP(Powerup, "class Arbarlith2::Powerup")
 
 Powerup::Powerup(OBJECT_ID ID)
 :Switch(ID)

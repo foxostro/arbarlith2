@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ using std::vector;
 
 #include "tstring.h"
 
-namespace Engine { 
+namespace Engine {
 
 #ifndef M_PI
 #define M_PI ((double)3.14159265)
@@ -51,7 +51,7 @@ namespace Engine {
 
 /** Functor that deletes the 2nd part of the pair */
 struct delete_second {
-	template <class U> struct sig { typedef void type; };  
+	template <class U> struct sig { typedef void type; };
 	template <class FIRST, class SECOND>
 	void operator()(pair<FIRST,SECOND> &a) const
 	{
@@ -61,7 +61,7 @@ struct delete_second {
 
 /** Functor that deletes the argument */
 struct delete_arg {
-	template <class U> struct sig { typedef void type; };  
+	template <class U> struct sig { typedef void type; };
 	template <class ARG>
 	void operator()(ARG &a) const
 	{
@@ -116,7 +116,7 @@ _tstring toLowerCase(const _tstring &in);
 void Tokenize(const _tstring& str, vector<_tstring>& tokens, const _tstring& delimiters = _T(" \t\n"));
 void Replace(_tstring &source, _tstring &find, _tstring &replace);
 
-}; // namespace
+} // namespace
 
 
 #endif

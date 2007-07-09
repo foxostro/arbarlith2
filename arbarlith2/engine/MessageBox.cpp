@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,11 +32,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "MessageBox.h"
 #include "world.h"
 
-namespace Engine { 
+namespace Engine {
 
 MsgBox::MsgBox(float x, float y)
-: m_pLblMessage(0),
-  WindowWidget(x, y, _T("data/sprites/msgbox.tga"), _T("data/sprites/msgbox_down.tga"))
+: WindowWidget(x, y, _T("data/sprites/msgbox.tga"), _T("data/sprites/msgbox_down.tga")),
+  m_pLblMessage(0)
 {
 	m_bVisible = false;
 	m_pLblMessage = new LabelWidget(_T("text\nhere"), 0.0f, 0.0f);
@@ -46,7 +46,7 @@ MsgBox::MsgBox(float x, float y)
 void MsgBox::onMouseClick(void)
 {
 	Close();
-	__super::onMouseClick();
+	WindowWidget::onMouseClick();
 }
 
 void MsgBox::Open(const _tstring &strLabel)

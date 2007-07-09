@@ -103,7 +103,7 @@ void ShadowManager::setZone(Zone *zone)
 void ShadowManager::update(const ActorSet &zoneActors, float deltaTime)
 {
 	CHECK_GL_ERROR();
-	
+
 	periodicTimer -= deltaTime;
 	if(periodicTimer < 0)
 	{
@@ -115,9 +115,9 @@ void ShadowManager::update(const ActorSet &zoneActors, float deltaTime)
 	{
 		shadows[i]->update(zoneActors, deltaTime);
 	}
-	
+
 	glViewport(0, 0, SDLWindow::GetSingleton().GetWidth(), SDLWindow::GetSingleton().GetHeight());
-	
+
 	CHECK_GL_ERROR();
 }
 
@@ -133,7 +133,7 @@ void ShadowManager::reassignShadows(void)
 	while(iter != lights.end())
 	{
 		const Light *light = *iter;
-		
+
 		if(light->causesShadows)
 			++iter;
 		else
@@ -144,13 +144,13 @@ void ShadowManager::reassignShadows(void)
 	{
 		// disable all shadows
 		for(size_t i=0; i<getMaxShadows(); ++i)
-			shadows[i]->setLight(0); 
+			shadows[i]->setLight(0);
 	}
 	else
 	{
 		// get the most active light
 		const Light * light = lights[0];
-		
+
 		// If the most active light has changed, then we need to reflect that and force a shadow update
 		for(size_t i=0; i<getMaxShadows(); ++i)
 			shadows[i]->setLight(light);
@@ -169,7 +169,7 @@ void ShadowManager::reassignShadows(void)
 		{
 			Actor *p = iter->second;
 			if(p->doesCastShadows() && p->m_ID!=player.m_ID)
-			{	
+			{
 				shadows[shadowIdx]->setActor(p->m_ID);
 				shadowIdx++;
 			}
@@ -179,8 +179,11 @@ void ShadowManager::reassignShadows(void)
 #endif
 
 		// disable any remaining shadows
-		for(shadowIdx; shadowIdx<getMaxShadows(); ++shadowIdx)
+		while(shadowIdx<getMaxShadows())
+		{
 			shadows[shadowIdx]->setActor(0);
+			++shadowIdx;
+		}
 	}
 }
 

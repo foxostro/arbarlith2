@@ -41,6 +41,6 @@ typedef Factory<StateMachine> StateMachineFactory;
 
 StateMachineFactory& getStateMachineFactory(void);
 
-}; // namespace
+} // namespace Engine
 
 #endif

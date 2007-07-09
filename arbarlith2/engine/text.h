@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vec4.h"
 #include "propbag.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Type for definition the dimensions of a character on-screen */
 enum FONT_SIZE
@@ -98,7 +98,7 @@ private:
 	/**
 	Prints a single character to the screen
 	@param a Corner of the character's quad
-	@param b Corner of the character's quad 
+	@param b Corner of the character's quad
 	@param c Corner of the character's quad
 	@param d Corner of the character's quad
 	@param z The character to print out
@@ -113,9 +113,37 @@ private:
 	@param character The character to print out
 	@param color The coor of the text
 	@param size The size of the text
-	@param useBillboard Should use a billboard when displaying 
+	@param useBillboard Should use a billboard when displaying
 	*/
 	void putChar(vec3 *offset, TCHAR character, const COLOR *color, FONT_SIZE size, bool useBillboard) const;
+
+	/**
+	Gets character information
+	@param z Character
+	@return Character information
+	*/
+	Character& getCharacter(char z);
+
+	/**
+	Gets character information
+	@param z Character
+	@return Character information
+	*/
+	const Character& getCharacter(char z) const;
+
+	/**
+	Gets character information
+	@param z Character
+	@return Character information
+	*/
+	Character& getCharacter(wchar_t z);
+
+	/**
+	Gets character information
+	@param z Character
+	@return Character information
+	*/
+	const Character& getCharacter(wchar_t z) const;
 
 public:
 	/** The origin of the font characters */
@@ -147,7 +175,7 @@ public:
 	@param text The text to print
 	@param color The coor of the text
 	@param size The size of the text
-	@param useBillboard Should use a billboard when displaying 
+	@param useBillboard Should use a billboard when displaying
 	*/
 	void write(const _tstring &text, const COLOR &color, FONT_SIZE size, bool useBillboard=false) const;
 
@@ -167,7 +195,7 @@ public:
 };
 
 
-}; // namespace
+} // namespace Engine
 
 
 #endif

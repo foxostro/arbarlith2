@@ -40,17 +40,17 @@ class Actor;
 typedef Factory<Actor> ActorFactory;
 
 ActorFactory& getActorFactory(void);
- 
+
 template<class T> struct ActorRegistrar
 {
-	ActorRegistrar(void)
+	ActorRegistrar(const _tstring typeName)
 	{
-		::Engine::getActorFactory().registerType<T>();
+		::Engine::getActorFactory().registerType<T>(typeName);
 	}
 };
 
-#define GEN_ACTOR_RTTI_CPP(TYPE) namespace { ::Engine::ActorRegistrar< TYPE > _registrar; }
+#define GEN_ACTOR_RTTI_CPP(TYPE, NAME) namespace { ::Engine::ActorRegistrar< TYPE > _registrar(_T(NAME)); }
 
-}; // namespace
+} // namespace Engine
 
 #endif

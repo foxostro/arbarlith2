@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -56,6 +56,10 @@ template < class FN >
 class CallbackInterpolator : public Task
 {
 public:
+	/** Destructor */
+	virtual ~CallbackInterpolator(void)
+	{}
+
 	/**
 	Constructs the interpolator
 	@param value Points to the value to modify
@@ -78,7 +82,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	void update(float deltaTime)
 	{
@@ -106,7 +110,7 @@ private:
 
 	/** The starting value*/
 	float startingValue;
-	
+
 	/** The ending value */
 	float endingValue;
 
@@ -136,6 +140,6 @@ static CallbackInterpolator<T>* makeCallbackInterpolator(float *value, float sta
 
 
 
-}; // namespace
+} // namespace Engine
 
 #endif

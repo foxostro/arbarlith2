@@ -72,6 +72,6 @@ public:
 	AnimationController* load(const _tstring &fileName);
 };
 
-};
+} // namespace Engine
 
 #endif

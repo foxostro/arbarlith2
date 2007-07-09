@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "StateMachine.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -118,8 +118,6 @@ protected:
 	float fleeThresholdForHealth;
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

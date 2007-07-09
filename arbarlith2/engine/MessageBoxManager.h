@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "MessageBox.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Manages a collection of message boxes */
 class MessageBoxManager : public Widget
@@ -54,6 +54,6 @@ private:
 	list<MsgBox*> boxes;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

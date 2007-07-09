@@ -31,14 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _COMMAND_H_
 #define _COMMAND_H_
 
-
-
-
 namespace Engine {
 
-	
 const float defaultTimeout = 2000.0f;
-	
+
 /** Represents a generic low-level AI command for a waypoint */
 class Command
 {
@@ -48,19 +44,19 @@ public:
 	{
 		/** Stand in place */
 		FREEZE,
-		
+
 		/** Move to an object */
 		MOVE_TARGET,
-		
+
 		/** Move to a point in space */
 		MOVE_POS,
-		
+
 		/** Swing at the target if in range */
 		ATTACK,
-		
+
 		/** Move to an object and use it */
 		USE,
-		
+
 		/** Flee from the target until we have exceeded the proximity distance or the time out has expired */
 		FLEE
 	};
@@ -74,10 +70,10 @@ public:
 	@param timeout Milliseconds until the order is cancelled
 	*/
 	Command(enumCommand cmd,
-		    vec3 pos,
-			float speed=1.0f,
-			float proximity=1.0f,
-			float timeout=defaultTimeout)
+	        vec3 pos,
+	        float speed=1.0f,
+	        float proximity=1.0f,
+	        float timeout=defaultTimeout)
 	: commandType(cmd),
 	  position(pos),
 	  target(INVALID_ID),
@@ -95,10 +91,10 @@ public:
 	@param timeout Milliseconds until the order is cancelled
 	*/
 	Command(enumCommand cmd,
-		    OBJECT_ID id,
-			float speed=1.0f, 
-			float proximity=1.0f,
-			float timeout=defaultTimeout)
+	        OBJECT_ID id,
+	        float speed=1.0f,
+	        float proximity=1.0f,
+	        float timeout=defaultTimeout)
 	: commandType(cmd),
 	  target(id),
 	  desiredSpeed(speed),
@@ -115,10 +111,10 @@ public:
 	@param timeout Milliseconds until the order is cancelled
 	*/
 	Command(enumCommand cmd,
-		    const Actor &actor,
-			float speed=1.0f,
-			float proximity=1.0f,
-			float timeout=defaultTimeout)
+	        const Actor &actor,
+	        float speed=1.0f,
+	        float proximity=1.0f,
+	        float timeout=defaultTimeout)
 	: commandType(cmd),
 	  target(actor.m_ID),
 	  desiredSpeed(speed),
@@ -138,16 +134,16 @@ public:
 	{
 		return target;
 	}
-	
+
 	/**
 	Gets the desiredSpeed
 	@return the desiredSpeed
 	*/
-	float getDesiredSpeed(void)	const
+	float getDesiredSpeed(void) const
 	{
 		return desiredSpeed;
 	}
-	
+
 	/**
 	Gets the desiredProximity
 	@return the desiredProximity
@@ -156,7 +152,7 @@ public:
 	{
 		return desiredProximity;
 	}
-	
+
 	/**
 	Gets the position
 	@return the position
@@ -165,7 +161,7 @@ public:
 	{
 		return position;
 	}
-	
+
 	/**
 	Gets the commandType
 	@return the commandType
@@ -174,7 +170,7 @@ public:
 	{
 		return commandType;
 	}
-	
+
 	/**
 	Gets the timeOut
 	@return the timeOut
@@ -187,13 +183,13 @@ public:
 private:
 	/** The action to be performed on this waypoint */
 	enumCommand commandType;
-	
-	/** The object that a target refers to */
-	OBJECT_ID target;
-	
+
 	/** The absolute position of the waypoint */
 	vec3 position;
-	
+
+	/** The object that a target refers to */
+	OBJECT_ID target;
+
 	/** Percentage of full speed to navigate to the waypoint at */
 	float desiredSpeed;
 
@@ -215,7 +211,7 @@ public:
 	@param timeout Milliseconds until the order is cancelled
 	*/
 	CommandFreeze(float timeout) : Command(FREEZE, INVALID_ID, 0, 0, timeout) {}
-	
+
 	/**
 	Constructs the FreezeCommand
 	@param timeout Milliseconds until the order is cancelled
@@ -428,9 +424,6 @@ public:
 	{}
 };
 
-
-
-
-}; // namespace
+} // namespace Engine
 
 #endif

@@ -116,7 +116,7 @@ void ParticleBody::Update(float dTime)
 	float Time = m_Age / 1000.0f;
 
 	m_vPosition = (m_vConstantAcceleration * 0.5f * SQR(Time)) +
-		          (initialVelocity * Time) + 
+		          (initialVelocity * Time) +
 				   m_vInitialPosition;
 }
 
@@ -145,7 +145,7 @@ ParticleGraph::ParticleGraph(CPropBag &)
 bool ParticleGraph::LoadXml(CPropBag &Bag)
 {
 	m_Points.clear();
-	
+
 	m_MinX = 0.0f;
 	m_MaxX = 0.0f;
 	m_MinY = 0.0f;
@@ -206,42 +206,48 @@ float ParticleGraph::GetValue(float x)
 }
 
 ParticleElement::ParticleElement(void)
-: m_bRandomRotationDirection(false),
+: ParticleBody(),
+  m_nMaterialHandle(0),
+  m_pOwner(0),
+  m_LifeSpan(0.0f),
+  m_bRandomRotationDirection(false),
   m_bRotationDirection(true),
+  m_SizeMul(1.0f),
   m_RotationImmediate(0.0f),
   m_SizeImmediate(0.0f),
   m_AlphaImmediate(0.0f),
   m_RedImmediate(0.0f),
   m_GreenImmediate(0.0f),
-  m_BlueImmediate(0.0f),
-  m_nMaterialHandle(0),
-  m_SizeMul(1.0f),
-  m_pOwner(NULL),
-  ParticleBody()
+  m_BlueImmediate(0.0f)
 {}
 
 ParticleElement::ParticleElement(CPropBag &Bag, ParticleSystem &system)
-: m_bRandomRotationDirection(false),
+: ParticleBody(Bag),
+  m_nMaterialHandle(0),
+  m_pOwner(&system),
+  m_LifeSpan(1000.0f),
+  m_bRandomRotationDirection(false),
   m_bRotationDirection(true),
+  m_SizeMul(1.0f),
   m_RotationImmediate(0.0f),
   m_SizeImmediate(0.0f),
   m_AlphaImmediate(0.0f),
   m_RedImmediate(0.0f),
   m_GreenImmediate(0.0f),
-  m_BlueImmediate(0.0f),
-  m_LifeSpan(1000.0f),
-  m_nMaterialHandle(0),
-  m_pOwner(&system),
-  m_SizeMul(1.0f),
-  ParticleBody(Bag)
+  m_BlueImmediate(0.0f)
 {
 	LoadXml(Bag, system);
 }
 
 ParticleElement::ParticleElement(const ParticleElement &element)
-: m_strName(element.m_strName),
+: ParticleBody(element),
+  m_nMaterialHandle(element.m_nMaterialHandle),
+  m_pOwner(element.m_pOwner),
+  m_LifeSpan(element.m_LifeSpan),
+  m_strName(element.m_strName),
   m_bRandomRotationDirection(element.m_bRandomRotationDirection),
   m_bRotationDirection(element.m_bRotationDirection),
+  m_SizeMul(element.m_SizeMul),
   m_RotationGraph(element.m_RotationGraph),
   m_SizeGraph(element.m_SizeGraph),
   m_AlphaGraph(element.m_AlphaGraph),
@@ -253,12 +259,7 @@ ParticleElement::ParticleElement(const ParticleElement &element)
   m_AlphaImmediate(element.m_AlphaImmediate),
   m_RedImmediate(element.m_RedImmediate),
   m_GreenImmediate(element.m_GreenImmediate),
-  m_BlueImmediate(element.m_BlueImmediate),
-  m_LifeSpan(element.m_LifeSpan),
-  m_nMaterialHandle(element.m_nMaterialHandle),
-  m_pOwner(element.m_pOwner),
-  m_SizeMul(element.m_SizeMul),
-  ParticleBody(element)
+  m_BlueImmediate(element.m_BlueImmediate)
 {}
 
 bool ParticleElement::LoadXml(CPropBag &Bag, ParticleSystem &system)
@@ -400,7 +401,8 @@ void ParticleElement::Update(float dTime)
 }
 
 ParticleEmitter::ParticleEmitter(CPropBag &Bag, ParticleSystem &Owner)
-: m_bRandomRotationDirection(false),
+: m_pOwner(&Owner),
+  m_bRandomRotationDirection(false),
   m_bRotationDirection(true),
   m_vRotationAxis(0.0f, 1.0f, 0.0f),
   m_RotationImmediate(0.0f),
@@ -413,8 +415,7 @@ ParticleEmitter::ParticleEmitter(CPropBag &Bag, ParticleSystem &Owner)
   m_Time(0.0f),
   m_Length(0.0f),
   m_bLooping(false),
-  m_iNumCycles(0),
-  m_pOwner(&Owner)
+  m_iNumCycles(0)
 {
 	ASSERT(m_pOwner!=NULL, _T("ParticleEmitter::Emitter  ->  Null Pointer: m_pOwner."));
 
@@ -443,7 +444,7 @@ ParticleEmitter::ParticleEmitter(CPropBag &Bag, ParticleSystem &Owner)
 	m_LifeSpanGraph.LoadXml(LifeBag);
 	m_LifeSpanImmediate = m_LifeSpanGraph.GetValue(0.0f);
 	ASSERT(m_LifeSpanImmediate!=0.0, _T("m_LifeSpan==0.0, and causes division by zero."));
-	
+
 	Bag.Get(_T("random rotation direction"), m_bRandomRotationDirection);
 	Bag.Get(_T("rotation direction"),        m_bRotationDirection);
 	Bag.Get(_T("rotation axis"),            &m_vRotationAxis);
@@ -455,7 +456,8 @@ ParticleEmitter::ParticleEmitter(CPropBag &Bag, ParticleSystem &Owner)
 }
 
 ParticleEmitter::ParticleEmitter(const ParticleEmitter &emitter)
-: m_Template(emitter.m_Template),
+: m_pOwner(emitter.m_pOwner),
+  m_Template(emitter.m_Template),
   m_bRandomRotationDirection(emitter.m_bRandomRotationDirection),
   m_bRotationDirection(emitter.m_bRotationDirection),
   m_vRotationAxis(emitter.m_vRotationAxis),
@@ -469,15 +471,14 @@ ParticleEmitter::ParticleEmitter(const ParticleEmitter &emitter)
   m_SpeedImmediate(emitter.m_SpeedImmediate),
   m_SizeMulGraph(emitter.m_SizeMulGraph),
   m_SizeMulImmediate(emitter.m_SizeMulImmediate),
-  m_LifeSpanImmediate(emitter.m_LifeSpanImmediate),
   m_LifeSpanGraph(emitter.m_LifeSpanGraph),
+  m_LifeSpanImmediate(emitter.m_LifeSpanImmediate),
   m_Time(emitter.m_Time),
   m_Length(emitter.m_Length),
   m_bLooping(emitter.m_bLooping),
-  m_iNumCycles(emitter.m_iNumCycles),
-  m_pOwner(emitter.m_pOwner)
+  m_iNumCycles(emitter.m_iNumCycles)
 {
-	ASSERT(m_pOwner!=NULL, _T("ParticleEmitter::Emitter(const Emitter&)  ->  Null Pointer: m_pOwner."));
+	ASSERT(m_pOwner!=0, _T("m_pOwner was null"));
 }
 
 ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
@@ -504,7 +505,7 @@ ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
 	m_LifeSpanImmediate             = emitter.m_LifeSpanImmediate;
 	m_LifeSpanGraph                 = emitter.m_LifeSpanGraph;
 
-	ASSERT(m_pOwner!=NULL, _T("ParticleEmitter::operator=  ->  Null Pointer: m_pOwner."));
+	ASSERT(m_pOwner!=0, _T("m_pOwner was null"));
 
 	return(*this);
 }
@@ -519,15 +520,15 @@ void ParticleEmitter::Update(float dTime)
 	if(m_bLooping && m_Time>m_Length)
 	{
 		m_Time = 0.0f;
-		
+
 		if(m_iNumCycles>0)
 			m_iNumCycles--;
 	}
 
 	if(!IsDead())
 	{
-		ASSERT(m_pOwner!=NULL,  _T("ParticleEmitter::Update  ->  Null Pointer: m_pOwner."));
-		
+		ASSERT(m_pOwner!=0, _T("m_pOwner was null"));
+
 		// Update immediate graph values
 		float Percent = m_Time / m_Length;
 		m_EmissionRateImmediate = m_EmissionRateGraph.GetValue(Percent);
@@ -544,7 +545,7 @@ void ParticleEmitter::Update(float dTime)
 			ParticleElement particle(m_Template);
 
 			vec3 origin = m_pOwner->getPosition();
-			
+
 			// Ignore m_HotSpot
 			// Very much like a normal distribution
 			float x = FRAND_RANGE(0,2);
@@ -562,20 +563,20 @@ void ParticleEmitter::Update(float dTime)
 }
 
 ParticleSystem::ParticleSystem(CPropBag &Bag)
-: m_nMaxParticles(0),
+: ParticleBody(Bag),
+  m_nMaxParticles(0),
   m_ppElements(NULL),
-  m_Behavior(EMIT_WAIT),
-  ParticleBody(Bag) // Exists in absolute coordinates
+  m_Behavior(EMIT_WAIT)
 {
 	LoadXml(Bag);
 }
 
 ParticleSystem::ParticleSystem(const ParticleSystem &system)
-: m_Emitters(system.m_Emitters),
+: ParticleBody(system),
+  m_Emitters(system.m_Emitters),
   m_nMaxParticles(system.m_nMaxParticles),
   m_ppElements(NULL),
-  m_Behavior(system.m_Behavior),
-  ParticleBody(system)
+  m_Behavior(system.m_Behavior)
 {
 	// Allocate the m_pElements array
 	m_ppElements = new ELEMENT_PTR[m_nMaxParticles];
@@ -642,7 +643,7 @@ bool ParticleSystem::LoadXml(CPropBag &Bag)
 	Bag.Get(_T("max"), iTemp);
 	m_nMaxParticles = (size_t)iTemp;
 	ASSERT(m_nMaxParticles>0, _T("particle system does not give m_nMaxParticles>0"));
-	
+
 	// Allocate the m_pElements array
 	m_ppElements = new ELEMENT_PTR[m_nMaxParticles];
 	ASSERT(m_ppElements!=NULL, _T("Null Pointer: m_ppElements."));
@@ -669,7 +670,7 @@ bool ParticleSystem::LoadXml(CPropBag &Bag)
 		m_Materials.push_back(mat);
 		m_Frames.push_back(0);
 	}
-	
+
 	// Load the particle templates
 	for(int i=0; i<nTemplates; ++i)
 	{
@@ -706,7 +707,7 @@ bool ParticleSystem::LoadXml(CPropBag &Bag)
 
 void ParticleSystem::Render(void)
 {
-	vec3 vPos = getPosition();	
+	vec3 vPos = getPosition();
 
 	glPushMatrix();
 

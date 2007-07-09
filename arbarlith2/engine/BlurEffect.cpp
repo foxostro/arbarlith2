@@ -35,15 +35,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
 
 BlurEffect::BlurEffect(void)
-:myAge(0),
-timeLimit(0),
-blur(256,256) 
+: blur(256,256),
+  timeLimit(0),
+  myAge(0)
 {}
 
 void BlurEffect::release(void)

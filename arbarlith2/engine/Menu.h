@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "BackdropTexture.h"
 #include "Application.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Does the game menu screens */
 class Menu
@@ -156,10 +156,10 @@ protected:
 private:
 	/** The index of the currently selected element */
 	int selectedIndex;
-	
+
 	/** Debounce the up key */
 	bool debounceUp;
-	
+
 	/** Debounce the down key */
 	bool debounceDown;
 
@@ -170,6 +170,6 @@ private:
 	TextWriter *font;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

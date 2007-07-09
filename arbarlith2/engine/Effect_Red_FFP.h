@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Singleton.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -124,7 +124,7 @@ public:
 	@return The name of the Effect
 	*/
 	virtual _tstring getName(void) const;
-	
+
 	/**
 	Has the Effect determine how well it can implement an effect signature
 	@param signature The effectsignature to test
@@ -133,6 +133,6 @@ public:
 	virtual int howGood(effect_sig signature) const;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

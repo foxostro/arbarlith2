@@ -65,6 +65,7 @@ y(600.0f)
 	}
 
 	// Copy file data
+	memset(buffer, 0, size);
 	file.read(buffer, size);
 	text = toTString(buffer);
 

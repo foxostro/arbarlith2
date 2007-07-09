@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,15 +32,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "VisualPriority.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
 VisualPriority::VisualPriority(void)
-:hasMoved(false),
-hasAnimated(false),
-needsVisualPriorityUpdate(true), // start off needing a priority update
-visualPriority(0.0f)
+: hasMoved(false),
+  hasAnimated(false),
+  visualPriority(0.0f),
+  needsVisualPriorityUpdate(true) // start off needing a priority update
 {}
 
 VisualPriority::~VisualPriority(void)

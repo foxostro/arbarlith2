@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace Engine;
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Spawns monsters of a specific type when triggered */
 class TileGate : public Actor
@@ -131,6 +131,6 @@ private:
 	_tstring lockSfx;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

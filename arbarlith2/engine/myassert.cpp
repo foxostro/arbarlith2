@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,9 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #ifdef _WIN32
-#ifndef STRICT
-#	define STRICT
-#endif
+
+#define STRICT
 #include <windows.h>
 #include "resource.h" // Resource Header
 
@@ -39,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "logstring.h"
 #include "myassert.h"
 
-namespace Engine { 
+namespace Engine {
 
 enum ASSERT_RESPONSE
 {
@@ -115,12 +114,10 @@ ASSERT_RESPONSE CreateAssertBox(int iLine, _tstring strFile, _tstring strMsg)
 	g_strAssertFile = strFile;
 	g_strAssertMsg  = strMsg;
 
-	// Log the assertion
-	ERR(_T("Assertion in File: \"") + g_strAssertFile + _T("\"\n") + 
-		_T("Line #") + g_strAssertLine + _T("\n") +
-		_T("Message: \"") + g_strAssertMsg + _T("\""));
+	ERR(_T("Assertion in File: \"") + g_strAssertFile + _T("\"\n") +
+	    _T("Line #") + g_strAssertLine + _T("\n") +
+	    _T("Message: \"") + g_strAssertMsg + _T("\""));
 
-	// Display the assert box
 	DialogBox(GetModuleHandle(NULL), (LPCTSTR)IDD_ASSERT_DLG, NULL, (DLGPROC)AssertProc);
 
 	return g_AssertResponse;
@@ -149,6 +146,6 @@ void assertionFailed(int iLine, const TCHAR *pszfileName, const _tstring &strMsg
 	}
 }
 
-}; // namespace
+} // namespace Engine
 
 #endif

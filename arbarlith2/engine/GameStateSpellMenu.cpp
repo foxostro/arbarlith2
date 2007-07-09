@@ -38,13 +38,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "LinearInterpolator.h"
 #include "GameStateSpellMenu.h"
 
-namespace Engine { 
+namespace Engine {
 
 vec2 Project(const vec3 &p); // stdafx.cpp
-	
+
 GameStateSpellMenu::GameStateSpellMenu(void)
 :dimness(0.7f)
 {
+	TRACE(_T("Constructing GameStateSpellMenu... "));
+
 	padlock.loadTexture(_T("data/sprites/padlock.png"), 0);
 
 	for(int i=0; i<MAX_PLAYERS; ++i)
@@ -52,6 +54,8 @@ GameStateSpellMenu::GameStateSpellMenu(void)
 		leftDebounce[i] = false;
 		rightDebounce[i] = false;
 	}
+
+	TRACE(_T("...finished (Constructing GameStateSpellMenu)"));
 }
 
 GameStateSpellMenu::~GameStateSpellMenu(void)
@@ -75,7 +79,7 @@ void GameStateSpellMenu::update(float)
 		dim.draw();
 
 		effect_Begin(effect_GUI);
-		
+
 			const size_t numOfPlayers = g_World.getNumOfPlayers();
 
 			if(numOfPlayers==1)
@@ -92,7 +96,7 @@ void GameStateSpellMenu::update(float)
 					Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(g_World.getPlayer(i));
 
 					vec2 win = Project(player.getPos());
-					
+
 					drawForPlayer(player, win.x, win.y, radius);
 				}
 			}
@@ -123,7 +127,7 @@ void GameStateSpellMenu::updateForPlayer(size_t playerNumber)
 		leftDebounce[playerNumber] = false;
 	}
 
-	
+
 	if(g_Keys.isKeyDown(player.KEY_PLAYER_WALK_RIGHT))
 	{
 		if(rightDebounce[playerNumber] == false)
@@ -157,7 +161,7 @@ void GameStateSpellMenu::onRotateCounterClockwise(vector<Arbarlith2::Spell*> spe
 void GameStateSpellMenu::drawForPlayer(Arbarlith2::MyPlayer &player, float cx, float cy, float radius) const
 {
 	vector<Arbarlith2::Spell*> spellList = player.getSpellList();
-	
+
 	for(size_t i=0; i < spellList.size(); ++i)
 	{
 		Arbarlith2::Spell &spell = *spellList[i];

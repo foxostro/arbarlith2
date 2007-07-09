@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,23 +33,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Task.h"
 
-
-// Class Prototype
-namespace FMOD { class Channel; }
-
-
-namespace Engine { 
-
+namespace Engine {
 
 typedef size_t SOUND_HANDLE;
-typedef map<SOUND_HANDLE, FMOD::Channel*> SOUNDS_MAP;
 
 /** Controls the loading and playing of sounds */
 class SoundSystem : public Task
 {
 public:
 	/** Destructor */
-	~SoundSystem(void);
+	virtual ~SoundSystem(void);
 
 	/** Constructor */
 	SoundSystem(void);
@@ -62,10 +55,10 @@ public:
 
 	/** Deletes all loaded sound files from memory. */
 	void destroy(void);
-	
+
 	/**
 	Updates the FMOD system.  Call once per tick
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	void update(float deltaTime);
 
@@ -102,20 +95,8 @@ public:
 	@return Returns a handle to the sound
 	*/
 	SOUND_HANDLE playMusic(const _tstring &fileName);
-
-protected:
-	/** List of all sounds */
-	SOUNDS_MAP sounds;
-
-	/** The next handle assign */
-	SOUND_HANDLE nextHandle;
-
-	/** The handle to the currently playing music file */
-	SOUND_HANDLE music;
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

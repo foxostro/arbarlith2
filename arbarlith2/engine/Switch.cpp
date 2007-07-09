@@ -10,11 +10,11 @@ E-Mail: mailto:andrewfox@cmu.edu
 #include "GameStateRun.h"
 #include "Switch.h"
 
-namespace Engine { 
+namespace Engine {
 
 
 
-GEN_ACTOR_RTTI_CPP(Switch)
+GEN_ACTOR_RTTI_CPP(Switch, "class Engine::Switch")
 
 
 
@@ -38,8 +38,8 @@ void Switch::clear(void)
 
 bool Switch::LoadXml(CPropBag &xml)
 {
-	Trigger::LoadXml(xml);	
-	
+	Trigger::LoadXml(xml);
+
 	xml.getSym(actionLabel);
 	xml.getSym(time);
 
@@ -81,7 +81,7 @@ void Switch::update(float deltaTime)
 
 	// Count down
 	fadeTimer -= deltaTime;
-	
+
 	// has a player gotten close enough to gain the Switch's attention?
 	OBJECT_ID user = INVALID_ID;
 	if(playerIsInProximity(user))
@@ -109,7 +109,7 @@ void Switch::update(float deltaTime)
 		fadeTimer=0;
 		prompt.remove(promptHandle);
 	}
-	
+
 	Trigger::update(deltaTime);
 }
 

@@ -185,7 +185,7 @@ float Mesh::calculateRadius()
 	// Find the point furthest from the center point
 	for(int i=0; i<m_numOfVerts; ++i)
 	{
-		float radius = sqrtf(  SQR(m_pVerts[i].x-centerPt.x) + SQR(m_pVerts[i].y-centerPt.y) + SQR(m_pVerts[i].z-centerPt.z)  );
+		double radius = sqrt(  SQR(m_pVerts[i].x-centerPt.x) + SQR(m_pVerts[i].y-centerPt.y) + SQR(m_pVerts[i].z-centerPt.z)  );
 
 		furthest = max(furthest, radius);
 	}
@@ -197,25 +197,21 @@ BoundingBox Mesh::calculateBoundingBox()
 {
 	BoundingBox box;
 
-	vec3 &max = box.m_Max;
-	vec3 &min = box.m_Min;
+	vec3 &boxMax = box.m_Max;
+	vec3 &boxMin = box.m_Min;
 
 	for(int i=0; i<m_numOfVerts; ++i)
 	{
-		float x = m_pVerts[i].x;
-		float y = m_pVerts[i].y;
-		float z = m_pVerts[i].z;
+		boxMax.x = max(boxMax.x, m_pVerts[i].x);
+		boxMax.y = max(boxMax.y, m_pVerts[i].y);
+		boxMax.z = max(boxMax.z, m_pVerts[i].z);
 
-		max.x = max(max.x, x);
-		max.y = max(max.y, y);
-		max.z = max(max.z, z);
-
-		min.x = min(min.x, x);
-		min.y = min(min.y, y);
-		min.z = min(min.z, z);
+		boxMin.x = min(boxMin.x, m_pVerts[i].x);
+		boxMin.y = min(boxMin.y, m_pVerts[i].y);
+		boxMin.z = min(boxMin.z, m_pVerts[i].z);
 	}
 
-	box.m_Pos = (max + min) * 0.5f;
+	box.m_Pos = (boxMax +boxMin) * 0.5f;
 
 	return box;
 }

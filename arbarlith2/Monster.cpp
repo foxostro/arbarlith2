@@ -37,9 +37,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "engine/MonsterFSM.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(Monster)
+GEN_ACTOR_RTTI_CPP(Monster, "class Arbarlith2::Monster")
 
 Monster::Monster(OBJECT_ID ID)
 : Creature(ID)
@@ -73,7 +73,7 @@ void Monster::update(float deltaTime)
 	{
 		spell->update(deltaTime);
 	}
-	
+
 	Creature::update(deltaTime);
 }
 
@@ -84,7 +84,7 @@ bool Monster::saveTidy(CPropBag &xml, CPropBag &dataFile) const
 	StateMachine *fsm = GetStateMachine();
 
 	_tstring type = _T("none");
-		
+
 	if(fsm != 0)
 	{
 		type = fsm->getTypeString();
@@ -111,7 +111,7 @@ bool Monster::LoadXml(CPropBag &xml)
 	case 4: spell = new SpellHeal		(&getZone(), m_ID, _T("data/spells/heal.xml"));			break; // Heal
 	case 5: spell = new SpellFireBall	(&getZone(), m_ID, _T("data/spells/ice-blast.xml"));		break; // Ice Blast
 	case 6: spell = 0; break; // Reserved for "Resurrect" Spell
-	default: spell = 0; break; 
+	default: spell = 0; break;
 	};
 
 	if(spell!=0)
@@ -135,4 +135,4 @@ void Monster::onSlidOnWall(void)
 	CancelOrders();
 }
 
-} //namespace
+} //namespace Arbarlith2

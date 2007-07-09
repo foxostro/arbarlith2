@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-//#include <winsock.h>
 
 int WINAPI WinMain(HINSTANCE ,  // hInstance
                    HINSTANCE ,  // hPrevInstance
@@ -43,25 +42,14 @@ int WINAPI WinMain(HINSTANCE ,  // hInstance
 
 	srand((unsigned int)GetTickCount()); // Seed the random number generator
 
-	// Setup sockets
-	/*WSADATA wsaData;
-	WSAStartup(MAKEWORD(1, 1), &wsaData);*/
-
 	// Are we running in safe mode?
 	if(GetSystemMetrics(SM_CLEANBOOT)!=0)
 	{
 		MessageBox(0, _T("You are running this application in Safe mode!"), _T("Warning!"), MB_OK);
 	}
 
-	// Are we running from a network terminal?
-	if(GetSystemMetrics(SM_REMOTECONTROL)!=0 || GetSystemMetrics(SM_REMOTESESSION)!=0)
-	{
-		MessageBox(0, _T("You are running this application from a remote session, performance will be poor."), _T("Warning!"), MB_OK);
-	}
-
 	// Run the game
 	Engine::Application app;
 
-	// exit
-    return 0;  
+	return 0;
 }

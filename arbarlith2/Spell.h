@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/Material.h"
 #include "engine/Zone.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Magical spell that a creature can cast */
 class Spell
@@ -75,7 +75,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	virtual void update(float deltaTime);
 
@@ -191,6 +191,6 @@ private:
 	void drawSpell_Lock(float x, float y, float size) const;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

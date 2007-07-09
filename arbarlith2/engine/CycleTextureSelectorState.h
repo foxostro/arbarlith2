@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListElementWidget.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 enum TEXTURE_SELECTOR_STATE
 {
@@ -99,10 +99,6 @@ public:
 	}
 };
 
-
-
-}; // namespace
-
-
+} // namespace Engine
 
 #endif

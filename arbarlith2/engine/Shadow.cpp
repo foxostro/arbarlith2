@@ -75,7 +75,7 @@ void Shadow::reaquire(void)
 {
 	glGenTextures(1, &shadowMapTexture);
 	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
-	
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapSize, shadowMapSize, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -102,7 +102,7 @@ void Shadow::update(const ActorSet &zoneActors, float deltaTime)
 			calculateAngularSpread(actor, lightViewMatrix, lx, ly);
 
 			calculateMatrices(*light, actor, shadowMapSize, lightProjectionMatrix, lightViewMatrix, textureMatrix, lx, ly);
-			
+
 			frustum = calculateFrustum(lightProjectionMatrix, lightViewMatrix);
 
 			if(g_Application.displayDebugData)
@@ -167,7 +167,7 @@ void Shadow::calculateMatrices(const Light &light, const Actor &actor, int shado
 				lightCenter.x,		lightCenter.y,		lightCenter.z,
 				lightUp.x,			lightUp.y,			lightUp.z);
 	lightViewMatrix.zero();
-	glGetFloatv(GL_MODELVIEW_MATRIX, lightViewMatrix);	
+	glGetFloatv(GL_MODELVIEW_MATRIX, lightViewMatrix);
 	glPopMatrix();
 
 // Calculate the projection matrix
@@ -262,19 +262,19 @@ CHECK_GL_ERROR();
 			glLoadMatrixf(lightProjectionMatrix);
 
 			glMatrixMode(GL_MODELVIEW);
-			glPushMatrix();		
+			glPushMatrix();
 			glLoadMatrixf(lightViewMatrix);
 
 			//Use viewport the same size as the shadow map
 			glViewport(0, 0, shadowMapSize, shadowMapSize);
-			
+
 			//Draw the scene
 			actor.drawObjectToDepthBuffer();
 
 			//Read the depth buffer into the shadow map texture
 			glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
 			glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, shadowMapSize, shadowMapSize);
-			
+
 			// Pop the modelview matrix we set up
 			glPopMatrix();
 
@@ -286,7 +286,7 @@ CHECK_GL_ERROR();
 			glMatrixMode(GL_MODELVIEW);
 
 	effect_End();
-	
+
 CHECK_GL_ERROR();
 }
 
@@ -295,7 +295,7 @@ void Shadow::bind(const ActorSet &zoneActors, unsigned int textureUnit) const
 	if(light!=0 && zoneActors.isMember(actorID))
 	{
 		CHECK_GL_ERROR();
-		
+
 		// Bind shadow texture
 		glActiveTextureARB(textureStages[textureUnit]);
 		glClientActiveTextureARB(textureStages[textureUnit]);
@@ -373,7 +373,7 @@ void Shadow::testDepthTexture(void) const
 	glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE_ARB, GL_INTENSITY);
 
 	// Render a textured quad on the screen
-	glBegin(GL_QUADS);	
+	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(400,   0, 0);
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(400, 400, 0);
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(  0, 400, 0);
@@ -390,7 +390,7 @@ void Shadow::testDepthTexture(void) const
 
 	// Use modelview mode
 	glMatrixMode(GL_MODELVIEW);
-	
+
 	// Restore settings
 	glPopAttrib();
 }
@@ -410,7 +410,7 @@ void Shadow::drawFrustum(void) const
 		glVertex3f(ntr.x,ntr.y,ntr.z);
 		glVertex3f(nbr.x,nbr.y,nbr.z);
 		glVertex3f(nbl.x,nbl.y,nbl.z);
-	
+
 	//far plane
 		glVertex3f(ftr.x,ftr.y,ftr.z);
 		glVertex3f(ftl.x,ftl.y,ftl.z);
@@ -463,4 +463,4 @@ bool Shadow::isInUse(void) const
 	return (actorID!=INVALID_ID) && (light!=0);
 }
 
-}; // namespace
+} // namespace Engine

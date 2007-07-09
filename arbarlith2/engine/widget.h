@@ -31,17 +31,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _WIDGET_H_
 #define _WIDGET_H_
 
-namespace Engine { 
+namespace Engine {
 
 /** a GUI widget */
 class Widget
 {
 public:
-	/** Constructor */
-	Widget(void);
-
 	/** Destructor */
 	virtual ~Widget(void);
+
+	/** Constructor */
+	Widget(void);
 
 	/**
 	Adds a child widget
@@ -202,7 +202,7 @@ protected:
 	@return true if the mouse is within the widget
 	*/
 	bool isWithin(void) const;
-	
+
 public:
 	/** Indicate that the widget is visible */
 	bool m_bVisible;
@@ -251,7 +251,7 @@ private:
 
 
 
-}; // namespace
+} // namespace Engine
 
 
 

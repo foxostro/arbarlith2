@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/GameStateSpellMenu.h"
 #include "Spell.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 Spell::Spell(void)
 {
@@ -162,10 +162,10 @@ void Spell::drawIcon2D(bool active, float x, float y, float size) const
 	glEnable(GL_TEXTURE_2D);
 	(active ? matActive : matInactive).bind();
 
-	glBegin(GL_QUADS);		
+	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + size, y + size, 0.0f);
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + 0.0f, y + size, 0.0f);
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + 0.0f, y + 0.0f, 0.0f); 
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + 0.0f, y + 0.0f, 0.0f);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + size, y + 0.0f, 0.0f);
 	glEnd();
 
@@ -177,8 +177,8 @@ void Spell::drawIcon2D(bool active, float x, float y, float size) const
 	{
 		drawSpell_Lock(x, y, size);
 	}
-	
-	CHECK_GL_ERROR(); 
+
+	CHECK_GL_ERROR();
 }
 
 void Spell::drawSpell_X(float x, float y, float size) const
@@ -210,10 +210,10 @@ void Spell::drawSpell_Lock(float x, float y, float size) const
 	glEnable(GL_BLEND);
 	GameStateSpellMenu::GetSingleton().padlock.bind();
 
-	glBegin(GL_QUADS);		
+	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(x + size, y + size, 0.0f);
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(x + 0.0f, y + size, 0.0f);
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + 0.0f, y + 0.0f, 0.0f); 
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(x + 0.0f, y + 0.0f, 0.0f);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(x + size, y + 0.0f, 0.0f);
 	glEnd();
 
@@ -246,26 +246,26 @@ void Spell::update(float deltaTime)
 
 void Spell::draw(const vec3 &center) const
 {
-	if(state != READY)
+	if(timer < 1000.0f)
 	{
-		if(timer < 1000.0f)
+		float y = 0;
+		float MAX_Y = 0.3f;
+
+		switch(state)
 		{
-			float y = 0;
-			float MAX_Y = 0.3f;
-			
-			switch(state)
-			{
-			case COOLING:
-				y = MAX_Y;
-				break;
+		case COOLING:
+			y = MAX_Y;
+			break;
 
-			case CASTING:
-				y = MAX_Y * (1 - (timer / castTime));
-				break;
-			};
+		case CASTING:
+			y = MAX_Y * (1 - (timer / castTime));
+			break;
 
-			drawIcon(true, center + vec3(0, y, 0), 0.6f);
-		}
+		case READY:
+			break; // Do nothing
+		};
+
+		drawIcon(true, center + vec3(0, y, 0), 0.6f);
 	}
 }
 
@@ -277,7 +277,7 @@ bool Spell::beginCast(void)
 		state = CASTING;
 		return true;
 	}
-	
+
 	return false;
 }
 

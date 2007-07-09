@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "listelementwidget.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -55,7 +55,7 @@ protected:
 	@return Y-Coordinate
 	*/
 	float getTop(void) const;
-	
+
 	/** Reconstructs the list */
 	virtual void update(void);
 
@@ -85,6 +85,6 @@ public:
 	virtual void addElement(ListElementWidget *element);
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

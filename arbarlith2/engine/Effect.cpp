@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 void Effect::setTextureFilters(void)
 {
@@ -49,12 +49,12 @@ void Effect::setTextureFilters(void)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		break;
 
-	case 1: // trilinear		
+	case 1: // trilinear
 		if(supportsAniostropy)
 		{
 			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f); // disables aniostropic filtering
 		}
-		
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		break;
@@ -76,7 +76,7 @@ void Effect::disableAllTextureUnits(void)
 		glActiveTextureARB(textureStages[i]);
 		glDisable(GL_TEXTURE_2D);
 	}
-	
+
 	for(int i=0; i<g_MultitextureUnits; ++i)
 	{
 		glClientActiveTextureARB(textureStages[i]);

@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2007 Game Creation Society
+Copyright © 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace Engine;
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /**
 Creates an explosion that damages nearby creatures
@@ -49,6 +49,6 @@ Creates an explosion that damages nearby creatures
 */
 void createExplosion(Zone &zone, const vec3 &position, int damageValue, OBJECT_ID attackerID, const _tstring &explosionParticleFile, const _tstring &soundEffectFileName);
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

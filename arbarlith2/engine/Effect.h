@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "EffectSig.h"
 
-namespace Engine { 
+namespace Engine {
 
 /**
 An Effect is responsible for the algorithm and rendering states
@@ -153,7 +153,7 @@ public:
 	@return the priority of the effect implentation, 0 is perfectly WRONG, 100 is perfect
 	*/
 	virtual int howGood(effect_sig signature) const = 0;
-	
+
 	/**
 	Sets the texture filters for the currently bound texture to a
 	setting appropriate to the current perfoemance settings.
@@ -162,13 +162,13 @@ public:
 	under many circumstances.  This needs to be controlled.
 	*/
 	static void setTextureFilters(void);
-	
+
 	/**
 	Disables texture units and texture coordinate arrays for texture stages > 1
 	Enables the texture unit and coordinate array for the first texture unit
 	*/
 	static void disableExtraTextureUnits(void);
-	
+
 	/**
 	Disables texture units and texture coordinate arrays for texture stages > 1
 	Enables the texture unit and coordinate array for the first texture unit
@@ -183,6 +183,6 @@ private:
 	virtual void copy(const Effect &effect);
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

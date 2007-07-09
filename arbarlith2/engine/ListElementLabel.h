@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "labelwidget.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -47,7 +47,7 @@ private:
 	LabelWidget *myLabel;
 
 public:
-	/** Controls the inactive/active visua state of the widget */	
+	/** Controls the inactive/active visua state of the widget */
 	bool isActive;
 
 	/**
@@ -57,8 +57,9 @@ public:
 	@param imageFileFALSE The image used for the element when the value is false
 	*/
 	ListElementLabel(const _tstring &label, const _tstring& imageFileTRUE, const _tstring& imageFileFALSE)
-	:isActive(false),
-	ToggleWidget(&isActive, imageFileTRUE, imageFileTRUE, imageFileFALSE, imageFileFALSE)
+	: ToggleWidget(&isActive, imageFileTRUE, imageFileTRUE, imageFileFALSE, imageFileFALSE),
+	  myLabel(0),
+	  isActive(false)
 	{
 		myLabel = new LabelWidget(label, 12, 2);
 		myLabel->dumb = true;
@@ -74,8 +75,9 @@ public:
 	@param imageFileMouseOverFALSE The image used for the element on mouse over when the value is false
 	*/
 	ListElementLabel(const _tstring &label, const _tstring& imageFileTRUE, const _tstring& imageFileMouseOverTRUE, const _tstring& imageFileFALSE, const _tstring& imageFileMouseOverFALSE)
-	:isActive(false),
-	ToggleWidget(&isActive, imageFileTRUE, imageFileMouseOverTRUE, imageFileFALSE, imageFileMouseOverFALSE)
+	: ToggleWidget(&isActive, imageFileTRUE, imageFileMouseOverTRUE, imageFileFALSE, imageFileMouseOverFALSE),
+	  myLabel(0),
+	  isActive(false)
 	{
 		myLabel = new LabelWidget(label, 12, 2);
 		AddChild(myLabel);
@@ -85,12 +87,12 @@ public:
 	Gets the label
 	@return label
 	*/
-	_tstring getLabel(void)
+	inline _tstring getLabel(void) const
 	{
 		return myLabel->getLabel();
 	}
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

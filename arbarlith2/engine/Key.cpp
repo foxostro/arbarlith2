@@ -33,11 +33,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
-GEN_ACTOR_RTTI_CPP(Key)
+GEN_ACTOR_RTTI_CPP(Key, "class Engine::Key")
 
 
 

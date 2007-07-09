@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -52,7 +52,7 @@ respectiely.  As long as three vectors are orthogonal, the
 matrix remains a valid transformation matrix.  If the
 vectors are allowed to become non-orgthogonal, then the
 resulting transformation will cause the transformed object
-to be skewed. 
+to be skewed.
 
 It is important to note that although the mat4 class names
 them the front, up, and left vectors, this is not
@@ -182,7 +182,7 @@ public:
 		m[0]=1.0f;
 		m[5]=1.0f;
 		m[10]=1.0f;
-		m[15]=1.0f; 
+		m[15]=1.0f;
 	}
 
 	/**
@@ -269,13 +269,13 @@ public:
 		// and return it
 		return temp;
 	}
-	
+
 	/**
 	Subtracts this matrix to another matrix.
 	@param mt The other matrix
 	@return resultant matrix
 	*/
-	mat4 operator - (const mat4 &mt) const	
+	mat4 operator - (const mat4 &mt) const
 	{
 		// the return matrix
 		mat4 temp = *this;
@@ -294,13 +294,13 @@ public:
 		// and return it
 		return temp;
 	}
-	
+
 	/**
 	Adds this matrix to another matrix.
 	@param mt The other matrix
 	@return resultant matrix
 	*/
-	mat4 operator + (const mat4 &mt) const	
+	mat4 operator + (const mat4 &mt) const
 	{
 		// the return matrix
 		mat4 temp = *this;
@@ -351,7 +351,7 @@ public:
 		// and return it
 		return temp;
 	}
-	
+
 	/**
 	Transforms a vector by this matrix
 	@param v The vector
@@ -377,7 +377,7 @@ public:
 				  row2=m[INDEX(1,cty)],
 				  row3=m[INDEX(2,cty)],
 				  row4=m[INDEX(3,cty)];
-			
+
 			// then xs
 			for(int ctx=0; ctx<4; ctx++)
 			{
@@ -396,7 +396,7 @@ public:
 		// and return
 		return *this;
 	}
-	
+
 	/**
 	Transforms a vector by the matrix.
 	*/
@@ -441,14 +441,14 @@ public:
 	/**
 	Transposes the matrix
 	*/
-	void transpose(void)	
-	{ 
-		mat4 temp; 
-	
+	void transpose(void)
+	{
+		mat4 temp;
+
 		// go through the matrix
-		for(int cty=0; cty<4; cty++) 
+		for(int cty=0; cty<4; cty++)
 		{
-			for(int ctx=0; ctx<4; ctx++) 
+			for(int ctx=0; ctx<4; ctx++)
 			{
 				temp.m[INDEX(ctx,cty)]=m[INDEX(cty,ctx)];
 			}
@@ -464,17 +464,17 @@ public:
 	/**
 	Invert the matrix
 	*/
-	void invert(void) 
+	void invert(void)
 	{
 		float *data = m;
 		const int actualsize = 4;
 		const int maxsize = 4;
 
 		for (int i=1; i < actualsize; i++) data[i] /= data[0]; // normalize row 0
-		for (int i=1; i < actualsize; i++)  { 
+		for (int i=1; i < actualsize; i++)  {
 		for (int j=i; j < actualsize; j++)  { // do a column of L
 			float sum = 0.0;
-			for (int k = 0; k < i; k++)  
+			for (int k = 0; k < i; k++)
 				sum += data[j*maxsize+k] * data[k*maxsize+i];
 			data[j*maxsize+i] -= sum;
 			}
@@ -483,7 +483,7 @@ public:
 			float sum = 0.0;
 			for (int k = 0; k < i; k++)
 				sum += data[i*maxsize+k]*data[k*maxsize+j];
-			data[i*maxsize+j] = 
+			data[i*maxsize+j] =
 			(data[i*maxsize+j]-sum) / data[i*maxsize+i];
 			}
 		}
@@ -492,7 +492,7 @@ public:
 			float x = 1.0;
 			if ( i != j ) {
 			x = 0.0;
-			for ( int k = i; k < j; k++ ) 
+			for ( int k = i; k < j; k++ )
 				x -= data[j*maxsize+k]*data[k*maxsize+i];
 			}
 			data[j*maxsize+i] = x / data[j*maxsize+j];
@@ -508,7 +508,7 @@ public:
 		for ( int i = 0; i < actualsize; i++ )   // final inversion
 		for ( int j = 0; j < actualsize; j++ )  {
 			float sum = 0.0;
-			for ( int k = ((i>j)?i:j); k < actualsize; k++ )  
+			for ( int k = ((i>j)?i:j); k < actualsize; k++ )
 				sum += ((j==k)?1.0f:data[j*maxsize+k])*data[k*maxsize+i];
 			data[j*maxsize+i] = sum;
 			}
@@ -626,9 +626,9 @@ public:
 	The up vector must not be parallel to the line of sight from the eye to
 	the reference point.
 
-	@param eye		The position of the eye point. 
-	@param center	The position of the reference point. 
-	@param up		The direction of the up vector. 
+	@param eye		The position of the eye point.
+	@param center	The position of the reference point.
+	@param up		The direction of the up vector.
 	*/
 	void lookAt(const vec3 &eye, const vec3 &center, const vec3 &up);
 
@@ -698,8 +698,6 @@ public:
 	}
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

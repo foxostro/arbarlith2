@@ -37,9 +37,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "MyPlayer.h"
 #include "PowerupHeal.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(PowerupHeal)
+GEN_ACTOR_RTTI_CPP(PowerupHeal, "class Arbarlith2::PowerupHeal")
 
 PowerupHeal::PowerupHeal(OBJECT_ID ID)
 :Powerup(ID)

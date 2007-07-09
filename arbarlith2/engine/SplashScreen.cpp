@@ -42,9 +42,9 @@ SplashScreen::SplashScreen(void)
 	const _tstring splashScreenImage = _T("data/sprites/backdrops/splash.png");
 
 	splash.create(nill,
-				  splashScreenImage,
-				  nill,
-				  nill);
+	              splashScreenImage,
+	              nill,
+	              nill);
 }
 
 SplashScreen::~SplashScreen(void)
@@ -71,7 +71,7 @@ void SplashScreen::draw(float intensity)
 	glDisable(GL_ALPHA_TEST);
 	glColor4fv(COLOR(intensity, intensity, intensity, 1.0f));
 	glEnable(GL_TEXTURE_2D);
-	glBegin(GL_QUADS);	
+	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(1024.0f,   0.0f, 0.0f);
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(1024.0f, 768.0f, 0.0f);
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(   0.0f, 768.0f, 0.0f);
@@ -92,7 +92,7 @@ void SplashScreen::draw(float intensity)
 
 	// check for sizing
 	if(g_Input.ResizePending())
-	{		
+	{
 		int width = g_Input.ResizeWidth(),
 			height = g_Input.ResizeHeight(); // screen dimensions
 
@@ -139,4 +139,4 @@ void SplashScreen::doSplashFade(void)
 	}while(time-startTime < 1000);
 }
 
-}; // namespace
+} // namespace Engine

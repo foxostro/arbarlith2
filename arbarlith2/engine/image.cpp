@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h" // Master Header
-#include "il.h"
+
+/*
+Include the DevIL headers
+*/
+#include <IL/il.h>
+#include <IL/ilu.h>
+
 #include "profile.h"
 #include "image.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -75,10 +81,7 @@ bool Image::load(const _tstring &_fileName)
 	ilBindImage(imageName);
 
 
-	const string ansi = toAnsiString(fileName);
-	const char * ansiptr = ansi.c_str();
-	const ILstring s = (ILstring)ansiptr;
-
+	char *s = toAnsiCharArray(fileName);
 
 	if(!ilLoadImage(s))
 	{
@@ -90,6 +93,8 @@ bool Image::load(const _tstring &_fileName)
 			ERR(_tstring(_T("IL Error: ")) + itoa(err));
 		}
 
+		delete[] s;
+
 		return false;
 	}
 
@@ -99,6 +104,8 @@ bool Image::load(const _tstring &_fileName)
 	}
 
 	this->fileName = fileName;
+
+	delete[] s;
 
 	return true;
 }
@@ -124,8 +131,8 @@ int Image::getDepth(void) const
 unsigned char* Image::getImage(void) const
 {
 	ilBindImage(imageName);
-	return ilGetData();
+	unsigned char *data = ilGetData();
+	return data;
 }
 
-
-}; // namespace
+} // namespace Engine

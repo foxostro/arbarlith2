@@ -15,8 +15,12 @@ namespace Engine
 	class XmlDataType
 	{
 	public:
+        /** Default construtor */
+        XmlDataType(void)
+        {}
+
 		/**
-		Gets the string representation of the object 
+		Gets the string representation of the object
 		@return string representation
 		*/
 		virtual _tstring ToString() const = 0;
@@ -37,6 +41,7 @@ namespace Engine
 			return ToString();
 		}
 	};
-};
+
+} // namespace Engine
 
 #endif

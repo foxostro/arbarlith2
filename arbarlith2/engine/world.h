@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define MAX_PLAYERS 4
 
-namespace Engine { 
+namespace Engine {
 
 // class prototype
 class Player;
@@ -76,14 +76,14 @@ public:
 	if the calling child class should save just enough for editor mode
 	*/
 	virtual bool SaveXml(CPropBag &bag);
-	
+
 	/**
 	Load from XML
 	@param bag XML source
 	@return true if successful
 	*/
 	virtual bool LoadXml(CPropBag &bag);
-	
+
 	/**
 	Save to XML
 	@param fileName XML source
@@ -100,7 +100,7 @@ public:
 
 	/**
 	Updates the tak every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	void update(float deltaTime);
 
@@ -152,8 +152,8 @@ public:
 	inline double getClockTicks(void) const
 	{
 		return m_ClockTicks;
-	}	
-	
+	}
+
 	/**
 	Gets the name of the starting Zone
 	@return milliseconds
@@ -218,7 +218,7 @@ public:
 		return averagePlayerPosition;
 	}
 
-private:	
+private:
 	/** The name of the starting Zone */
 	_tstring startingRealm;
 
@@ -257,6 +257,6 @@ private:
 	vec3 findAveragePlayerPosition(void) const;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

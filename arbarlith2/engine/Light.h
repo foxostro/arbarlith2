@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,11 +36,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "propbag.h"
 #include "Frustum.h"
 
-namespace Engine { 
+namespace Engine {
 
 /**
 Encapsulates the state of a typical OpenGL light.
-The state can be bound to an OpenGL light, given the light handle. 
+The state can be bound to an OpenGL light, given the light handle.
 */
 class Light
 {
@@ -147,7 +147,7 @@ public:
 	@param light The light to make a copy of
 	*/
 	void copy(const Light &light);
-	
+
 	/**
 	Assignment operator
 	@param rh The right-hand side
@@ -210,7 +210,7 @@ public:
 	If the Light is a spot light, then this method positions and orients the Light.
 	The Light will be placed at the location specified by 'position' and caused to
 	point in the direction of the location specified by 'center.'
-	@param position	The position of the Light. 
+	@param position	The position of the Light.
 	@param center	A point that the spot Light is focused on.
 	*/
 	inline void lookAt(const vec3 &position, const vec3 &center)
@@ -241,6 +241,6 @@ private:
 	void calculateMatrices(void);
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,13 +45,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "GameStateMenu.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
 
 
-GEN_ACTOR_RTTI_CPP(Player)
+GEN_ACTOR_RTTI_CPP(Player, "class Engine::Player")
 
 
 
@@ -66,13 +66,11 @@ void Player::deleteController(void)
 	if(playerNumber >= 0 && playerNumber < 3)
 	{
 		deleteControllerActions(playerNumber);
-	}	
+	}
 }
 
-void Player::deleteControllerActions(int playerNumber)
+void Player::deleteControllerActions(int)
 {
-	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
-	
 	g_Keys.deleteAction(KEY_PLAYER_WALK_FWD);
 	g_Keys.deleteAction(KEY_PLAYER_WALK_REV);
 	g_Keys.deleteAction(KEY_PLAYER_WALK_LEFT);
@@ -99,7 +97,7 @@ void Player::setupControllerActions(int playerNumber)
 	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
 
 	_tstring num = Engine::itoa(playerNumber+1);
-	
+
 	KEY_PLAYER_WALK_FWD	= g_Keys.createAction(_T("Player") + num + _T("-Walk-Fwd"));
 	KEY_PLAYER_WALK_REV	= g_Keys.createAction(_T("Player") + num + _T("-Walk-Rev"));
 	KEY_PLAYER_WALK_LEFT	= g_Keys.createAction(_T("Player") + num + _T("-Walk-Left"));
@@ -143,23 +141,21 @@ void Player::setupControllerBindings(int playerNumber)
 	g_Keys.save(userKeysFile);
 }
 
+void Player::enterGameOverScreen(void)
+{
+	g_Application.changeGameState(GAME_STATE_MENU);
+	GameStateMenu::GetSingleton().enterGameOverScreen();
+}
+
 void Player::OnDeath(void)
 {
-	struct enterGameOverScreen
-	{
-		void operator()(void) const
-		{
-			g_Application.changeGameState(GAME_STATE_MENU);
-			GameStateMenu::GetSingleton().enterGameOverScreen();
-		}
-	};
-
 	Creature::OnDeath();
 
 	if(allPlayersAreDead(getZone()))
 	{
 		// Begin to fade the screen out
-		g_Application.addTask(  makeCallbackInterpolator(&Dimmer::alphaBlur, 0.0f, 1.0f, 2000.0f, enterGameOverScreen())  );
+		boost::function<void (void)> fn = boost::bind(&Player::enterGameOverScreen, this);
+		g_Application.addTask(  makeCallbackInterpolator(&Dimmer::alphaBlur, 0.0f, 1.0f, 2000.0f, fn)  );
 	}
 }
 
@@ -205,7 +201,7 @@ bool Player::LoadXml(CPropBag &xml)
 }
 
 bool Player::saveTidy(CPropBag &xml, CPropBag &dataFile) const
-{	
+{
 	xml.Add(_T("inventory"), inventory.save()); // Save the inventory, the default value doesn't matter
 	return Creature::saveTidy(xml, dataFile);
 }
@@ -268,7 +264,7 @@ bool Player::doUseAction(void)
 		if(!o.zombie && distance<maxUseDistance)
 		{
 			// Perform the USE action immediately
-			o.activate(this);			
+			o.activate(this);
 
 			// Signal that SOME action was taken
 			return true;
@@ -291,7 +287,7 @@ void Player::directControl(void)
 		bool s = g_Keys.isKeyDown(KEY_PLAYER_WALK_REV);
 		bool a = g_Keys.isKeyDown(KEY_PLAYER_WALK_LEFT);
 		bool d = g_Keys.isKeyDown(KEY_PLAYER_WALK_RIGHT);
-		
+
 		bool moveKey = w || s || a || d;
 
 		     if(w && a) direction =  z + x;
@@ -301,7 +297,7 @@ void Player::directControl(void)
 		else if(w)      direction =  z;
 		else if(s)      direction = -z;
 		else if(a)      direction =  x;
-		else if(d)      direction = -x;	
+		else if(d)      direction = -x;
 
 		if(moveKey)
 		{
@@ -330,7 +326,7 @@ void Player::clear(void)
 void Player::setPlayerNumber(int playerNumber)
 {
 	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
-	
+
 	deleteController();
 
 	this->playerNumber = playerNumber;
@@ -340,12 +336,16 @@ void Player::setPlayerNumber(int playerNumber)
 	OnChangePlayerNumber(playerNumber);
 }
 
+#ifdef _DEBUG
 void Player::OnChangePlayerNumber(int playerNumber)
 {
 	ASSERT(playerNumber >= 0 && playerNumber <= 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
-	
 	// Do nothing
 }
+#else
+void Player::OnChangePlayerNumber(int)
+{}
+#endif
 
 void Player::pickupItem(Item *item)
 {
@@ -371,7 +371,7 @@ bool Player::inventoryQuery(const _tstring &name, OBJECT_ID &out) const
 void Player::discardItem(OBJECT_ID id)
 {
 	inventory.erase(inventory.find(id));
-	
+
 	if(inventory.empty())
 	{
 		selectSpecificItem(INVALID_ID);
@@ -417,7 +417,7 @@ void Player::selectSpecificItem(OBJECT_ID id)
 		if(inventory.isMember(id))
 		{
 			selectedItem = id;
-			
+
 			// Play an item select noise
 			g_SoundSystem.play(_T("data/sound/click.wav"));
 		}
@@ -430,7 +430,7 @@ const _tstring Player::getAttackAnim(void) const
 }
 
 const _tstring Player::getIdleAnim(void) const
-{	
+{
 	return _tstring(_T("idle")) + getItemName();
 }
 
@@ -482,7 +482,7 @@ _tstring Player::getItemName(void) const
 
 		return _tstring(_T("_")) + item.getName();
 	}
-	
+
 	return _tstring();
 }
 

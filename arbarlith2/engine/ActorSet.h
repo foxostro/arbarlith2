@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,16 +37,16 @@ using std::queue;
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 
+#include "Object.h"
 #include "ActorFactory.h"
 
-namespace Engine { 
+namespace Engine {
 
 class Frustum;
-class Actor;
 class Zone;
 
 /** Collection of associated actors, by reference */
-class ActorSet : public map<Engine::OBJECT_ID, Engine::Actor*>
+class ActorSet : public map<const Engine::OBJECT_ID, Engine::Actor*>
 {
 public:
 	/** Creates an empty set */
@@ -254,7 +254,7 @@ public:
 		// collect the distances from the position to each actor
 		for(const_iterator iter = begin(); iter!=end(); ++iter)
 		{
-			if(!isType<TYPE>(iter->second))	
+			if(!instanceof(*(iter->second), TYPE))
 				s.insert(*iter);
 		}
 
@@ -275,7 +275,7 @@ public:
 		// collect the distances from the position to each actor
 		for(const_iterator iter = begin(); iter!=end(); ++iter)
 		{
-			if(isType<TYPE>(iter->second))	
+			if(instanceof(*(iter->second), TYPE))
 				s.insert(*iter);
 		}
 
@@ -301,7 +301,7 @@ public:
 		// collect the distances from the position to each actor
 		for(const_iterator iter = begin(); iter!=end(); ++iter)
 		{
-			if(isType<TYPE>(iter->second))	
+			if(instanceof(*(iter->second), TYPE))
 				objects.push_back(ActorSet::getDistance(*iter, pos));
 		}
 
@@ -309,7 +309,7 @@ public:
 		sort(objects.begin(), objects.end(), tuple_less());
 
 		// Return the closest one, or INVALID_ID if it is outside of the threshold distance
-		return (objects.empty()) 
+		return (objects.empty())
 					? INVALID_ID
 					: (objects[0].first > threshold)
 						? INVALID_ID
@@ -330,7 +330,7 @@ public:
 
 		for(const_iterator i = begin(); i != end(); ++i)
 		{
-			if(isType<TYPE>(i->second))
+			if(instanceof(*(i->second), TYPE))
 			{
 				Tuple tuple = getDistance(*i, pos);
 
@@ -357,28 +357,28 @@ public:
 
 	/**
 	request that an actor be spawned on the next update
-	@param dataFile The datafile of the actor (specifies type) 
+	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
 	void spawnNow(const _tstring &dataFile, const vec3 &position, Zone *zone);
 
 	/**
 	request that an actor be spawned on the next update
-	@param dataFile The datafile of the actor (specifies type) 
+	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
 	void spawnNow(CPropBag &xml, const vec3 &position, Zone *zone);
 
 	/**
 	request that an actor be spawned on the next update
-	@param dataFile The datafile of the actor (specifies type) 
+	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
 	void spawn(const _tstring &dataFile, const vec3 &position);
 
 	/**
 	request that an actor be spawned on the next update
-	@param dataFile The datafile of the actor (specifies type) 
+	@param dataFile The datafile of the actor (specifies type)
 	*/
 	Actor& spawnNow(CPropBag &xml, Zone *zone);
 
@@ -424,11 +424,9 @@ private:
 	template<class TYPE>
 	static void deleteActor(pair<OBJECT_ID,Actor*> p)
 	{
-		Actor *o = toActor(p);
-
-		if(isType<TYPE>(o))
+		if(instanceof(*(p.second), TYPE))
 		{
-			o->zombie = true;
+			(p.second)->zombie = true;
 		}
 	}
 
@@ -471,18 +469,6 @@ private:
 	static void drawActorToDepthBuffer(Actor *p);
 };
 
-/**
-Simple function to quickly determine if an actor is of the templated type
-Useful in lambda functions!
-@param p actor
-@return true if the actor is of the templated type
-*/
-template<class T>
-static bool isType(Actor * p)
-{
-	return instanceof(*p, T);
-}
-
-}; //namespace
+} // namespace Engine
 
 #endif

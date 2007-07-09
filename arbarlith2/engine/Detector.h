@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Trigger.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Sends a signal when conditions are met */
 class Detector : public Trigger
@@ -115,6 +115,6 @@ private:
 	bool triggeredOnce;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

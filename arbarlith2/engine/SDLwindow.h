@@ -5,14 +5,14 @@
 #ifndef SDL_WINDOW
 #define SDL_WINDOW
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
  //haven't figured out how to do multi-window with SDL yet
 #include "singleton.h"
 #include "myassert.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -66,7 +66,7 @@ public:
 	void Create(const _tstring &title, unsigned int width,
 		        unsigned int height, const ColorFormat &format,
 		        unsigned int zdepth, bool fullscreen);
-	
+
 	//destroy the currently active window
 	void Kill();
 
@@ -99,7 +99,7 @@ private:
 };
 
 
-}; // namespace
+} // namespace Engine
 
 
 

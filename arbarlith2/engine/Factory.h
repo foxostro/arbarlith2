@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _FACTORY_H_
 #define _FACTORY_H_
 
-namespace Engine { 
+namespace Engine {
 
 typedef int OBJECT_ID;
 typedef size_t OBJECT_TYPE;
@@ -51,7 +51,7 @@ static OBJECT_TYPE getType()                                                    
 	return (OBJECT_TYPE)(typePtr);                                                    \
 }
 
-// Evaluates true when the given object is of the given type or extends that type
+// Evaluates true when the object is of the given type or extends that type
 #define instanceof(o, TYPE)     (dynamic_cast<const TYPE *>(&o)!=0)
 
 /** Templated allocator function is acceptable in nearly all instances */
@@ -68,31 +68,33 @@ a copy of its own handle within the factory.
 */
 template<class TYPE> class Factory
 {
-private:
-	/** Tracks the incrementing unique ID for the next object to be created */
-	static OBJECT_ID uniqueID;
-	
+public:
 	/** Prototype for the allocator function */
 	typedef TYPE* (*AllocatorFn)(OBJECT_ID);
-	
-	typedef map<_tstring, OBJECT_TYPE> mapStringToType;
-	typedef map<OBJECT_TYPE, AllocatorFn> mapTypeToAlloc;
-	typedef map<OBJECT_ID, TYPE*> mapHandleToObject;
+	typedef map < OBJECT_ID, TYPE* > mapHandleToObject;
+
+	/** Stores objects that have been allocated */
+	mapHandleToObject objects;
+
+private:
+
+	typedef map < _tstring, OBJECT_TYPE > mapStringToType;
+	typedef map < OBJECT_TYPE, AllocatorFn > mapTypeToAlloc;
+
+	/** Tracks the incrementing UID for the next object to be created */
+	static OBJECT_ID uniqueID;
 
 	/** Maps from the type name to the type ID */
 	mapStringToType toTypeID;
 
 	/** Maps from the type to the allocator function */
 	mapTypeToAlloc toAllocator;
-	
-	/** Stores objects that have been allocated */
-	mapHandleToObject objects;
-	
+
 public:
 	/** Default constructor */
 	Factory(void)
 	{}
-	
+
 	/** Destructor */
 	~Factory(void)
 	{
@@ -116,16 +118,17 @@ public:
 	void remove(OBJECT_ID handle)
 	{
 		delete(objects.find(handle)->second);
-		erase(objects.find(handle));
+		objects.erase(objects.find(handle));
 	}
 
-	/** Registers a type with the factory database */
+	/**
+	Registers a type with the factory database
+	@param typeName Name of the type (type_info::name is implementation dependent)
+	*/
 	template<class T>
-	void registerType(void)
+	void registerType(const _tstring &typeName)
 	{
 		const type_info& typeInfo = typeid(T);
-		const char *pszName = typeInfo.name();
-		const _tstring typeName = toTString(pszName);
 		const OBJECT_TYPE typeID = (OBJECT_TYPE)(&typeInfo); // address of this is constant
 
 		if(toTypeID.find(typeName) == toTypeID.end())
@@ -134,6 +137,8 @@ public:
 
 			AllocatorFn fn = &::Engine::allocatorFn<TYPE, T>;
 			toAllocator.insert(  make_pair(typeID, fn)  );
+
+			TRACE(_T("Registered type \"") + typeName + _T("\""));
 		}
 	}
 
@@ -174,21 +179,34 @@ public:
 	*/
 	OBJECT_ID create(OBJECT_TYPE type)
 	{
-		mapTypeToAlloc::iterator iter = toAllocator.find(type);
-		ASSERT(iter!=toAllocator.end(), _T("The specified type was not found"));
-
 		OBJECT_ID handle = uniqueID;
 		uniqueID++;
-		
-		TYPE *o = (iter->second)(handle);
+
+		TYPE *o = (toAllocator.find(type)->second)(handle);
 		ASSERT(o!=0, _T("Allocator failed"));
 
 		objects.insert(make_pair(handle, o));
 
 		return handle;
+
+		/*
+		mapTypeToAlloc::iterator i;
+
+		iter = toAllocator.find(type);
+		ASSERT(iter!=toAllocator.end(), _T("The specified type was not found"));
+
+		OBJECT_ID handle = uniqueID;
+		uniqueID++;
+
+		TYPE *o = (iter->second)(handle);
+		ASSERT(o!=0, _T("Allocator failed"));
+
+		objects.insert(make_pair(handle, o));
+
+		return handle;*/
 	}
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(Boss)
+GEN_ACTOR_RTTI_CPP(Boss, "class Arbarlith2::Boss")
 
 Boss::Boss(OBJECT_ID ID)
 : Monster(ID)
@@ -89,4 +89,4 @@ void Boss::returnToMenu(void)
 	g_Application.changeGameState(GAME_STATE_MENU);
 }
 
-} //namespace
+} // namespace Arbarlith2

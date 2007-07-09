@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -39,7 +39,7 @@ using std::map;
 #include "Singleton.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /**
@@ -131,7 +131,7 @@ public:
 
 extern EffectManager g_EffectManager;
 
-}; // namespace
+} // namespace Engine
 
 
 #endif

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "propbag.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** OpenGL fog */
@@ -88,8 +88,6 @@ public:
 	void deactivate(void) const;
 };
 
-
-}; //namespace
-
+} // namespace Engine
 
 #endif

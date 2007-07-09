@@ -35,9 +35,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Widget.h"
 #include "text.h"
 
-namespace Engine { 
+namespace Engine {
 
-class LabelWidget : public Widget  
+class LabelWidget : public Widget
 {
 public:
 	LabelWidget
@@ -66,7 +66,7 @@ public:
 	{
 		return m_strLabel;
 	}
-	
+
 	/**
 	Sets the label text
 	@param label The new label text
@@ -89,6 +89,6 @@ private:
 };
 
 
-}; //namespace
+} //namespace Engine
 
 #endif

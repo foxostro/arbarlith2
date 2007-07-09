@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(DetectorProximityMonster)
+GEN_ACTOR_RTTI_CPP(DetectorProximityMonster, "class Arbarlith2::DetectorProximityMonster")
 
 bool DetectorProximityMonster::isInProximity(OBJECT_ID actor, float triggerRadius) const
 {
@@ -46,10 +46,10 @@ bool DetectorProximityMonster::isInProximity(OBJECT_ID actor, float triggerRadiu
 
 	// Ignore dead monsters
 	const Monster *monster = dynamic_cast<const Monster*>(s.getPtr(actor));
-	if(monster!=0 && !monster->isAlive()) 
+	if(monster!=0 && !monster->isAlive())
 		return false;
 
-	return __super::isInProximity(actor, triggerRadius);
+	return Engine::DetectorProximity<Monster>::isInProximity(actor, triggerRadius);
 }
 
-}; // namespace
+} // namespace Arbarlith2

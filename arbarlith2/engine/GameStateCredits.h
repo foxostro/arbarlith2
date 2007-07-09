@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "GameState.h"
 #include "Material.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** State of the game where the credits are displayed */
 class GameStateCredits : public GameState, public Singleton<GameStateCredits>
@@ -50,7 +50,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	virtual void update(float deltaTime);
 
@@ -83,6 +83,6 @@ private:
 	float y;
 };
 
-}; // namespace
+}; // namespace Engine
 
 #endif

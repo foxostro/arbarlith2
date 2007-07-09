@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,13 +34,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "labelwidget.h"
 #include "item.h"
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Widget that displays an item */
-class ItemWidget : public LabelWidget  
+class ItemWidget : public LabelWidget
 {
-public:	
+public:
 	/**
 	Constructs the Item widget
 	@param x The X-Coord of the widget
@@ -50,7 +50,7 @@ public:
 
 	/**
 	Change the item tht will be displayed
-	@param item The new item to display 
+	@param item The new item to display
 	*/
 	void setItem(Item *item);
 
@@ -59,7 +59,7 @@ private:
 	Item *item;
 };
 
-}; //namespace
+} // namespace Engine
 
 
 #endif

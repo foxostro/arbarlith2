@@ -147,7 +147,7 @@ private:
 	void processVersionChunk(Chunk &currentChunk) const;
 
 	/**
-	Processes the object info data 
+	Processes the object info data
 	@param currentChunk chunk data
 	@param wrapper the partially loaded model
 	*/
@@ -251,7 +251,7 @@ private:
 	@param material current material
 	*/
 	void readMaterialName(Chunk &currentChunk, Material &material) const;
-	
+
 	/**
 	Reads the material texture file
 	@param currentChunk chunk data
@@ -267,6 +267,6 @@ private:
 	void forceSkin(Engine::Model &model, const _tstring &skinFileName) const;
 };
 
-}; // namespace Engine
+} // namespace Engine
 
 #endif

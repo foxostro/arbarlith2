@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vec4.h"
 #include "mesh.h" // BoundingBox
 
-namespace Engine { 
+namespace Engine {
 
 		class ParticleSystem; // Prototype definition
 
@@ -128,6 +128,16 @@ namespace Engine {
 		// A particle
 		class ParticleElement : public ParticleBody
 		{
+		public:
+			/** This handle could be passed to the System to obtain the material we want to use */
+			size_t m_nMaterialHandle;
+
+			/** ParticleSystem that owns this element */
+			ParticleSystem *m_pOwner;
+
+			/** Milliseconds that this element will be alive for */
+			float m_LifeSpan;
+
 		private:
 			// Name of the particle type
 			_tstring m_strName;
@@ -160,13 +170,9 @@ namespace Engine {
 			vec3 A, B, C, D;
 
 		public:
-
-			// This handle could be passed to the System to obtain the material we want to use
-			size_t m_nMaterialHandle;
-
-
-			ParticleSystem *m_pOwner;
-
+			/** Destructor */
+			virtual ~ParticleElement(void)
+			{}
 
 			///  Name: Element::Element
 			///  Desc: Constructor
@@ -182,7 +188,7 @@ namespace Engine {
 			///  Name: Element::Element
 			///  Desc: Copy Constructor
 			ParticleElement(const ParticleElement &element);
-			
+
 			/// Name: operator=
 			/// Desc: Assignment Operator
 			ParticleElement &operator=(const ParticleElement &element);
@@ -233,8 +239,6 @@ namespace Engine {
 			///  Name: Element::GetAge
 			///  Desc: Returns the age of the particle
 			inline float GetAge() { return m_Age; }
-
-			float m_LifeSpan;
 		};
 
 		// Creates particles in the parent System accordign to rules loaded from xml.
@@ -265,7 +269,7 @@ namespace Engine {
 			// Particle stats on emission
 			ParticleGraph m_SpeedGraph;     // Speed in direction of emitter on emission over time
 			float m_SpeedImmediate; // Immediate Speed in direction of emitter on emission over time
-			
+
 			ParticleGraph m_SizeMulGraph;     // Size multiplier on emission over time
 			float m_SizeMulImmediate; // Immediate Size multiplier on emmision
 
@@ -300,7 +304,7 @@ namespace Engine {
 			///  Name: Emitter::IsDead
 			///  Desc: Is the particle dead?
 			/// Param: void
-			inline bool IsDead(void) 
+			inline bool IsDead(void)
 			{
 				if(m_bLooping == false)
 				{
@@ -339,7 +343,7 @@ namespace Engine {
 			{
 				EMIT_WAIT,
 				EMIT_REPLACE_OLDEST,
-				EMIT_REPLACE_RANDOM,
+				EMIT_REPLACE_RANDOM
 			};
 
 		private:
@@ -348,9 +352,9 @@ namespace Engine {
 
 			// List of materials loaded at creation
 			vector<Material> m_Materials;
-			
+
 			// Holds the current frame of animation for all materials
-			vector<float> m_Frames; 
+			vector<float> m_Frames;
 
 			// List of all emitters managed by the System
 			vector<ParticleEmitter> m_Emitters;
@@ -366,20 +370,20 @@ namespace Engine {
 			///  Desc: Constructor
 			/// Param: void
 			ParticleSystem(void)
-			: m_ppElements(NULL),
+			: ParticleBody(),
 			  m_nMaxParticles(0),
-			  m_Behavior(EMIT_WAIT),
-			  ParticleBody()
+			  m_ppElements(NULL),
+			  m_Behavior(EMIT_WAIT)
 			{}
 
 			///  Name: System::System
 			///  Desc: Constructor
 			/// Param: _tstring strFile  --  File to load xml from
 			ParticleSystem(_tstring strFile)
-			: m_ppElements(NULL),
+			: ParticleBody(),
 			  m_nMaxParticles(0),
-			  m_Behavior(EMIT_WAIT),
-			  ParticleBody()
+			  m_ppElements(NULL),
+			  m_Behavior(EMIT_WAIT)
 			{
 				CPropBag Bag;
 				Bag.Load(strFile);
@@ -395,9 +399,8 @@ namespace Engine {
 			///  Desc: Copy Constructor
 			ParticleSystem(const ParticleSystem &system);
 
-			///  Name: System::System
-			///  Desc: Destructor
-			~ParticleSystem(void);
+			/** Destructor */
+			virtual ~ParticleSystem(void);
 
 			///  Name: System::LoadXml
 			///  Desc: Loads data from xml and returns success (true) or failure (false)
@@ -435,7 +438,7 @@ namespace Engine {
 			Material& GetMaterial(size_t nHandle);
 
 			///  Name: System::IsDead
-			///  Desc: Polls the emitters and returns true if all emitters are dead, else returns false 
+			///  Desc: Polls the emitters and returns true if all emitters are dead, else returns false
 			/// Param: none
 			bool IsDead();
 
@@ -458,7 +461,7 @@ namespace Engine {
 			}
 		};
 
-}; // namespace
+} // namespace Engine
 
 typedef vector<Engine::ParticleSystem*> PARTICLE_SYSTEMS;
 

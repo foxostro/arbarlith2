@@ -35,9 +35,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Explosion.h"
 #include "Bullet.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(Bullet)
+GEN_ACTOR_RTTI_CPP(Bullet, "class Arbarlith2::Bullet")
 
 Bullet::Bullet(OBJECT_ID ID)
 :Trigger(ID)
@@ -57,7 +57,7 @@ void Bullet::clear(void)
 
 void Bullet::onSlidOnWall(void)
 {
-	__super::onSlidOnWall();
+	Trigger::onSlidOnWall();
 	kill();
 }
 
@@ -68,7 +68,7 @@ void Bullet::update(float deltaTime)
 	solid = true;
 	floating = true;
 
-	__super::update(deltaTime);
+	Trigger::update(deltaTime);
 
 	// Kill the bullet once it has collided with anything
 	if(anyCollisions())
@@ -91,10 +91,10 @@ void Bullet::shoot(OBJECT_ID owner, const vec3 &velocity, int damageValue, const
 	this->explosionSoundEffectFile = explosionSoundEffectFile;
 	this->causesFreeze = causesFreeze;
 	this->knockbackMagnitude = knockbackMagnitude;
-	
+
 	topSpeed = velocity.getMagnitude();
 	frictionAcceleration = 0.0f;
-	
+
 	// Fire off the particle system, have it follow the bullet's position
 	particleHandle = getZone().SpawnPfx(particleDef, getPos());
 }
@@ -102,7 +102,7 @@ void Bullet::shoot(OBJECT_ID owner, const vec3 &velocity, int damageValue, const
 bool Bullet::pollConditions(void) const
 {
 	OBJECT_ID unused;
-	
+
 	// Only consider Creature from our Zone that are not the Bullet owner
 	ActorSet s = getZone().getObjects().typeFilter<Creature>().exclude(owner);
 
@@ -133,7 +133,7 @@ void Bullet::onTrigger(void)
 void Bullet::kill(void)
 {
 	zombie=true;
-	
+
 	// release the particle system now that we are done with it
 	ParticleSystem *s = getZone().particles[particleHandle];
 	s->Kill();
@@ -166,8 +166,8 @@ bool Bullet::isInProximity(OBJECT_ID actor, float triggerRadius) const
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
-}; // namespace
+} // namespace Arbarlith2

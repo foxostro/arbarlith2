@@ -37,9 +37,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListElementTweaker.h"
 #include "Listener.h"
 
-namespace Engine { 
+namespace Engine {
 
-GEN_ACTOR_RTTI_CPP(Listener)
+GEN_ACTOR_RTTI_CPP(Listener, "class Engine::Listener")
 
 Listener::Listener(OBJECT_ID ID)
 :Trigger(ID)
@@ -47,7 +47,7 @@ Listener::Listener(OBJECT_ID ID)
 
 void Listener::clear(void)
 {
-	__super::clear();
+	Trigger::clear();
 	signals.clear();
 	anySignal=false;
 	expression = _T("any: 1 ; 2 ; 3 ; 4 ; 5");
@@ -117,7 +117,7 @@ void Listener::setupSignals(const _tstring &expression)
 
 bool Listener::LoadXml(CPropBag &xml)
 {
-	__super::LoadXml(xml);
+	Trigger::LoadXml(xml);
 
 	xml.getSym(expression);
 	setupSignals(expression);
@@ -128,7 +128,7 @@ bool Listener::LoadXml(CPropBag &xml)
 bool Listener::saveTidy(CPropBag &xml, CPropBag &editorData) const
 {
 	saveTag(xml, editorData, _T("expression"), expression);
-	return __super::saveTidy(xml, editorData);
+	return Trigger::saveTidy(xml, editorData);
 }
 
 void Listener::OnMessage(Message_s message)
@@ -147,7 +147,7 @@ void Listener::OnMessage(Message_s message)
 
 void Listener::update(float milliseconds)
 {
-	__super::update(milliseconds);
+	Trigger::update(milliseconds);
 
 	for(map<int, float>::iterator iter = signals.begin(); iter != signals.end(); ++iter)
 	{
@@ -164,7 +164,7 @@ void Listener::createToolBar(ListPaneWidget *pane)
 
 void Listener::sync(void)
 {
-	__super::sync();
+	Trigger::sync();
 
 	setupSignals(expression);
 }

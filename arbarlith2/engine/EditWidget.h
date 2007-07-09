@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "labelwidget.h"
 #include "Controller.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Edittable text widget.  The EditWidget allows the user to edit a block of text. */
 class EditWidget : public LabelWidget
@@ -96,6 +96,6 @@ public:
 	bool hasFocus(void) const;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

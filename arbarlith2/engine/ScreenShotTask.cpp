@@ -29,11 +29,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "il.h"
+
+/*
+Include the DevIL headers
+*/
+#include <IL/il.h>
+#include <IL/ilut.h>
+
 #include "ScreenShotTask.h"
 #include "SearchFile.h"
 
-namespace Engine { 
+namespace Engine {
+
+int stoi(const _tstring &s); // stdafx.cpp
 
 ScreenShotTask::ScreenShotTask(void)
 :screenShotDebounce(false)
@@ -67,14 +75,9 @@ void ScreenShotTask::takeScreenShot(void)
 
 	_tmkdir(_T("sshots/"));
 
-	// Save the screen shot
-	{
-		const string ansi = toAnsiString(getScreenShotFileName());
-		const char * ansiptr = ansi.c_str();
-		const ILstring s = (ILstring)ansiptr;
-
-		ilSaveImage(s);
-	}
+	char *pszScreenShotFileName = toAnsiCharArray(getScreenShotFileName());
+	ilSaveImage(pszScreenShotFileName);
+	delete[] pszScreenShotFileName;
 
 	ilDeleteImages(1, &handle);
 }
@@ -82,17 +85,20 @@ void ScreenShotTask::takeScreenShot(void)
 _tstring ScreenShotTask::getScreenShotFileName(void)
 {
 	int highestNumber = 0;
-		
+
 	const _tstring screen = _tstring(_T("screen"));
 	const _tstring ext = _tstring(_T(".jpg"));
 
 	SearchFile files(_T("sshots/*.jpg"));
-	
-	for(vector<_tstring>::const_iterator iter=files.m_Files.begin(); iter!=files.m_Files.end(); ++iter)
+
+	for(vector<_tstring>::const_iterator iter=files.m_Files.begin();
+	    iter!=files.m_Files.end();
+	    ++iter)
 	{
 		const _tstring fileName =(*iter);
-		const _tstring strNum = fileName.substr(screen.length(), fileName.length() - screen.length() - ext.length());
-		const int number = _tstoi(strNum.c_str());
+		const _tstring strNum = fileName.substr(screen.length(),
+		fileName.length() - screen.length() - ext.length());
+		const int number = stoi(strNum);
 
 		if(number>highestNumber)
 		{
@@ -103,4 +109,4 @@ _tstring ScreenShotTask::getScreenShotFileName(void)
 	return _tstring(_T("sshots/screen")) + itoa(++highestNumber) + ext;
 }
 
-}; //namespace
+} //namespace Engine

@@ -46,7 +46,7 @@ public:
 	{
 		clear();
 	}
-	
+
 	~ShadowManager(void)
 	{
 		destroy();
@@ -107,6 +107,6 @@ private:
 	void reassignShadows(void);
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

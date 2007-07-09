@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,13 +33,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "text.h"
 #include "3dmath.h"
 
-namespace Engine { 
-          
+namespace Engine {
+
+int stoi(const _tstring &s)
+{
+      int ret = 0;
+      _tstringstream stream;
+
+      stream << s;
+      stream >> ret;
+
+      return ret;
+}
+
 float stof(const _tstring &s)
 {
       float ret = 0.0f;
       _tstringstream stream;
-      
+
       stream << s;
       stream >> ret;
 
@@ -50,7 +61,7 @@ _tstring itoa(int i)
 {
 	_tstring ret;
 	_tstringstream stream;
-	
+
 	stream << i;
 	stream >> ret;
 
@@ -139,7 +150,7 @@ vec3 Project(const vec3 &p)
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 			glLoadIdentity();
-			gluPerspective(45, 1024.0f / 768.0f, 0.01f, 5000.0f);		
+			gluPerspective(45, 1024.0f / 768.0f, 0.01f, 5000.0f);
 			glGetDoublev(GL_PROJECTION_MATRIX, projMat);
 		glPopMatrix();
 
@@ -160,7 +171,7 @@ Projects a ray onto the screen from the mouse cursor's position
 */
 vec3 UnProject(int winx, int winy, float winz)
 {
-	
+
 	GLdouble x=0.0, y=0.0, z=0.0;
 
 	GLint MouseX = winx;

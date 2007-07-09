@@ -34,9 +34,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/ToggleWidgetText.h"
 #include "Teleporter.h"
 
-namespace Engine { 
+namespace Engine {
 
-GEN_ACTOR_RTTI_CPP(Teleporter)
+GEN_ACTOR_RTTI_CPP(Teleporter, "class Engine::Teleporter")
 
 Teleporter::Teleporter(OBJECT_ID ID)
 : Switch(ID)
@@ -52,7 +52,7 @@ void Teleporter::clear(void)
 void Teleporter::onUse(Actor*)
 {
 	const size_t numOfPlayers = g_World.getNumOfPlayers();
-	
+
 	if(numOfPlayers < 2)
 	{
 		// Place the single player at the destination point
@@ -86,7 +86,7 @@ void Teleporter::createToolBar(ListPaneWidget *pane)
 
 bool Teleporter::LoadXml(CPropBag &xml)
 {
-	__super::LoadXml(xml);
+	Switch::LoadXml(xml);
 
 	xml.getSym(destinationPosition);
 
@@ -97,7 +97,7 @@ bool Teleporter::saveTidy(CPropBag &xml, CPropBag &editorData) const
 {
 	saveTag(xml, editorData, _T("destinationPosition"),	destinationPosition);
 
-	return __super::saveTidy(xml, editorData);
+	return Switch::saveTidy(xml, editorData);
 }
 
 }; // namespace

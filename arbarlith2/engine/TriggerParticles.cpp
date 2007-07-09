@@ -35,11 +35,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "TriggerParticles.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
-GEN_ACTOR_RTTI_CPP(TriggerParticles)
+GEN_ACTOR_RTTI_CPP(TriggerParticles, "class Engine::TriggerParticles")
 
 
 
@@ -77,7 +77,7 @@ bool TriggerParticles::LoadXml(CPropBag &xml)
 void TriggerParticles::createToolBar(ListPaneWidget *pane)
 {
 	// Create the initial tool bar
-	__super::createToolBar(pane);
+	Trigger::createToolBar(pane);
 
 	// Add to the tool bar
 	pane->addElement(new ListElementTweakerString(	_T("Particle FX"),	&pfxFileName));

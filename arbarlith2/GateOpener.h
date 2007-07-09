@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace Engine;
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Opens or closes a specified gate when triggered */
 class GateOpener : public Listener
@@ -86,6 +86,6 @@ private:
 	bool open;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

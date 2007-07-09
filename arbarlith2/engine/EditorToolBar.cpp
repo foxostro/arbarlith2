@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ToggleWidget.h"
 #include "ToggleWidgetText.h"
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -81,7 +81,7 @@ void EditorToolBar::clear(void)
 
 void EditorToolBar::destroy(void)
 {
-	__super::destroy();
+	Widget::destroy();
 
 	clear();
 }
@@ -119,7 +119,7 @@ void EditorToolBar::create(void)
 	toolBarMisc->addElement(new ToggleWidget(&shouldSave,		_T("data/sprites/list/editor/save_down.png"),	_T("data/sprites/list/editor/save_up.png")));
 	toolBarMisc->addElement(new ToggleWidget(&shouldLoad,		_T("data/sprites/list/editor/load_down.png"),	_T("data/sprites/list/editor/load_up.png")));
 	toolBarMisc->addElement(new ToggleWidget(&shouldNew,		_T("data/sprites/list/editor/new_on.png"),		_T("data/sprites/list/editor/new_on_over.png"),	_T("data/sprites/list/editor/new_off.png"),		_T("data/sprites/list/editor/new_off_over.png")));
-	
+
 	// Create some controls for the map editor
 	createObjectPalette();
 	createWallTextureSelector();
@@ -144,7 +144,7 @@ void EditorToolBar::create(void)
 
 // Create the actor properties pane
 	actorProperties	= new ListPaneWidget(400, 400);
-	AddChild(actorProperties);	
+	AddChild(actorProperties);
 	hideActorPane(); // initially hidden
 }
 
@@ -322,7 +322,7 @@ void EditorToolBar::update(float deltaTime)
 									  tileEditor_floorTextureFile,
 									  tileEditor_wallTextureFile,
 							          tileEditor_height);
-						
+
 						// Rebuild the map display list
 						map.reaquire();
 
@@ -332,6 +332,31 @@ void EditorToolBar::update(float deltaTime)
 
 				drag = false;
 			}
+
+			break;
+
+		case ToolBarForEditorTools::EDITOR_DESTROY_TOOL:
+			// (This tool doesn't require updating every tick)
+			break;
+
+		case ToolBarForEditorTools::EDITOR_ROTATE_TOOL:
+			// (This tool doesn't require updating every tick)
+			break;
+
+		case ToolBarForEditorTools::EDITOR_ROTATE_X_TOOL:
+			// (This tool doesn't require updating every tick)
+			break;
+
+		case ToolBarForEditorTools::EDITOR_ROTATE_Z_TOOL:
+			// (This tool doesn't require updating every tick)
+			break;
+
+		case ToolBarForEditorTools::EDITOR_MOVE_TOOL:
+			// (This tool doesn't require updating every tick)
+			break;
+
+		case ToolBarForEditorTools::EDITOR_SELECT_TOOL:
+			// (This tool doesn't require updating every tick)
 			break;
 		};
 
@@ -389,7 +414,7 @@ void EditorToolBar::update(float deltaTime)
 
 		// Save / Load the game
 		if(shouldSave)
-		{	
+		{
 			Zone &zone = g_World.getPlayer().getZone();
 			_tstring fileName = zone.getName() + _T(".xml");
 
@@ -476,22 +501,22 @@ vec3 EditorToolBar::getGroundPickPos(float elevation) const
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
-	
+
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
 	g_Camera.setCamera();
 
-	
-	
-	
+
+
+
 	vec3 groundPos;
 	groundPos.zero();
 
 	// Get the point on the ground plane that the mouse is hovering over.
 
 	// Get a ray for the mouse
-	vec3 mouseRay[] = 
+	vec3 mouseRay[] =
 	{
 		UnProject(0.0f),
 		UnProject(1.0f),
@@ -515,7 +540,7 @@ vec3 EditorToolBar::getGroundPickPos(float elevation) const
 
 		// Snap to grid
 		if(snapToGrid)
-		{			
+		{
 			float snap = 0.25f;
 
 			float snappedX = (snap) * floorf(groundPos.x / snap);
@@ -525,13 +550,13 @@ vec3 EditorToolBar::getGroundPickPos(float elevation) const
 			groundPos.z = snappedZ;
 		}
 	}
-	
-	
+
+
 
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
-	
+
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 
@@ -594,7 +619,7 @@ void EditorToolBar::onLeftMouseDown()
 	case ToolBarForEditorTools::EDITOR_ROTATE_TOOL:
 		{
 			if(selected)
-			{	
+			{
 				const vec3 delta = vec3(selected->getPos().x-groundPos.x, 0, selected->getPos().z-groundPos.z);
 				const vec3 zAxis = delta.getNormal();
 				const vec3 yAxis = vec3(0,1,0);
@@ -613,18 +638,18 @@ void EditorToolBar::onLeftMouseDown()
 	case ToolBarForEditorTools::EDITOR_ROTATE_X_TOOL:
 		{
 			if(selected)
-			{	
+			{
 				vec3 delta = groundPos - selected->getPos();
 				float angle = atan2f(delta.x, delta.y) * 0.1f;
 
 				mat4 rot;
 				rot.rotateX(angle);
 
-		                mat4 orientation = selected->getOrientation(); 
-					
+		                mat4 orientation = selected->getOrientation();
+
 				orientation *= rot;
 
-				selected->setOrientation(orientation); 
+				selected->setOrientation(orientation);
 			}
 		}
 		break;
@@ -632,18 +657,18 @@ void EditorToolBar::onLeftMouseDown()
 	case ToolBarForEditorTools::EDITOR_ROTATE_Z_TOOL:
 		{
 			if(selected)
-			{	
+			{
 				vec3 delta = groundPos - selected->getPos();
 				float angle = atan2f(delta.x, delta.y) * 0.1f;
 
 				mat4 rot;
 				rot.rotateZ(angle);
 
-		                mat4 orientation = selected->getOrientation(); 
-					
+		                mat4 orientation = selected->getOrientation();
+
 				orientation *= rot;
 
-				selected->setOrientation(orientation); 
+				selected->setOrientation(orientation);
 			}
 		}
 		break;
@@ -655,7 +680,7 @@ void EditorToolBar::onLeftMouseDown()
 
 			// Create objects from a palette of available types
 			_tstring nextObject = getNextObject();
-			
+
 			_tstring rtti;
 			CPropBag ThisObjBag;
 
@@ -667,14 +692,14 @@ void EditorToolBar::onLeftMouseDown()
 			ThisObjBag.Load(editorDataFile);
 			ThisObjBag.Get(_T("type"), rtti);
 
-			// Create the object inside the game world		
+			// Create the object inside the game world
 			OBJECT_ID id = objects.create(rtti, &g_World.getPlayer().getZone());
 			if(id != INVALID_ID)
 			{
 				Actor &object = objects.get(id);
 				object.LoadXml(ThisObjBag);
 				object.editorDataFile = editorDataFile;
-				
+
 				// Do not affect object y with the move command
 				vec3 groundPos = getGroundPickPos(0.0f);
 

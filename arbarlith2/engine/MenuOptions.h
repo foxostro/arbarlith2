@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Menu.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Does the game's option screens */
@@ -48,7 +48,7 @@ public:
 	~MenuOptions(void);
 
 	/** Create and allocate resources for the menus */
-	void create(void);	
+	void create(void);
 
 protected:
 	/** Populates the menu elements */
@@ -73,8 +73,6 @@ private:
 	};
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

@@ -60,6 +60,9 @@ wstring toUnicodeString(const wstring &unicodestr);
 string toAnsiString(const string &ansistr);
 string toAnsiString(const wstring &unicodestr);
 
+char* toAnsiCharArray(const string &ansistr);
+char* toAnsiCharArray(const wstring &unicodestr);
+
 
 #ifdef _UNICODE
 #define toTString toUnicodeString

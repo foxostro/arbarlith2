@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Camera.h"
 #include "GameState.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Game states */
 enum GAME_STATE
@@ -67,7 +67,7 @@ While the main or WinMain functions (depending on the OS we are compiling for)
 are used to enter the application from the Operating System kernel, the only
 purpose they serve is to immediately instantiate an Application type object.
 */
-class Application : public Singleton<Application>  
+class Application : public Singleton<Application>
 {
 public:
 	/** Default Constructor */
@@ -115,7 +115,7 @@ public:
 	{
 		return mouseSensitivity;
 	}
-	
+
 	/** Saves the configuration settings */
 	void saveXmlConfigFiles(void);
 
@@ -211,7 +211,7 @@ private:
 
 	/** Start DevIL */
 	void startDevIL(void);
-	
+
 	/** Load the configuration files for the game */
 	void loadXmlConfigFiles(void);
 
@@ -250,7 +250,7 @@ public:
 	{
 		SHADOWS_AND_LIGHTING_ENABLED,
 		LIGHTING_ENABLED,
-		SHADOWS_AND_LIGHTING_DISABLED,
+		SHADOWS_AND_LIGHTING_DISABLED
 	} graphicsMode;
 
 	/** Performance setting to control whether particle effects are rendered */
@@ -288,7 +288,7 @@ private:
 
 	/** Sound engine */
 	SoundSystem *soundSystem;
-	
+
 	/**	The list of live tasks */
 	list<Task*> tasks;
 
@@ -314,7 +314,7 @@ private:
 	World *world;
 };
 
-}; // namespace
+} // namespace Engine
 
 // Proxies
 #define g_Application	(::Engine::Application::GetSingleton())

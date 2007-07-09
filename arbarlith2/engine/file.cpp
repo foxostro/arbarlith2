@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -53,11 +53,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #endif
 
-namespace Engine { 
+#ifndef W_OK
+#define W_OK _S_IREAD
+#endif
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-//                                         Functions                                           //
-/////////////////////////////////////////////////////////////////////////////////////////////////
+#ifndef R_OK
+#define R_OK _S_IWRITE
+#endif
+
+namespace Engine {
+
+////////////////////////////////////////////////////////////////////////////////
+//                                   Functions                                //
+////////////////////////////////////////////////////////////////////////////////
 
 _tstring toLowerCase(const _tstring &in); // stdafx.cpp
 
@@ -99,7 +107,7 @@ _tstring getAppDataDirectory(void)
 	TCHAR homeDir[MAX_PATH] = {0};
 
 	bool result = false;
-	
+
 #ifdef _WIN32
 	result = SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE, NULL, 0, homeDir));
 #else
@@ -152,31 +160,27 @@ return _T("./");
 
 _tstring pathAppend(const _tstring &path, const _tstring &fileName)
 {
-	_tstring resultPath;
-
-#ifdef _WIN32
-	TCHAR szPath[MAX_PATH] = {0};
-	_tstrcpy_s(szPath, path.c_str());
-	resultPath = (TRUE == PathAppend(szPath, fileName.c_str())) ? _tstring(szPath) : fileName;
-#else
-	TCHAR lastChar = path.at(path.length()-1);
+	const TCHAR lastChar = path.at(path.length()-1);
 
 	if(lastChar != _T('/') && lastChar != _T('\\'))
 	{
-		resultPath = path + _T("/") + fileName;
+		return File::fixFilename(path + _T("/") + fileName);
 	}
 	else
 	{
-		resultPath = path + fileName;
+		return File::fixFilename(path + fileName);
 	}
-#endif
-
-	return File::fixFilename(resultPath);
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+File::File(const File &)
+{
+	// Do nothing
+	clear();
+}
 
 void File::clear(void)
 {
@@ -210,7 +214,7 @@ bool File::openFile(const _tstring &fileName, bool binary)
 	if(!isFileOnDisk(fileName))
 	{
 		return false;
-	}	
+	}
 
 
 	// Check for read permissions
@@ -218,12 +222,12 @@ bool File::openFile(const _tstring &fileName, bool binary)
 	{
 		FAIL(_T("Failed to obtain read permissions for file: ") + fileName);
 		return false;
-	}	
-	
-	
+	}
+
+
 	// Open the file
 	FILE *fp = 0;
-	
+
 	if(binary)
 	{
 		fp = _tfopen(fileName.c_str(), _T("rb"));
@@ -263,7 +267,7 @@ size_t File::getFileLength(FILE *fp)
 	fseek(fp, 0, SEEK_END);
 	size = ftell(fp)+1;
 	fseek(fp, 0, SEEK_SET);
-		
+
 	return (size_t)size;
 }
 
@@ -278,25 +282,15 @@ bool File::hasAccess(const _tstring &fileName, File::ACCESS_MODE mode)
 
 	const string ansiFileName = toAnsiString(fileName);
 	const char *pszFileName = ansiFileName.c_str();
-	
+
 	if(stat(pszFileName, &info) == 0)
 	{
-		if(mode == ACCESS_MODE_EXISTENCE)
-		{
-			// we have determined, by retrieving file stats, that the file exists
-			return true;
-		}
-
-		#ifdef _WIN32
-		const unsigned int W_OK = _S_IREAD;
-		const unsigned int R_OK = _S_IWRITE;
-		#endif
-
 		switch(mode)
 		{
-		case ACCESS_MODE_READ:	return 0 != (info.st_mode & R_OK);
-		case ACCESS_MODE_WRITE:	return 0 != (info.st_mode & W_OK);
-		case ACCESS_MODE_RW:	return 0 != (info.st_mode & (R_OK | W_OK));
+		case ACCESS_MODE_EXISTENCE: return true; // we have determined, by retrieving file stats, that the file exists
+		case ACCESS_MODE_READ:      return 0 != (info.st_mode & R_OK);
+		case ACCESS_MODE_WRITE:     return 0 != (info.st_mode & W_OK);
+		case ACCESS_MODE_RW:        return 0 != (info.st_mode & (R_OK | W_OK));
 		};
 	}
 
@@ -308,7 +302,7 @@ bool File::saveFile(const _tstring &fileName, bool binary)
 {
 	bool fileExists = isFileOnDisk(fileName);
 	bool writableFile = hasAccess(fileName, ACCESS_MODE_WRITE);
-	
+
 	if(fileExists)
 	{
 		if(!writableFile)
@@ -339,7 +333,7 @@ bool File::saveFile(const _tstring &fileName, bool binary)
 		return false;
 	}
 	else
-	{	
+	{
 		#ifdef _DEBUG
 			TRACE(_tstring(_T("Saving file: ")) + fileName);
 		#endif
@@ -472,9 +466,8 @@ size_t File::write(const _tstring &s)
 	const char * ansiptr = ansi.c_str();
 
 	size_t ansiptr_len = strlen(ansiptr);
-	size_t ansistr_len = ansi.size();
 
-	ASSERT(ansiptr_len==ansistr_len, _T("Failed to convert string from Unicode to ANSI"));
+	ASSERT(ansiptr_len==ansi.size(), _T("Failed to convert string from Unicode to ANSI"));
 
 	return write((unsigned char*)ansiptr, ansiptr_len);
 }
@@ -498,7 +491,7 @@ void File::reserve(size_t size)
 
 		// Allocate a larger buffer
 		data = new unsigned char[size];
-	
+
 		// Replace contents with the existing data
 		memcpy(data, temp, this->size);
 
@@ -514,7 +507,7 @@ _tstring File::getPath(const _tstring &fileName)
 {
 	size_t i;
 	_tstring in = fixFilename(fileName);
-	
+
 	ASSERT(!fileName.empty(), _T("File name is blank"));
 
 	for(i=in.size()-1; i>0 && in.at(i)!=_T('\\'); --i);
@@ -532,7 +525,7 @@ _tstring File::getPath(void) const
 _tstring File::getFilenameNoPath(void) const
 {
 	_tstring in = fixFilename(fileName);
-	_tstring out; 
+	_tstring out;
 
 	ASSERT(!fileName.empty(), _T("File name is blank"));
 
@@ -556,44 +549,37 @@ _tstring File::fixFilename(const _tstring &fileName)
 	return t;
 }
 
-_tstring File::stripExtension(const _tstring &fileName)
+size_t File::findExtensionDelimeter(const _tstring &fileName)
 {
-	size_t i=0;
-
-	// Step backwards until we find a period.  Also, we just eject if we find a slash.
-	for(i=fileName.length()-1; fileName[i] != '.' && i >= 0; --i)
+	for(size_t i=0; i<fileName.length(); ++i)
 	{
-		TCHAR c = fileName[i];
+		TCHAR c = fileName[fileName.length() - i - 1];
+
+		if(c == _T('.'))
+		{
+			// Found the delimeter, return its index
+			return fileName.length() - i - 1;
+		}
 
 		if(c == _T('\\') || c == _T('/'))
 		{
-			return fileName;
+			// Found that there was no delimeter, return the index of the end of the string
+			return fileName.length();
 		}
 	}
 
-	return fileName.substr(0, i);
+	// Found that there was no delimeter, return the index of the end of the string
+	return fileName.length();
+}
+
+_tstring File::stripExtension(const _tstring &fileName)
+{
+	return fileName.substr(0, findExtensionDelimeter(fileName));
 }
 
 _tstring File::getExtension(const _tstring &fileName)
 {
-	size_t i=0;
-
-	if(fileName.empty() || fileName.length()<1)
-		return _T("");
-
-	// Step backwards until we find a period.  Also, we just eject if we find a slash.
-	for(i=fileName.length()-1; fileName[i] != '.' && i >= 0; --i)
-	{
-		TCHAR c = fileName[i];
-
-		if(c == _T('\\') || c == _T('/'))
-		{
-			return fileName;
-		}
-	}
-
-	return fileName.substr(i, fileName.length());
+	return fileName.substr(findExtensionDelimeter(fileName), fileName.length());
 }
 
-
-}; // namespace
+} // namespace Engine

@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace Engine;
 
-namespace Engine { 
+namespace Engine {
 
 /** Listens for a combination of signals and triggers when they are met */
 class Listener : public Trigger
@@ -120,6 +120,6 @@ private:
 	_tstring expression;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

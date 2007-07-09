@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "EffectManager.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -90,9 +90,9 @@ void Material::clear(void)
 	shininess=16.0f;
 
 	myName = _T("not-set");
-	
+
 	effect=0;
-	
+
 	glow=false;
 
 	memset(textures, 0, sizeof(textures));
@@ -111,7 +111,8 @@ void Material::loadTexture(const _tstring &fileName, unsigned int textureUnit)
 
 void Material::loadTexture(Image &image, unsigned int textureUnit)
 {
-	setTexture(g_TextureMgr.Create(&image), textureUnit);
+	TextureHandle *handle = g_TextureMgr.Create(&image);
+	setTexture(handle, textureUnit);
 }
 
 void Material::setTexture(TextureHandle *handle, unsigned int textureUnit)
@@ -141,7 +142,7 @@ void Material::bind(void) const
 	glMaterialfv(GL_FRONT,	GL_DIFFUSE,		diffuse);
 	glMaterialfv(GL_FRONT,	GL_SPECULAR,	specular);
 	glMaterialf(GL_FRONT,	GL_SHININESS,	shininess);
-	
+
 	CHECK_GL_ERROR();
 }
 

@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Spell.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Heals a few allies within the area of affect */
 class SpellHeal : public Spell
@@ -84,6 +84,6 @@ private:
 	float spellRadius;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

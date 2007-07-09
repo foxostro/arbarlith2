@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,16 +31,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "animation.h"
 
-namespace Engine { 
+namespace Engine {
 
 AnimationSequence::AnimationSequence(vector<KeyFrame> keyFrames, const _tstring &name, float priority, bool looping, int start, int length, float fps)
 : m_strName(name),
   m_Priority(priority),
+  m_Time(0.0f),
+  m_TimeScalar(1.0f),
   m_bLooping(looping),
   fps(fps),
-  m_Time(0.0f),
-  m_bFinished(false),
-  m_TimeScalar(1.0f)
+  m_bFinished(false)
 {
 	for(int i=0; i<length; ++i)
 	{
@@ -55,10 +55,10 @@ AnimationSequence::AnimationSequence(const AnimationSequence &animation)
   m_strName(animation.m_strName),
   m_Priority(animation.m_Priority),
   m_Time(animation.m_Time),
+  m_TimeScalar(animation.m_TimeScalar),
   m_bLooping(animation.m_bLooping),
   fps(animation.fps),
-  m_bFinished(animation.m_bFinished),
-  m_TimeScalar(animation.m_TimeScalar)
+  m_bFinished(animation.m_bFinished)
 {
 	createWorkingSetOfMeshes(animation.meshes);
 }
@@ -120,7 +120,7 @@ float AnimationSequence::CalculateCylindricalRadius(float Time)
 		return 0.0f;
 	}
 	else
-	{	
+	{
 		vector<float> radii;
 		transform(meshes.begin(), meshes.end(), back_inserter(radii), bind(&Mesh::calculateCylindricalRadius, _1));
 		sort(radii.begin(), radii.end(), greater<float>());
@@ -141,7 +141,7 @@ float AnimationSequence::CalculateHeight(float Time)
 		return 0.0f;
 	}
 	else
-	{	
+	{
 		vector<float> top, btm;
 
 		transform(meshes.begin(), meshes.end(), back_inserter(top), bind(&getTop, bind(&Mesh::calculateBoundingBox, _1)));
@@ -163,12 +163,12 @@ float AnimationSequence::CalculateRadius(float Time)
 		return 0.0f;
 	}
 	else
-	{	
+	{
 		vector<float> radii;
 
 		transform(meshes.begin(), meshes.end(), back_inserter(radii), bind(&Mesh::calculateRadius, _1));
 		sort(radii.begin(), radii.end(), greater<float>());
-		
+
 		return radii[0];
 	}
 }
@@ -212,7 +212,7 @@ const Model& AnimationSequence::getFrame(float millisecondsIntoAnimation) const
 	const size_t lowerFrame = (size_t)floor(frameOfAnimation);
 	const size_t upperFrame = (size_t)ceil(frameOfAnimation);
 	const float bias = frameOfAnimation - lowerFrame;
-	
+
 	return getFrame(lowerFrame, upperFrame, bias);
 }
 

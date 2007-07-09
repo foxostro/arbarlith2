@@ -7,7 +7,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 	Copyright 2002 Jeff Molofee, Gregory Austwick and Others
 
 	Title:
-		TextureManager Manager	
+		TextureManager Manager
 
 	Version History:
 		v1.00	New class (GA 31/10/02)
@@ -15,15 +15,15 @@ E-Mail: mailto:andrewfox@cmu.edu
 	Licence:
 
 	This SDK/library is free software, written primarily for
-	teaching purposes. You can redistribute and modify it to 
-	your heart's content. However, any use of this library is 
-	at the user's own risk. There is no warranty. The authors 
-	will not be held responsible for ANYTHING that happens as 
-	a result of the use of this software. All financial/emotional/health 
-	problems or anything else that happens after using this 
-	software is therefore the user's own responsibility. 
-	Nevertheless, if the user finds it useful, an email or a 
-	mention in any credits would be appreciated, but is not 
+	teaching purposes. You can redistribute and modify it to
+	your heart's content. However, any use of this library is
+	at the user's own risk. There is no warranty. The authors
+	will not be held responsible for ANYTHING that happens as
+	a result of the use of this software. All financial/emotional/health
+	problems or anything else that happens after using this
+	software is therefore the user's own responsibility.
+	Nevertheless, if the user finds it useful, an email or a
+	mention in any credits would be appreciated, but is not
 	necessary.
 */
 
@@ -34,7 +34,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -43,7 +43,7 @@ class TextureManager
 private:
 	/** the texture list type */
 	typedef std::list<TextureHandle> TListType;
-	
+
 	/** the texture list */
 	TListType tlist;
 
@@ -53,7 +53,7 @@ private:
 public:
 	/** Constructor */
 	TextureManager();
-	
+
 	/** Destructor */
 	~TextureManager();
 
@@ -107,16 +107,14 @@ public:
 	@param name The texture name
 	*/
 	void Delete(const _tstring &name);
-	
+
 	/** Release all textures */
 	void release(void);
-	
+
 	/** Reaquire all textures */
 	void reaquire(void);
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

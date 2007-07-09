@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "propbag.h"
 #include "frustum.h"
 
-namespace Engine { 
+namespace Engine {
 
 /**
 Flying camera
@@ -44,7 +44,7 @@ Flying camera
 */
 class Camera
 {
-private:	
+private:
 	/** Indicates that the camera has moved since the last call to setCamera */
 	bool moved;
 
@@ -54,8 +54,13 @@ private:
 	/** Position of the camera */
 	vec3 position;
 
+	/** Most recently cached camera frustum */
 	Frustum frustum;
 
+	/**
+	Calculates the camera frustum
+	@return Camera frtustum
+	*/
 	Frustum calculateFrustum(void);
 
 public:
@@ -69,14 +74,14 @@ public:
 		fromXml(tag);
 	}
 
-	/**	Default constructor	*/
+	/** Default constructor */
 	Camera(void)
 	{
 		clear();
 	}
 
 	/** Destructor */
-	~Camera(void)
+	virtual ~Camera(void)
 	{
 		destroy();
 	}
@@ -136,7 +141,7 @@ public:
 	{
 		position = x;
 	}
-	
+
 	/**
 	Creates an xml tag to represent the object
 	@return The tag representing this object
@@ -169,9 +174,9 @@ public:
 	The up vector must not be parallel to the line of sight from the eye to
 	the reference point.
 
-	@param eye		The position of the eye point. 
-	@param center	The position of the reference point. 
-	@param up		The direction of the up vector. 
+	@param eye		The position of the eye point.
+	@param center	The position of the reference point.
+	@param up		The direction of the up vector.
 	*/
 	void lookAt(const vec3 &eye, const vec3 &center, const vec3 &up);
 
@@ -188,6 +193,6 @@ public:
 	Frustum getFrustum(void) const;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

@@ -13,7 +13,7 @@ Source: www.gamedev.net "Enginuity, Part V"
 #include "myassert.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -58,8 +58,6 @@ class Singleton
 
 template <typename T> T* Singleton <T>::ms_singleton = 0;
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

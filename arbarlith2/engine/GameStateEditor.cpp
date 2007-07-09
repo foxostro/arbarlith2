@@ -36,8 +36,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "WaitScreen.h"
 #include "GameStateEditor.h"
 
-namespace Engine { 
-	
+namespace Engine {
+
 GameStateEditor::GameStateEditor(void)
 :editorToolBar(0)
 {}
@@ -102,4 +102,4 @@ void GameStateEditor::release(void)
 void GameStateEditor::reaquire(void)
 {}
 
-}; // namespace
+} // namespace Engine

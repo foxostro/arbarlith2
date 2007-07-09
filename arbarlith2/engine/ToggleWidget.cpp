@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "ToggleWidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 ToggleWidget::ToggleWidget(bool *value, const _tstring& imageFileTRUE, const _tstring& imageFileFALSE)
 :myValue(value)
@@ -68,7 +68,7 @@ ToggleWidget::ToggleWidget(bool *value, const _tstring& imageFileTRUE, const _ts
 void ToggleWidget::onMouseClick(void)
 {
 	setValue(!getValue()); // Toggle the value
-	__super::onMouseClick();
+	ListElementWidget::onMouseClick();
 }
 
 const Material& ToggleWidget::getMaterial(void) const

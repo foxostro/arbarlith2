@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/MonsterFSM.h"
 
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 
 
@@ -57,8 +57,6 @@ private:
 	float thresholdSpellRange;
 };
 
-
-}; // namespace
-
+} // namespace Arbarlith2
 
 #endif

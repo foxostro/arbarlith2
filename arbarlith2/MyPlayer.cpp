@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(MyPlayer)
+GEN_ACTOR_RTTI_CPP(MyPlayer, "class Arbarlith2::MyPlayer")
 
 MyPlayer::MyPlayer(OBJECT_ID ID)
 :Engine::Player(ID)
@@ -78,7 +78,7 @@ void MyPlayer::deleteControllerActions(int playerNumber)
 	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
 
 	Player::deleteControllerActions(playerNumber);
-	
+
 	g_Keys.deleteAction(KEY_PLAYER_CAST_SPELL);
 
 	KEY_PLAYER_CAST_SPELL = INVALID_ACTION_CODE;
@@ -140,7 +140,7 @@ void MyPlayer::update(float deltaTime)
 			spellCastDebounce = true;
 
 			if(getSpell().beginCast())
-			{			
+			{
 				// scale the animation speed for the duration of the actual spell cast
 				size_t animHandle = getAnimationHandle(getSpellCastAnim());
 				float delay = getAnimationLength(animHandle);
@@ -273,10 +273,10 @@ void MyPlayer::DoCollisionResponse(void)
 void MyPlayer::OnChangePlayerNumber(int playerNumber)
 {
 	ASSERT(playerNumber >= 0 && playerNumber <= 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
-	
+
 	Player::OnChangePlayerNumber(playerNumber);
 
-	_tstring playerModel[] = 
+	_tstring playerModel[] =
 	{
 		_T("data/hero/model.md3xml"),
 		_T("data/hero-red/model.md3xml"),
@@ -300,10 +300,10 @@ void MyPlayer::drawObjectDebugData(void) const
 	glPushMatrix();
 		glTranslatef(base.x, base.y + 0.25f, base.z);
 		g_Application.fontSmall.write(spell.toString(), white, FONT_SIZE_NORMAL, true);
-		
+
 		glTranslatef(0.0f, 0.2f, 0.0f);
 		g_Application.fontSmall.write(getName(), white, FONT_SIZE_NORMAL, true);
-		
+
 		glTranslatef(0.0f, 0.2f, 0.0f);
 		g_Application.fontSmall.write(getTypeString(), white, FONT_SIZE_NORMAL, true);
 	glPopMatrix();
@@ -322,4 +322,4 @@ void MyPlayer::drawStateCountdown(void) const
 	}
 }
 
-}; // namespace
+} // namespace Arbarlith2

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,9 +33,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "windows.h"
 #include "LogString.h"
 
-Engine::LogString logger;
+namespace Engine {
 
-namespace Engine { 
+LogString& getMessageLogger(void)
+{
+	static LogString *logger = new LogString; // HACK: this memory is never free'd
+	ASSERT(logger!=0, _T("logger was null"));
+	return(*logger);
+}
 
 LogString::LogString(void)
 {
@@ -46,7 +51,7 @@ LogString::LogString(void)
 void LogString::addString(const _tstring &s)
 {
 	_tstring logFileName = pathAppend(getAppDataDirectory(), _T("log.txt"));
-	
+
 	// Store the message
 	lastMessage = s;
 

@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Detector.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Sends a signal when an object of a given type is very close to the detector */
 template<class T>
@@ -57,16 +57,18 @@ protected:
 	virtual bool pollConditions(void) const
 	{
 		OBJECT_ID unused;
-		
-		ActorSet s = getZone().getObjects().typeFilter<T>();
+
+		const ActorSet &objects = getZone().getObjects();
+
+		ActorSet s = objects.typeFilter<T>();
 
 		return isAnythingInProximity(s, unused, triggerRadius);
 	}
-	
+
 public:
 	GEN_RTTI(DetectorProximity)
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

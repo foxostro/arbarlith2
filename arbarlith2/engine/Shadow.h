@@ -45,19 +45,19 @@ public:
 	{
 		clear();
 	}
-	
+
 	~Shadow(void)
 	{
 		destroy();
 	}
 
-	/**	Clears the manager to a just-constructed state */
+	/** Clears the manager to a just-constructed state */
 	void clear(void);
 
-	/**	Cleanly destroys and clears the shadow */
+	/** Cleanly destroys and clears the shadow */
 	void destroy(void);
 
-	/**	Reconstructs the Shadow */
+	/** Reconstructs the Shadow */
 	void create(void);
 
 	/** Release assets */
@@ -72,13 +72,13 @@ public:
 	@param deltaTime Time elapsed since the last update
 	*/
 	void update(const ActorSet &zoneActors, float deltaTime);
-	
+
 	/**
 	Binds the shadow to a specific actor
 	@param actorID The id of an actor which generates the shadow
 	*/
 	void setActor(OBJECT_ID actorID);
-	
+
 	/**
 	Binds the shadow to a specific light
 	@param light The handle of the light that this shadow is bound to
@@ -105,7 +105,7 @@ public:
 	{
 		needsUpdate=true;
 	}
-	
+
 	/** renders the shadow texture onto the screen to test it */
 	void testDepthTexture(void) const;
 
@@ -124,7 +124,7 @@ public:
 	{
 		return receivers;
 	}
-	
+
 	/**
 	Gets the shadow frustum
 	@return shadow frustum
@@ -183,7 +183,7 @@ private:
 	@param lightViewMatrix Model-View matrix from the light's perspective
 	@param textureMatrix texture projection matrix
 	@param lx Angle of the frustum in the x direction
-	@param ly Angle of the frustum in the y direction 
+	@param ly Angle of the frustum in the y direction
 	*/
 	static void calculateMatrices(const Light &light, const Actor &actor, int shadowMapSize, mat4& lightProjectionMatrix, mat4& lightViewMatrix, mat4& textureMatrix, float lx, float ly);
 
@@ -201,7 +201,7 @@ private:
 	@param light Light that will be generating the shadow
 	@param actor Actor that will be casting the shadow
 	@param lx Angle of the frustum in the x direction
-	@param ly Angle of the frustum in the y direction 
+	@param ly Angle of the frustum in the y direction
 	@param ntl
 	@param ntr
 	@param nbl
@@ -243,6 +243,6 @@ private:
 	static void calculateAngularSpread(const Actor &actor, const mat4& lightViewMatrix, float &lx, float &ly);
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

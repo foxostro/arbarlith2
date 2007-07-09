@@ -36,9 +36,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Player.h"
 #include "Lamp.h"
 
-namespace Engine { 
+namespace Engine {
 
-GEN_ACTOR_RTTI_CPP(Lamp)
+GEN_ACTOR_RTTI_CPP(Lamp, "class Engine::Lamp")
 
 Lamp::Lamp(OBJECT_ID ID)
 :Switch(ID)

@@ -34,14 +34,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListElementTweaker.h"
 #include "Zone.h"
 #include "Player.h"
-#include "Trigger.h" 
+#include "Trigger.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
-GEN_ACTOR_RTTI_CPP(Trigger)
+GEN_ACTOR_RTTI_CPP(Trigger, "class Engine::Trigger")
 
 
 
@@ -98,7 +98,7 @@ bool Trigger::playerIsInProximity(OBJECT_ID &player) const
 			}
 		}
 	}
-	
+
 	return false;
 }
 
@@ -123,7 +123,7 @@ bool Trigger::saveTidy(CPropBag &xml, CPropBag &dataFile) const
 
 bool Trigger::LoadXml(CPropBag &xml)
 {
-	Actor::LoadXml(xml);	
+	Actor::LoadXml(xml);
 
 	loadList(xml, _T("sounds"), sounds);
 	if(!xml.getSym(triggerRadius))

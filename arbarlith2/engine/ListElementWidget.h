@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "WindowWidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Element of a list widget on the GUI */
 class ListElementWidget : public WindowWidget
@@ -44,14 +44,14 @@ private:
 
 	/** Image when the element is depressed */
 	static _tstring depressedImg;
-	
+
 	/** Image when the mouse is over the element */
 	static _tstring hoverImg;
 
 public:
 	/** Constructor */
 	ListElementWidget(void);
-	
+
 	/**
 	Constructor
 	@param x relative x
@@ -66,7 +66,6 @@ public:
 	virtual void onMouseClick(void);
 };
 
-}; // namespace
-
+} // namespace Engine
 
 #endif

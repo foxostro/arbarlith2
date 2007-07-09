@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "mesh.h"
 #include "keyframe.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Records keyframe timing and arrangement for ana animation */
 class AnimationSequence
@@ -202,7 +202,7 @@ private:
 
 	/**
 	Gets the frame of animation by interploating between the given keyframes
-	@param lowerFrame Index of the lower keyframe 
+	@param lowerFrame Index of the lower keyframe
 	@param upperFrame Index of the upper keyframe
 	@param bias 0.0 to 1.0 indicating the bias between the keyframes
 	@return The frame of animation
@@ -249,6 +249,6 @@ private:
 	bool m_bFinished;
 };
 
-}; //namespace
+} //namespace Engine
 
 #endif

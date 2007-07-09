@@ -1,9 +1,37 @@
 /*
-Copyright Â© 2003-2007 Andrew Fox
+Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
+
 2006 Richard Halstead
 E-mail: mailto:rhalstea@andrew.cmu.edu
+
+Copyright © 2006-2007 Game Creation Society
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the Game Creation Society nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE Game Creation Society ``AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE Game Creation Society BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
+
 
 #ifndef ACTOR_H
 #define ACTOR_H
@@ -14,7 +42,7 @@ E-mail: mailto:rhalstea@andrew.cmu.edu
 #include "Message.h"
 #include "AnimationController.h"
 
-namespace Engine { 
+namespace Engine {
 
 class ActorSet;
 class Zone;
@@ -159,14 +187,14 @@ public:
 
 	/**
 	Determines whether any object is in proximity to this object and returns the ID of that object
-	@param id When isAnythingInProximity returns true, this returns the ID of the object 
+	@param id When isAnythingInProximity returns true, this returns the ID of the object
 	@return true if some object was in proximity, false otherwise
 	*/
 	virtual bool isAnythingInProximity(OBJECT_ID &id) const;
 
 	/**
 	Determines whether any object is in proximity to this object and returns the ID of that object
-	@param id When isAnythingInProximity returns true, this returns the ID of the object 
+	@param id When isAnythingInProximity returns true, this returns the ID of the object
 	@param triggerRadius Radius to define "proximity" as
 	@return true if some object was in proximity, false otherwise
 	*/
@@ -175,7 +203,7 @@ public:
 	/**
 	Determines whether any object is in proximity to this object and returns the ID of that object
 	@param s Only considers objects of the given actor set
-	@param id When isAnythingInProximity returns true, this returns the ID of the object 
+	@param id When isAnythingInProximity returns true, this returns the ID of the object
 	@return true if some object was in proximity, false otherwise
 	*/
 	virtual bool isAnythingInProximity(const ActorSet &s, OBJECT_ID &id) const;
@@ -183,7 +211,7 @@ public:
 	/**
 	Determines whether any object is in proximity to this object and returns the ID of that object
 	@param s Only considers objects of the given actor set
-	@param id When isAnythingInProximity returns true, this returns the ID of the object 
+	@param id When isAnythingInProximity returns true, this returns the ID of the object
 	@param triggerRadius Radius to define "proximity" as
 	@return true if some object was in proximity, false otherwise
 	*/
@@ -267,7 +295,7 @@ public:
 	{
 		return sphereRadius;
 	}
-	
+
 	/**
 	Get the radius of the smallest cylinder that can completly enclose the object
 	@return radius
@@ -483,7 +511,7 @@ protected:
 	@return list of all objects this object is colliding with
 	*/
 	virtual list<Actor*> getCollisions(const ActorSet &set) const;
-	
+
 	/** Records all collisions in the previous tick */
 	list<Actor*> m_Collisions;
 
@@ -527,47 +555,47 @@ protected:
 	template<class T>
 	bool saveTag(CPropBag &xml, CPropBag &editorData, const _tstring &tagName, T data) const
 	{
-		T defaultValue;                                                                      
-		bool contains = editorData.Get(tagName, defaultValue);                               
-		if(!contains || (contains && defaultValue!=data))                                    
-		{                                                                                    
-			xml.Add(tagName, data);                                                          
-			return true;                                                                     
-		}                                                                                    
-		else                                                                                 
-		{                                                                                    
-			return false;                                                                    
-		}                                                                                    
+		T defaultValue;
+		bool contains = editorData.Get(tagName, defaultValue);
+		if(!contains || (contains && defaultValue!=data))
+		{
+			xml.Add(tagName, data);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	bool saveTag(CPropBag &xml, CPropBag &editorData, const _tstring &tagName, _tstring data) const
 	{
-		_tstring defaultValue;                                                                      
-		bool contains = editorData.Get(tagName, defaultValue);                               
-		if(!contains || (contains && defaultValue!=data))                                    
-		{                                                                                    
-			xml.Add(tagName, data);                                                          
-			return true;                                                                     
-		}                                                                                    
-		else                                                                                 
-		{                                                                                    
-			return false;                                                                    
-		}                                                                                    
+		_tstring defaultValue;
+		bool contains = editorData.Get(tagName, defaultValue);
+		if(!contains || (contains && defaultValue!=data))
+		{
+			xml.Add(tagName, data);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	bool saveTag(CPropBag &xml, CPropBag &editorData, const _tstring &tagName, vec4 data) const
 	{
-		vec4 defaultValue;                                                                      
-		bool contains = editorData.Get(tagName, defaultValue);                               
-		if(!contains || (contains && defaultValue!=data))                                    
-		{                                                                                    
-			xml.Add(tagName, data);                                                          
-			return true;                                                                     
-		}                                                                                    
-		else                                                                                 
-		{                                                                                    
-			return false;                                                                    
-		}                                                                                    
+		vec4 defaultValue;
+		bool contains = editorData.Get(tagName, defaultValue);
+		if(!contains || (contains && defaultValue!=data))
+		{
+			xml.Add(tagName, data);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -684,6 +712,6 @@ private:
 	float getRealAngleY(void) const;
 };
 
-}; // namespace
+} // namespace Engine
 
-#endif // !defined(AFX_OBJECT_H__858CB05A_BB57_447D_8AC0_865ECDF1EDD9__INCLUDED_)
+#endif

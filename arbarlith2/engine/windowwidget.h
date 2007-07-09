@@ -34,9 +34,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Widget.h"
 #include "Material.h"
 
-namespace Engine { 
+namespace Engine {
 
-class WindowWidget : public Widget  
+class WindowWidget : public Widget
 {
 public:
 	/**
@@ -46,7 +46,7 @@ public:
 	@param imageFile The image file to use for an unaffected widget
 	*/
 	WindowWidget(float x, float y, const _tstring &imageFile);
-	
+
 	/**
 	Constructor
 	@param x relative x
@@ -55,7 +55,7 @@ public:
 	@param depressedFile The image file to use for a depressed widget
 	*/
 	WindowWidget(float x, float y, const _tstring &imageFile, const _tstring &depressedFile);
-	
+
 	/**
 	Constructor
 	@param x relative x
@@ -96,7 +96,7 @@ private:
 	vec2 unstretchedDim;
 };
 
-}; //namespace
+} //namespace Engine
 
 #endif
 

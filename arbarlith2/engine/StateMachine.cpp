@@ -3,7 +3,7 @@ Modified in 2005-2007 by Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 */
 
-/* Copyright © Steve Rabin, 2001. 
+/* Copyright © Steve Rabin, 2001.
  * All rights reserved worldwide.
  *
  * This software is provided "as is" without express or implied
@@ -18,7 +18,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 #include "StateMachine.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -32,7 +32,7 @@ StateMachine::StateMachine(OBJECT_ID) // RTTI expects to pass us our ID, but we 
 	m_ccMessagesToGameObject = INVALID_ID;
 }
 
-	
+
 void StateMachine::Initialize( void )
 {
 	Process( EVENT_Enter, 0 );
@@ -47,7 +47,7 @@ void StateMachine::Update( Message_s * msg )
 
 void StateMachine::Process( StateMachineEvent event, Message_s * msg )
 {
-	
+
 	if( event == EVENT_Message && msg && GetCCReceiver() > INVALID_ID )
 	{	// CC this message
 		SendMsg( msg->m_Type, GetCCReceiver() );
@@ -113,7 +113,7 @@ void StateMachine::SendDelayedMsg( float delay, MSG_TYPE name, OBJECT_ID receive
 	Msg.m_Type = name;
 
 	// The message is sent via the message router in the realm where our owner is
-	m_Owner->getZone().router.Send(Msg);	
+	m_Owner->getZone().router.Send(Msg);
 }
 
 
@@ -133,12 +133,12 @@ void StateMachine::SendDelayedMsgToMe( float delay, MSG_TYPE name, MSG_Scope )
 double StateMachine::GetTimeInState( void )
 {
 	return( g_World.getClockTicks() - m_timeOnEnter );
-}	
+}
 
 bool StateMachine::SaveXml(CPropBag &Bag)
 {
-	Bag.Add(_T("currentState"), (int)m_currentState);
-	Bag.Add(_T("nextState"),    (int)m_nextState);
+	Bag.Add(_T("currentState"), m_currentState);
+	Bag.Add(_T("nextState"),    m_nextState);
 	Bag.Add(_T("stateChange"),  m_stateChange);
 	Bag.Add(_T("timeOnEnter"),  m_timeOnEnter);
 
@@ -147,14 +147,12 @@ bool StateMachine::SaveXml(CPropBag &Bag)
 
 bool StateMachine::LoadXml(CPropBag &Bag)
 {
-	int iTemp=0;
-
-	Bag.Get(_T("currentState"), iTemp); m_currentState = unsigned int(iTemp);
-	Bag.Get(_T("nextState"),    iTemp); m_nextState = unsigned int(iTemp);
+	Bag.Get(_T("currentState"), m_currentState);
+	Bag.Get(_T("nextState"),    m_nextState);
 	Bag.Get(_T("stateChange"),  m_stateChange);
 	Bag.Get(_T("timeOnEnter"),  m_timeOnEnter);
 
-	m_Owner = NULL;
+	m_Owner = 0;
 	m_ccMessagesToGameObject = INVALID_ID;
 
 	return true;

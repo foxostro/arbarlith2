@@ -56,7 +56,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <tchar.h>
 #else
 #include <unistd.h>
-#define TCHAR char 
+#define TCHAR char
 #define _tmkdir mkdir
 #define _T(s) s
 #endif
@@ -71,7 +71,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stack>
 #include <map>
 #include <sstream>
-#include <strstream>
 #include <new>
 #include <algorithm>
 #include <exception>

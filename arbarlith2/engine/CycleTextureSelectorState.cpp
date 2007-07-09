@@ -31,12 +31,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "CycleTextureSelectorState.h"
 
-namespace Engine { 
+namespace Engine {
 
 CycleTextureSelectorState::CycleTextureSelectorState(TEXTURE_SELECTOR_STATE *value)
-:myLabel(_T("uninitialized")),
-myValue(value),
-statusLbl(0)
+: myValue(value),
+  myLabel(_T("uninitialized")),
+  statusLbl(0)
 {
 	// Create the status label
 	AddChild(statusLbl = new LabelWidget(myLabel, 12.0f, 1.0f));
@@ -82,7 +82,7 @@ void CycleTextureSelectorState::onMouseClick(void)
 
 	statusLbl->setLabel(getLabel(*myValue));
 
-	__super::onMouseClick();
+	ListElementWidget::onMouseClick();
 }
 
 void CycleTextureSelectorState::onMouseEnter(void)

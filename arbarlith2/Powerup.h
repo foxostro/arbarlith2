@@ -37,8 +37,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "engine/Switch.h"
 
-namespace Arbarlith2 { 
-	
+namespace Arbarlith2 {
+
 class MyPlayer;
 
 /** Basic power up object */

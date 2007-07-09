@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _GAME_STATE_H_
 #define _GAME_STATE_H_
 
-namespace Engine { 
+namespace Engine {
 
 /** State of the game */
 class GameState
@@ -39,7 +39,7 @@ class GameState
 public:
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	virtual void update(float deltaTime)=0;
 
@@ -48,7 +48,7 @@ public:
 
 	/** Called when the state is exitted */
 	virtual void onExit(void)=0;
-	
+
 	/** Release assets */
 	virtual void release(void)=0;
 
@@ -56,6 +56,6 @@ public:
 	virtual void reaquire(void)=0;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

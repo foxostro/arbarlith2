@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _VISUAL_PRIORITY_H_
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -66,7 +66,7 @@ class VisualPriority
 public:
 	/** Indicates that the object has moved in this tick */
 	bool hasMoved;
-	
+
 	/**
 	Indicates that the object has changed in mesh geometry -- possibly as a result of keyframe animation.
 	If this is the case, then the object's appearance on screen will have been altered.
@@ -84,7 +84,7 @@ protected:
 	*/
 	float visualPriority;
 
-	/**	Indicates that the object needs to have its visual priority updated	*/
+	/** Indicates that the object needs to have its visual priority updated	*/
 	bool needsVisualPriorityUpdate;
 
 public:
@@ -92,7 +92,7 @@ public:
 	VisualPriority(void);
 
 	/** Destructor */
-	~VisualPriority(void);
+	virtual ~VisualPriority(void);
 
 	/**
 	Gets the visual priority of the object

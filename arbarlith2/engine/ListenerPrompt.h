@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Listener.h"
 #include "TriggerPrompt.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Displays a message in the message prompt when certain signals conditions are satisfied */
 class ListenerPrompt : public Listener
@@ -88,6 +88,6 @@ private:
 	TriggerPrompt::HANDLE handle;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

@@ -40,9 +40,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "GateOpener.h"
 #include "TileGate.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(GateOpener)
+GEN_ACTOR_RTTI_CPP(GateOpener, "class Arbarlith2::GateOpener")
 
 GateOpener::GateOpener(OBJECT_ID ID)
 :Listener(ID)
@@ -85,7 +85,7 @@ bool GateOpener::LoadXml(CPropBag &xml)
 }
 
 bool GateOpener::saveTidy(CPropBag &xml, CPropBag &editorData) const
-{	
+{
 	saveTag(xml, editorData, _T("gateName"), gateName);
 	saveTag(xml, editorData, _T("open"), open);
 	return Listener::saveTidy(xml, editorData);
@@ -99,4 +99,4 @@ void GateOpener::createToolBar(ListPaneWidget *pane)
 	pane->addElement(new ToggleWidgetText		(_T("Opens Gate"),	&open));
 }
 
-}; // namespace
+} // namespace Arbarlith2

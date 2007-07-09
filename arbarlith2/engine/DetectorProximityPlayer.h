@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "DetectorProximity.h"
 #include "Player.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Sends a signal when an object of a given type is very close to the detector */
 class DetectorProximityPlayer : public DetectorProximity<Player>
@@ -52,6 +52,6 @@ public:
 	GEN_RTTI(DetectorProximityPlayer)
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

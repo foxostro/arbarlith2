@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "task.h"
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -68,7 +68,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	void update(float deltaTime)
 	{
@@ -94,7 +94,7 @@ private:
 
 	/** The starting value*/
 	float startingValue;
-	
+
 	/** The ending value */
 	float endingValue;
 
@@ -105,8 +105,6 @@ private:
 	float timeLimit;
 };
 
-
-
-}; // namespace
+} // namespace Engine
 
 #endif

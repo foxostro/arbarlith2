@@ -16,15 +16,15 @@ E-Mail: mailto:andrewfox@cmu.edu
 	Licence:
 
 	This SDK/library is free software, written primarily for
-	teaching purposes. You can redistribute and modify it to 
-	your heart's content. However, any use of this library is 
-	at the user's own risk. There is no warranty. The authors 
-	will not be held responsible for ANYTHING that happens as 
-	a result of the use of this software. All financial/emotional/health 
-	problems or anything else that happens after using this 
-	software is therefore the user's own responsibility. 
-	Nevertheless, if the user finds it useful, an email or a 
-	mention in any credits would be appreciated, but is not 
+	teaching purposes. You can redistribute and modify it to
+	your heart's content. However, any use of this library is
+	at the user's own risk. There is no warranty. The authors
+	will not be held responsible for ANYTHING that happens as
+	a result of the use of this software. All financial/emotional/health
+	problems or anything else that happens after using this
+	software is therefore the user's own responsibility.
+	Nevertheless, if the user finds it useful, an email or a
+	mention in any credits would be appreciated, but is not
 	necessary.
 */
 
@@ -59,7 +59,7 @@ Timer :: Timer()
 		performance=true;
 		// calculate the resolution from the frequency
 		resolution=(float) ( ((double)1.0f)/((double)frequency) );
-	}else{	
+	}else{
 		// No performance counter available
 		performance=false;
 		// Get the present time
@@ -134,4 +134,4 @@ void Frame :: Update()
 	numFrames += 1.0;
 }
 
-}; // namespace NeHe
+} // namespace NeHe

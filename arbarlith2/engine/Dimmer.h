@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _DIMMER_H_
 #define _DIMMER_H_
 
-namespace Engine { 
+namespace Engine {
 
 /** Dims the screen */
 class Dimmer
@@ -47,6 +47,6 @@ public:
 	static float alphaBlur;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

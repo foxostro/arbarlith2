@@ -32,11 +32,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SelectionList.h"
 #include "ListElementWidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 SelectionList::SelectionList(float x, float y)
-:selected(0),
-ListPaneWidget(x, y)
+: ListPaneWidget(x, y),
+  selected(0)
 {}
 
 void SelectionList::addSelectableElement(ListElementWidget *widget)

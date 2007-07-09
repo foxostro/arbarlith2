@@ -43,10 +43,10 @@ wstring toUnicodeString(const string &str)
 		if(lenW > 0)
 		{
 			BSTR unicodestr = ::SysAllocStringLen(0, lenW);
-			
+
 			if(unicodestr != 0)
 			{
-				::MultiByteToWideChar(CP_ACP, 0, ansistr, lenA, unicodestr, lenW);		
+				::MultiByteToWideChar(CP_ACP, 0, ansistr, lenA, unicodestr, lenW);
 				wstring s = unicodestr;
 				::SysFreeString(unicodestr);
 				return s;
@@ -68,34 +68,37 @@ string toAnsiString(const string &ansistr)
 }
 
 string toAnsiString(const wstring &unicodestr)
-{	
+{
+	char *ansistr = toAnsiCharArray(unicodestr);
+	string s = ansistr;
+	delete [] ansistr;
+	return s;
+}
+
+char* toAnsiCharArray(const string &ansistr)
+{
+	char *dst = new char[ansistr.size()+1];
+
+	for(size_t i=0; i<ansistr.size(); ++i) dst[i] = ansistr[i];
+	dst[ansistr.size()] = 0;
+
+	ASSERT(strcmp(dst, ansistr.c_str())==0, _T("Failed to duplicate ANSI string \"") + ansistr + _T("\""));
+
+	return dst;
+}
+
+char* toAnsiCharArray(const wstring &unicodestr)
+{
 	size_t lenW = wcslen(unicodestr.c_str());
 	char *ansistr = new char[lenW+1];
 
 	for(size_t i=0; i<lenW; ++i)
 	{
-		wchar_t c = unicodestr[i];
-
-		if(c > 0 && c < 128)
-		{
-			ansistr[i] = (char)c;
-		}
-		else
-		{
-			ansistr[i] = '?';
-		}
+		ansistr[i] = static_cast<char>(unicodestr[i]);
 	}
 	ansistr[lenW] = 0;
 
-	string s = ansistr;
+	ASSERT(strlen(ansistr)==lenW,     _T("strlen(ansistr) != lenW")     );
 
-	size_t len1 = strlen(ansistr);
-	size_t len2 = s.size();
-	ASSERT(len1==len2, _T("len1==len2"));
-	ASSERT(len1==lenW, _T("len1==lenW"));
-
-	// ...use the strings, then free their memory:
-	delete [] ansistr;
-
-	return s;
+	return ansistr;
 }

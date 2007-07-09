@@ -9,7 +9,11 @@ E-Mail: mailto:andrewfox@cmu.edu
 #include "PropBag.h"
 
 
-namespace Engine { 
+namespace Engine {
+
+// stdafx.cpp
+int stoi(const _tstring &s);
+float stof(const _tstring &s);
 
 
 
@@ -43,6 +47,11 @@ void CPropBag::Add(const _tstring& key, _tstring data, bool convert)
 void CPropBag::Add(const _tstring& key, int data)
 {
 	Add(key, itoa(data));
+}
+
+void CPropBag::Add(const _tstring& key, size_t data)
+{
+	Add(key, itoa((int)data));
 }
 
 void CPropBag::Add(const _tstring& key, double data)
@@ -98,7 +107,7 @@ void CPropBag::Remove(const _tstring &key, int instance)
   if (i == m_Data.end()) return; // nothing to remove
   if (instance != -1) for(int q=0; q < instance; q++, i++);
   if (i != m_Data.end()) {
-    
+
     if (instance == -1) { // kill all instances
       do {
         delete((*i).second);
@@ -210,7 +219,7 @@ bool CPropBag::LoadMerge(const _tstring &filename)
 
 			// Copy file data
 			file.read(buffer, size);
-			
+
 			// Copy the buffer into the _tstring
 			strData = toTString(buffer);
 
@@ -278,8 +287,8 @@ bool CPropBag::LoadMergeFromString(const _tstring &data)
 	bool isPossibleClosingTag=false;
 
 	for(_tstring::const_iterator iter = data.begin(); iter != data.end(); ++iter)
-	{    
-		const unsigned char b = (unsigned char)(*iter);		
+	{
+		const unsigned char b = (unsigned char)(*iter);
 
 		switch(curstate)
 		{
@@ -319,7 +328,7 @@ bool CPropBag::LoadMergeFromString(const _tstring &data)
 				{
 					// Build the _tstring for what may be the closing tag
 					possibleClosingTag += b;
-				
+
 					// Otherwise, search for the real closing tag
 					if(possibleClosingTag == closetag)
 					//if(tagvalue.find(closetag) != _tstring::npos)
@@ -341,7 +350,7 @@ bool CPropBag::LoadMergeFromString(const _tstring &data)
 					if(b == _T('>'))
 					{
 						isPossibleClosingTag = false;
-					} 
+					}
 				}
 
 				// Have we begun to encounter what may be the closing tag?
@@ -361,7 +370,7 @@ bool CPropBag::LoadMergeFromString(const _tstring &data)
 }
 
 bool CPropBag::LoadFromString(const _tstring &data)
-{	
+{
 	m_Data.clear();
 	return LoadMergeFromString(data);
 }
@@ -407,7 +416,15 @@ bool CPropBag::Get(const _tstring& key, int &dest, int instance)
 {
   _tstring str;
   if (!Get(key, str, instance)) return(false);
-  dest = _tstoi(str.c_str());
+  dest = stoi(str);
+  return(true);
+}
+
+bool CPropBag::Get(const _tstring& key, size_t &dest, int instance)
+{
+  _tstring str;
+  if (!Get(key, str, instance)) return(false);
+  dest = static_cast<size_t>(stoi(str));
   return(true);
 }
 
@@ -415,7 +432,7 @@ bool CPropBag::Get(const _tstring& key, double &dest, int instance)
 {
   _tstring str;
   if (!Get(key, str, instance)) return(false);
-  dest = _tstof(str.c_str());
+  dest = stof(str);
   return(true);
 }
 
@@ -423,7 +440,7 @@ bool CPropBag::Get(const _tstring& key, float &dest, int instance)
 {
   _tstring str;
   if (!Get(key, str, instance)) return(false);
-  dest = (float)_tstof(str.c_str());
+  dest = stof(str);
   return(true);
 }
 
@@ -495,41 +512,41 @@ int CPropBag::GetNumInstances(_tstring key)
 
 void CPropString::MakeStringSafeForPropBag(_tstring &str)
 {
-	_tstring amp(_T("&amp;"));
-	_tstring lt(_T("&lt;"));
-	_tstring gt(_T("&gt;"));
-	
-	_tstring and(_T("&"));
-	_tstring lesser(_T("<"));
-	_tstring greater(_T(">"));
+	_tstring ampEntity = _T("&amp;");
+	_tstring ltEntity = _T("&lt;");
+	_tstring gtEntity = _T("&gt;");
+
+	_tstring ampStr = _T("&");
+	_tstring ltStr = _T("<");
+	_tstring gtStr = _T(">");
 
 	// replace all &'s with &amp;
-	Replace(str, and, amp);
+	Replace(str, ampStr, ampEntity);
 
 	// replace all <'s with &lt;
-	Replace(str, lesser, lt);
-	
+	Replace(str, ltStr, ltEntity);
+
 	// replace all >'s with &gt's
-	Replace(str, greater, gt);
+	Replace(str, gtStr, gtEntity);
 }
 void CPropString::RestoreOrigFromSafeString(_tstring &str)
 {
-	_tstring amp(_T("&amp;"));
-	_tstring lt(_T("&lt;"));
-	_tstring gt(_T("&gt;"));
-	
-	_tstring and(_T("&"));
-	_tstring lesser(_T("<"));
-	_tstring greater(_T(">"));
+	_tstring ampEntity = _T("&amp;");
+	_tstring ltEntity = _T("&lt;");
+	_tstring gtEntity = _T("&gt;");
+
+	_tstring ampStr = _T("&");
+	_tstring ltStr = _T("<");
+	_tstring gtStr = _T(">");
 
 	// replace all &amp; with &
-	Replace(str, amp, and);
+	Replace(str, ampEntity, ampStr);
 
 	// replace all &lt; with <
-	Replace(str, lt, lesser);
+	Replace(str, ltEntity, ltStr);
 
 	// replace all &gt; with >
-	Replace(str, gt, greater);
+	Replace(str, gtEntity, gtStr);
 }
 
 void CPropBag::Clear()
@@ -554,19 +571,19 @@ void CPropBag::Merge(const CPropBag &newstuff, bool overwrite)
     CPropString *pStr = dynamic_cast<CPropString*>(newiter->second);
     CPropBag *pBag = dynamic_cast<CPropBag *>(newiter->second);
 
-    if (pStr) { 
+    if (pStr) {
 		  // if it doesn't already exist here, or if overwrite is set,
 		  if (m_Data.find(newiter->first) != m_Data.end() || overwrite) {
 		    // add it to this bag
 		    Remove(newiter->first);
-		    Add(newiter->first, pStr->GetData(), false); 
+		    Add(newiter->first, pStr->GetData(), false);
 		  }
 	  }
-    if (pBag) { 
+    if (pBag) {
 		  // if it doesn't exist, just add the bag (easy!)
 		  PropertyMap::iterator origbagiter = m_Data.find(newiter->first);
 		  if (origbagiter == m_Data.end()) {
-			  Add(newiter->first, *pBag); 
+			  Add(newiter->first, *pBag);
 		  }
 		  else {
 			  // it exists, so we need to recurse into the subbag
@@ -574,9 +591,9 @@ void CPropBag::Merge(const CPropBag &newstuff, bool overwrite)
 			  if (origbag) {
 				  origbag->Merge(*pBag, overwrite);
         } else {
-          // it's a _tstring, and we have a bag... 
+          // it's a _tstring, and we have a bag...
           // if we should overwrite, do so.
-          if (overwrite) { 
+          if (overwrite) {
             Remove(newiter->first);
             Add(newiter->first, *pBag);
           }

@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Material.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Backdrop texture for a screen.  The image chosen depends upon the screen resolution. */
@@ -74,19 +74,17 @@ public:
 private:
 	/** Material for the backdrop at 640x480 resolution */
 	Material* texture_640x480;
-	
+
 	/** Material for the backdrop at 800x600 resolution */
 	Material* texture_800x600;
-	
+
 	/** Material for the backdrop at 1024x768 resolution */
 	Material* texture_1024x768;
-	
+
 	/** Material for the backdrop at 1280x768 resolution */
 	Material* texture_1280x768;
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

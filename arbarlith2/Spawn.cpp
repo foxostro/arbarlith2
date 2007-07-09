@@ -41,9 +41,9 @@ namespace Engine {
 vec3 GetRandomVector(float length);
 };
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(Spawn)
+GEN_ACTOR_RTTI_CPP(Spawn, "class Arbarlith2::Spawn")
 
 Spawn::Spawn(OBJECT_ID ID)
 :Listener(ID)
@@ -92,7 +92,7 @@ void Spawn::onTrigger(void)
 
 bool Spawn::LoadXml(CPropBag &xml)
 {
-	__super::LoadXml(xml);
+	Listener::LoadXml(xml);
 
 	xml.getSym(monsterDatafile);
 	xml.getSym(minMonsters);
@@ -103,12 +103,13 @@ bool Spawn::LoadXml(CPropBag &xml)
 }
 
 bool Spawn::saveTidy(CPropBag &xml, CPropBag &editorData) const
-{	
+{
 	saveTag(xml, editorData, _T("monsterDatafile"),		monsterDatafile);
 	saveTag(xml, editorData, _T("minMonsters"),		minMonsters);
 	saveTag(xml, editorData, _T("maxMonsters"),		maxMonsters);
 	saveTag(xml, editorData, _T("separationDistance"),	separationDistance);
-	return __super::saveTidy(xml, editorData);
+
+	return Listener::saveTidy(xml, editorData);
 }
 
 }; // namespace

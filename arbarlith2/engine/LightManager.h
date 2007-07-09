@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Light.h"
 #include "Camera.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Handle to a Light in the manager */
 typedef int HLIGHT;
@@ -160,6 +160,6 @@ public:
 	void update(float deltaTime);
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

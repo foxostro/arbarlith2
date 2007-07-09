@@ -47,9 +47,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_FSM_RTTI_CPP(SpellCasterFSM)
+GEN_FSM_RTTI_CPP(SpellCasterFSM, "class Arbarlith2::SpellCasterFSM")
 
 enum States
 {
@@ -60,8 +60,8 @@ enum States
 };
 
 SpellCasterFSM::SpellCasterFSM(OBJECT_ID handle)
-: thresholdSpellRange(5),
-  MonsterFSM(handle)
+: MonsterFSM(handle),
+  thresholdSpellRange(5)
 {
 	thresholdGainInterest = 7;
 	thresholdLoseInterest = 9;
@@ -81,7 +81,7 @@ void SpellCasterFSM::orderTheAttack(void)
 		m_Owner->CancelOrders();
 		m_Owner->lookAt(getTarget().getPos());
 
-		// Cast an offensive spell at the target	
+		// Cast an offensive spell at the target
 		Spell *spell = monsterOwner->getSpellPtr();
 		ASSERT(spell!=0, _T("Owner's preferred spell was null"));
 		spell->beginCast();

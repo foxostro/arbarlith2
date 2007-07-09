@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -72,16 +72,19 @@ public:
 	}
 };
 
-}; // namespace
+/**
+Gets the global message logger
+@return message logger
+*/
+LogString& getMessageLogger(void);
 
-/** Message logger */
-extern Engine::LogString logger;
+} // namespace Engine
 
 // The TRACE macro will dump a _tstring to the log file in verbose mode
-#define TRACE(msg) logger.log( _tstring(_T(__FUNCTION__)), _tstring(msg) )
+#define TRACE(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }
 
 // The ERR macro will dump a _tstring to the log file in verbose mode
-#define ERR(msg) logger.log( _tstring(_T(__FUNCTION__)), _tstring(msg) )
+#define ERR(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }
 
 
 #endif

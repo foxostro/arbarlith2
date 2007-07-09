@@ -69,7 +69,7 @@ public:
 
 	/**
 	Gets the list of available spells
-	@return the spells 
+	@return the spells
 	*/
 	vector<Spell*> getSpellList(void) const
 	{
@@ -114,7 +114,7 @@ public:
 	{
 		return getSpell(activeIdx);
 	}
-	
+
 	/**
 	Indicates that the player has picked up the certain spell ability
 	@param spellIdx Index of the spell
@@ -124,7 +124,7 @@ public:
 	{
 		return getSpell(spellIdx).available;
 	}
-	
+
 	/**
 	Enable or disable the spell
 	@param spellIdx Spell index
@@ -157,7 +157,7 @@ public:
 	virtual void OnChangePlayerNumber(int playerNumber);
 
 protected:
-	/** Action code for casting a player spell */	
+	/** Action code for casting a player spell */
 	ACTION_CODE KEY_PLAYER_CAST_SPELL;
 
 	/**
@@ -184,7 +184,7 @@ protected:
 	@param playerNumber Player number, starts at zero
 	*/
 	virtual void setupControllerBindings(int playerNumber);
-	
+
 	/**
 	Polls the world to determine whether a USE action is appropriate.
 	If so, then the action may be taken.
@@ -203,6 +203,6 @@ private:
 	bool spellCastDebounce;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

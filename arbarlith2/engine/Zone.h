@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fog.h"
 #include "World.h"
 
-namespace Engine { 
+namespace Engine {
 
 // class prototype
 class EditorToolBar;
@@ -51,8 +51,8 @@ class EditorToolBar;
 /** A contained area of the game world */
 class Zone
 {
-	friend World;
-	friend EditorToolBar; // FIXME: remove this statement! needed so that the toolbar can edit the Zone name... correct this
+	friend class World;
+	friend class EditorToolBar; // FIXME: remove this statement! needed so that the toolbar can edit the Zone name... correct this
 
 public:
 	/** Default constructor */
@@ -86,14 +86,14 @@ public:
 	if the calling child class should save just enough for editor mode
 	*/
 	virtual bool SaveXml(CPropBag &bag);
-	
+
 	/**
 	Load from XML
 	@param bag XML source
 	@return true if successful
 	*/
 	virtual bool LoadXml(CPropBag &bag);
-	
+
 	/**
 	Save to XML
 	@param fileName XML source
@@ -180,7 +180,7 @@ public:
 	@param deltaTime Time elapsed since the last update
 	*/
 	void update(float deltaTime);
-	
+
 	/**
 	Update particles and delete stale particle systems
 	@param deltaTime Time elapsed since the last update
@@ -249,7 +249,7 @@ public:
 
 	/** List of particle systems in the world */
 	PARTICLE_SYSTEMS particles;
-	
+
 private:
 	/** All lights in the Zone */
 	LightManager lightManager;
@@ -280,9 +280,6 @@ private:
 	Map map;
 };
 
-
-}; // namespace
-
-
+} // namespace Engine
 
 #endif

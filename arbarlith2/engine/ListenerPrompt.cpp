@@ -35,9 +35,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "GameStateRun.h"
 #include "ListenerPrompt.h"
 
-namespace Engine { 
+namespace Engine {
 
-GEN_ACTOR_RTTI_CPP(ListenerPrompt)
+GEN_ACTOR_RTTI_CPP(ListenerPrompt, "class Engine::ListenerPrompt")
 
 ListenerPrompt::ListenerPrompt(OBJECT_ID ID)
 :Listener(ID)
@@ -46,7 +46,7 @@ ListenerPrompt::ListenerPrompt(OBJECT_ID ID)
 void ListenerPrompt::clear(void)
 {
 	Listener::clear();
-	
+
 	message = _T("ERROR: Invalid Message");
 	timeOut = 1000.0f;
 	handle = -1;
@@ -77,7 +77,7 @@ bool ListenerPrompt::LoadXml(CPropBag &xml)
 }
 
 bool ListenerPrompt::saveTidy(CPropBag &xml, CPropBag &editorData) const
-{	
+{
 	saveTag(xml, editorData, _T("message"), message);
 	saveTag(xml, editorData, _T("timeOut"), timeOut);
 	return Listener::saveTidy(xml, editorData);

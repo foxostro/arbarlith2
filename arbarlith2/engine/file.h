@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _FILE_H_
 #define _FILE_H_
 
-namespace Engine { 
+namespace Engine {
 
 /**
 Creates a directory
@@ -105,7 +105,7 @@ public:
 		FILE_STATUS_SUCCESS=0,
 		FILE_STATUS_NOT_FOUND,
 		FILE_STATUS_CANNOT_OPEN,
-		FILE_STATUS_CANNOT_ACCESS,
+		FILE_STATUS_CANNOT_ACCESS
 	};
 
 	/** Seek origin marker */
@@ -113,7 +113,7 @@ public:
 	{
 		FILE_SEEK_BEGIN,
 		FILE_SEEK_CURRENT,
-		FILE_SEEK_END,
+		FILE_SEEK_END
 	};
 
 	/** Constructor */
@@ -121,6 +121,9 @@ public:
 	{
 		clear();
 	}
+
+	/** Copy constructor */
+	File(const File &file);
 
 	/**
 	Constructor
@@ -343,6 +346,20 @@ public:
 	static _tstring fixFilename(const _tstring &fileName);
 
 	/**
+	Finds the extension marker in a string.
+	findExtensionDelimeter determines the index of the extension delimiter
+	character in a given fileName, when possible. For example, calling with
+	the fileName = "image.jpeg" will return 5 and "data/text.txt" will
+	return 9.  Also be aware that "data/text.txt.bak" will return 13, as
+	this is the last string that is clearly identifiable as a file
+	extension.
+	@param fileName Name of the file
+	@return Index of the extension delimiter character in the fileName.
+	If there is no extension, then the length of the filename is returned.
+	*/
+	static size_t findExtensionDelimeter(const _tstring &fileName);
+
+	/**
 	Removes a file extension from the file name
 	@param fileName The name of the file to extract the extension from
 	@return Removes a file extension from a file path and returns the modified file name.
@@ -381,7 +398,6 @@ public:
 	static bool isFileOnDisk(const _tstring &fileName);
 };
 
-}; //namespace
-
+} //namespace Engine
 
 #endif

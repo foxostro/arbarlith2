@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/DetectorProximity.h"
 #include "Monster.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Sends a signal when an object of a given type is very close to the detector */
 class DetectorProximityMonster : public Engine::DetectorProximity<Monster>
@@ -62,6 +62,6 @@ public:
 	GEN_RTTI(DetectorProximityMonster)
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

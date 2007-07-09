@@ -57,7 +57,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Engine { 
+namespace Engine {
 
 vec3 Project(const vec3 &p); // stdafx.cpp
 
@@ -97,27 +97,25 @@ AnimationController* createAnimationController(const _tstring &fileName)
 
 
 
-GEN_ACTOR_RTTI_CPP(Actor)
+GEN_ACTOR_RTTI_CPP(Actor, "class Engine::Actor")
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
 Actor::Actor(const OBJECT_ID ID)
-: m_pModel(0),
-  myZone(0),
-  m_ID(ID)
-{	
+: m_ID(ID)
+{
 	clear();
 }
 
-Actor::~Actor()
+Actor::~Actor(void)
 {
 	destroy();
 }
 
 //////////////////////////////////////////////////////////////////////
-// Member functions        
+// Member functions
 //////////////////////////////////////////////////////////////////////
 
 void Actor::clear(void)
@@ -172,7 +170,7 @@ mat4 Actor::toWorldSpace(void) const
 	rotateIt.rotateY((float)M_PI / 2);
 
 	mat = (mat * rotateIt) * m_Scale;
-    
+
 	// Place the mesh
 	mat.setPos(getPos());
 	mat.m[15] = 1.0f;
@@ -202,7 +200,7 @@ void Actor::LoadModel(const _tstring &fileName)
 		m_pModel = createAnimationController(DEFAULT_MODEL);
 
 		ASSERT(m_pModel!=0,	_T("failed to load model and failed to load placeholder"));
-		
+
 		if(m_pModel==0)
 		{
 			ERR(_T("failed to load model and failed to load placeholder"));
@@ -218,7 +216,7 @@ void Actor::LoadModel(const _tstring &fileName)
 		m_strModelFilename = fileName;
 	}
 
-	// Calculate the scale from the desired height and the raw model height			
+	// Calculate the scale from the desired height and the raw model height
 	setHeight(m_desiredHeight);
 
 	// Use the idle animation until another is selected
@@ -236,9 +234,7 @@ void Actor::Place(const vec3 &pos)
 }
 
 void Actor::OnPlace(void)
-{
-	__noop;
-}
+{}
 
 void Actor::updateForEditor(float)
 {
@@ -274,7 +270,7 @@ void Actor::update(float milliseconds)
 
 	// Eliminate any vertical component of velocity
 	velocity.y=0;
-	
+
 	if(velocity.getMagnitude() > FLT_EPSILON)
 	{
 		// Integrate position over time
@@ -286,7 +282,7 @@ void Actor::update(float milliseconds)
 		hasMoved = false;
 		velocity.zero();
 	}
-	
+
 	// Apply friction
 	float frictionalDeltaVelocity = frictionAcceleration*timeStep;
 	if(frictionalDeltaVelocity > FLT_EPSILON)
@@ -323,9 +319,9 @@ void Actor::setHeight(float h)
 	{
 		// Calculate the scale from the desired height and the raw model height
 		float height = m_pModel->calculateHeight(0.0f);
-		
+
 		if(height==0)
-		{	
+		{
 			TRACE(_tstring(_T("Height was zero, but we'll just pretend its merely tiny: ")) + m_strModelFilename);
 			height = 0.01f;
 		}
@@ -347,7 +343,7 @@ void Actor::calculateRadius(void)
 		// Calculate spherical radius
 		sphereRadius = getScale() * m_pModel->calculateRadius(time);
 
-		// Calculate Cylindrical radius	
+		// Calculate Cylindrical radius
 		cylinderRadius = getScale() * m_pModel->calculateCylindricalRadius(time);
 	}
 }
@@ -401,7 +397,7 @@ void Actor::slideAgainstWalls(void)
 	// Get our current position (tile coordinates)
 	int x = m.tileX(position.x);
 	int z = m.tileX(position.z);
-	
+
 	// Bail out if we aren't even over a tile
 	if(!m.onATile(x, z))
 		return;
@@ -445,7 +441,7 @@ void Actor::slideAgainstWalls(void)
 		position.z = wall_top - r;
 		slidOnWall = true;
 	}
-	
+
 	if(overlapBottom>0 && !passableBottom)
 	{
 		position.z = wall_bottom + r;
@@ -457,7 +453,7 @@ void Actor::slideAgainstWalls(void)
 		position.x = wall_left + r;
 		slidOnWall = true;
 	}
-	
+
 	if(overlapRight>0 && !passableRight)
 	{
 		position.x = wall_right - r;
@@ -480,14 +476,14 @@ bool Actor::isNeighborTilePassable(const Map &m, int x, int z) const
 
 		if(floating)
 		{
-			
+
 			palatableElevationDifference = getPos().y > tile.getTileHeight();
 		}
 		else
 		{
 			palatableElevationDifference = fabsf(getPos().y - tile.getTileHeight()) < 0.5f;
 		}
-		
+
 		return(tile.isPassable() && palatableElevationDifference);
 	}
 
@@ -506,13 +502,13 @@ list<Actor*> Actor::getCollisions(const ActorSet &s) const
 	for(ActorSet::const_iterator iter=s.begin(); iter!=s.end(); ++iter)
 	{
 		Actor * const a = iter->second;
-	
+
 		if(isCollision(*a))
 		{
 			colliders.push_front(a);
 		}
 	}
-	
+
 	return colliders;
 }
 
@@ -571,7 +567,7 @@ void Actor::drawObjectToDepthBuffer(void) const
 		m_pModel->draw();
 		glPopMatrix();
 	}
-		
+
 	CHECK_GL_ERROR();
 }
 
@@ -582,7 +578,7 @@ void Actor::drawObjectDebugData(void) const
 	glPushMatrix();
 		glTranslatef(base.x, base.y, base.z);
 		g_Application.fontSmall.write(getName(), white, FONT_SIZE_NORMAL, true);
-		
+
 		glTranslatef(0.0f, 0.2f, 0.0f);
 		g_Application.fontSmall.write(getTypeString(), white, FONT_SIZE_NORMAL, true);
 	glPopMatrix();
@@ -632,10 +628,10 @@ bool Actor::saveTidy(CPropBag &Bag, CPropBag &dataFile) const
 }
 
 bool Actor::LoadXml(CPropBag &Bag)
-{	
+{
 	// Free any used memory and destroy the old object
-	destroy(); 
-	
+	destroy();
+
 	// Allow an external data file
 	if(Bag.Get(_T("file"), editorDataFile))
 	{
@@ -645,8 +641,8 @@ bool Actor::LoadXml(CPropBag &Bag)
 	}
 
 	// kept to support previous versions of the file format
-	if(Bag.Get(_T("radius"), m_desiredHeight)) m_desiredHeight*=2.0f; 
-	
+	if(Bag.Get(_T("radius"), m_desiredHeight)) m_desiredHeight*=2.0f;
+
 	// Load the object data
 	Bag.Get(_T("height"),			m_desiredHeight);
 	Bag.Get(_T("mass"),			m_Mass);
@@ -673,7 +669,7 @@ bool Actor::LoadXml(CPropBag &Bag)
 	spawnPoint = validatedPos = position;
 
 	ASSERT(getZone().getMap().onATile(position.x, position.z), _T("position is outside of the bounds of the map"));
-	
+
 	// Load model data from xml, then load the specified resources
 	if(Bag.Get(_T("model"), m_strModelFilename) == true)
 	{
@@ -691,9 +687,9 @@ bool Actor::LoadXml(CPropBag &Bag)
 bool Actor::ChangeAnimation(const _tstring &name, float speed)
 {
 	ASSERT(m_pModel!=0, _T("Actor::ChangeAnimation  ->  Null Pointer: m_pModel."));
-	
+
 	if(m_pModel != 0)
-	{	
+	{
 		return m_pModel->requestAnimationChange(name, speed);
 	}
 	else
@@ -707,7 +703,7 @@ bool Actor::ChangeAnimation(size_t nIdx, float Speed)
 	ASSERT(m_pModel!=0, _T("Actor::ChangeAnimation  ->  Null Pointer: m_pModel."));
 
 	if(m_pModel)
-	{	
+	{
 		return m_pModel->requestAnimationChange(nIdx, Speed);
 	}
 	else
@@ -716,10 +712,14 @@ bool Actor::ChangeAnimation(size_t nIdx, float Speed)
 	}
 }
 
+#ifdef _DEBUG
 void Actor::OnMessage(Message_s Msg)
 {
 	ASSERT(m_ID == Msg.m_Recipient, _T("Actor::OnMessage  ->  Message was mailed to the wrong object."));
 }
+#else
+void Actor::OnMessage(Message_s){}
+#endif
 
 bool Actor::wasCollision(OBJECT_ID id)
 {
@@ -758,7 +758,7 @@ void Actor::createToolBar(ListPaneWidget *pane)
 void Actor::sync(void)
 {
 	setHeight(m_desiredHeight);
-	
+
 	validatedPos = position;
 }
 
@@ -848,7 +848,7 @@ bool Actor::isInProximity(OBJECT_ID actor, float triggerRadius) const
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -954,7 +954,7 @@ bool Actor::isCollision(const Actor &a) const
 	// If we are a player and they are a player
 	const Player *playerWe = dynamic_cast<const Player*>(this);
 	const Player *playerThey = dynamic_cast<const Player*>(&a);
-	
+
 	if(playerWe!=0 && playerThey!=0)
 	{
 		return false;

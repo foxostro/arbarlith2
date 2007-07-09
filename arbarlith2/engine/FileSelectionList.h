@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SelectionList.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -64,6 +64,6 @@ protected:
 	virtual void update(float deltaTime);
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

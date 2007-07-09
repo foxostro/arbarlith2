@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "animation.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Manages a set of animation sequences */
 class AnimationController
@@ -170,6 +170,6 @@ private:
 	void clear(void);
 };
 
-}; //namespace
+} //namespace Engine
 
 #endif

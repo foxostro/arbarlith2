@@ -38,19 +38,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "MenuWorldSelection.h"
 #include "MenuWorldLeadOut.h"
 
-namespace Engine { 
-	
+namespace Engine {
+
 GameStateMenu::GameStateMenu(void)
 {
+	TRACE(_T("Creating the various pages of the menu..."));
+
 	gameMenu = new Menu;
+	TRACE(_T("Created gameMenu"));
+
 	gameOverMenu = new MenuGameOver;
+	TRACE(_T("Created gameOverMenu"));
+
 	gameMenuOptions = new MenuOptions;
+	TRACE(_T("Created gameMenuOptions"));
+
 	gameMenuWorldSelection = new MenuWorldSelection;
+	TRACE(_T("Created gameMenuWorldSelection"));
+
 	gameMenuWorldLeadOut[0] = new MenuWorldLeadOut(_T("data/sprites/backdrops/world1-leadout.jpg"));
+	TRACE(_T("Created gameMenuWorldLeadOut[0]"));
+
 	gameMenuWorldLeadOut[1] = new MenuWorldLeadOut(_T("data/sprites/backdrops/world2-leadout.jpg"));
+	TRACE(_T("Created gameMenuWorldLeadOut[1]"));
+
 	gameMenuWorldLeadOut[2] = new MenuWorldLeadOut(_T("data/sprites/backdrops/world3-leadout.jpg"));
+	TRACE(_T("Created gameMenuWorldLeadOut[2]"));
 
 	menu = gameMenu; // select the default menu
+
+	TRACE(_T("...finished"));
 }
 
 GameStateMenu::~GameStateMenu(void)
@@ -69,7 +86,7 @@ void GameStateMenu::update(float)
 	ASSERT(menu!=0, _T("Menu does not exist"));
 
 	menu->update();
-	
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	menu->draw();
 }
@@ -120,10 +137,12 @@ void GameStateMenu::enterGameMenuWorldLeadOut(int worldNum)
 
 void GameStateMenu::repopulateMenu(void)
 {
-	ASSERT(0 != gameMenu,					_T("gameMenu was null"));
-	ASSERT(0 != gameOverMenu,				_T("gameOverMenu was null"));
-	ASSERT(0 != gameMenuOptions,			_T("gameMenuOptions was null"));
-	ASSERT(0 != gameMenuWorldSelection,		_T("gameMenuWorldSelection was null"));
+	TRACE(_T("Repopulating elements of the menu..."));
+
+	ASSERT(0 != gameMenu,			_T("gameMenu was null"));
+	ASSERT(0 != gameOverMenu,		_T("gameOverMenu was null"));
+	ASSERT(0 != gameMenuOptions,		_T("gameMenuOptions was null"));
+	ASSERT(0 != gameMenuWorldSelection,	_T("gameMenuWorldSelection was null"));
 	ASSERT(0 != gameMenuWorldLeadOut[0],	_T("gameMenuWorldLeadOut[0] was null"));
 	ASSERT(0 != gameMenuWorldLeadOut[1],	_T("gameMenuWorldLeadOut[1] was null"));
 	ASSERT(0 != gameMenuWorldLeadOut[2],	_T("gameMenuWorldLeadOut[2] was null"));
@@ -136,6 +155,7 @@ void GameStateMenu::repopulateMenu(void)
 	gameMenuWorldLeadOut[1]->populateElements();
 	gameMenuWorldLeadOut[2]->populateElements();
 
+	TRACE(_T("...finished"));
 }
 
-}; // namespace
+} // namespace Engine

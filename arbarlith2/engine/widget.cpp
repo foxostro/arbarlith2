@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,14 +35,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Engine {
 
 Widget::Widget(void)
-	: widgetName(_T("This widget has not been assigned a name.")),
-	  m_bVisible(true),
-	  dumb(false),
-	  dead(false),
-	  depressed(false),
-	  within(false),
-	  hover(false),
-	  parent(0)
+: m_bVisible(true),
+  dumb(false),
+  widgetName(_T("This widget has not been assigned a name.")),
+  dead(false),
+  depressed(false),
+  within(false),
+  hover(false),
+  mouseDown(false),
+  parent(0)
 {}
 
 Widget::~Widget(void)
@@ -74,13 +75,13 @@ void Widget::RenderTree(const vec2 &base) const
 	{
 		glPushMatrix();
 		glTranslatef(relPos.x, relPos.y, 0.0f);
-		
+
 		// draw ourselves
 		draw();
 
 		// draw our children
 		for_each(m_Children.begin(), m_Children.end(), bind(&Widget::RenderTree, _1, absPos));
-		
+
 		glPopMatrix();
 	}
 }
@@ -90,7 +91,7 @@ void Widget::ProcessTree(float deltaTime)
 	if(isVisible())
 	{
 		pruneDeadChildren(); // can we run this periodically?
-		
+
 		if(m_Children.size()>0)
 		{
 			// Process Children in reverse order of rendering
@@ -162,10 +163,10 @@ void Widget::handleEvents(void)
 {
 	bool lastWithin = hover;
 	bool lastMouseDown = mouseDown;
-	
+
 	mouseDown = g_Input.MouseLeft;
 	within = isWithin();
-	
+
 	// Mouse Enter
 	if(within && !lastWithin)
 	{
@@ -185,7 +186,7 @@ void Widget::handleEvents(void)
 	// Mouse Up
 	if(!mouseDown && lastMouseDown)
 	{
-		if(hover) 
+		if(hover)
 		{
 			onMouseUp();
 
@@ -200,12 +201,12 @@ void Widget::handleEvents(void)
 
 		depressed = false;
 	}
-	
+
 	// Mouse Down
 	if(hover && mouseDown)
 	{
 		depressed = true;
-		
+
 		if(!lastMouseDown)
 		{
 			onMouseDown();

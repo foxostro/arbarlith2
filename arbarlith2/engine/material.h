@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "TextureHandle.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /**
@@ -87,7 +87,7 @@ public:
 	@param textureUnit The texture unit to bind the texture with
 	*/
 	void loadTexture(const _tstring &fileName, unsigned int textureUnit);
-	
+
 	/**
 	Loads a texture
 	@param fileName The image object containing the texture
@@ -100,13 +100,13 @@ public:
 	@param textureHandle A handle to the texture
 	@param textureUnit The texture unit to bind the layer at
 	*/
-	void setTexture(TextureHandle *textureHandle, unsigned int textureUnit);	
-	
+	void setTexture(TextureHandle *textureHandle, unsigned int textureUnit);
+
 	/**
 	Retrieve the name of the material
 	@return The name of the material
 	*/
-	const _tstring& getName(void) const 
+	const _tstring& getName(void) const
 	{
 		return myName;
 	}
@@ -115,7 +115,7 @@ public:
 	Changes the name of the material
 	@param name The new name of the material
 	*/
-	void setName(const _tstring &name) 
+	void setName(const _tstring &name)
 	{
 		myName = name;
 	}
@@ -167,9 +167,7 @@ private:
 	TextureHandle *textures[32];
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif
 

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Blur.h"
 #include "COLOR.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Causes the screen to become blurred and then regain focus over time */
 class BlurEffect
@@ -42,7 +42,7 @@ class BlurEffect
 public:
 	/**	Constructs the Blur effect */
 	BlurEffect(void);
-	
+
 	/**
 	Starts the screen blur effect
 	@param timePeriod The time that the screen is blurred for
@@ -74,7 +74,7 @@ public:
 		blur.setZone(zone);
 	}
 
-private:	
+private:
 	/** Screen capture */
 	Blur blur;
 
@@ -85,6 +85,6 @@ private:
 	float myAge;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

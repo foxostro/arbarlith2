@@ -14,27 +14,26 @@ Co-Web Host of www.GameTutorials.com
 #include "vec4.h"
 #include "mat4.h"
 
+namespace Engine {
 
-namespace Engine { 
-
-
-// We create an enum of the sides so we don't have to call each side 0 or 1.
-// This way it makes it more understandable and readable when dealing with frustum sides.
+/**
+We create an enum of the sides so we don't have to call each side 0 or 1.
+This way it makes it more understandable and readable when dealing with frustum sides.
+*/
 enum FrustumSide
 {
-	RIGHT	= 0,		// The RIGHT side of the frustum
-	LEFT	= 1,		// The LEFT	 side of the frustum
-	BOTTOM	= 2,		// The BOTTOM side of the frustum
-	TOP		= 3,		// The TOP side of the frustum
-	BACK	= 4,		// The BACK	side of the frustum
-	FRONT	= 5			// The FRONT side of the frustum
-}; 
+	RIGHT	= 0,
+	LEFT	= 1,
+	BOTTOM	= 2,
+	TOP	= 3,
+	BACK	= 4,
+	FRONT	= 5
+};
 
-// This will allow us to create an object to keep track of our frustum
-class Frustum {
-
+/** This will allow us to create an object to keep track of our frustum */
+class Frustum
+{
 public:
-
 	// Calculates the frustum from the modelview/projection frustum currently set
 	void CalculateFrustum(void);
 
@@ -53,7 +52,7 @@ public:
 	// This takes a 3D point and a sphere diameter and returns TRUE if the sphere is inside of the frustum
 	inline bool SphereInFrustum2(const vec4 &sphereCenter, float diameter) const
 	{
-		for(int i = 0; i < 6; i++)	
+		for(int i = 0; i < 6; i++)
 		{
 			if( m_Frustum[i][0] * sphereCenter.x +
 				m_Frustum[i][1] * sphereCenter.y +
@@ -63,7 +62,7 @@ public:
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -86,23 +85,21 @@ public:
 	Frustum& operator=(const Frustum &o);
 
 private:
-	// This holds the A B C and D values for each side of our frustum.
+	/** This holds the A B C and D values for each side of our frustum. */
 	float m_Frustum[6][4];
 };
 
-}; // namespace
-
+} // namespace Engine
 
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////////
 //
-// * QUICK NOTES * 
+// * QUICK NOTES *
 //
 // This file holds the frustum class prototypes.
-// 
-// 
+//
+//
 // Ben Humphrey (DigiBen)
 // Game Programmer
 // DigiBen@GameTutorials.com

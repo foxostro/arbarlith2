@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "LabelWidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Displays debugging data */
 class DebugLabel : public LabelWidget
@@ -53,6 +53,6 @@ public:
 	virtual void update(float deltaTime);
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

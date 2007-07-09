@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Spell.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Shoots a bullet projectile */
 class SpellFireBall : public Spell
@@ -91,6 +91,6 @@ private:
 	float height;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

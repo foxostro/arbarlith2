@@ -16,7 +16,7 @@ Co-Web Host of www.GameTutorials.com
 #include "vec4.h"
 #include "mat4.h"
 
-namespace Engine { 
+namespace Engine {
 
 /**
 Represents the intersection of a ray with a plane or face
@@ -34,7 +34,7 @@ public:
 
 	/** Vector tangent to the intersection plane */
 	vec3 t;
-    
+
 	/**
 	Gets the transformation frame of the intersection with the colliding plane
 	@return The transformation frame of the intersection, relative to the colliding plane
@@ -82,24 +82,24 @@ bool InsidePolygon(vec3 vIntersection, vec3 Poly[], long verticeCount);
 bool IntersectedPolygon(vec3 vPoly[], vec3 vLine[], int verticeCount);
 
 // This function classifies a sphere according to a plane.  The information returned
-// tells us if the sphere is BEHIND, in FRONT, or INTERSECTS the plane.  This takes 
+// tells us if the sphere is BEHIND, in FRONT, or INTERSECTS the plane.  This takes
 // the sphere's center, the plane's normal, a point on the plane, the sphere's radius
 // and a referenced variable to hold the distance.  This way we can return the distance
 // and the sphere's relationship to the plane.  The distance is from the plane to the center
 // of the sphere.  With this information it enables us to offset the sphere if needed.
-int ClassifySphere(vec3 &vCenter, 
+int ClassifySphere(vec3 &vCenter,
 				   vec3 &vNormal, vec3 &vPoint, float radius, float &distance);
 
 // This takes in the sphere center, radius, polygon vertices and vertex count.
 // This function is only called if the intersection point failed.  The sphere
 // could still possibly be intersecting the polygon, but on it's edges.
-bool EdgeSphereCollision(vec3 &vCenter, 
+bool EdgeSphereCollision(vec3 &vCenter,
 						 vec3 vPolygon[], int vertexCount, float radius);
 
 // This returns true if the sphere is intersecting with the polygon.
-// The parameters are the vertices of the polygon, vertex count, along with the center 
+// The parameters are the vertices of the polygon, vertex count, along with the center
 // and radius of the sphere.
-bool SpherePolygonCollision(vec3 vPolygon[], 
+bool SpherePolygonCollision(vec3 vPolygon[],
 							vec3 &vCenter, int vertexCount, float radius);
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ public:
 
 	/** Maximum vertex of the box relative to m_Pos*/
 	vec3 m_Max;
-			 
+
 	/*
 	Determines whether a collision between two boxes has occurred
 	@param box The bounding box to test against
@@ -199,6 +199,6 @@ public:
 	bool LoadXml(CPropBag &xml);
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

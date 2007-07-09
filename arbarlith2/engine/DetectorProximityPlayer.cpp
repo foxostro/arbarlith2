@@ -36,6 +36,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-GEN_ACTOR_RTTI_CPP(DetectorProximityPlayer)
+GEN_ACTOR_RTTI_CPP(DetectorProximityPlayer, "class Engine::DetectorProximityPlayer")
 
 }; // namespace

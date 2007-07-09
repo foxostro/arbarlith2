@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Message.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -47,7 +47,7 @@ class MessageRouter
 	ActorSet &m_Objects;
 
 	vector<Message_s> m_Messages;
-	
+
 	/** Objects that are subscribed to receive messages from a specific signal */
 	vector<OBJECT_ID> signalReceivers[NUM_SIGNALS];
 
@@ -77,7 +77,7 @@ public:
 	@param signalIndex Index of the signal
 	*/
 	void subscribeToSignal(OBJECT_ID id, int signalIndex);
-	
+
 	/**
 	Unsubscribe to all signals
 	@param id The receier to cancel
@@ -88,7 +88,7 @@ private:
 	void MailIt(Message_s Msg);
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif
 

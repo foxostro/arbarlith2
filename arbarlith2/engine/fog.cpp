@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,18 +33,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fog.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
 Fog::Fog(void)
-:red(0),
-green(0),
-blue(0),
-density(1),
-fnear(1),
-ffar(60),
-shouldBeUsed(true)
+: density(1),
+  fnear(1),
+  ffar(60),
+  red(0),
+  green(0),
+  blue(0),
+  shouldBeUsed(true)
 {}
 
 CPropBag Fog::save(void) const
@@ -63,7 +63,7 @@ CPropBag Fog::save(void) const
 }
 
 bool Fog::load(CPropBag &xml)
-{		
+{
 	// Load the fog settings
 	xml.Get(_T("enabled"), shouldBeUsed);
 	xml.Get(_T("near"),    fnear);

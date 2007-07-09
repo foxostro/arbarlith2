@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "3dmath.h"
 
-namespace Engine { 
+namespace Engine {
 
 class Tile;
 
@@ -83,6 +83,6 @@ private:
 	float diameter;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,8 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "OpenGL.h"
 #include "HorizBar.h"
 
-namespace Engine { 
-	
+namespace Engine {
+
 HorizBar::HorizBar(float x,
                    float y,
                    float capacity,
@@ -41,10 +41,10 @@ HorizBar::HorizBar(float x,
                    const _tstring &strForeground,
                    const _tstring &strBackground,
                    bool leftAlign)
-: m_Capacity(capacity),
-  m_Position(startingPosition),
+: m_ForeImage(0),
   m_BackImage(0),
-  m_ForeImage(0),
+  m_Position(startingPosition),
+  m_Capacity(capacity),
   initialWidth(0),
   isLeftAligned(leftAlign)
 {

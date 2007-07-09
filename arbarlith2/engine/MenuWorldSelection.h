@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Menu.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Does the game's world selection screen */
@@ -48,7 +48,7 @@ public:
 	~MenuWorldSelection(void);
 
 	/** Create and allocate resources for the menus */
-	void create(void);	
+	void create(void);
 
 protected:
 	/** Populates the menu elements */
@@ -85,8 +85,6 @@ private:
 	};
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

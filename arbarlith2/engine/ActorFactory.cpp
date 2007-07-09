@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,11 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
+#include "Object.h"
 #include "ActorFactory.h"
 
-namespace Engine { 
+namespace Engine {
 
-OBJECT_ID ActorFactory::uniqueID = 1;
+template<>
+OBJECT_ID Factory< Actor >::uniqueID = 1;
 
 ActorFactory& getActorFactory(void)
 {

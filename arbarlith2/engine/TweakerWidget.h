@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -49,10 +49,11 @@ private:
 
 public:
 	TweakerWidgetString(const _tstring &label, _tstring *value, float x, float y)
-	:myLabel(label),
-	myValue(value),
-	EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL)
-	{}
+	:EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL)
+	{
+		myLabel = label;
+		myValue = value;
+	}
 
 	virtual void update(float deltaTime)
 	{
@@ -80,7 +81,7 @@ public:
 	virtual _tstring getValue(void)
 	{
 		(*myValue) = getLabel();
-		
+
 		return(*myValue);
 	}
 
@@ -103,14 +104,15 @@ template<class TYPE>
 class TweakerWidget : public EditWidget
 {
 private:
-	TYPE *myValue;
 	_tstring myLabel;
+
+	TYPE *myValue;
 
 public:
 	TweakerWidget(const _tstring &label, TYPE *value, float x, float y)
-	:myLabel(label),
-	myValue(value),
-	EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL)
+	: EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL),
+	  myLabel(label),
+	  myValue(value)
 	{}
 
 	virtual void update(float deltaTime)
@@ -148,18 +150,18 @@ public:
 
 		ss << getLabel().c_str();
 		ss >> (*myValue);
-		
+
 		return(*myValue);
 	}
 
-	/**	Called in the event that focus is acquired */
+	/** Called in the event that focus is acquired */
 	virtual void onAcquireFocus(void)
 	{
 		EditWidget::onAcquireFocus();
 		setLabel(getString());
 	}
 
-	/**	Called in the event that focus is lost */
+	/** Called in the event that focus is lost */
 	virtual void onLostFocus(void)
 	{
 		EditWidget::onLostFocus();
@@ -175,10 +177,11 @@ private:
 
 public:
 	TweakerWidgetXML(const _tstring &label, XmlDataType *value, float x, float y)
-	:myLabel(label),
-	myValue(value),
-	EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL)
-	{}
+	:EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL)
+	{
+		myLabel = label;
+		myValue = value;
+	}
 
 	virtual void update(float deltaTime)
 	{
@@ -228,9 +231,6 @@ public:
 	}
 };
 
-
-}; // namespace
-
-
+} // namespace Engine
 
 #endif

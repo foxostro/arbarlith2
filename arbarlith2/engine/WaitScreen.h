@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Singleton.h"
 #include "BackdropTexture.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Waiting and loading screen */
 class WaitScreen : public Singleton<WaitScreen>
@@ -54,11 +54,8 @@ private:
 	BackdropTexture backDrop;
 };
 
+} // namespace Engine
 
-}; // namespace
-
-
-// Proxy
-#define g_WaitScreen (Engine::WaitScreen::GetSingleton())
+#define g_WaitScreen (::Engine::WaitScreen::GetSingleton())
 
 #endif

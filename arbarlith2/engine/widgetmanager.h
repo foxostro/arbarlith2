@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Widget.h"
 #include "MessageBoxManager.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Manages the whole hierarchy of widgets in the GUI */
 class WidgetManager : public Singleton<WidgetManager>
@@ -82,9 +82,8 @@ private:
 	Widget m_RootWidget;
 };
 
-}; // namespace
+} // namespace Engine
 
-// Proxy
-#define g_GUI (Engine::WidgetManager::GetSingleton())
+#define g_GUI (::Engine::WidgetManager::GetSingleton())
 
 #endif

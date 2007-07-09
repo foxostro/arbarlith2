@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Powerup.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Powerup that gives the player a new spell */
 class PowerupSpell : public Powerup

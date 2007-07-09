@@ -5,7 +5,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 Modified to use SDL windowing and get rid of ControlData February 2006 by Tom Cauchois
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "il.h"
 #include "EffectManager.h"
 #include "Application.h"
 #include "WaitScreen.h"
@@ -59,6 +58,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "PeriodicCallbackTask.h"
 
 
+/*
+Include the DevIL headers
+*/
+#include <IL/il.h>
+#include <IL/ilu.h>
+#include <IL/ilut.h>
 
 namespace Engine {
 
@@ -96,17 +101,18 @@ void Application::start(void)
 
 	// Create the effect manager
 	EffectManager::GetSingleton().create();
-	
+
 	// Load the font setup file
 	loadFonts();
-	
+
 	// Load the key bindings
 	new Controller();
 
 	// Initialize the splash screen
+	TRACE(_T("Loading splash screen..."));
 	new SplashScreen();
-	TRACE(_T("Splash screen started."));
 	g_SplashScreen.doSplash(5000);
+	TRACE(_T("...Completed loading splash screen"));
 
 	// Initialize the wait screen
 	new WaitScreen();
@@ -115,19 +121,32 @@ void Application::start(void)
 
 	// Create the frame timer
 	fme = new NeHe::Frame;
-		
+
 	// Create the sound manager
 	addTask(soundSystem = new SoundSystem);
 	g_WaitScreen.Render();
 	TRACE(_T("Sound system initialized"));
 
+
 	// Prepare handlers for various key press events
 	addTask(new ScreenShotTask);
+	TRACE(_T("Started screen shot task"));
+
 	addTask(new EditorKeyDetector);
+	TRACE(_T("Started editor hotkey task"));
+
 	addTask(new MenuKeyDetector);
+	TRACE(_T("Started menu hotkey task"));
+
 	addTask(new SpellMenuKeyDetector);
+	TRACE(_T("Started spell-menu hotkey task"));
+
 	addTask(new DebugDisplayToggleKeyDetector);
+	TRACE(_T("Started debug-info hotkey task"));
+
 	addTask(new FPSDisplayToggleKeyDetector);
+	TRACE(_T("Started FPS-display hotkey task"));
+
 
 	// Create a task to handle the GUI
 	new WidgetManager;
@@ -143,17 +162,32 @@ void Application::start(void)
 #endif
 
 	// set up the game states
-	states[GAME_STATE_RUN] = new GameStateRun();
-	states[GAME_STATE_EDITOR] = new GameStateEditor();
-	states[GAME_STATE_MENU] = new GameStateMenu();
-	states[GAME_STATE_SPELL_MENU] = new GameStateSpellMenu();
-	states[GAME_STATE_CREDITS] = new GameStateCredits();
+	TRACE(_T("Creating game state objects..."));
+	{
+		states[GAME_STATE_RUN] = new GameStateRun();
+		TRACE(_T("...created GameStateRun..."));
 
+		states[GAME_STATE_EDITOR] = new GameStateEditor();
+		TRACE(_T("...created GameStateEditor..."));
+
+		states[GAME_STATE_MENU] = new GameStateMenu();
+		TRACE(_T("...created GameStateMenu..."));
+
+		states[GAME_STATE_SPELL_MENU] = new GameStateSpellMenu();
+		TRACE(_T("...created GameStateSpellMenu..."));
+
+		states[GAME_STATE_CREDITS] = new GameStateCredits();
+		TRACE(_T("...created GameStateCredits..."));
+	}
+	TRACE(_T("...finished (Creating game state objects)"));
+
+	TRACE(_T("Entering the menu game state..."));
 	gameState = GAME_STATE_MENU;
 	states[GAME_STATE_MENU]->onEnter();
+	TRACE(_T("...finished (Entering the menu game state)"));
 
 	// Complete
-	TRACE(_T("...startup completed"));
+	TRACE(_T("...Finished starting up"));
 	g_WaitScreen.Render();
 }
 
@@ -185,7 +219,7 @@ void Application::run(void)
 
 		// Take out the garbage
 		tasks = pruneDeadTasks(tasks); // TODO: this really only needs to be run periodically?
-		
+
 		// pump
 		glFlush();
 		g_Window.Flip();
@@ -249,7 +283,7 @@ void Application::stop(void)
 
 	// Finish it up
 	clear();
-	
+
 	TRACE(_T("...shutdown completed"));
 }
 
@@ -271,7 +305,7 @@ void Application::clear(void)
 	displayFPS=false;
 
 	mouseSensitivity=100.0f;
-	
+
 	soundSystem = 0;
 	fme = 0;
 	world = 0;
@@ -281,18 +315,35 @@ void Application::clear(void)
 
 void Application::startDevIL()
 {
+	TRACE(_T("Initializing DevIL..."));
+
 	// First, check the DevIL image library's version
 	if(ilGetInteger(IL_VERSION_NUM) < IL_VERSION)
 	{
-		ERR(_T("DevIL version is different than expected!"));
+		FAIL(_T("IL_VERSION_NUM version is different than expected!"));
 	}
-	else
+
+	if(ilGetInteger(ILU_VERSION_NUM) < ILU_VERSION)
 	{
-		// Then, Initialize the DevIL image library
-		ilInit();
-		iluInit();
-		ilutInit();
+		FAIL(_T("IL_VERSION_NUM version is different than expected!"));
 	}
+
+	if(ilGetInteger(ILUT_VERSION_NUM) < ILUT_VERSION)
+	{
+		FAIL(_T("IL_VERSION_NUM version is different than expected!"));
+	}
+
+	/*
+	Then, Initialize the DevIL image library
+	The docs say this step isn't necessary as long as we use a shared
+	library when linking to DevIL.  However, it suggests we do it anyway
+	to ease a few sorts of particular problems.
+	*/
+	ilInit();
+	iluInit();
+	ilutInit();
+
+	TRACE(_T("...DevIL initialized successfully"));
 }
 
 void Application::startOpenGL()
@@ -307,8 +358,8 @@ void Application::startOpenGL()
 	int  depth		= 32;	 // bits per pixel
 
 
-	
-	
+
+
 	// Load the setup file
 	const _tstring setupFileName = pathAppend(getAppDataDirectory(), defaultSetupFileName);
 
@@ -390,8 +441,8 @@ void Application::loadXmlConfigFiles(void)
 	// Load the engine setup file
 	CPropBag BaseBag, FogBag, PerfBag;
 
-	
-	
+
+
 	// Load the setup file
 	_tstring setupFileName = pathAppend(getAppDataDirectory(), defaultSetupFileName);
 
@@ -432,7 +483,7 @@ void Application::enterWorld(int worldNum)
 	ASSERT(worldNum<=unlockedWorld,   _T("Parameter \'worldNum\' specifies a world that is currently locked: #") + itoa(worldNum)
 		                        + _T(" while only worlds #0 through #") + itoa(unlockedWorld) + _T("are unlocked."));
 
-	const _tstring worlds[] = 
+	const _tstring worlds[] =
 	{
 		_T("data/worlds/world1.sav.xml"),
 		_T("data/worlds/world2.sav.xml"),
@@ -476,7 +527,7 @@ void Application::release(void)
 
 	for(map<GAME_STATE,GameState*>::iterator i = states.begin(); i != states.end(); ++i)
 		(i->second)->release();
-	
+
 	TRACE(_T("Releasing game world resources"));
 	g_WaitScreen.Render();
 
@@ -495,13 +546,13 @@ void Application::reaquire(void)
 
 	fontLarge.reaquire();
 	fontSmall.reaquire();
-	
+
 	TRACE(_T("Reaquiring game world resources"));
 	g_WaitScreen.Render();
 
 	if(World::GetSingletonPtr())
 		g_World.reaquire();
-	
+
 	TRACE(_T("Reaquiring game state resources"));
 	g_WaitScreen.Render();
 

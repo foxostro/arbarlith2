@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListPaneWidget.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -51,7 +51,7 @@ protected:
 	/** The selected element */
 	ListElementWidget *selected;
 
-public:	
+public:
 	/**
 	Constructs the list widget
 	@param x The X-Coordinate of the list widget
@@ -80,9 +80,6 @@ public:
 	virtual void childWasClicked(ListElementWidget *child);
 };
 
-
-}; // namespace
-
-
+} // namespace Engine
 
 #endif

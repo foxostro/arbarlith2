@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,12 +38,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "LightManager.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
 // class prototype
-class Zone; 
+class Zone;
 class Item;
 
 /** Represents the user's avatar in the game World */
@@ -86,7 +86,7 @@ public:
 
 	/** Gets the name of the proper idle animation */
 	virtual const _tstring getIdleAnim(void) const;
-	
+
 	/** Gets the name of the proper run-fwd animation */
 	virtual const _tstring getRunFwdAnim(void) const;
 
@@ -261,7 +261,7 @@ protected:
 	@param playerNumber Player number, starts at zero
 	*/
 	virtual void setupControllerBindings(int playerNumber);
-	
+
 	/**
 	Polls the world to determine whether a USE action is appropriate.
 	If so, then the action may be taken.
@@ -285,11 +285,11 @@ private:
 	@return true if all players in the specified zone are dead
 	*/
 	static bool allPlayersAreDead(Zone &zone);
+
+	/** Enters the game menu screen */
+	void enterGameOverScreen(void);
 };
 
-
-}; // namespace
-
-
+} // namespace Engine
 
 #endif

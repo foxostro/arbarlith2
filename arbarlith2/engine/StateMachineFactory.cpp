@@ -32,7 +32,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "StateMachine.h"
 #include "StateMachineFactory.h"
 
-namespace Engine { 
+namespace Engine {
+
+template<>
+OBJECT_ID StateMachineFactory::uniqueID = 1;
 
 StateMachineFactory& getStateMachineFactory(void)
 {
@@ -41,6 +44,4 @@ StateMachineFactory& getStateMachineFactory(void)
 	return(*factory);
 }
 
-OBJECT_ID StateMachineFactory::uniqueID = 1;
-
-}; // namespace
+} // namespace Engine

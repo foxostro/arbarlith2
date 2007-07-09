@@ -36,13 +36,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "task.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** After a delay period, a callback function is executed */
 template < class FN >
 class CallbackTask : public Task
 {
 public:
+	/** Destructor */
+	virtual ~CallbackTask(void)
+	{}
+
 	/**
 	Constructs the task
 	@param delay After this delay, the callback function is called
@@ -57,7 +61,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	void update(float deltaTime)
 	{
@@ -92,6 +96,6 @@ static CallbackTask<T>* makeCallbackTask(float delay, T fn)
 	return new CallbackTask<T>(delay, fn);
 }
 
-}; // namespace
+} // namespace Engine
 
 #endif

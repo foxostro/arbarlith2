@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //#define _ASSERT_H_
 
 
-namespace Engine { 
+namespace Engine {
 
 /**
 Tests an assertion
@@ -42,7 +42,7 @@ Tests an assertion
 */
 void assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message);
 
-}; // namespace
+} // namespace Engine
 
 
 
@@ -72,9 +72,9 @@ void assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message
 // Causes an assertion failure (even in Release mode)
 #ifndef FAIL
 #define FAIL(msg) \
-{                                                                  \
-	logger.log( _tstring(_T(__FUNCTION__)), _tstring(msg) );       \
-	Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg)); \
+{                                                                                       \
+	::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );  \
+	Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg));                  \
 }
 #endif
 

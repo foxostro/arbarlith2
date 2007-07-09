@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "sdl.h"
 #include "profile.h"
 
 #include "Zone.h"
@@ -60,7 +59,7 @@ bool World::SaveXml(const _tstring &fileName)
 {
 	CPropBag bag;
 	SaveXml(bag);
-	
+
 	TRACE(_T("Writing the game to file"));
 	g_WaitScreen.Render();
 
@@ -74,7 +73,7 @@ bool World::SaveXml(const _tstring &fileName)
 bool World::SaveXml(CPropBag &Bag)
 {
 	CPropBag AllRealmsBag, clientBag;
-	
+
 	// Do the waitscreen every so often
 	TRACE(_T("Saving the game"));
 	g_WaitScreen.Render();
@@ -95,7 +94,7 @@ bool World::SaveXml(CPropBag &Bag)
 			// Save the realm
 			CPropBag RealmBag;
 			realm->SaveXml(RealmBag);
-			AllRealmsBag.Add(_T("realm"), RealmBag);			
+			AllRealmsBag.Add(_T("realm"), RealmBag);
 		}
 	}
 
@@ -137,7 +136,7 @@ Zone& World::getZone(const _tstring &zoneName)
 
 	if(zone == 0)
 		FAIL(_tstring(_T("Zone does not exist: ")) + zoneName);
-	
+
 	return(*zone);
 }
 
@@ -192,7 +191,7 @@ Zone* World::cacheZone(const _tstring &fileName)
 	g_WaitScreen.Render();
 
 	Zone* zone = new Zone;
-	
+
 	ASSERT(zone != 0, _T("Failed to allocate zone"));
 
 	if(!zone->xmlCache.Load(fileName))
@@ -208,7 +207,7 @@ Zone* World::cacheZone(const _tstring &fileName)
 	}
 
 	m_Realms.push_back(zone);
-	
+
 
 	g_WaitScreen.Render();
 	TRACE(_tstring(_T("Finished caching zone: ")) + zone->getName());
@@ -257,27 +256,27 @@ bool World::LoadXml(CPropBag &xml)
 	// Load the Player
 	reloadPlayer(xml);
 
+	TRACE(_T("...finished (Loading game world)"));
 	return true;
 }
 
 void World::destroy(void)
 {
-	g_WaitScreen.Render();
+	TRACE(_T("Destroying the current world..."));
 
+	g_WaitScreen.Render();
 
 	for_each(m_Realms.begin(), m_Realms.end(), bind(delete_arg(), _1));
-	g_WaitScreen.Render();
-
-
 	clear();
-	g_WaitScreen.Render();
+
+	TRACE(_T("...finished"));
 }
 
 void World::clear(void)
 {
 	m_Realms.clear();
 	m_ClockTicks=0.0f;
-	
+
 	for(int i=0; i<MAX_PLAYERS; ++i)
 	{
 		player[i]=0;
@@ -299,9 +298,9 @@ void World::reaquire(void)
 void World::update(float deltaTime)
 {
 	m_ClockTicks += double(deltaTime); // Update the game clock
-	
+
 	recalculateAveragePlayerPosition();
-	
+
 	Player &player = getPlayer(0);
 	Zone &zone = player.getZone();
 	zone.update(deltaTime);
@@ -310,20 +309,20 @@ void World::update(float deltaTime)
 const Player& World::getPlayer(size_t playerNum) const
 {
 	const Player *player = getPlayerPtr(playerNum);
-	
+
 	ASSERT(player!=0, _T("player[") + itoa((int)playerNum) + _T("] was null"));
-	
+
 	return(*player);
 }
 
 Player& World::getPlayer(size_t playerNum)
 {
 	ASSERT(playerNum < MAX_PLAYERS, _T("invalid player number"));
-	
+
 	Player *player = getPlayerPtr(playerNum);
-	
+
 	ASSERT(player!=0, _T("player[") + itoa((int)playerNum) + _T("] was null"));
-	
+
 	return(*player);
 }
 
@@ -340,6 +339,8 @@ Player* World::getPlayerPtr(size_t playerNum)
 
 void World::reloadPlayer(CPropBag &newGame)
 {
+	TRACE(_T("Reloading the player..."));
+
 	CPropBag playerBag;
 
 	if(newGame.Get(_T("player"), playerBag))
@@ -362,41 +363,51 @@ void World::reloadPlayer(CPropBag &newGame)
 		int numOfJoysticks = SDL_NumJoysticks();
 
 #if _PLAYER_ONE_HAS_NO_JOYSTICK_
+		TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player 1 will always be on the keyboard"));
 		NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks + 1, MAX_PLAYERS);
 #else
+		TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is not defined, so player 1 will always be on the keyboard and joystick #1"));
 		NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks, MAX_PLAYERS);
 #endif
 
 		// Create the players
 		Zone *defaultZone = &getZone(startingRealm);
-		for(size_t i = 0; i < NumOfPlayers; ++i)
+		for(int i = 0; (size_t)i < NumOfPlayers; ++i)
 		{
 			Actor *p = defaultZone->getObjects().createPtr(type, defaultZone);
 
 			player[i] = dynamic_cast<Player*>(p);
-			
-			player[i]->LoadXml(playerBag);
 
-			player[i]->setPlayerNumber((int)i);
+			ASSERT(player[i]!=0, _T("Failed to construct player #") + itoa(i));
+
+			player[i]->LoadXml(playerBag);
+			TRACE(_T("Loaded player #") + itoa(i));
+
+			player[i]->setPlayerNumber(i);
+			TRACE(_T("Actually set player number to ") + itoa(i));
 
 			if(NumOfPlayers>1)
 			{
 				float angle = 2.0f * ((float)i/NumOfPlayers) * (float)M_PI;
 				vec3 offset = vec3(cosf(angle), 0, sinf(angle)) * 1.2f;
 				player[i]->Place(player[i]->getPos() + offset);
+
+				TRACE(_T("Placed player #") + itoa(i) + _T("in the game world."));
 			}
 		}
 	}
+
+	TRACE(_T("...finished (Reloading the player)"));
 }
 
 vec3 World::findAveragePlayerPosition(void) const
 {
 	vec3 averagePlayerPosition;
 	const size_t numOfPlayers = getNumOfPlayers();
-	
+
 	ASSERT(numOfPlayers!=0, _T("Number of players is zero, and it shouldn't be."));
 	ASSERT(numOfPlayers < MAX_PLAYERS, _T("Number of players (") + itoa((int)numOfPlayers) + _T(") is too large!  The maximum is ") + itoa((int)MAX_PLAYERS));
-	
+
 	for(size_t i=0; i<numOfPlayers; ++i)
 	{
 		const Player &player = getPlayer(i);
@@ -413,7 +424,7 @@ void World::updateCamera(void)
 	float cameraDistance = minCameraDistance;
 	const vec3 averagePlayerPosition = getAveragePlayerPosition();
 	const size_t numOfPlayers = g_World.getNumOfPlayers();
-	
+
 	if(numOfPlayers>1)
 	{
 		float maxPlayerDistance=0;

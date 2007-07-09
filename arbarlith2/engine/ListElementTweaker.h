@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "primitivedatatypes.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -75,21 +75,21 @@ public:
 	virtual void onMouseEnter(void)
 	{
 		tweaker->onMouseEnter();
-		__super::onMouseEnter();
+		ListElementWidget::onMouseEnter();
 	}
 
 	/** Called in the even of a mouse exit event */
 	virtual void onMouseExit(void)
 	{
 		tweaker->onMouseExit();
-		__super::onMouseExit();
+		ListElementWidget::onMouseExit();
 	}
 
 	/** Called in the even of a mouse click */
 	virtual void onMouseClick(void)
 	{
 		tweaker->onMouseClick();
-		__super::onMouseClick();
+		ListElementWidget::onMouseClick();
 	}
 };
 
@@ -128,21 +128,21 @@ public:
 	virtual void onMouseEnter(void)
 	{
 		tweaker->onMouseEnter();
-		__super::onMouseEnter();
+		ListElementWidget::onMouseEnter();
 	}
 
 	/** Called in the even of a mouse exit event */
 	virtual void onMouseExit(void)
 	{
 		tweaker->onMouseExit();
-		__super::onMouseExit();
+		ListElementWidget::onMouseExit();
 	}
 
 	/** Called in the even of a mouse click */
 	virtual void onMouseClick(void)
 	{
 		tweaker->onMouseClick();
-		__super::onMouseClick();
+		ListElementWidget::onMouseClick();
 	}
 };
 
@@ -180,26 +180,24 @@ public:
 	virtual void onMouseEnter(void)
 	{
 		tweaker->onMouseEnter();
-		__super::onMouseEnter();
+		ListElementWidget::onMouseEnter();
 	}
 
 	/** Called in the even of a mouse exit event */
 	virtual void onMouseExit(void)
 	{
 		tweaker->onMouseExit();
-		__super::onMouseExit();
+		ListElementWidget::onMouseExit();
 	}
 
 	/** Called in the even of a mouse click */
 	virtual void onMouseClick(void)
 	{
 		tweaker->onMouseClick();
-		__super::onMouseClick();
+		ListElementWidget::onMouseClick();
 	}
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,12 +31,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "ToggleWidgetText.h"
 
-namespace Engine { 
+namespace Engine {
 
 ToggleWidgetText::ToggleWidgetText(const _tstring& label, bool *value)
-:myLabel(label),
-myValue(value),
-statusLbl(0)
+: myValue(value),
+  myLabel(label),
+  statusLbl(0)
 {
 	// Create the status label
 	AddChild(statusLbl = new LabelWidget(myLabel, 12.0f, 1.0f));
@@ -64,7 +64,7 @@ void ToggleWidgetText::onMouseClick(void)
 	if(getValue())	OnTurnsOn();
 	else			OnTurnsOff();
 
-	__super::onMouseClick();
+	ListElementWidget::onMouseClick();
 }
 
 void ToggleWidgetText::OnTurnsOn(void)
@@ -89,7 +89,7 @@ void ToggleWidgetText::onMouseExit(void)
 
 void ToggleWidgetText::update(float deltaTime)
 {
-	__super::update(deltaTime);
+	ListElementWidget::update(deltaTime);
 }
 
 }; // namespace

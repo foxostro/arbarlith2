@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "PerformanceLabel.h"
 #include "DebugLabel.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Normal running state of the game */
 class GameStateRun : public GameState, public Singleton<GameStateRun>
@@ -53,7 +53,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	virtual void update(float deltaTime);
 
@@ -99,10 +99,10 @@ private:
 	/** FPS label */
 	PerformanceLabel *performanceLabel;
 
-	/** Debugging data */ 
+	/** Debugging data */
 	DebugLabel *debugLabel;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

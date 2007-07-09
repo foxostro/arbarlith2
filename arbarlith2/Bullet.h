@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace Engine;
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Shoots a projectile that can kill creatures */
 class Bullet : public Trigger
@@ -83,7 +83,7 @@ public:
 	@return true if the specified actor is in proximity to us
 	*/
 	virtual bool isInProximity(OBJECT_ID actor, float triggerRadius) const;
-	
+
 	/**
 	The originator of the bullet
 	@return the bullet originator's ID
@@ -103,7 +103,7 @@ protected:
 
 	/** Called in the event of the Trigger activating */
 	virtual void onTrigger(void);
-	
+
 	/** Called in the event that the actor slid against a wall */
 	virtual void onSlidOnWall(void);
 
@@ -131,6 +131,6 @@ private:
 	float knockbackMagnitude;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

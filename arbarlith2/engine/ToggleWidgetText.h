@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListElementWidget.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -102,10 +102,6 @@ public:
 	}
 };
 
-
-
-}; // namespace
-
-
+} // namespace Engine
 
 #endif

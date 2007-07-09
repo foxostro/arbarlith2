@@ -35,11 +35,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
-GEN_ACTOR_RTTI_CPP(Item)
+GEN_ACTOR_RTTI_CPP(Item, "class Engine::Item")
 
 
 
@@ -62,7 +62,7 @@ void Item::onUse(Actor *a)
 
 void Item::OnEquip(Player &)
 {}
-	
+
 void Item::OnUnequip(Player &)
 {}
 

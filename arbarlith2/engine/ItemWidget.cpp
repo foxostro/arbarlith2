@@ -31,17 +31,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ItemWidget.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
 ItemWidget::ItemWidget(float x, float y)
-:item(0),
-LabelWidget(_T("Label not initialized"),
-			 x,
-			 y,
-			 white,
-			 FONT_SIZE_LARGE)
+: LabelWidget(_T("[nill]"), x, y, white, FONT_SIZE_LARGE),
+  item(0)
 {
 	setItem(0);
 }

@@ -11,7 +11,7 @@
 //									-	Corrected lerp (reversed f and 1-f)
 //				13th December 2002	-	Added default parameter to alpha of Set()
 //									-	Added red, green, blue constant COLORs
-//////////////////////////////////////////////////////////////////////////////////////////	
+//////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef COLOR_H
 #define COLOR_H
@@ -38,13 +38,13 @@ public:
 
 	void Set(float newR, float newG, float newB, float newA=0.0f)
 	{	r=newR;	g=newG;	b=newB;	a=newA;	}
-	
+
 	//accessors kept for compatability
 	void SetR(float newR) {r = newR;}
 	void SetG(float newG) {g = newG;}
 	void SetB(float newB) {b = newB;}
 	void SetA(float newA) {a = newA;}
-	
+
 	float GetR() const {return r;}	//public accessor functions
 	float GetG() const {return g;}	//inline, const
 	float GetB() const {return b;}
@@ -131,7 +131,7 @@ const COLOR cyan(0.0f, 1.0f, 1.0f, 1.0f);
 const COLOR magenta(1.0f, 0.0f, 1.0f, 1.0f);
 const COLOR yellow(1.0f, 1.0f, 0.0f, 1.0f);
 
-}; // namespace
+} // namespace Engine
 
 #endif	//COLOR_H
 

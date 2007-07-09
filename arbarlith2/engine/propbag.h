@@ -2,6 +2,8 @@
 Modified by Andrew Fox in 2003-2006
 Original Source: McCuskey, Mason. "Game Programming Tricks of the Trade". "Trick 15: Serialization Using XML Property Bags". Premier Press. 2002.
 E-Mail: mailto:andrewfox@cmu.edu
+
+TODO: Get rid of these god forsaken catch(...){return false;} statements!
 */
 
 #ifndef PROPBAG_H__INCLUDED
@@ -13,7 +15,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 
 using namespace std;
 
-namespace Engine { 
+namespace Engine {
 
 /** Item for XML bag */
 class CPropItem
@@ -21,6 +23,10 @@ class CPropItem
 public:
 	/** Constructor */
 	CPropItem(void)
+	{}
+
+  	/** Copy constructor */
+	CPropItem(const CPropItem &)
 	{}
 
 #if 0
@@ -34,14 +40,14 @@ public:
 	@param indentlevel Indentation level of the resultant xml code
 	*/
 	virtual _tstring Save(int indentlevel=0) const = 0;
-	
+
 	/**
 	Equality operator
 	@param r Item to test
 	@return true when the objects are equal
 	*/
 	virtual bool operator==(const CPropItem &r) = 0;
-	
+
 	/**
 	Inequality operator
 	@param r Item to test
@@ -64,24 +70,24 @@ public:
 
 	CPropString(_tstring data, bool convert = true)
 	{
-		SetData(data, convert); 
+		SetData(data, convert);
 	}
 
 	_tstring GetData() const
-	{ 
-		_tstring str = m_Data; 
+	{
+		_tstring str = m_Data;
 		if (m_Converted)
-			RestoreOrigFromSafeString(str); 
+			RestoreOrigFromSafeString(str);
 
-		return(str); 
+		return(str);
 	}
 
 	void SetData(_tstring d, bool convert)
-	{ 
+	{
 		if(convert)
 			MakeStringSafeForPropBag(d);
 
-		m_Data = d; 
+		m_Data = d;
 		m_Converted = convert;
 	}
 
@@ -100,7 +106,11 @@ public:
 		{
 			const CPropString &rStr = (const CPropString &)(r);
 			return(m_Data == rStr.m_Data);
-		} catch(...) { return(false); }
+		}
+		catch(...)
+		{
+			return(false);
+		}
 	}
 
 protected:
@@ -114,12 +124,24 @@ typedef multimap<_tstring, CPropItem *> PropertyMap;
 class CPropBag : public CPropItem
 {
 public:
-  virtual ~CPropBag();
-  CPropBag();
-  CPropBag(const CPropBag &r) { Init(); Copy(r); }
-  CPropBag(const _tstring &r) { Init(); LoadFromString(r); }
+  virtual ~CPropBag(void);
 
-  
+  CPropBag(void);
+
+  CPropBag(const CPropBag &r)
+  :CPropItem(r)
+  {
+  	Init();
+  	Copy(r);
+  }
+
+  CPropBag(const _tstring &r)
+  {
+  	Init();
+  	LoadFromString(r);
+  }
+
+
   void Clear();
 
   bool PutTagIntoBag(const _tstring &tagname, const _tstring &tagvalue);
@@ -140,12 +162,13 @@ public:
 
   void Add(const _tstring &key, _tstring data, bool convert = true);
   void Add(const _tstring &key, int data);
+  void Add(const _tstring &key, size_t data);
   void Add(const _tstring &key, double data);
   void Add(const _tstring &key, float data);
   void Add(const _tstring &key, bool data);
   void Add(const _tstring &key, CPropBag data);
   void Add(const _tstring &key, const XmlDataType *data);
- 
+
   void Remove(const _tstring &key, int instance = -1); // -1 = all instances
 
   _tstring Save (int indentlevel=0) const;
@@ -157,7 +180,7 @@ public:
   // Loads a file and merges the contents
   bool LoadMerge(const _tstring &filename);
   bool LoadMergeFromString(const _tstring &data);
-  
+
   int GetNumInstances(_tstring key);
 
   inline bool Get(const _tstring &key, XmlDataType &dest, int instance = 0)
@@ -167,6 +190,7 @@ public:
 
   bool Get(const _tstring &key, _tstring &dest, int instance = 0);
   bool Get(const _tstring &key, int &dest, int instance = 0);
+  bool Get(const _tstring &key, size_t &dest, int instance = 0);
   bool Get(const _tstring &key, double &dest, int instance = 0);
   bool Get(const _tstring &key, float &dest, int instance = 0);
   bool Get(const _tstring &key, bool &dest, int instance = 0);
@@ -186,7 +210,7 @@ protected:
   PropertyMap m_Data;
 };
 
-}; //namespace
+} // namespace Engine
 
 
 

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Tile.h"
 #include "QuadTreeNode.h"
 
-namespace Engine { 
+namespace Engine {
 
 /**
 Manages a map made out of Tile objects.
@@ -58,7 +58,7 @@ private:
 
 	/** Quad tree spatially organizes the tiles */
 	QuadTreeNode *quadTree;
-	
+
 	/** all map material (index is the material ID) */
 	vector<Material*> materialsLegend;
 
@@ -137,7 +137,7 @@ public:
 
 	/** Draws the map to the depth buffer to project shadows */
 	void drawToDepthBuffer(void) const;
-	
+
 	/**
 	Dtermines whether or not a position is within the tile map
 	@param x The x-coordinate of the Tile, in tile-space
@@ -148,7 +148,7 @@ public:
 	{
 		return(x >= 0 && x < width && z >= 0 && z < height);
 	}
-	
+
 	/**
 	Determines whether or not a position is within the tile map
 	@param x The x-coordinate of the Tile, in tile-space
@@ -200,7 +200,7 @@ public:
 	{
 		int tileX = (int)floorf(x / tileMetersX);
 		int tileZ = (int)floorf(z / tileMetersX);
-		
+
 		return getTile(tileX, tileZ);
 	}
 
@@ -214,7 +214,7 @@ public:
 	{
 		int tileX = (int)floorf(x / tileMetersX);
 		int tileZ = (int)floorf(z / tileMetersX);
-		
+
 		return getTile(tileX, tileZ);
 	}
 
@@ -329,8 +329,6 @@ public:
 	}
 };
 
-
-}; //namespace
-
+} // namespace Engine
 
 #endif

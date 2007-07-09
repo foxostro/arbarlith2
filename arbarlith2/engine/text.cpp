@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 using namespace std;
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -83,7 +83,7 @@ void TextWriter::setup(CPropBag &xml)
 {
 	CPropBag FontBag;
 	_tstring fontImageFileName = File::fixFilename(_T("data/fonts/default.png")); // default font image
-	
+
 	// Load the font configuration files
 	xml.Get(_T("font"), FontBag);
 	FontBag.Get(_T("image"), fontImageFileName);
@@ -162,7 +162,7 @@ void TextWriter::setup(CPropBag &xml)
 			size_t char_row = row;
 			size_t char_rowLength = width * bytesPerPixel;
 			size_t char_idx = char_row * char_rowLength;
-			
+
 			memcpy(buffer + char_idx, font + font_idx, char_rowLength);
 
 			const int threshold = 96;
@@ -187,7 +187,7 @@ void TextWriter::setup(CPropBag &xml)
 			characters[c].width = (imgRight - imgLeft) / (float)width;
 			characters[c].left = imgLeft / (float)width;
 		}
-		
+
 		// Create a new texture object
 		characters[c].charTex=0;
 		glGenTextures(1, &characters[c].charTex);
@@ -208,20 +208,48 @@ void TextWriter::setup(CPropBag &xml)
 				  alpha ? GL_RGBA : GL_RGB,
 				  GL_UNSIGNED_BYTE,
 				  buffer);
-		
+
 		CHECK_GL_ERROR();
 	} // loop
-	
+
 	// Delete the buffer
 	delete[] buffer;
 	buffer=0;
-	
+
 	TRACE(_tstring(_T("Created font: ")) + fontImageFileName);
+}
+
+TextWriter::Character& TextWriter::getCharacter(char z)
+{
+	ASSERT(z >= 0, _T("Invalid character"));
+
+	return characters[  (size_t)((z >= 0) ? z : '?')  ];
+}
+
+const TextWriter::Character& TextWriter::getCharacter(char z) const
+{
+	ASSERT(z >= 0, _T("Invalid character"));
+
+	return characters[  (size_t)((z >= 0) ? z : '?')  ];
+}
+
+TextWriter::Character& TextWriter::getCharacter(wchar_t z)
+{
+	ASSERT(z < 128, _T("Invalid character"));
+
+	return characters[  (size_t)((z < 128) ? z : '?')  ];
+}
+
+const TextWriter::Character& TextWriter::getCharacter(wchar_t z) const
+{
+	ASSERT(z < 128, _T("Invalid character"));
+
+	return characters[  (size_t)((z < 128) ? z : '?')  ];
 }
 
 void TextWriter::drawChar(const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, TCHAR z, const COLOR &color) const
 {
-	glBindTexture(GL_TEXTURE_2D, characters[z].charTex);
+	glBindTexture(GL_TEXTURE_2D, getCharacter(z).charTex);
 	glColor4fv(color);
 
 	glBegin(GL_QUADS);
@@ -246,7 +274,7 @@ void TextWriter::putChar(vec3 *offset, TCHAR character, const COLOR *color, FONT
 	{
 		w = _size / 100.0f;
 		h = _size / 100.0f;
-		
+
 		const mat4 &m = g_Camera.getOrientation();
 		right = m.getAxisX().getNormal();
 		up = m.getAxisY().getNormal();
@@ -274,14 +302,14 @@ void TextWriter::putChar(vec3 *offset, TCHAR character, const COLOR *color, FONT
 	else
 	{
 		/*               center the quad          place it        shift left by an offset  */
-		const vec3 a = -right*(w*0.5f)        + (*offset) - right*w*characters[character].left;
-		const vec3 b =  right*(w*0.5f)        + (*offset) - right*w*characters[character].left;
-		const vec3 c =  right*(w*0.5f) + up*h + (*offset) - right*w*characters[character].left;
-		const vec3 d = -right*(w*0.5f) + up*h + (*offset) - right*w*characters[character].left;
+		const vec3 a = -right*(w*0.5f)        + (*offset) - right*w*getCharacter(character).left;
+		const vec3 b =  right*(w*0.5f)        + (*offset) - right*w*getCharacter(character).left;
+		const vec3 c =  right*(w*0.5f) + up*h + (*offset) - right*w*getCharacter(character).left;
+		const vec3 d = -right*(w*0.5f) + up*h + (*offset) - right*w*getCharacter(character).left;
 
 		drawChar(a, b, c, d, character, *color);
 
-		float offsetRight = w*characters[character].width + w*0.1f; // TODO: plus some spacing between characters
+		float offsetRight = w*getCharacter(character).width + w*0.1f; // TODO: plus some spacing between characters
 
 		nextOffset = (*offset) + right*offsetRight;
 	}
@@ -321,11 +349,11 @@ void TextWriter::write(const _tstring &text, const COLOR &color, FONT_SIZE size,
 		// Enable blending, to smooth the characters' edges and show through to the background
 		glBlendFunc(GL_SRC_ALPHA,GL_ONE);
 		glEnable(GL_BLEND);
-				
+
 		// Write out the string
 		vec3 offset;
 		for_each(text.begin(), text.end(), bind(&TextWriter::putChar, this, &offset, _1, &color, size, useBillboard));
-		
+
 	glPopAttrib();
 	CHECK_GL_ERROR();
 }
@@ -346,7 +374,7 @@ vec2 TextWriter::getDimensions(const _tstring &text, FONT_SIZE size) const
 		}
 		else
 		{
-			row_width += characters[*i].width;
+			row_width += getCharacter(*i).width;
 		}
 	}
 
@@ -364,4 +392,4 @@ float TextWriter::getLineHeight(FONT_SIZE size) const
 	return lineHeight * _size;
 }
 
-}; // namespace
+} // namespace Engine

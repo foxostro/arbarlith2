@@ -1,0 +1,1863 @@
+# depslib dependency file v1.0
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\boss.cpp
+	"stdafx.h"
+	"Boss.h"
+	"engine/CallbackInterpolator.h"
+	"engine/Dimmer.h"
+	"engine/GameStateMenu.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\stdafx.h
+	<windows.h>
+	<tchar.h>
+	<queue>
+	<vector>
+	<map>
+	<list>
+	"engine/macros.h"
+	"engine/vec4.h"
+	"engine/PropBag.h"
+	"engine/ListElementTweaker.h"
+	"engine/Controller.h"
+	"engine/WaitScreen.h"
+	"engine/Creature.h"
+	"engine/Player.h"
+	"engine/Zone.h"
+	"engine/World.h"
+	"engine/Application.h"
+	"engine/misc.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\macros.h
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\vec4.h
+	"misc.h"
+	"primitivedatatypes.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\misc.h
+	<cmath>
+	<float.h>
+	<vector>
+	"tstring.h"
+
+1183983668 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\tstring.h
+	<string>
+	<sstream>
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\primitivedatatypes.h
+	"misc.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\propbag.h
+	<map>
+	"PrimitiveDataTypes.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listelementtweaker.h
+	"misc.h"
+	"TweakerWidget.h"
+	"ListElementWidget.h"
+	"primitivedatatypes.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\tweakerwidget.h
+	"primitivedatatypes.h"
+	"EditWidget.h"
+	<sstream>
+	<string>
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\editwidget.h
+	"labelwidget.h"
+	"Controller.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\labelwidget.h
+	"COLOR.h"
+	"Widget.h"
+	"text.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\color.h
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\widget.h
+
+1183989591 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\text.h
+	"COLOR.h"
+	"vec4.h"
+	"propbag.h"
+
+1183829386 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\controller.h
+	"Singleton.h"
+	<SDL/SDL.h>
+	<map>
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\singleton.h
+	"logstring.h"
+	"myassert.h"
+
+1183994852 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\logstring.h
+	"misc.h"
+
+1183995000 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\myassert.h
+	<assert.h>
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listelementwidget.h
+	"WindowWidget.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\windowwidget.h
+	"Widget.h"
+	"Material.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\material.h
+	"COLOR.h"
+	"Image.h"
+	"TextureHandle.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\image.h
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\texturehandle.h
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\waitscreen.h
+	"Singleton.h"
+	"BackdropTexture.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\backdroptexture.h
+	"Material.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\creature.h
+	<deque>
+	"Object.h"
+	"Command.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\object.h
+	"tstring.h"
+	"ActorFactory.h"
+	"EffectSig.h"
+	"Message.h"
+	"AnimationController.h"
+
+1183994266 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\actorfactory.h
+	"Factory.h"
+
+1183994114 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\factory.h
+	"tstring.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effectsig.h
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\message.h
+	"ActorFactory.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\animationcontroller.h
+	"animation.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\animation.h
+	"mesh.h"
+	"keyframe.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\mesh.h
+	"3dmath.h"
+	"material.h"
+	"file.h"
+	"propbag.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\3dmath.h
+	"misc.h"
+	"primitivedatatypes.h"
+	"vec4.h"
+	"mat4.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\mat4.h
+	<cmath>
+	"vec4.h"
+
+1184008546 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\file.h
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\keyframe.h
+	"propbag.h"
+	"mesh.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\command.h
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\player.h
+	"Singleton.h"
+	"Creature.h"
+	"ActorSet.h"
+	"World.h"
+	"LightManager.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\actorset.h
+	<queue>
+	<boost/lambda/bind.hpp>
+	<boost/lambda/lambda.hpp>
+	"Object.h"
+	"ActorFactory.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\world.h
+	"vec4.h"
+	"ActorFactory.h"
+	"PropBag.h"
+	"Singleton.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\lightmanager.h
+	"Light.h"
+	"Camera.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\light.h
+	"vec4.h"
+	"mat4.h"
+	"propbag.h"
+	"Frustum.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\frustum.h
+	"vec4.h"
+	"mat4.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\camera.h
+	"mat4.h"
+	"propbag.h"
+	"frustum.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\zone.h
+	"ActorSet.h"
+	"ActorFactory.h"
+	"messagerouter.h"
+	"particle.h"
+	"LightManager.h"
+	"ShadowManager.h"
+	"MusicEngine.h"
+	"Map.h"
+	"fog.h"
+	"World.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\messagerouter.h
+	"Message.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\particle.h
+	"propbag.h"
+	"3dmath.h"
+	"vec4.h"
+	"mesh.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\shadowmanager.h
+	"Shadow.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\shadow.h
+	"Object.h"
+	"ActorSet.h"
+	"Light.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\musicengine.h
+	"propbag.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\map.h
+	"propbag.h"
+	"Tile.h"
+	"QuadTreeNode.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\tile.h
+	"3dmath.h"
+	"Material.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\quadtreenode.h
+	"3dmath.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\fog.h
+	"propbag.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\application.h
+	"misc.h"
+	"myassert.h"
+	"text.h"
+	"OpenGL.h"
+	"widgetmanager.h"
+	"SoundSystem.h"
+	"SDLWindow.h"
+	"TextureManager.h"
+	"Camera.h"
+	"GameState.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\opengl.h
+	"timer.h"
+	"singleton.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\timer.h
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\widgetmanager.h
+	"Singleton.h"
+	"Widget.h"
+	"MessageBoxManager.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\messageboxmanager.h
+	"MessageBox.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\messagebox.h
+	"WindowWidget.h"
+	"LabelWidget.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\soundsystem.h
+	"Task.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\task.h
+
+1183829442 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\sdlwindow.h
+	<SDL/SDL.h>
+	"singleton.h"
+	"myassert.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\texturemanager.h
+	"TextureHandle.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestate.h
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\boss.h
+	"Monster.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\monster.h
+	"engine/World.h"
+	"engine/Creature.h"
+	"Spell.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spell.h
+	"engine/vec4.h"
+	"engine/PropBag.h"
+	"engine/Material.h"
+	"engine/Zone.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\callbackinterpolator.h
+	"task.h"
+	<boost/function.hpp>
+	<boost/bind.hpp>
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\dimmer.h
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestatemenu.h
+	"Singleton.h"
+	"Menu.h"
+	"GameState.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menu.h
+	"BackdropTexture.h"
+	"Application.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\bullet.cpp
+	"stdafx.h"
+	"engine/ActorSet.h"
+	"engine/World.h"
+	"engine/Zone.h"
+	"Explosion.h"
+	"Bullet.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\explosion.h
+	"engine/tstring.h"
+	"engine/Zone.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\bullet.h
+	"engine/Trigger.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\trigger.h
+	"object.h"
+	"world.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\detectorproximitymonster.cpp
+	"stdafx.h"
+	"engine/World.h"
+	"engine/Zone.h"
+	"DetectorProximityMonster.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\detectorproximitymonster.h
+	"engine/DetectorProximity.h"
+	"Monster.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\detectorproximity.h
+	"Detector.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\detector.h
+	"Trigger.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\explosion.cpp
+	"stdafx.h"
+	"engine/ActorSet.h"
+	"engine/Creature.h"
+	"engine/Zone.h"
+	"Explosion.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\gateopener.cpp
+	"stdafx.h"
+	"engine/ActorSet.h"
+	"engine/World.h"
+	"engine/Zone.h"
+	"engine/Random.h"
+	"engine/WaitScreen.h"
+	"engine/ListPaneWidget.h"
+	"engine/ListElementTweaker.h"
+	"engine/ToggleWidgetText.h"
+	"GateOpener.h"
+	"TileGate.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\random.h
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listpanewidget.h
+	"widgetmanager.h"
+	"listelementwidget.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\togglewidgettext.h
+	"ListElementWidget.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\gateopener.h
+	"engine/Listener.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listener.h
+	"Trigger.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\tilegate.h
+	"engine/Object.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\monster.cpp
+	"stdafx.h"
+	"SpellFireBall.h"
+	"SpellIncinerate.h"
+	"SpellHeal.h"
+	"SpellCasterFSM.h"
+	"Monster.h"
+	"engine/MonsterFSM.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellfireball.h
+	"Spell.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellincinerate.h
+	"Spell.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellheal.h
+	"Spell.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellcasterfsm.h
+	"engine/MonsterFSM.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\monsterfsm.h
+	"StateMachine.h"
+
+1183994266 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\statemachine.h
+	"StateMachineFactory.h"
+	"world.h"
+	"creature.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\statemachinefactory.h
+	"Factory.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\myplayer.cpp
+	"stdafx.h"
+	"engine/gl.h"
+	"engine/LinearInterpolator.h"
+	"engine/CallbackTask.h"
+	"Spell.h"
+	"SpellFireBall.h"
+	"SpellIncinerate.h"
+	"SpellHeal.h"
+	"Monster.h"
+	"MyPlayer.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gl.h
+	<windows.h>
+	<GL/glew.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\linearinterpolator.h
+	"task.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\callbacktask.h
+	<boost/function.hpp>
+	<boost/bind.hpp>
+	"task.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\myplayer.h
+	"engine/World.h"
+	"engine/Player.h"
+	"Spell.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\powerup.cpp
+	"stdafx.h"
+	"MyPlayer.h"
+	"PowerUp.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\powerup.h
+	"engine/Switch.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\switch.h
+	"world.h"
+	"Trigger.h"
+	"TriggerPrompt.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\triggerprompt.h
+	"tstring.h"
+	"widget.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\powerupheal.cpp
+	"stdafx.h"
+	"engine/World.h"
+	"engine/Zone.h"
+	"engine/CallbackTask.h"
+	"engine/GameStateRun.h"
+	"engine/ListPaneWidget.h"
+	"MyPlayer.h"
+	"PowerupHeal.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestaterun.h
+	"Singleton.h"
+	"BlurEffect.h"
+	"Dimmer.h"
+	"TriggerPrompt.h"
+	"GameState.h"
+	"PerformanceLabel.h"
+	"DebugLabel.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\blureffect.h
+	"Blur.h"
+	"COLOR.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\blur.h
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\performancelabel.h
+	"LabelWidget.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\debuglabel.h
+	"LabelWidget.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\powerupheal.h
+	"Powerup.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\powerupspell.cpp
+	"stdafx.h"
+	"engine/World.h"
+	"engine/Zone.h"
+	"engine/CallbackTask.h"
+	"engine/ListPaneWidget.h"
+	"engine/GameStateRun.h"
+	"MyPlayer.h"
+	"PowerupSpell.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\powerupspell.h
+	"Powerup.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spawn.cpp
+	"stdafx.h"
+	"engine/ActorSet.h"
+	"engine/World.h"
+	"engine/Zone.h"
+	"engine/Random.h"
+	"engine/WaitScreen.h"
+	"engine/ListElementTweaker.h"
+	"Spawn.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spawn.h
+	"engine/Listener.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellfireball.cpp
+	"stdafx.h"
+	"engine/gl.h"
+	"Bullet.h"
+	"SpellFireBall.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellheal.cpp
+	"stdafx.h"
+	"engine/gl.h"
+	"engine/Player.h"
+	"SpellHeal.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellincinerate.cpp
+	"stdafx.h"
+	"engine/gl.h"
+	"Explosion.h"
+	"SpellIncinerate.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\teleporter.cpp
+	"stdafx.h"
+	"engine/ListElementTweaker.h"
+	"engine/ListPaneWidget.h"
+	"engine/ToggleWidgetText.h"
+	"Teleporter.h"
+
+1183689574 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\teleporter.h
+	"engine/Switch.h"
+
+1184002683 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\tilegate.cpp
+	"stdafx.h"
+	"engine/World.h"
+	"engine/CallbackInterpolator.h"
+	"engine/CallbackTask.h"
+	"engine/ListPaneWidget.h"
+	"engine/ListElementTweaker.h"
+	"engine/ToggleWidgetText.h"
+	"TileGate.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\3dmath.cpp
+	"stdafx.h"
+	"3dmath.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\stdafx.h
+	<windows.h>
+	<direct.h>
+	<tchar.h>
+	<unistd.h>
+	<list>
+	<vector>
+	<string>
+	<queue>
+	<stack>
+	<map>
+	<sstream>
+	<new>
+	<algorithm>
+	<exception>
+	<cctype>
+	<cmath>
+	<cstdio>
+	<cstdlib>
+	<cstdarg>
+	<cstring>
+	<float.h>
+	<boost/lambda/lambda.hpp>
+	<boost/lambda/bind.hpp>
+	<boost/lambda/if.hpp>
+	<boost/lambda/construct.hpp>
+	"tstring.h"
+	"logstring.h"
+	"myassert.h"
+	"macros.h"
+	"singleton.h"
+	"random.h"
+	"file.h"
+	"Controller.h"
+	"Application.h"
+	"opengl.h"
+	"effect.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect.h
+	"EffectSig.h"
+
+1183689575 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spell.cpp
+	"stdafx.h"
+	"engine/gl.h"
+	"engine/LinearInterpolator.h"
+	"engine/GameStateSpellMenu.h"
+	"Spell.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestatespellmenu.h
+	"Singleton.h"
+	"Dimmer.h"
+	"GameState.h"
+	"Material.h"
+	"../MyPlayer.h"
+	"../Spell.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\spellcasterfsm.cpp
+	"stdafx.h"
+	"engine/World.h"
+	"engine/Zone.h"
+	"engine/Creature.h"
+	"engine/Player.h"
+	"engine/random.h"
+	"Spell.h"
+	"Monster.h"
+	"SpellCasterFSM.h"
+
+1184008560 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\3dsloader.cpp
+	"stdafx.h"
+	"3dsLoader.h"
+	"WaitScreen.h"
+	"profile.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\3dsloader.h
+	"ModelLoader.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\modelloader.h
+	"tstring.h"
+	"AnimationController.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\profile.h
+	"tstring.h"
+
+1183780885 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\actorfactory.cpp
+	"stdafx.h"
+	"Object.h"
+	"ActorFactory.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\actorset.cpp
+	"stdafx.h"
+	"gl.h"
+	"OpenGL.h"
+	"WaitScreen.h"
+	"frustum.h"
+	"ActorSet.h"
+	"ActorFactory.h"
+	"priority_queue.h"
+	"profile.h"
+	"Player.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\priority_queue.h
+	<vector>
+	<queue>
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\animationcontroller.cpp
+	"stdafx.h"
+	"AnimationController.h"
+
+1183784087 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\assertdlg.rc
+	"resource.h"
+	"windows.h"
+	"resource.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\resource.h
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\backdroptexture.cpp
+	"stdafx.h"
+	"gl.h"
+	"BackdropTexture.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\blur.cpp
+	"stdafx.h"
+	"EffectManager.h"
+	"gl.h"
+	"Zone.h"
+	"Blur.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effectmanager.h
+	<map>
+	"Effect.h"
+	"EffectSig.h"
+	"Singleton.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\blureffect.cpp
+	"stdafx.h"
+	"EffectManager.h"
+	"gl.h"
+	"BlurEffect.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\color.cpp
+	"stdafx.h"
+	"COLOR.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\controller.cpp
+	"stdafx.h"
+	"Controller.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\debugdisplaytogglekeydetector.cpp
+	"stdafx.h"
+	"DebugDisplayToggleKeyDetector.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\debugdisplaytogglekeydetector.h
+	"Task.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\debuglabel.cpp
+	"stdafx.h"
+	"MessageRouter.h"
+	"Player.h"
+	"Zone.h"
+	"World.h"
+	"DebugLabel.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\detector.cpp
+	"stdafx.h"
+	"ListPaneWidget.h"
+	"ListElementTweaker.h"
+	"ToggleWidgetText.h"
+	"ActorSet.h"
+	"World.h"
+	"Zone.h"
+	"Detector.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\detectorproximity.cpp
+	"stdafx.h"
+	"ActorSet.h"
+	"World.h"
+	"Zone.h"
+	"Player.h"
+	"DetectorProximity.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\detectorproximityplayer.cpp
+	"stdafx.h"
+	"World.h"
+	"Zone.h"
+	"Player.h"
+	"DetectorProximityPlayer.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\detectorproximityplayer.h
+	"DetectorProximity.h"
+	"Player.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\dimmer.cpp
+	"stdafx.h"
+	"EffectManager.h"
+	"gl.h"
+	"Dimmer.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\editorkeydetector.cpp
+	"stdafx.h"
+	"EditorKeyDetector.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\editorkeydetector.h
+	"Task.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\editortoolbar.cpp
+	"stdafx.h"
+	"gl.h"
+	"application.h"
+	"World.h"
+	"Player.h"
+	"Zone.h"
+	"Map.h"
+	"EditorToolBar.h"
+	"ListElementTweaker.h"
+	"ListElementLabel.h"
+	"ToggleWidget.h"
+	"ToggleWidgetText.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\editortoolbar.h
+	"Widget.h"
+	"ActorSet.h"
+	"FileSelectionList.h"
+	"Map.h"
+	"ToolBarForEditorTools.h"
+	"CycleTextureSelectorState.h"
+	"StringSelectionList.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\fileselectionlist.h
+	"SelectionList.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\selectionlist.h
+	"ListPaneWidget.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\toolbarforeditortools.h
+	"selectionlist.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\cycletextureselectorstate.h
+	"ListElementWidget.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\stringselectionlist.h
+	"SelectionList.h"
+	"ListElementLabel.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listelementlabel.h
+	"ToggleWidget.h"
+	"labelwidget.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\togglewidget.h
+	"ListElementWidget.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect.cpp
+	"stdafx.h"
+	"gl.h"
+	"Effect.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effectmanager.cpp
+	"stdafx.h"
+	"gl.h"
+	"priority_queue.h"
+	"primitivedatatypes.h"
+	"EffectManager.h"
+	"Effect.h"
+	"Effect_TextureReplace_FFP.h"
+	"Effect_Gouraud_FFP.h"
+	"Effect_Particle_FFP.h"
+	"Effect_GUI_FFP.h"
+	"Effect_Red_FFP.h"
+	"Effect_Project_Shadows.h"
+	"Effect_Receive_Shadows.h"
+	"Effect_Z_Only.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_texturereplace_ffp.h
+	"Effect.h"
+	"Singleton.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_gouraud_ffp.h
+	"Effect.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_particle_ffp.h
+	"Effect.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_gui_ffp.h
+	"Effect.h"
+	"Singleton.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_red_ffp.h
+	"Effect.h"
+	"Singleton.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_project_shadows.h
+	"Singleton.h"
+	"Effect.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_receive_shadows.h
+	"Effect.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_z_only.h
+	"Effect.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_gui_ffp.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_GUI_FFP.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_gouraud_ffp.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_Gouraud_FFP.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_particle_ffp.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_Particle_FFP.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_project_shadows.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_Project_Shadows.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_receive_shadows.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_Receive_Shadows.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_red_ffp.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_Red_FFP.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_texturereplace_ffp.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_TextureReplace_FFP.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\effect_z_only.cpp
+	"stdafx.h"
+	"gl.h"
+	"propbag.h"
+	"Effect_Z_Only.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\fpsdisplaytogglekeydetector.cpp
+	"stdafx.h"
+	"FPSDisplayToggleKeyDetector.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\fpsdisplaytogglekeydetector.h
+	"Task.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\fileselectionlist.cpp
+	"stdafx.h"
+	"SearchFile.h"
+	"fileselectionlist.h"
+	"ListElementLabel.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\searchfile.h
+
+1183987514 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestatecredits.cpp
+	"stdafx.h"
+	"gl.h"
+	"World.h"
+	"Zone.h"
+	"Player.h"
+	"PerformanceLabel.h"
+	"Dimmer.h"
+	"LinearInterpolator.h"
+	"GameStateCredits.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestatecredits.h
+	"Singleton.h"
+	"Dimmer.h"
+	"GameState.h"
+	"Material.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestateeditor.cpp
+	"stdafx.h"
+	"OpenGL.h"
+	"gl.h"
+	"World.h"
+	"Zone.h"
+	"Player.h"
+	"WaitScreen.h"
+	"GameStateEditor.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestateeditor.h
+	"Singleton.h"
+	"EditorToolBar.h"
+	"GameState.h"
+
+1183992579 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestatemenu.cpp
+	"stdafx.h"
+	"gl.h"
+	"GameStateMenu.h"
+	"Dimmer.h"
+	"LinearInterpolator.h"
+	"MenuGameOver.h"
+	"MenuOptions.h"
+	"MenuWorldSelection.h"
+	"MenuWorldLeadOut.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menugameover.h
+	"Menu.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menuoptions.h
+	"Menu.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menuworldselection.h
+	"Menu.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menuworldleadout.h
+	"Menu.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestaterun.cpp
+	"stdafx.h"
+	"gl.h"
+	"World.h"
+	"Zone.h"
+	"Player.h"
+	"Dimmer.h"
+	"LinearInterpolator.h"
+	"GameStateRun.h"
+
+1183996858 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\gamestatespellmenu.cpp
+	"stdafx.h"
+	"gl.h"
+	"World.h"
+	"Zone.h"
+	"PerformanceLabel.h"
+	"Dimmer.h"
+	"LinearInterpolator.h"
+	"GameStateSpellMenu.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\itemwidget.cpp
+	"stdafx.h"
+	"ItemWidget.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\itemwidget.h
+	"labelwidget.h"
+	"item.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\item.h
+	"Switch.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\key.cpp
+	"stdafx.h"
+	"Key.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\key.h
+	"Item.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\light.cpp
+	"stdafx.h"
+	"gl.h"
+	"COLOR.h"
+	"zone.h"
+	"Light.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\lightmanager.cpp
+	"stdafx.h"
+	"gl.h"
+	"priority_queue.h"
+	"Frustum.h"
+	"Zone.h"
+	"World.h"
+	"Player.h"
+	"LightManager.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listelementwidget.cpp
+	"stdafx.h"
+	"SelectionList.h"
+	"ListElementWidget.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listpanewidget.cpp
+	"stdafx.h"
+	"world.h"
+	"listelementwidget.h"
+	"listpanewidget.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listener.cpp
+	"stdafx.h"
+	"ActorSet.h"
+	"World.h"
+	"Zone.h"
+	"WaitScreen.h"
+	"ListPaneWidget.h"
+	"ListElementTweaker.h"
+	"Listener.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listenerprompt.cpp
+	"stdafx.h"
+	"ListPaneWidget.h"
+	"ListElementTweaker.h"
+	"ToggleWidgetText.h"
+	"GameStateRun.h"
+	"ListenerPrompt.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\listenerprompt.h
+	"Listener.h"
+	"TriggerPrompt.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\map.cpp
+	"stdafx.h"
+	"gl.h"
+	"EffectManager.h"
+	"Tile.h"
+	"material.h"
+	"searchfile.h"
+	"Map.h"
+	"profile.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\md3loader.cpp
+	"stdafx.h"
+	"profile.h"
+	"File.h"
+	"Mesh.h"
+	"Md3Loader.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\md3loader.h
+	"ModelLoader.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menu.cpp
+	"stdafx.h"
+	"gl.h"
+	"LinearInterpolator.h"
+	"WaitScreen.h"
+	"Dimmer.h"
+	"Menu.h"
+	"GameStateMenu.h"
+	"LightManager.h"
+	"World.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menugameover.cpp
+	"stdafx.h"
+	"gl.h"
+	"GameStateMenu.h"
+	"MenuGameOver.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menukeydetector.cpp
+	"stdafx.h"
+	"GameStateMenu.h"
+	"MenuKeyDetector.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menukeydetector.h
+	"Task.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menuoptions.cpp
+	"stdafx.h"
+	"gl.h"
+	"Application.h"
+	"GameStateMenu.h"
+	"MenuOptions.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menuworldleadout.cpp
+	"stdafx.h"
+	"gl.h"
+	"WaitScreen.h"
+	"Application.h"
+	"GameStateMenu.h"
+	"MenuWorldLeadOut.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\menuworldselection.cpp
+	"stdafx.h"
+	"gl.h"
+	"WaitScreen.h"
+	"Application.h"
+	"World.h"
+	"GameStateMenu.h"
+	"MenuWorldSelection.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\messagebox.cpp
+	"stdafx.h"
+	"MessageBox.h"
+	"world.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\messageboxmanager.cpp
+	"stdafx.h"
+	"MessageBoxManager.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\messagerouter.cpp
+	"stdafx.h"
+	"Object.h"
+	"ActorSet.h"
+	"World.h"
+	"MessageRouter.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\modelloader.cpp
+	"stdafx.h"
+	"profile.h"
+	"ModelLoader.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\cycletextureselectorstate.cpp
+	"stdafx.h"
+	"CycleTextureSelectorState.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\editwidget.cpp
+	"stdafx.h"
+	"SDLwindow.h"
+	"EditWidget.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\monsterfsm.cpp
+	"stdafx.h"
+	"World.h"
+	"Zone.h"
+	"Creature.h"
+	"Player.h"
+	"MonsterFSM.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\musicengine.cpp
+	"stdafx.h"
+	"random.h"
+	"application.h"
+	"SoundSystem.h"
+	"musicengine.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\performancelabel.cpp
+	"stdafx.h"
+	"PerformanceLabel.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\propbag.cpp
+	"stdafx.h"
+	"profile.h"
+	"PropBag.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\quadtreenode.cpp
+	"stdafx.h"
+	"Application.h"
+	"Tile.h"
+	"profile.h"
+	"QuadTreeNode.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\sdlwindow.cpp
+	"stdafx.h"
+	"Application.h"
+	"SDLwindow.h"
+
+1183983668 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\screenshottask.cpp
+	"stdafx.h"
+	<IL/il.h>
+	<IL/ilut.h>
+	"ScreenShotTask.h"
+	"SearchFile.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\il.h
+	<windows.h>
+	<IL/il.h>
+	<IL/ilu.h>
+	<IL/ilut.h>
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\screenshottask.h
+	"Task.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\selectionlist.cpp
+	"stdafx.h"
+	"SelectionList.h"
+	"ListElementWidget.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\shadowmanager.cpp
+	"stdafx.h"
+	"gl.h"
+	"ActorSet.h"
+	"Zone.h"
+	"Player.h"
+	"World.h"
+	"ShadowManager.h"
+
+1183983206 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\soundsystem.cpp
+	"stdafx.h"
+	"soundsystem.h"
+
+1182225252 c:\program files\fmod soundsystem\fmod programmers api win32\api\inc\fmod.hpp
+	"fmod.h"
+
+1182490662 c:\program files\fmod soundsystem\fmod programmers api win32\api\inc\fmod.h
+	"fmod_codec.h"
+	"fmod_dsp.h"
+
+1182490663 c:\program files\fmod soundsystem\fmod programmers api win32\api\inc\fmod_codec.h
+
+1182490663 c:\program files\fmod soundsystem\fmod programmers api win32\api\inc\fmod_dsp.h
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\spellmenukeydetector.cpp
+	"stdafx.h"
+	"SpellMenuKeyDetector.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\spellmenukeydetector.h
+	"Task.h"
+
+1183908483 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\splashscreen.cpp
+	"stdafx.h"
+	"gl.h"
+	"SplashScreen.h"
+	"Image.h"
+	"TextureHandle.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\splashscreen.h
+	"Singleton.h"
+	"BackdropTexture.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\statemachine.cpp
+	"stdafx.h"
+	"Zone.h"
+	"StateMachine.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\statemachinefactory.cpp
+	"stdafx.h"
+	"StateMachine.h"
+	"StateMachineFactory.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\switch.cpp
+	"stdafx.h"
+	"Zone.h"
+	"Player.h"
+	"CallbackTask.h"
+	"GameStateRun.h"
+	"Switch.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\texturehandle.cpp
+	"stdafx.h"
+	"gl.h"
+	"Effect.h"
+	"TextureHandle.h"
+
+1183986753 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\texturemanager.cpp
+	"stdafx.h"
+	"gl.h"
+	"WaitScreen.h"
+	"Effect.h"
+	"TextureManager.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\tile.cpp
+	"stdafx.h"
+	"gl.h"
+	"File.h"
+	"Tile.h"
+	"Map.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\togglewidget.cpp
+	"stdafx.h"
+	"ToggleWidget.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\togglewidgettext.cpp
+	"stdafx.h"
+	"ToggleWidgetText.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\toolbarforeditortools.cpp
+	"stdafx.h"
+	"toolbarforeditortools.h"
+	"ListElementWidget.h"
+	"ToggleWidget.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\trigger.cpp
+	"stdafx.h"
+	"ListPaneWidget.h"
+	"ToggleWidgetText.h"
+	"ListElementTweaker.h"
+	"Zone.h"
+	"Player.h"
+	"Trigger.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\triggerparticles.cpp
+	"stdafx.h"
+	"ListPaneWidget.h"
+	"ListElementTweaker.h"
+	"Zone.h"
+	"TriggerParticles.h"
+
+1183689573 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\triggerparticles.h
+	"Trigger.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\triggerprompt.cpp
+	"stdafx.h"
+	"gl.h"
+	"TriggerPrompt.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\visualpriority.cpp
+	"stdafx.h"
+	"VisualPriority.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\visualpriority.h
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\waitscreen.cpp
+	"stdafx.h"
+	"gl.h"
+	"WaitScreen.h"
+	"Image.h"
+	"TextureHandle.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\zone.cpp
+	"stdafx.h"
+	"gl.h"
+	"Zone.h"
+	"Player.h"
+	"SearchFile.h"
+	"waitscreen.h"
+	"frustum.h"
+	"priority_queue.h"
+	"EditorToolBar.h"
+	"Dimmer.h"
+	"profile.h"
+	"EffectSig.h"
+	"EffectManager.h"
+
+1183991756 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\animation.cpp
+	"stdafx.h"
+	"animation.h"
+
+1183992227 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\application.cpp
+	"stdafx.h"
+	"gl.h"
+	"EffectManager.h"
+	"Application.h"
+	"WaitScreen.h"
+	"SplashScreen.h"
+	"World.h"
+	"Md3Loader.h"
+	"ScreenShotTask.h"
+	"EditorKeyDetector.h"
+	"MenuKeyDetector.h"
+	"SpellMenuKeyDetector.h"
+	"DebugDisplayToggleKeyDetector.h"
+	"FPSDisplayToggleKeyDetector.h"
+	"GameStateRun.h"
+	"GameStateEditor.h"
+	"GameStateMenu.h"
+	"GameStateSpellMenu.h"
+	"GameStateCredits.h"
+	"Controller.h"
+	"profile.h"
+	"PeriodicCallbackTask.h"
+	<IL/il.h>
+	<IL/ilu.h>
+	<IL/ilut.h>
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\periodiccallbacktask.h
+	<boost/function.hpp>
+	<boost/lambda/bind.hpp>
+	<boost/lambda/lambda.hpp>
+	"task.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\camera.cpp
+	"stdafx.h"
+	"gl.h"
+	"camera.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\creature.cpp
+	"stdafx.h"
+	"CallbackTask.h"
+	"gl.h"
+	"WidgetManager.h"
+	"ListPaneWidget.h"
+	"ListElementTweaker.h"
+	"World.h"
+	"Zone.h"
+	"Player.h"
+	"StateMachineFactory.h"
+	"StateMachine.h"
+	"Creature.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\fog.cpp
+	"stdafx.h"
+	"gl.h"
+	"fog.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\frustum.cpp
+	"stdafx.h"
+	"gl.h"
+	"Frustum.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\horizbar.cpp
+	"stdafx.h"
+	"OpenGL.h"
+	"HorizBar.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\horizbar.h
+	"widgetmanager.h"
+	"windowwidget.h"
+
+1183983668 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\image.cpp
+	"stdafx.h"
+	<IL/il.h>
+	<IL/ilu.h>
+	"profile.h"
+	"image.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\item.cpp
+	"stdafx.h"
+	"Player.h"
+	"Zone.h"
+	"Item.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\keyframe.cpp
+	"stdafx.h"
+	"keyframe.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\labelwidget.cpp
+	"stdafx.h"
+	"gl.h"
+	"application.h"
+	"LabelWidget.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\lamp.cpp
+	"stdafx.h"
+	"ListPaneWidget.h"
+	"ListElementTweaker.h"
+	"ToggleWidgetText.h"
+	"Light.h"
+	"Zone.h"
+	"Player.h"
+	"Lamp.h"
+
+1183689570 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\lamp.h
+	"Switch.h"
+	"LightManager.h"
+
+1183994772 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\logstring.cpp
+	"stdafx.h"
+	"file.h"
+	"windows.h"
+	"LogString.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\mat4.cpp
+	"stdafx.h"
+	"gl.h"
+	"mat4.h"
+
+1183991726 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\material.cpp
+	"stdafx.h"
+	"gl.h"
+	"material.h"
+	"Effect.h"
+	"EffectManager.h"
+
+1184008596 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\file.cpp
+	"stdafx.h"
+	"profile.h"
+	<sys/types.h>
+	<sys/stat.h>
+	<shlobj.h>
+	<shlwapi.h>
+	<direct.h>
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\mesh.cpp
+	"stdafx.h"
+	"gl.h"
+	"Md3Loader.h"
+	"3dsLoader.h"
+	"mesh.h"
+	"Effect.h"
+	"EffectManager.h"
+
+1183985870 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\myassert.cpp
+	<windows.h>
+	"resource.h"
+	"stdafx.h"
+	"logstring.h"
+	"myassert.h"
+
+1183996376 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\object.cpp
+	"stdafx.h"
+	<cmath>
+	"gl.h"
+	"profile.h"
+	"mat4.h"
+	"Tile.h"
+	"Map.h"
+	"Zone.h"
+	"World.h"
+	"Object.h"
+	"Creature.h"
+	"Player.h"
+	"Object.h"
+	"Frustum.h"
+	"ListElementTweaker.h"
+	"ToggleWidget.h"
+	"ToggleWidgetText.h"
+	"GameStateEditor.h"
+	"Md3Loader.h"
+	"3dsLoader.h"
+	"Trigger.h"
+	"../Bullet.h"
+	"Player.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\opengl.cpp
+	"stdafx.h"
+	"gl.h"
+	"opengl.h"
+	"COLOR.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\particle.cpp
+	"stdafx.h"
+	"gl.h"
+	"random.h"
+	"particle.h"
+
+1183996377 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\player.cpp
+	"stdafx.h"
+	"gl.h"
+	"Player.h"
+	"Zone.h"
+	"World.h"
+	"Light.h"
+	"ListElementTweaker.h"
+	"Item.h"
+	"MenuGameOver.h"
+	"WaitScreen.h"
+	"CallbackInterpolator.h"
+	"Dimmer.h"
+	"Switch.h"
+	"GameStateMenu.h"
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\primitivedatatypes.cpp
+	"stdafx.h"
+	"PrimitiveDataTypes.h"
+
+1183689572 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\profile.cpp
+	"stdafx.h"
+	"misc.h"
+	"LabelWidget.h"
+	"profile.h"
+	<string.h>
+	<stdio.h>
+
+1183689571 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\searchfile.cpp
+	"stdafx.h"
+	<io.h>
+	"searchfile.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\stdafx.cpp
+	"stdafx.h"
+	"gl.h"
+	"text.h"
+	"3dmath.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\widgetmanager.cpp
+	"stdafx.h"
+	"EffectSig.h"
+	"profile.h"
+	"widgetmanager.h"
+
+1183689569 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\windowwidget.cpp
+	"stdafx.h"
+	"gl.h"
+	"application.h"
+	"world.h"
+	"SDLwindow.h"
+	"WindowWidget.h"
+
+1184002347 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\world.cpp
+	"stdafx.h"
+	"gl.h"
+	"profile.h"
+	"Zone.h"
+	"World.h"
+	"WaitScreen.h"
+	"SearchFile.h"
+	"Player.h"
+
+1183990779 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\text.cpp
+	"stdafx.h"
+	"gl.h"
+	"opengl.h"
+	"text.h"
+	"image.h"
+	"mat4.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\timer.cpp
+	"stdafx.h"
+	"timer.h"
+	"profile.h"
+	<windows.h>
+	<mmsystem.h>
+
+1184002683 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\tstring.cpp
+	"stdafx.h"
+
+1183770698 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\widget.cpp
+	"stdafx.h"
+	"gl.h"
+	"widget.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\win32.cpp
+	"stdafx.h"
+
+1183770699 c:\documents and settings\arfox\my documents\arbarlith2\branches\codeblocks\arbarlith2\engine\shadow.cpp
+	"stdafx.h"
+	"gl.h"
+	"Frustum.h"
+	"Zone.h"
+	"Shadow.h"
+
+1151385464 c:\program files\codeblocks\include\sdl\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_audio.h"
+	"SDL_cdrom.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_loadso.h"
+	"SDL_mutex.h"
+	"SDL_rwops.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_video.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<iconv.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1151385468 c:\program files\codeblocks\include\sdl\sdl_config.h
+	"SDL_platform.h"
+	<stdarg.h>
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_platform.h
+
+1151385462 c:\program files\codeblocks\include\sdl\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385464 c:\program files\codeblocks\include\sdl\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385464 c:\program files\codeblocks\include\sdl\sdl_endian.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385468 c:\program files\codeblocks\include\sdl\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385462 c:\program files\codeblocks\include\sdl\sdl_cdrom.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385464 c:\program files\codeblocks\include\sdl\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385464 c:\program files\codeblocks\include\sdl\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_active.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_quit.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385462 c:\program files\codeblocks\include\sdl\sdl_active.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keysym.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_keysym.h
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385468 c:\program files\codeblocks\include\sdl\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1151385466 c:\program files\codeblocks\include\sdl\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385468 c:\program files\codeblocks\include\sdl\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385468 c:\program files\codeblocks\include\sdl\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1151385462 c:\program files\codeblocks\include\sdl\begin_code.h
+
+1151385462 c:\program files\codeblocks\include\sdl\close_code.h
+

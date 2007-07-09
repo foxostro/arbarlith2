@@ -37,15 +37,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "propbag.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Holds mesh data and can render that data */
-class Mesh 
+class Mesh
 {
 public:
 	/**
-	Face structure.  This is is used for indexing into the vertex 
+	Face structure.  This is is used for indexing into the vertex
 	and texture coordinate arrays.  From this information we know which vertices
 	from our vertex array go to which face, along with the correct texture coordinates.
 	*/
@@ -53,7 +53,7 @@ public:
 	{
 		/** indicies for the verts that make up this triangle */
 		int vertIndex[3];
-		
+
 		/** indicies for the tex coords to texture this face */
 		int coordIndex[3];
 	};
@@ -127,7 +127,7 @@ public:
 	@return radius
 	*/
 	float calculateRadius(void);
-	
+
 	/**
 	Calculates the radius of the smallest cylinder that encloses the object.
 	@return radius
@@ -183,6 +183,6 @@ private:
 	void copy(const Mesh &obj);
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

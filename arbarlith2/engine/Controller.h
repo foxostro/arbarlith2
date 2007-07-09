@@ -43,11 +43,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _CONTROLLER_H_
 
 #include "Singleton.h"
-#include "sdl.h"
+#include <SDL/SDL.h>
 
 #include <map>
 
-namespace Engine { 
+namespace Engine {
 
 /** Handle to a particular action */
 typedef int ACTION_CODE;
@@ -81,7 +81,7 @@ class JoyDir
 public:
 	/** Index of the device, ie the hat or axis or button */
 	int DeviceIdx;
-	
+
 	/** Type of device */
 	Uint8 Type;
 
@@ -227,7 +227,8 @@ public:
 
 
 
-}; //namespace
-#define g_Keys (Engine::Controller::GetSingleton())
+} // namespace Engine
+
+#define g_Keys (::Engine::Controller::GetSingleton())
 
 #endif

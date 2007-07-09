@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Spell.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Creates an explosion on top of every creature near the caster */
 class SpellIncinerate : public Spell
@@ -82,6 +82,6 @@ private:
 	float spellRadius;
 };
 
-}; // namespace
+} // namespace Arbarlith2
 
 #endif

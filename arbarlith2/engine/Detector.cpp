@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-GEN_ACTOR_RTTI_CPP(Detector)
+GEN_ACTOR_RTTI_CPP(Detector, "class Engine::Detector")
 
 Detector::Detector(OBJECT_ID ID)
 :Trigger(ID)
@@ -95,7 +95,7 @@ void Detector::update(float deltaTime)
 
 bool Detector::LoadXml(CPropBag &xml)
 {
-	__super::LoadXml(xml);
+	Trigger::LoadXml(xml);
 
 	xml.getSym(signalSuccess);
 	xml.getSym(signalFail);
@@ -105,17 +105,17 @@ bool Detector::LoadXml(CPropBag &xml)
 }
 
 bool Detector::saveTidy(CPropBag &xml, CPropBag &editorData) const
-{	
+{
 	saveTag(xml, editorData, _T("signalSuccess"), signalSuccess);
 	saveTag(xml, editorData, _T("signalFail"), signalFail);
 	saveTag(xml, editorData, _T("onlyTripOnce"), onlyTripOnce);
 
-	return __super::saveTidy(xml, editorData);
+	return Trigger::saveTidy(xml, editorData);
 }
 
 void Detector::createToolBar(ListPaneWidget *pane)
 {
-	__super::createToolBar(pane);
+	Trigger::createToolBar(pane);
 
 	pane->addElement(new ToggleWidgetText(		_T("Only trip once"),		&onlyTripOnce));
 	pane->addElement(new ListElementTweaker<int>(	_T("Signal on Success"),	&signalSuccess));

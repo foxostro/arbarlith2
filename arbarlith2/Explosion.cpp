@@ -73,4 +73,4 @@ void createExplosion(Zone &zone, const vec3 &position, int damageValue, OBJECT_I
 	}
 }
 
-}; // namespace
+} // namespace Arbarlith2

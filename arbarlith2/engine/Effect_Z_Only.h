@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Effect.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** only affect the depth buffer */
 class Effect_Z_Only : public Effect
@@ -118,7 +118,7 @@ public:
 	@return The name of the Effect
 	*/
 	virtual _tstring getName(void) const;
-	
+
 	/**
 	Has the Effect determine how well it can implement an effect signature
 	@param signature The effectsignature to test
@@ -127,6 +127,6 @@ public:
 	virtual int howGood(effect_sig signature) const;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

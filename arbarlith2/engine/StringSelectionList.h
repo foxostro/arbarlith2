@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SelectionList.h"
 #include "ListElementLabel.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Selection list of values */
 template<class T>
@@ -55,11 +55,11 @@ private:
 		@param value Value to associate with the element
 		*/
 		ELEMENT(const _tstring &label, const T &value)
-		:myValue(value),
-		ListElementLabel(label, _T("data/sprites/list/listwidget_depressed.png"),
-								_T("data/sprites/list/listwidget_depressed_over.png"),
-								_T("data/sprites/list/listwidget.png"),
-								_T("data/sprites/list/listwidget_hover.png"))
+		: ListElementLabel(label, _T("data/sprites/list/listwidget_depressed.png"),
+		                          _T("data/sprites/list/listwidget_depressed_over.png"),
+		                          _T("data/sprites/list/listwidget.png"),
+		                          _T("data/sprites/list/listwidget_hover.png")),
+		  myValue(value)
 		{}
 
 		/**

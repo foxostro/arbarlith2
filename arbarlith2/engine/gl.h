@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -47,15 +47,11 @@ Include the OpenGL headers
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <GL/glaux.h>
-
-
-
+//#include <GL/glaux.h>
 
 namespace Engine
 {
 	extern GLenum textureStages[];
-};
-
+}
 
 #endif

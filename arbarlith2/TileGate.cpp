@@ -37,9 +37,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/ToggleWidgetText.h"
 #include "TileGate.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
-GEN_ACTOR_RTTI_CPP(TileGate)
+GEN_ACTOR_RTTI_CPP(TileGate, "class Arbarlith2::TileGate")
 
 TileGate::TileGate(OBJECT_ID ID)
 :Actor(ID)
@@ -78,7 +78,7 @@ void TileGate::onTrigger(void)
 
 bool TileGate::LoadXml(CPropBag &xml)
 {
-	__super::LoadXml(xml);
+	Actor::LoadXml(xml);
 
 	xml.getSym(lockedHeight);
 	xml.getSym(unlockedHeight);
@@ -114,7 +114,7 @@ bool TileGate::saveTidy(CPropBag &xml, CPropBag &editorData) const
 	saveTag(xml, editorData, _T("unlockSfx"),		unlockSfx);
 	saveTag(xml, editorData, _T("lockSfx"),		lockSfx);
 
-	return __super::saveTidy(xml, editorData);
+	return Actor::saveTidy(xml, editorData);
 }
 
 void TileGate::unlockGate(void)
@@ -192,7 +192,7 @@ Tile& TileGate::getTile(void)
 
 void TileGate::createToolBar(ListPaneWidget *pane)
 {
-	__super::createToolBar(pane);
+	Actor::createToolBar(pane);
 
 	pane->addElement(new ListElementTweakerString	(_T("Unlocking Sfx"),		&unlockSfx));
 	pane->addElement(new ListElementTweakerString	(_T("Locking Sfx"),		&lockSfx));

@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Player.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -81,9 +81,9 @@ OBJECT_ID ActorSet::create(const _tstring &type, Zone *zone)
 {
 	ActorFactory &factory = Engine::getActorFactory();
 
-	ActorFactory::iterator iter = factory.find(  factory.create(type)  );
-	
-	if(iter==factory.end())
+	ActorFactory::mapHandleToObject::iterator iter = factory.objects.find(  factory.create(type)  );
+
+	if(iter==factory.objects.end())
 	{
 		FAIL(_T("cannot create an object of the type: ") + type);
 		return INVALID_ID;
@@ -92,7 +92,7 @@ OBJECT_ID ActorSet::create(const _tstring &type, Zone *zone)
 	{
 		OBJECT_ID handle = iter->first;
 		Actor *actor = iter->second;
-		
+
 		// add it to the set
 		insert(make_pair(handle, actor));
 
@@ -117,7 +117,7 @@ Actor& ActorSet::get(OBJECT_ID id)
 	return(*actor);
 }
 
-const Actor* ActorSet::getPtr(OBJECT_ID id) const 
+const Actor* ActorSet::getPtr(OBJECT_ID id) const
 {
 	if(isMember(id))
 		return(find(id)->second);
@@ -200,16 +200,22 @@ vector<Actor*> ActorSet::getByName(const _tstring &name)
 void ActorSet::garbageCollection(void)
 {
 	// delete zombie actors
-	iterator iter = begin();
+	ActorSet::const_iterator iter = begin();
+	ActorSet::const_iterator nextIter;
+
 	while(iter != end())
 	{
+		// Get an iterator to the next element (or the end of the map)
+		nextIter = iter;
+		nextIter++;
+
 		if(static_cast<Actor*>(iter->second)->zombie)
 		{
 			Engine::getActorFactory().remove(iter->first);
-			iter = erase(iter);
+			erase(iter->first);
 		}
-		else
-			iter++;
+
+		iter = nextIter;
 	}
 }
 
@@ -217,7 +223,7 @@ void ActorSet::drawActor(const Frustum *frustum, Actor *p)
 {
 	ASSERT(frustum!=0, _T("Null parameter! frustum was null"));
 	ASSERT(p!=0, _T("Null parameter! p was null"));
-	
+
 	if(!p->zombie && frustum->SphereInFrustum2(p->getPos(), p->getSphereRadius()*2))
 		p->drawObject();
 }
@@ -226,7 +232,7 @@ void ActorSet::drawActorTransparent(const Frustum *frustum, Actor *p)
 {
 	ASSERT(frustum!=0, _T("Null parameter! frustum was null"));
 	ASSERT(p!=0, _T("Null parameter! p was null"));
-	
+
 	if(!p->zombie && frustum->SphereInFrustum2(p->getPos(), p->getSphereRadius()*2))
 		p->drawTransparentObject();
 }
@@ -235,7 +241,7 @@ void ActorSet::drawActorDebugText(const Frustum *frustum, Actor *p)
 {
 	ASSERT(frustum!=0, _T("Null parameter! frustum was null"));
 	ASSERT(p!=0, _T("Null parameter! p was null"));
-	
+
 	if(!p->zombie && frustum->SphereInFrustum2(p->getPos(), p->getSphereRadius()*2))
 		p->drawObjectDebugData();
 }
@@ -243,7 +249,7 @@ void ActorSet::drawActorDebugText(const Frustum *frustum, Actor *p)
 void ActorSet::drawActorToDepthBuffer(Actor *p)
 {
 	ASSERT(p!=0, _T("Null parameter! p was null"));
-	
+
 	if(!p->zombie && p->doesCastShadows())
 		p->drawObjectToDepthBuffer();
 }
@@ -359,7 +365,7 @@ Actor& ActorSet::spawnNow(CPropBag &xml, Zone *zone)
 		xml.Get(_T("type"), rtti);
 	}
 
-	// Create the object inside the game world		
+	// Create the object inside the game world
 	OBJECT_ID id = create(rtti, zone);
 
 	// Load the object from XML
@@ -384,7 +390,7 @@ void ActorSet::load(CPropBag &xml, Zone *zone)
 
 	TRACE(_T("Loading ActorSet"));
 	g_WaitScreen.Render();
-				
+
 	// Get the number ofobjects coming up
 	int numObjects = xml.GetNumInstances(_T("object"));
 
@@ -392,7 +398,7 @@ void ActorSet::load(CPropBag &xml, Zone *zone)
 	for(int i=0; i<numObjects; ++i)
 	{
 		CPropBag ThisObjBag;
-		
+
 		xml.Get(_T("object"), ThisObjBag, i);
 
 		spawnNow(ThisObjBag, zone);
@@ -437,7 +443,7 @@ OBJECT_ID ActorSet::rayCast(OBJECT_ID caster, const vec3 &start, const vec3 &dir
 	vector< pair<float,OBJECT_ID> > intersections;
 
 	transform(begin(), end(), back_inserter(intersections), bind(&ActorSet::rayIntersectActor, caster, start, dir, bind(&toActor, _1)));
-	
+
 	if(intersections.empty())
 	{
 		return INVALID_ID;
@@ -464,7 +470,7 @@ OBJECT_ID ActorSet::pick(int mx, int my)
 {
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
-	
+
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadIdentity();
@@ -473,23 +479,23 @@ OBJECT_ID ActorSet::pick(int mx, int my)
 
 
 	OBJECT_ID id = INVALID_ID;
-	
+
 	// Create the mouse ray
 	vec3 mouse1 = UnProject(mx, my, 0.0f);
 	vec3 mouse2 = UnProject(mx, my, 10.0f);
-	vec3 delta = mouse2 - mouse1; 
+	vec3 delta = mouse2 - mouse1;
 
-	
 
-	
+
+
 	id = rayCast(INVALID_ID, mouse1, delta);
-	
-	
+
+
 
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
-	
+
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
 
@@ -529,7 +535,7 @@ bool ActorSet::query(const _tstring &name, OBJECT_ID &out) const
 			return true;
 		}
 	}
-	
+
 	out = INVALID_ID;
 	return false;
 }

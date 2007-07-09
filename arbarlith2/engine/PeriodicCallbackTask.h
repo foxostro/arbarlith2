@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "task.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Every so often, a callback function is executed (ignores game state! executes in every game state!) */
 template < class FN >
@@ -58,7 +58,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	void update(float deltaTime)
 	{
@@ -93,6 +93,6 @@ static PeriodicCallbackTask<T>* makePeriodicCallbackTask(float delay, T fn)
 	return new PeriodicCallbackTask<T>(delay, fn);
 }
 
-}; // namespace
+} // namespace Engine
 
 #endif

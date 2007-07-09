@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _EFFECT_SIGNATURES_H_
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -49,7 +49,7 @@ const effect_sig effect_TRANSPARENT			= 1200;	/** Selects an effect to render a 
 const effect_sig effect_RED					= 1400; /** Selects an effect to render a model so that its red, lit, and untextured */
 
 /*
-It is also possible to specify that a specific Effect class is to be used, rather than 
+It is also possible to specify that a specific Effect class is to be used, rather than
 a template of an effect that may have been prioritized accordingto hardware support.
 These effect signatures are from the set of signature from 1 to 499 and are reserved for
 specific effect classes.
@@ -76,9 +76,6 @@ bool effect_Begin(effect_sig signature);
 /** Stops using the currently bound Effect.  It is an error to end an effect while one is not bound. */
 void effect_End(void);
 
-
-}; // namespace
-
-
+} // namespace Engine
 
 #endif

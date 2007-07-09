@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -118,16 +118,23 @@ public:
 	float x, y, z, w;
 
 	/**
-	Default constructor sets all coordinates to zero 
+	Default constructor sets all coordinates to zero
 	*/
-	vec4(void) : x(0), y(0), z(0), w(0)
-	{}
+	vec4(void)
+	: XmlDataType()
+	{
+	    x = 0.0f;
+	    y = 0.0f;
+	    z = 0.0f;
+	    w = 0.0f;
+    }
 
 	/**
 	Copy constructor
 	@param vec The vector to copy
 	*/
 	vec4(const vec4 &vec)
+	: XmlDataType()
 	{
 		set(vec);
 	}
@@ -138,6 +145,7 @@ public:
 	@param p The point
 	*/
 	vec4(const Point2 &p)
+	: XmlDataType()
 	{
 		set(p);
 	}
@@ -148,6 +156,7 @@ public:
 	@param p The point
 	*/
 	vec4(const Point3 &p)
+	: XmlDataType()
 	{
 		set(p);
 	}
@@ -157,6 +166,7 @@ public:
 	@param p The point
 	*/
 	vec4(const Point4 &p)
+	: XmlDataType()
 	{
 		set(p);
 	}
@@ -169,6 +179,7 @@ public:
 	@param w W-Coordinate
 	*/
 	vec4(float x, float y, float z=0.0f, float w=0.0f)
+	: XmlDataType()
 	{
 		this->x = x;
 		this->y = y;
@@ -272,7 +283,7 @@ public:
 	/**
 	Calculates the vector after performing a cross product operation with it and another vector.
 	Determines the vector orthoganal to this vector and the given vector.
-	
+
 	v = < (v1.y * v2.z) - (v1.z * v2.y), (v1.z * V2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x) >
 
 	@param vec The other vector
@@ -286,14 +297,14 @@ public:
 		crossProduct.y = (getZ() * vec.getX()) - (getX() * vec.getZ());
 		crossProduct.z = (getX() * vec.getY()) - (getY() * vec.getX());
 
-		return vec4(crossProduct);	
+		return vec4(crossProduct);
 	}
 
 	/**
 	Calculates the value after performing a dot product operation with this vector and another vector.
-	
+
 	v1.v2 = |v1| |v2| cos theta
-	
+
 	@param vec The other vector
 	@return The dot product
 	*/
@@ -328,7 +339,7 @@ public:
 
 	/**
 	Gets the x-coordinate of this vector.
-	@return The x-coordinate 
+	@return The x-coordinate
 	*/
 	inline float getX(void) const
 	{
@@ -337,7 +348,7 @@ public:
 
 	/**
 	Gets the y-coordinate of this vector.
-	@return The y-coordinate 
+	@return The y-coordinate
 	*/
 	inline float getY(void) const
 	{
@@ -346,7 +357,7 @@ public:
 
 	/**
 	Gets the z-coordinate of this vector.
-	@return The z-coordinate 
+	@return The z-coordinate
 	*/
 	inline float getZ(void) const
 	{
@@ -355,7 +366,7 @@ public:
 
 	/**
 	Gets the w-coordinate of this vector.
-	@return The w-coordinate 
+	@return The w-coordinate
 	*/
 	inline float getW(void) const
 	{
@@ -621,7 +632,7 @@ Three-Dimensional vector
 typedef vec4 vec3;
 
 
-}; // namespace
+} // namespace Engine
 
 
 

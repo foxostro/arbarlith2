@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "listelementwidget.h"
 #include "listpanewidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 float ListPaneWidget::getTop(void) const
 {
@@ -43,7 +43,7 @@ float ListPaneWidget::getTop(void) const
 		ListElementWidget *element = listElements[listElements.size()-1];
 
 		ASSERT(element!=0, _T("the last element of the list was NULL"));
-		
+
 		return element->getRelativeY() + element->getHeight();
 	}
 	else
@@ -88,7 +88,7 @@ void ListPaneWidget::addElement(ListElementWidget *element)
 
 void ListPaneWidget::destroy(void)
 {
-	__super::destroy();
+	Widget::destroy();
 	listElements.clear();
 }
 

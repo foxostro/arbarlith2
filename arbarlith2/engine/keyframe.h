@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _KEYFRAME_H_
 
 
-namespace Engine { 
+namespace Engine {
 
 /** Several meshes make up a model at a single key frame */
 typedef vector<Mesh*> Model;
@@ -47,13 +47,13 @@ private:
 	/** Reference to the meshes involved in the keyframe */
 	Model meshes;
 
-public:	
+public:
 	/**
 	Constructs the keyframe from a single mesh
 	@param model The mesh to use for this keyframe
 	*/
 	KeyFrame(Mesh* mesh);
-	
+
 	/**
 	Constructs the keyframe from a model
 	@param model The mesh to use for this keyframe
@@ -111,6 +111,6 @@ public:
 	bool merge(const KeyFrame &o);
 };
 
-}; //namespace
+} //namespace Engine
 
 #endif

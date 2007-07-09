@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "Controller.h"
 
-namespace Engine { 
+namespace Engine {
 
 const Uint8 JOY_BUTTON = 0;
 const Uint8 JOY_AXIS = 1;
@@ -50,7 +50,7 @@ const Uint8 JOY_HAT = 2;
 const Uint8 JOY_BALL = 3;
 
 ACTION_CODE Controller::nextNewActionCode = 1000;
-	
+
 ACTION_CODE KEY_MENU_UP				= INVALID_ACTION_CODE;
 ACTION_CODE KEY_MENU_DOWN			= INVALID_ACTION_CODE;
 ACTION_CODE KEY_MENU_LEFT			= INVALID_ACTION_CODE;
@@ -92,14 +92,14 @@ Controller::Controller(void)
 	setupControllers();
 
 	buildKeymap();
-	
+
 	buildJoymap();
-	
+
 	buildActionNames();
-	
+
 	// Load key bindings from the user's application data directory
 	_tstring userKeysFile = pathAppend(getAppDataDirectory(), _T("keys.xml"));
-	
+
 	bool exists = File::isFileOnDisk(userKeysFile);
 
 	if(!exists || (exists && !load(userKeysFile)))
@@ -125,7 +125,7 @@ void Controller::setupControllers(void)
 	for(int i = 0; i < SDL_NumJoysticks() && i < 4; i++)
 	{
 		joystick[i] = SDL_JoystickOpen(i);
-		
+
 		if(joystick[i])
 		{
 			TRACE(_T("Joystick ") + toTString(SDL_JoystickName(i)) + _T(" Successfully opened."));
@@ -191,7 +191,7 @@ void Controller::buildKeymap(void)
 	for(TCHAR c = _T('a'); c <= _T('z'); ++c) //alphabetic keys
 	{
 		SDLKey key = (SDLKey)(   (int)SDLK_a + (c-'a')   );
-		
+
 		TCHAR name[] = {c, 0};
 
 		keymap[name] = key;
@@ -200,7 +200,7 @@ void Controller::buildKeymap(void)
 	for(TCHAR c = _T('0'); c <= _T('9'); ++c) //numeric keys
 	{
 		SDLKey key = (SDLKey)(   (int)SDLK_0 + (c-_T('0'))   );
-		
+
 		TCHAR name[] = {c, 0};
 
 		keymap[name] = key;
@@ -379,7 +379,7 @@ bool Controller::isKeyDown(ACTION_CODE actionCode)
 		multimap<ACTION_CODE, _tstring>::const_iterator i = bindings.lower_bound(actionCode);
 		multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(actionCode);
 
-		for(i; i!=stop; ++i)
+		while(i!=stop)
 		{
 			const _tstring &keyName = i->second;
 
@@ -389,16 +389,18 @@ bool Controller::isKeyDown(ACTION_CODE actionCode)
 				if(g_Input.Keys[keyCode])
 					return true;
 			}
-			
+
 			if(joymap[keyName]) // is it bound to a joystick?
 			{
 				JoyDir* joyDir = joymap[keyName];
 				if(hasJoyEventOccured(joyDir))
 					return true;
 			}
+
+			++i;
 		}
 	}
-	
+
 	return false;
 }
 
@@ -473,9 +475,10 @@ vector<_tstring> Controller::getKeyName(ACTION_CODE actionCode)
 		multimap<ACTION_CODE, _tstring>::const_iterator i = bindings.lower_bound(actionCode);
 		multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(actionCode);
 
-		for(i; i!=stop; ++i)
+		while(i!=stop)
 		{
 			keysBound.push_back(i->second);
+			++i;
 		}
 	}
 	else
@@ -493,7 +496,7 @@ bool Controller::load(const _tstring &fileName)
 	{
 		return false;
 	}
-	
+
 	setDefaults();
 
 	int numActions = Bag.GetNumInstances(_T("action"));
@@ -540,9 +543,10 @@ bool Controller::save(const _tstring &filename)
 			multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(actionCode);
 
 			// Save the (possibly) multiple bindings for this action
-			for(i; i!=stop; ++i)
+			while(i!=stop)
 			{
 				actionBag.Add(_T("binding"), i->second);
+				++i;
 			}
 		}
 
@@ -563,7 +567,16 @@ void Controller::deleteAction(ACTION_CODE action)
 
 		while(i!=stop)
 		{
-			i = bindings.erase(i);
+			/*
+			Is there a more elegant way to do this?
+			*/
+
+			multimap<ACTION_CODE, _tstring>::iterator nextIter = i;
+			nextIter++;
+
+			bindings.erase(i);
+
+			i = nextIter;
 		}
 	}
 
@@ -599,15 +612,17 @@ void Controller::addBinding(ACTION_CODE action, const _tstring &binding)
 		multimap<ACTION_CODE, _tstring>::const_iterator i = bindings.lower_bound(action);
 		multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(action);
 
-		for(i; i!=stop; ++i)
+		while(i!=stop)
 		{
 			if(i->second == binding)
 				return;
+
+			++i;
 		}
 	}
 
 	// allow duplicate keys
-	bindings.insert(make_pair(action, binding)); 
+	bindings.insert(make_pair(action, binding));
 }
 
 }; // namespace

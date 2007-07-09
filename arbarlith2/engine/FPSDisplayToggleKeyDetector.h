@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Task.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Listens for and handles key events to toggle the display of game FPS */
 class FPSDisplayToggleKeyDetector : public Task
@@ -56,6 +56,6 @@ private:
 	bool debounce;
 };
 
-}; //namespace
+} // namespace Engine
 
 #endif

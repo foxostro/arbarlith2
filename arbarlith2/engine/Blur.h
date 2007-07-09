@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _BLUR_H_
 #define _BLUR_H_
 
-namespace Engine { 
+namespace Engine {
 
 class Zone;
 
@@ -60,7 +60,7 @@ public:
 	@param height The height of the screen capture
 	*/
 	void create(int width, int height);
-	
+
 	/** Destroys the Blur */
 	void destroy(void);
 
@@ -81,7 +81,7 @@ public:
 
 	/** Reaquire assets */
 	void reaquire(void);
-	
+
 	/**
 	Sets the current zone for the Blur to re-render it as necessary
 	@param zone the current zone
@@ -111,6 +111,6 @@ private:
 	Zone *zone;
 };
 
-}; //namespace
+} //namespace Engine
 
 #endif

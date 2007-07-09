@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Tile.h"
 #include "Map.h"
 
-namespace Engine { 
+namespace Engine {
 
 void texCoord(float u, float v)
 {
@@ -49,10 +49,10 @@ void texCoord(float u, float v)
 Tile::Tile(void)
 :type(TILE_BLOCK),
 propertiesBitmap(0),
-floorMaterialMatID(0),
 wallMaterialMatID(0),
-floorMat(0),
+floorMaterialMatID(0),
 wallMat(0),
+floorMat(0),
 north(0),
 south(0),
 east(0),
@@ -69,13 +69,13 @@ void Tile::load(int x, int z, File &file, Map &owner)
 	wallMaterialMatID = 0;
 	floorMat = 0;
 	wallMat = 0;
-	
+
 	file.read(&type, sizeof(TILE_TYPE));
 	file.read(&propertiesBitmap, sizeof(TILE_PROPERTIES));
 	file.read(&tileHeight, sizeof(float));
 	file.read(&wallMaterialMatID, sizeof(MAP_MATERIAL_ID));
 	file.read(&floorMaterialMatID, sizeof(MAP_MATERIAL_ID));
-	
+
 	create(x, z, type, propertiesBitmap, tileHeight, floorMaterialMatID, wallMaterialMatID, owner);
 }
 
@@ -164,7 +164,7 @@ void Tile::drawWalls(const Tile *north, const Tile *south, const Tile *east, con
 			texCoord(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 0.0f);
 			texCoord(0.0f, minV); glVertex3f(1.0f, 0.0f, 0.0f);
 		}
-		
+
 		if(SHOULD_DRAW_WALL(east))
 		{
 			glNormal3f( 1.0f, 0.0f, 0.0f);
@@ -173,7 +173,7 @@ void Tile::drawWalls(const Tile *north, const Tile *south, const Tile *east, con
 			texCoord(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
 			texCoord(0.0f, minV); glVertex3f(1.0f, 0.0f, 1.0f);
 		}
-		
+
 		if(SHOULD_DRAW_WALL(west))
 		{
 			glNormal3f(-1.0f, 0.0f, 0.0f);
@@ -232,7 +232,7 @@ void Tile::draw(float x, float z) const
 	case TILE_BLOCK: drawBlockTypeTile(north, south, east, west); break;
 	default: break;
 	};
-	
+
 	glPopMatrix();
 }
 

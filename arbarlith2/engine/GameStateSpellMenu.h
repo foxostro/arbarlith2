@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../MyPlayer.h"
 #include "../Spell.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** State of the game where the spell selection menu is displayed */
 class GameStateSpellMenu : public GameState, public Singleton<GameStateSpellMenu>
@@ -53,7 +53,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	virtual void update(float deltaTime);
 
@@ -115,6 +115,6 @@ private:
 	void onRotateCounterClockwise(vector<Arbarlith2::Spell*> spellList, int &activeIdx);
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

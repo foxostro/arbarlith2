@@ -72,7 +72,7 @@ const unsigned short OBJECT_MESH = 0x4100;
 const unsigned short OBJECT_VERTICES = 0x4110;
 
 /** Sub-chunk of OBJECT_MESH, object faces */
-const unsigned short OBJECT_FACES = 0x4120;	
+const unsigned short OBJECT_FACES = 0x4120;
 
 /** Sub-chunk of OBJECT_MESH, references a material defined elsewhere */
 const unsigned short OBJECT_MATERIAL = 0x4130;
@@ -92,7 +92,7 @@ AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 		FAIL(_tstring(_T("File failed to open: ")) + fileName);
 		return 0;
 	}
-	
+
 	AnimationController* controller = new AnimationController();
 
 	xml.Get(_T("Truespace"), truespaceModel);
@@ -143,7 +143,7 @@ AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 }
 
 Engine::Model _3dsLoader::loadKeyFrame(const _tstring &fileName) const
-{	
+{
 	// Open the file
 	File file(fileName, true);
 	if(!file.loaded())
@@ -157,7 +157,7 @@ Engine::Model _3dsLoader::loadKeyFrame(const _tstring &fileName) const
 	{
 		FAIL(_T("PRIMARY chunk not found!  This is not a valid 3DS file: ") + fileName);
 	}
-	
+
 	// recursively load all chunks
 	Wrapper wrapper;
 	processNextChunk(currentChunk, wrapper);
@@ -177,7 +177,9 @@ _3dsLoader::Chunk::Chunk(File &file) : ID(0)
 	fileName = file.getFilename();
 }
 
-_3dsLoader::Chunk::Chunk(Chunk &parentChunk) : ID(0)
+_3dsLoader::Chunk::Chunk(Chunk &parentChunk)
+: File(parentChunk),
+  ID(0)
 {
 	if(!parentChunk.endOfFile())
 	{
@@ -237,7 +239,7 @@ void _3dsLoader::processVersionChunk(Chunk &currentChunk) const
 
 	// If the file version is over 3, give a warning that there could be a problem
 	if((currentChunk.getSize() == 4) && (currentChunk.peekChar() > 0x03))
-	{				
+	{
 		ERR(_T("This 3DS file is over version 3 so it may load incorrectly"));
 	}
 }
@@ -272,8 +274,8 @@ void _3dsLoader::processObjectChunk(Chunk &currentChunk, Wrapper &wrapper) const
 	{
 		mesh->material = wrapper.getMostRecentMaterial();
 	}
-	
-	wrapper.model.push_back(mesh); 
+
+	wrapper.model.push_back(mesh);
 }
 
 void _3dsLoader::processMaterialChunk(Chunk &parentChunk, Wrapper &wrapper) const
@@ -357,9 +359,9 @@ void _3dsLoader::fixTrueSpaceVertices(Mesh *mesh) const
 	rot.rotateY((float)M_PI);
 
 	for(int i=0; i < mesh->m_numOfVerts; ++i)
-	{		
+	{
 		vec3 corrected = rot.transformVector(mesh->m_pVerts[i]);
-		
+
 		mesh->m_pVerts[i].x = corrected.x;
 		mesh->m_pVerts[i].y = corrected.y;
 		mesh->m_pVerts[i].z = corrected.z;
@@ -406,7 +408,7 @@ void _3dsLoader::readVertexIndices(Chunk &currentChunk, Wrapper &wrapper, Mesh *
 		}
 	}
 
-	mesh->reallocElements();	
+	mesh->reallocElements();
 	generateNormals(mesh);
 
 	// An OBJECT_MATERIAL tag may be nested within this chunk
@@ -420,7 +422,7 @@ void _3dsLoader::generateNormals(Mesh *mesh) const
 		mesh->m_pNormals = new Point3[mesh->m_numOfVerts];
 
 		for(int i=0; i<mesh->m_numOfFaces; ++i)
-		{		
+		{
 			size_t iA = mesh->m_pFaces[i].vertIndex[0];
 			size_t iB = mesh->m_pFaces[i].vertIndex[1];
 			size_t iC = mesh->m_pFaces[i].vertIndex[2];
@@ -471,7 +473,7 @@ void _3dsLoader::readObjectMaterial(Chunk &currentChunk, Wrapper &model, Mesh *m
 
 	char materialName[255] = {0};
 	currentChunk.getString(materialName);
-	
+
 	mesh->material = model.getMaterial(toTString(materialName));
 
 	// We don't care about shared vertices, so skip the rest

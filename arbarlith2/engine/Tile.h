@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "3dmath.h"
 #include "Material.h"
 
-namespace Engine { 
+namespace Engine {
 
 // prototype
 class Map;
@@ -77,7 +77,7 @@ public:
 	@param z Tile Z
 	*/
 	Tile(void);
-	
+
 	/**
 	Draws the Tile.
 	@param x		The world space x coordinate of the Tile
@@ -136,7 +136,7 @@ public:
 	@param owner Map that owns the tile
 	*/
 	void load(int x, int z, File &file, Map &owner);
-	
+
 	/**
 	Saves the Tile to a binary file
 	@param file File is seek'd to the beginning of the tile data
@@ -147,7 +147,7 @@ public:
 	Constructs a tile with the specified characteristics
 	@param x Tile x
 	@param z Tile z
-	@param type Indicates the type of the Tile 
+	@param type Indicates the type of the Tile
 	@param propertiesBitmap Flags to indicate tile properties
 	@param tileHeight The height of a tile, specified in meters
 	@param floorMaterialMatID Material for the ceiling
@@ -160,7 +160,7 @@ public:
 	Constructs a tile with the specified characteristics
 	@param x Tile x
 	@param z Tile z
-	@param type Indicates the type of the Tile 
+	@param type Indicates the type of the Tile
 	@param propertiesBitmap Flags to indicate tile properties
 	@param tileHeight The height of a tile, specified in meters
 	@param floorFileName Material for the ceiling
@@ -228,7 +228,7 @@ private:
 	@param west		The western tile.
 	*/
 	void drawFloor(const Tile *north, const Tile *south, const Tile *east, const Tile *west) const;
-	
+
 	/**
 	Draws the walls of a block-type tile
 	@param north	The northern tile.
@@ -237,7 +237,7 @@ private:
 	@param west		The western tile.
 	*/
 	void drawBlockTypeTile(const Tile *north, const Tile *south, const Tile *east, const Tile *west) const;
-	
+
 	/**
 	Should we draw a wall between the border to the tile here?
 	@param x Tile on the border
@@ -250,6 +250,6 @@ private:
 	}
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

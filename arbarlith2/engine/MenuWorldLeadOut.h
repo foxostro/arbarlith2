@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Menu.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Does the lead out screen for when a world is completed */
@@ -54,7 +54,7 @@ public:
 	Allocates all resources
 	@param imageFileName File name for the backdrop image
 	*/
-	virtual void create(const _tstring &imageFileName);	
+	virtual void create(const _tstring &imageFileName);
 
 protected:
 	/** Populates the menu elements */
@@ -75,8 +75,6 @@ private:
 	};
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif

@@ -40,10 +40,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "StateMachine.h"
 #include "Creature.h"
 
-namespace Engine { 
+namespace Engine {
 
 
-GEN_ACTOR_RTTI_CPP(Creature)
+GEN_ACTOR_RTTI_CPP(Creature, "class Engine::Creature")
 
 
 
@@ -63,7 +63,7 @@ void Creature::resurrect(void)
 	state = NORMAL;
 
 	healthPoints = maxHealthPoints;
-	
+
 	ChangeAnimation(getIdleAnim());
 
 	// Start a resurrection particle effect
@@ -90,7 +90,7 @@ bool Creature::isInProximity(OBJECT_ID actor, float triggerRadius) const
 
 	// Ignore dead monsters
 	const Creature *creature = dynamic_cast<const Creature*>(s.getPtr(actor));
-	if(creature!=0 && !creature->isAlive()) 
+	if(creature!=0 && !creature->isAlive())
 		return false;
 
 	return Actor::isInProximity(actor, triggerRadius);
@@ -126,14 +126,14 @@ void Creature::damage(int amount, OBJECT_ID attackerID)
 	{
 		finalDamage /= 2;
 	}
-	
+
 	healthPoints -= finalDamage;
-	
+
 	if(getZone().getObjects().isMember(attackerID))
 	{
 		OnAttacked(dynamic_cast<Creature&>(getZone().getObjects().get(attackerID)), finalDamage);
 	}
-	
+
 	if(healthPoints<0)
 	{
 		kill();
@@ -232,15 +232,13 @@ void Creature::applyKnockBack(const vec3 &direction)
 }
 
 void Creature::OnKnockBack(void)
-{
-	__noop;
-}
+{}
 
 void Creature::update(float deltaTime)
 {
 	timeSinceLastAttack += deltaTime;
 	timeUntilOrderCancelled -= deltaTime;
-	
+
 	if(timeUntilOrderCancelled<=0)
 	{
 		timeUntilOrderCancelled = 0;
@@ -251,7 +249,7 @@ void Creature::update(float deltaTime)
 	{
 	case GHOST:
 		stateTimer -= deltaTime;
-		
+
 		if(stateTimer<=0)
 		{
 			stateTimer=0;
@@ -283,7 +281,7 @@ void Creature::update(float deltaTime)
 
 		// Process the queued commands sent by the FSM
 		ProcessCommand();
-		
+
 		ChangeAnimation(getWalkAnim(velocity.getMagnitude()));
 
 		break;
@@ -301,13 +299,13 @@ void Creature::update(float deltaTime)
 			// as long as the creature is still knocking back, keep the velocity constant
 			velocity = currentKnockBackVelocity;
 		}
-		
+
 		if(stateTimer<=0)
 		{
 			state = NORMAL;
 			stateTimer = 0;
 		}
-	
+
 		starAngle = starAngle > 359 ? 0 : starAngle + deltaTime*starSpeed;
 		ChangeAnimation(_T("stun"));
 		break;
@@ -316,7 +314,7 @@ void Creature::update(float deltaTime)
 		ChangeAnimation(_T("stun"));
 
 		stateTimer -= deltaTime;
-		
+
 		if(stateTimer<=0)
 		{
 			state = NORMAL;
@@ -324,9 +322,9 @@ void Creature::update(float deltaTime)
 		}
 		break;
 
-	case DYING:		
+	case DYING:
 		stateTimer -= deltaTime;
-		
+
 		if(stateTimer <= 0.0f)
 		{
 			state = DEAD;
@@ -334,12 +332,12 @@ void Creature::update(float deltaTime)
 		}
 
 		break;
-	
+
 	case DEAD:
 		ChangeAnimation(_T("dead"));
 
 		stateTimer -= deltaTime;
-		
+
 		// Is this dead actor currently off-screen?
 		if(stateTimer <= 0.0f)
 		{
@@ -349,7 +347,7 @@ void Creature::update(float deltaTime)
 
 		break;
 	};
-		
+
 	// AnimationSequence and housekeeping
 	Actor::update(deltaTime);
 }
@@ -409,7 +407,7 @@ bool Creature::LoadXml(CPropBag &Bag)
 	if(Actor::LoadXml(Bag))
 	{
 		Bag.getSym(healthPoints);
-		Bag.getSym(maxHealthPoints);		
+		Bag.getSym(maxHealthPoints);
 		Bag.getSym(attackDamage);
 		Bag.getSym(weaponMultiplier);
 		Bag.getSym(armorMultiplier);
@@ -462,7 +460,7 @@ void Creature::setFSM(const _tstring &strFSM)
 		}
 		else
 		{
-			stateMachine->setOwner(this);	
+			stateMachine->setOwner(this);
 			SetStateMachine(stateMachine);
 		}
 	}
@@ -624,7 +622,7 @@ void Creature::Process_AttackTarget(const CommandAttack &wp)
 	float speed = wp.getDesiredSpeed()*getTopSpeed();
 	float attackChargeThreshold = 1.0f;
 	float attackCharge = timeSinceLastAttack/attackChargeTime;
-	float chargeTimeRemaining = max(0, attackChargeTime - timeSinceLastAttack) / 1000.0f; // seconds
+	float chargeTimeRemaining = max(0.0f, attackChargeTime - timeSinceLastAttack) / 1000.0f; // seconds
 	float distance = getDistance(this, *target);
 	float vulnerableRadius = (getCylinderRadius() + target->getCylinderRadius()) * 2.0f;
 	float distancetoLeaveVulnerableRange = vulnerableRadius - distance;
@@ -871,7 +869,7 @@ void Creature::drawTransparentObject(void) const
 	{
 		return;
 	}
-	
+
 	CHECK_GL_ERROR();
 
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -896,7 +894,7 @@ void Creature::drawObject(void) const
 	{
 		return;
 	}
-	
+
 	CHECK_GL_ERROR();
 
 	if(state==FROZEN)
@@ -909,7 +907,7 @@ void Creature::drawObject(void) const
 	{
 		Actor::drawObject();
 	}
-	
+
 	if(isAlive())
 	{
 		if(g_Application.displayDebugData)
@@ -923,7 +921,7 @@ void Creature::drawObject(void) const
 			drawStarsAboveHead(m_desiredHeight + 0.02f);
 		}
 	}
-	
+
 	CHECK_GL_ERROR();
 }
 
@@ -931,10 +929,10 @@ void Creature::drawObjectDebugData(void) const
 {
 	const vec3 base = getPos() + vec3(0, getHeight(), 0);
 
-	_tstring stateString = _T("invalid state");	
+	_tstring stateString = _T("invalid state");
 	{
 		_tstring timeString = _T("(") + ftoa(stateTimer/1000, 1) + _T(") ");
-			
+
 		switch(state)
 		{
 		case NORMAL:	stateString = timeString + _T("NORMAL");	break;
@@ -951,9 +949,9 @@ void Creature::drawObjectDebugData(void) const
 	{
 		// This is the current order
 		const Command &wp = getCurrentOrder();
-		
+
 		_tstring timeString = _T("(") + ftoa(timeUntilOrderCancelled/1000, 1) + _T(" of ") + ftoa(wp.getTimeOut()/1000, 1) + _T(") ");
-			
+
 		// Handle the command
 		switch(wp.getCommand())
 		{
@@ -973,13 +971,13 @@ void Creature::drawObjectDebugData(void) const
 	glPushMatrix();
 		glTranslatef(base.x, base.y + 0.25f, base.z);
 		g_Application.fontSmall.write(commandString, white, FONT_SIZE_NORMAL, true);
-		
+
 		glTranslatef(0.0f, 0.2f, 0.0f);
 		g_Application.fontSmall.write(stateString, white, FONT_SIZE_NORMAL, true);
-		
+
 		glTranslatef(0.0f, 0.2f, 0.0f);
 		g_Application.fontSmall.write(getName(), white, FONT_SIZE_NORMAL, true);
-		
+
 		glTranslatef(0.0f, 0.2f, 0.0f);
 		g_Application.fontSmall.write(getTypeString(), white, FONT_SIZE_NORMAL, true);
 	glPopMatrix();
@@ -1003,7 +1001,7 @@ void Creature::drawStarsAboveHead(float y) const
 {
 	const int numStars = 7;
 	const vec3 center = getPos() + vec3(0, y, 0);
-	
+
 	const float WIDTH = 0.10f;
 	const float HEIGHT = 0.10f;
 
@@ -1016,7 +1014,7 @@ void Creature::drawStarsAboveHead(float y) const
 		glDisable(GL_LIGHTING);
 		glDisable(GL_COLOR_MATERIAL);
 		glDisable(GL_CULL_FACE);
-	
+
 		// Transparency
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glEnable(GL_BLEND);
@@ -1059,7 +1057,7 @@ void Creature::drawStarsAboveHead(float y) const
 void Creature::drawFloatingBar(float y, float p, COLOR CA, COLOR CB) const
 {
 	const vec3 center = getPos() + vec3(0, y, 0);
-	
+
 	const float WIDTH = 1.0f;
 	const float HEIGHT = 0.05f;
 
@@ -1100,7 +1098,7 @@ list<Actor*> Creature::getCollisions(const ActorSet &s) const
 {
 #if 0
 	list<Actor*> colliders;
-	
+
 	size_t numOfPlayers = g_World.getNumOfPlayers();
 	for(size_t i=0; i<numOfPlayers; ++i)
 	{

@@ -7,7 +7,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 	Copyright 2002 Jeff Molofee, Gregory Austwick and Others
 
 	Title:
-		TextureManager Manager	
+		TextureManager Manager
 
 	Version History:
 		v1.00	New class (GA 31/10/02)
@@ -15,15 +15,15 @@ E-Mail: mailto:andrewfox@cmu.edu
 	Licence:
 
 	This SDK/library is free software, written primarily for
-	teaching purposes. You can redistribute and modify it to 
-	your heart's content. However, any use of this library is 
-	at the user's own risk. There is no warranty. The authors 
-	will not be held responsible for ANYTHING that happens as 
-	a result of the use of this software. All financial/emotional/health 
-	problems or anything else that happens after using this 
-	software is therefore the user's own responsibility. 
-	Nevertheless, if the user finds it useful, an email or a 
-	mention in any credits would be appreciated, but is not 
+	teaching purposes. You can redistribute and modify it to
+	your heart's content. However, any use of this library is
+	at the user's own risk. There is no warranty. The authors
+	will not be held responsible for ANYTHING that happens as
+	a result of the use of this software. All financial/emotional/health
+	problems or anything else that happens after using this
+	software is therefore the user's own responsibility.
+	Nevertheless, if the user finds it useful, an email or a
+	mention in any credits would be appreciated, but is not
 	necessary.
 */
 
@@ -31,7 +31,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 #define _TEXTURE_HANDLE_H_
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Handle to a texture object */
@@ -46,7 +46,7 @@ private:
 
 	/** height of texture */
 	int height;
-	
+
 	/** whether the texture has an alpha component */
 	bool alpha;
 
@@ -84,7 +84,7 @@ public:
 	{
 		return height;
 	}
-	
+
 	/** Gets whether the texture has an alpha component */
 	bool getAlpha(void) const
 	{
@@ -116,7 +116,7 @@ public:
 };
 
 
-}; // namespace
+} // namespace Engine
 
 
 #endif

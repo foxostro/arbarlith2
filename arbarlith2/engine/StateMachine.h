@@ -3,7 +3,7 @@ Modified by Andrew Fox in 2004-2006
 E-Mail: mailto:andrewfox@cmu.edu
 */
 
-/* Copyright © Steve Rabin, 2001. 
+/* Copyright © Steve Rabin, 2001.
  * All rights reserved worldwide.
  *
  * This software is provided "as is" without express or implied
@@ -20,32 +20,43 @@ E-Mail: mailto:andrewfox@cmu.edu
 #include "world.h"
 #include "creature.h"
 
-
-
-namespace Engine { 
+namespace Engine {
 
 template<class T> struct StateMachineRegistrar
 {
-	StateMachineRegistrar(void)
+	StateMachineRegistrar(const _tstring typeName)
 	{
-		::Engine::getStateMachineFactory().registerType<T>();
+		::Engine::getStateMachineFactory().registerType<T>(typeName);
 	}
 };
 
-#define GEN_FSM_RTTI_CPP(TYPE) namespace { ::Engine::StateMachineRegistrar< TYPE > _registrar; }
+#define GEN_FSM_RTTI_CPP(TYPE, NAME) namespace { ::Engine::StateMachineRegistrar< TYPE > _registrar(_T(NAME)); }
 
 
 //State Machine Language Macros (put these keywords in the file USERTYPE.DAT in the same directory as MSDEV.EXE)
+#if 0
+
 #define BeginStateMachine		if( state < 0 ) { char statename[64] = "STATE_Global"; if(0) {
 #define EndStateMachine			return( true ); } } else { /*assert( 0 && "Invalid State" );*/ return( false ); } return( false );
-#define State(a)				return( true ); } } else if( a == state ) { char statename[64] = #a; if(0) { 
+#define State(a)				return( true ); } } else if( a == state ) { char statename[64] = #a; if(0) {
 #define OnMsg(a)				return( true ); } else if( EVENT_Message == event && msg && a == msg->m_Type ) { /*g_debuglog.LogStateMachineEvent( m_Owner->GetID(), msg, statename, #a, true );*/
 #define OnEvent(a)				return( true ); } else if( a == event ) { /*g_debuglog.LogStateMachineEvent( m_Owner->GetID(), msg, statename, #a, true );*/
 #define OnUpdate				OnEvent( EVENT_Update )
 #define OnEnter					OnEvent( EVENT_Enter )
 #define OnExit					OnEvent( EVENT_Exit )
 
+#else
 
+#define BeginStateMachine		if( state < 0 ) { if(0) {
+#define EndStateMachine			return( true ); } } else { return( false ); } return( false );
+#define State(a)			return( true ); } } else if( a == state ) { if(0) {
+#define OnMsg(a)			return( true ); } else if( EVENT_Message == event && msg && a == msg->m_Type ) {
+#define OnEvent(a)			return( true ); } else if( a == event ) {
+#define OnUpdate			OnEvent( EVENT_Update )
+#define OnEnter				OnEvent( EVENT_Enter )
+#define OnExit				OnEvent( EVENT_Exit )
+
+#endif
 
 enum StateMachineEvent { EVENT_INVALID,
 						 EVENT_Update,
@@ -67,8 +78,11 @@ public:
 	GEN_RTTI(StateMachine)
 
 public:
+	/** Destructor */
+	virtual ~StateMachine(void)
+	{}
+
 	StateMachine(OBJECT_ID handle);
-	~StateMachine( void ) {}
 
 	void Initialize( void );
 	void Update( Message_s * msg );
@@ -91,7 +105,7 @@ public:
 	if the calling child class should save just enough for editor mode
 	*/
 	virtual bool SaveXml(CPropBag &bag);
-	
+
 	/**
 	Load from XML
 	@param bag XML source
@@ -123,10 +137,8 @@ private:
 	OBJECT_ID m_ccMessagesToGameObject;
 
 	virtual bool States( StateMachineEvent event, Message_s * msg, int state ) = 0;
-
 };
 
-}; // namespace
-
+} // namespace Engine
 
 #endif	// __STATEMCH_H__

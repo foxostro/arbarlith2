@@ -9,7 +9,7 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 	Copyright 2002 Jeff Molofee, Gregory Austwick and Others
 
 	Title:
-		OpenGL Control class	
+		OpenGL Control class
 
 	Version History:
 		v1.00		Original class	(Daniel Vivas 03/08/02)
@@ -19,15 +19,15 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 	Licence:
 
 	This SDK/library is free software, written primarily for
-	teaching purposes. You can redistribute and modify it to 
-	your heart's content. However, any use of this library is 
-	at the user's own risk. There is no warranty. The authors 
-	will not be held responsible for ANYTHING that happens as 
-	a result of the use of this software. All financial/emotional/health 
-	problems or anything else that happens after using this 
-	software is therefore the user's own responsibility. 
-	Nevertheless, if the user finds it useful, an email or a 
-	mention in any credits would be appreciated, but is not 
+	teaching purposes. You can redistribute and modify it to
+	your heart's content. However, any use of this library is
+	at the user's own risk. There is no warranty. The authors
+	will not be held responsible for ANYTHING that happens as
+	a result of the use of this software. All financial/emotional/health
+	problems or anything else that happens after using this
+	software is therefore the user's own responsibility.
+	Nevertheless, if the user finds it useful, an email or a
+	mention in any credits would be appreciated, but is not
 	necessary.
 */
 // Modified by Andrew Fox
@@ -41,7 +41,7 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 class OpenGL : public Singleton<OpenGL>
@@ -106,12 +106,11 @@ extern bool supportsAniostropy;
 		FAIL(_tstring(_T("Line #")) + itoa(__LINE__) + _tstring(_T(": ")) + toTString((const char*)gluErrorString(errorCode))  ); \
 }
 #else
-#define FLUSH_GL_ERROR() 
-#define CHECK_GL_ERROR() 
+#define FLUSH_GL_ERROR()
+#define CHECK_GL_ERROR()
 #endif
 
-}; // namespace
-
+} // namespace Engine
 
 #endif
 

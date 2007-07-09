@@ -36,7 +36,7 @@ using std::deque;
 #include "Object.h"
 #include "Command.h"
 
-namespace Engine { 
+namespace Engine {
 
 // class prototypes
 class StateMachine;
@@ -44,7 +44,7 @@ class Zone;
 
 
 /** Active AI entity */
-class Creature : public Actor  
+class Creature : public Actor
 {
 public:
 	GEN_RTTI(Creature)
@@ -57,7 +57,7 @@ public:
 		SORT_DIST_ASCENDING,
 
 		/** Returned entries are sorted by decreasing distance from the calling Creature */
-		SORT_DIST_DESCENDING,
+		SORT_DIST_DESCENDING
 	};
 
 	/**
@@ -103,7 +103,7 @@ public:
 
 	/** Response when the creature dies */
 	virtual void OnDeath(void);
-	
+
 	/** Kills the creature at the next tick */
 	virtual void kill(void);
 
@@ -124,7 +124,7 @@ public:
 
 	/** Freezes the creature for a time */
 	virtual void freeze(void);
-	
+
 	/**
 	Damages the creature
 	@param amount The amount of damage
@@ -134,7 +134,7 @@ public:
 
 	/**
 	Respond to the event of being dealt damage by another creature
-	@param attacker 
+	@param attacker
 	@param finalDamage The final damage dealt after all modifiers
 	*/
 	virtual void OnAttacked(Creature &attacker, int finalDamage);
@@ -317,7 +317,7 @@ public:
 	@return sound effect file name
 	*/
 	virtual const _tstring getAttnSfx(void) const;
-	
+
 	/** Called in the event that the we are placed */
 	virtual void OnPlace(void);
 
@@ -337,7 +337,7 @@ private:
 	ProcessCommand will execute the current command each tick.
 	*/
 	void ProcessCommand(void);
-	
+
 	/**
 	Moves the Creature to the target object's position
 	@param wayPoint The waypoint and the order itself
@@ -361,7 +361,7 @@ private:
 	@param wayPoint The waypoint and the order itself
 	*/
 	void Process_FleeTarget(const CommandFlee &wp);
-	
+
 	/**
 	Orders the Creature to use the target
 	@param wayPoint The waypoint and the order itself
@@ -369,10 +369,10 @@ private:
 	void Process_UseTarget(const CommandUse &wp);
 
 
-	
+
 	/** When knocked back, this is how much more time until we exit the knockback state */
 	float knockBackTimer;
-	
+
 	/** When knocked back, scoot backwards for this amount of time */
 	float maxKnockBackTime;
 
@@ -384,7 +384,7 @@ private:
 
 	/** Longest stun time that can be inflicted */
 	float maxStunTime;
-		
+
 	/** When dealt damage greater thann this percent of remaining health, the creature is stunned */
 	float damagePercentToStun;
 
@@ -453,7 +453,7 @@ private:
 
 	/** Inicates that a message has recently been received */
 	bool haveMessage;
-	
+
 	/** Last received message */
 	Message_s lastMessage;
 
@@ -484,7 +484,7 @@ protected:
 	@param b Color 2
 	*/
 	void drawFloatingBar(float y, float p, COLOR a, COLOR b) const;
-	
+
 	/**
 	The attack animation has completed, actually deal damage to the fuckers
 	@param amount The amount of damage
@@ -533,7 +533,7 @@ protected:
 	@param speed value between -1 and +1 to describe the speed to use when walking
 	*/
 	virtual void walkTowards(const vec3 &target, float speed);
-	
+
 	/** Dying sounds */
 	vector<_tstring> dyingSounds;
 
@@ -542,7 +542,7 @@ protected:
 
 	/** Melee attack sounds */
 	vector<_tstring> attackSounds;
-	
+
 	/** Attention sounds */
 	vector<_tstring> attnSounds;
 
@@ -556,11 +556,11 @@ protected:
 		DEAD,
 		GHOST
 	} state;
-	
+
 	/** timer specific to the current Essential State of the creature (milliseconds) */
 	float stateTimer;
 };
 
-}; //namespace
+} //namespace Engine
 
 #endif

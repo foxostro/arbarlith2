@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2004-2007 Game Creation Society
+Copyright © 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,9 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _TASK_H_
 #define _TASK_H_
 
-
-namespace Engine { 
-
+namespace Engine {
 
 /**
 Task to be executed by the game engine
@@ -42,6 +40,10 @@ The kernel handles the game loop and calls the appropriate update functions ever
 class Task
 {
 public:
+	/** Destructor */
+	virtual ~Task(void)
+	{}
+
 	Task(void)
 	{
 		paused=false;
@@ -50,7 +52,7 @@ public:
 
 	/**
 	Updates the task every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick 
+	@param deltaTime The millesonds since the last tick
 	*/
 	virtual void update(float deltaTime)=0;
 
@@ -67,6 +69,6 @@ public:
 	bool dead;
 };
 
-}; // namespace
+} // namespace Engine
 
 #endif

@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ActorFactory.h"
 
-namespace Engine { 
+namespace Engine {
 
 enum MSG_TYPE
 {
@@ -42,7 +42,7 @@ enum MSG_TYPE
 	MSG_COLLISION, // One object has collided with another
 	MSG_ATTACKED,  // The receiving creature has been attacked
 	MSG_SANITY,    // The recieving creature is under pain of sanity loss
-	MSG_SIGNAL,    // The recieving creature is subscribed to a signal (specified in the message)
+	MSG_SIGNAL     // The recieving creature is subscribed to a signal (specified in the message)
 };
 
 struct Message_s
@@ -66,15 +66,13 @@ struct Message_s
 	double m_TimeDelay;
 
 	// Special data handled by specific message handlers and senders
-	void *m_pData; 
+	void *m_pData;
 
 	// Reserved for exclusive us by the message routing system
 	double m_Timestamp;
 	bool m_bSent;
 };
 
-
-}; // namespace
-
+} // namespace Engine
 
 #endif
