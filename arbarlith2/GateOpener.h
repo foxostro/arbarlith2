@@ -41,7 +41,7 @@ namespace Arbarlith2 {
 class GateOpener : public Listener
 {
 public:
-	GEN_RTTI(GateOpener)
+	GEN_RTTI(GateOpener, "class Arbarlith2::GateOpener")
 
 public:
 	/**
@@ -58,7 +58,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(Engine::CPropBag &xml);
+	virtual bool LoadXml(Engine::PropertyBag &xml);
 
 protected:
 	/** Called in the event of the Trigger activating */
@@ -70,7 +70,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/**
 	Creates the editor toolbar for the gate

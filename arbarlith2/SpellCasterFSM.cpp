@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "engine/World.h"
-#include "engine/Zone.h"
 #include "engine/Creature.h"
 #include "engine/Player.h"
 #include "engine/random.h"

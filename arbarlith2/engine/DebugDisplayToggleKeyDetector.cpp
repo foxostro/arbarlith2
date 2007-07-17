@@ -33,8 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine { 
 
-DebugDisplayToggleKeyDetector::DebugDisplayToggleKeyDetector(void)
-:debounce(false)
+DebugDisplayToggleKeyDetector::DebugDisplayToggleKeyDetector(Application &app)
+: application(app),
+  debounce(false)
 {}
 
 void DebugDisplayToggleKeyDetector::update(float)
@@ -56,7 +57,7 @@ void DebugDisplayToggleKeyDetector::update(float)
 
 void DebugDisplayToggleKeyDetector::toggleDisplay(void)
 {
-	g_Application.displayDebugData = !g_Application.displayDebugData;
+	application.displayDebugData = !application.displayDebugData;
 }
 
-}; //namespace
+} // namespace Engine

@@ -29,9 +29,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "EffectManager.h"
 #include "gl.h"
-#include "Zone.h"
+#include "SDLwindow.h"
+#include "EffectManager.h"
+#include "World.h"
 #include "Blur.h"
 
 

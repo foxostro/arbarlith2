@@ -30,11 +30,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
+#include "3dmath.h"
+#include "SDLwindow.h"
 #include "application.h"
 
-#include "World.h"
 #include "Player.h"
-#include "Zone.h"
+#include "World.h"
 #include "Map.h"
 
 #include "EditorToolBar.h"
@@ -51,6 +52,7 @@ vec3 UnProject(float depth); // stdafx.cpp
 
 void EditorToolBar::clear(void)
 {
+	world = 0;
 	tileEditor_type = TILE_BLOCK;
 	tileEditor_properties = 0;
 	tileEditor_floorTextureFile = _T("data/tiles/floor/floor.jpg");
@@ -88,21 +90,19 @@ void EditorToolBar::destroy(void)
 
 void EditorToolBar::create(void)
 {
+	ASSERT(world!=0, _T("world was null!  Call setWorld method first!"));
+
 // Get rid of everything old
 	destroy();
 
-// Create the Zone properties panel
+// Create the World properties panel
 	toolBarZone = new ListPaneWidget(0, 10);
 	toolBarZone->m_bVisible = false;
 	AddChild(toolBarZone);
 
-// Populate the Zone properties panel
-	World &world = g_World;
-	Player &player = world.getPlayer();
-	Zone &zone = player.getZone();
-
-	toolBarZone->addElement(new ListElementTweaker<float>( _T("Ambient Light [0,1]"),	&zone.getLightManager().ambientLight));
-	toolBarZone->addElement(new ListElementTweakerString(  _T("Zone Name"),			&zone.name));
+// Populate the World properties panel
+	toolBarZone->addElement(new ListElementTweaker<float>( _T("Ambient Light [0,1]"), &(world->getLightManager().ambientLight)  ));
+	toolBarZone->addElement(new ListElementTweakerString(  _T("World Name"),          &(world->name)  ));
 
 // Create the Tools panel
 	toolBarTools = new ToolBarForEditorTools(0, 160);
@@ -139,7 +139,7 @@ void EditorToolBar::create(void)
 	toolBarTilePropreties->addElement(new ListElementTweaker<float>				(_T("Tile Height"),		&tileEditor_height));
 
 // Create the mouse cursor label
-	mousePosLabel = new LabelWidget(_T("label here"), 700, 700);
+	mousePosLabel = new LabelWidget(_T("label here"), vec2(700,700));
 	AddChild(mousePosLabel);
 
 // Create the actor properties pane
@@ -226,15 +226,16 @@ TILE_TYPE EditorToolBar::getTileType(void) const
 
 void EditorToolBar::update(float deltaTime)
 {
-	ASSERT(toolBarTools!=0,				_T("toolBarTools was null"));
-	ASSERT(toolBarMisc!=0,				_T("toolBarMisc was null"));
-	ASSERT(toolBarZone!=0,				_T("toolBarZone was null"));
-	ASSERT(mousePosLabel!=0,			_T("mousePosLabel was null"));
-	ASSERT(objectPalette!=0,			_T("objectPalette was null"));
-	ASSERT(tileTypeSelector!=0,			_T("tileTypeSelector was null"));
-	ASSERT(texturePalette_Wall!=0,		_T("texturePalette_Wall was null"));
-	ASSERT(texturePalette_Floor!=0,		_T("texturePalette_Floor was null"));
-	ASSERT(tileHeightSelector!=0,		_T("tileHeightSelector was null"));
+	ASSERT(world!=0,                 _T("world was null!  Call setWorld first!"));
+	ASSERT(toolBarTools!=0,          _T("toolBarTools was null"));
+	ASSERT(toolBarMisc!=0,           _T("toolBarMisc was null"));
+	ASSERT(toolBarZone!=0,           _T("toolBarZone was null"));
+	ASSERT(mousePosLabel!=0,         _T("mousePosLabel was null"));
+	ASSERT(objectPalette!=0,         _T("objectPalette was null"));
+	ASSERT(tileTypeSelector!=0,      _T("tileTypeSelector was null"));
+	ASSERT(texturePalette_Wall!=0,   _T("texturePalette_Wall was null"));
+	ASSERT(texturePalette_Floor!=0,  _T("texturePalette_Floor was null"));
+	ASSERT(tileHeightSelector!=0,    _T("tileHeightSelector was null"));
 
 
 
@@ -307,7 +308,7 @@ void EditorToolBar::update(float deltaTime)
 				if(drag)
 				{
 					// get a reference to the map
-					Map &map = g_World.getPlayer().getZone().getMap();
+					Map &map = world->getMap();
 
 					// Get the position on the ground plane that the mouse was over
 					vec3 groundPos = getGroundPickPos(0.0f);
@@ -415,22 +416,20 @@ void EditorToolBar::update(float deltaTime)
 		// Save / Load the game
 		if(shouldSave)
 		{
-			Zone &zone = g_World.getPlayer().getZone();
-			_tstring fileName = zone.getName() + _T(".xml");
+			_tstring fileName = world->getName() + _T(".xml");
 
-			zone.SaveXml(_tstring(_T("data/zones/")) + fileName);
+			world->SaveXml(_tstring(_T("data/zones/")) + fileName);
 		}
 		else if(shouldLoad)
 		{
-			Zone &zone = g_World.getPlayer().getZone();
-			_tstring fileName = zone.getName() + _T(".xml");
+			_tstring fileName = world->getName() + _T(".xml");
 
-			zone.LoadXml(_tstring(_T("data/zones/")) + fileName);
+			world->LoadXml(_tstring(_T("data/zones/")) + fileName);
 
 			// Reload the players
-			CPropBag newGame;
-			newGame.Load(_T("data/zones/world1.sav.xml"));
-			g_World.reloadPlayer(newGame);
+			PropertyBag newGame;
+			newGame.Load(_T("data/zones/World1.xml"));
+			world->reloadPlayers(newGame);
 		}
 		else if(shouldNew)
 		{
@@ -464,9 +463,10 @@ void EditorToolBar::update(float deltaTime)
 
 void EditorToolBar::createNewMap(void)
 {
-	ActorSet &objects = g_World.getPlayer().getZone().getObjects();
-	Zone &zone = g_World.getPlayer().getZone();
-	Map &map = zone.getMap();
+	ASSERT(world!=0, _T("world was null!  Call setWorld first!"));
+
+	ActorSet &objects = world->getObjects();
+	Map &map = world->getMap();
 
 	map.makeNewMap();
 
@@ -474,9 +474,9 @@ void EditorToolBar::createNewMap(void)
 	objects.destroy();
 
 	// Add a player object
-	CPropBag newGame;
-	newGame.Load(_T("data/zone/world1.sav.xml"));
-	g_World.reloadPlayer(newGame);
+	PropertyBag newGame;
+	newGame.Load(_T("data/zone/World1.xml"));
+	world->reloadPlayers(newGame);
 }
 
 _tstring EditorToolBar::chooseTileWallTexture(void)
@@ -567,6 +567,8 @@ vec3 EditorToolBar::getGroundPickPos(float elevation) const
 
 void EditorToolBar::onLeftMouseDown()
 {
+	ASSERT(world!=0, _T("world was null!  Call setWorld first!"));
+
 	if(g_GUI.mouseOverSomeWidget) return;
 
 	// Get a position on the ground beneath the cursor
@@ -574,7 +576,7 @@ void EditorToolBar::onLeftMouseDown()
 	const vec3 groundPos = getGroundPickPos(e);
 
 	// Grab the pool of objects we are working from
-	ActorSet &objects = g_World.getPlayer().getZone().getObjects();
+	ActorSet &objects = world->getObjects();
 
 	// Get the id of the object under the mouse cursor
 	OBJECT_ID id = objects.getClosest<Actor>(groundPos, 2.0f);
@@ -682,7 +684,7 @@ void EditorToolBar::onLeftMouseDown()
 			_tstring nextObject = getNextObject();
 
 			_tstring rtti;
-			CPropBag ThisObjBag;
+			PropertyBag ThisObjBag;
 
 			_tstring editorDataFile;
 
@@ -690,10 +692,10 @@ void EditorToolBar::onLeftMouseDown()
 			editorDataFile = _tstring(_T("data/objects/")) + nextObject;
 
 			ThisObjBag.Load(editorDataFile);
-			ThisObjBag.Get(_T("type"), rtti);
+			ThisObjBag.get(_T("type"), rtti);
 
 			// Create the object inside the game world
-			OBJECT_ID id = objects.create(rtti, &g_World.getPlayer().getZone());
+			OBJECT_ID id = objects.create(rtti, world);
 			if(id != INVALID_ID)
 			{
 				Actor &object = objects.get(id);
@@ -723,7 +725,7 @@ void EditorToolBar::onLeftMouseDown()
 	case ToolBarForEditorTools::EDITOR_TILE_PENCIL_TOOL:
 		{
 			// get a reference to the map
-			Map &map =  g_World.getPlayer().getZone().getMap();
+			Map &map =  world->getMap();
 
 			// Get the position on the ground plane that was clicked
 			vec3 groundPos = getGroundPickPos(0.0f);

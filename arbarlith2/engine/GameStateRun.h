@@ -45,8 +45,11 @@ namespace Engine {
 class GameStateRun : public GameState, public Singleton<GameStateRun>
 {
 public:
-	/** Constructor */
-	GameStateRun(void);
+	/**
+	Constructor
+	@param app Game engine kernel. The application framework that is running the game.
+	*/
+	GameStateRun(Application &app);
 
 	/** Destructor */
 	virtual ~GameStateRun(void);

@@ -114,7 +114,7 @@ public:
 	Create and setup the Light using settings loaded from XML
 	@param xml The XML data source
 	*/
-	Light(CPropBag &xml)
+	Light(PropertyBag &xml)
 	{
 		clear();
 		fromXml(xml);
@@ -163,13 +163,13 @@ public:
 	Create and setup the Light using settings loaded from XML
 	@param xml The XML data source
 	*/
-	bool fromXml(CPropBag &xml);
+	bool fromXml(PropertyBag &xml);
 
 	/**
 	Saves Light settings to XML
 	@return XML data
 	*/
-	CPropBag toXml(void);
+	PropertyBag toXml(void);
 
 	/**
 	Bind the light state to an OpenGL light

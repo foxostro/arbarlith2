@@ -42,7 +42,7 @@ namespace Arbarlith2 {
 class MyPlayer : public Player
 {
 public:
-	GEN_RTTI(MyPlayer)
+	GEN_RTTI(MyPlayer, "class Arbarlith2::MyPlayer")
 
 public:
 	/**
@@ -65,7 +65,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(Engine::CPropBag &xml);
+	virtual bool LoadXml(Engine::PropertyBag &xml);
 
 	/**
 	Gets the list of available spells

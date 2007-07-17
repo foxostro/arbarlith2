@@ -42,7 +42,7 @@ namespace Arbarlith2 {
 class SpellCasterFSM : public MonsterFSM
 {
 public:
-	GEN_RTTI(SpellCasterFSM)
+	GEN_RTTI(SpellCasterFSM, "class Arbarlith2::SpellCasterFSM")
 
 public:
 	/** Constructs the FSM for a particular Creature */

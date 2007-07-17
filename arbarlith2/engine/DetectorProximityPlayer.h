@@ -49,7 +49,7 @@ public:
 	{}
 
 public:
-	GEN_RTTI(DetectorProximityPlayer)
+	GEN_RTTI(DetectorProximityPlayer, "class Engine::DetectorProximityPlayer")
 };
 
 } // namespace Engine

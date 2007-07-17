@@ -40,7 +40,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-GameStateMenu::GameStateMenu(void)
+GameStateMenu::GameStateMenu(Application &app)
+: GameState(app)
 {
 	TRACE(_T("Creating the various pages of the menu..."));
 
@@ -93,14 +94,14 @@ void GameStateMenu::update(float)
 
 void GameStateMenu::onEnter(void)
 {
-	g_SoundSystem.playMusic(g_Application.menuMusic);
+	g_SoundSystem.playMusic(application.menuMusic);
 	menu->populateElements();
 }
 
 void GameStateMenu::onExit(void)
 {
 	// Fade in the screen
-	g_Application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, 1.0f, 0.0f, 333));
+	application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, 1.0f, 0.0f, 333));
 }
 
 void GameStateMenu::release(void)

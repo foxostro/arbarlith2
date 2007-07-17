@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "World.h"
-#include "Zone.h"
 #include "Creature.h"
 #include "Player.h"
 #include "MonsterFSM.h"

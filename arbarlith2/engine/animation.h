@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _ANIMATION_H_
 #define _ANIMATION_H_
 
+#include "mat4.h"
 #include "mesh.h"
 #include "keyframe.h"
 
@@ -40,26 +41,35 @@ namespace Engine {
 class AnimationSequence
 {
 public:
+	/** Destructor */
+	~AnimationSequence(void);
+
 	/**
 	Loads the AnimationSequence from an XML source
 	@param keyFrames All keyframes in the mesh
 	@param name The name of the animation
 	@param priority The priority of the animation.  If priority > 1, then the animation is "high priority"
-	@param looping true if the naimation loops
+	@param looping true if the animation loops
 	@param start Index into keyFrames for the start of the animation sequence
 	@param length Number of keyframes in the animation sequence
 	@param fps The frames per second of the animation sequence
 	*/
-	AnimationSequence(vector<KeyFrame> keyFrames, const _tstring &name, float priority, bool looping, int start, int length, float fps);
+	AnimationSequence
+	(
+		vector<KeyFrame> keyFrames,
+		const _tstring &name,
+		float priority,
+		bool looping,
+		size_t start,
+		size_t length,
+		float fps
+	);
 
 	/**
 	Copy constructor
 	@param animation The animation to copy
 	*/
 	AnimationSequence(const AnimationSequence &animation);
-
-	/** Destructor */
-	~AnimationSequence(void);
 
 	/** Gets the name of the animation */
 	const _tstring& getName(void) const

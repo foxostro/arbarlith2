@@ -59,14 +59,10 @@ public:
 	/**
 	Constructs the widget
 	@param label The label
-	@param x X
-	@param y Y
-	@param size Font size
+	@param pos Position of the widget
 	*/
-	EditWidget(const _tstring &label = _T("Insert Label Here"),
-	           float x=0.0f,
-	           float y=0.0f,
-	           FONT_SIZE size = FONT_SIZE_NORMAL);
+	EditWidget(const _tstring &label,
+	           const vec2 &pos);
 
 	/**
 	Updates the EditWidget by grabbing user input if it has focus

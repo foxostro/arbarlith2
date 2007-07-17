@@ -31,8 +31,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _CYCLE_TEXTURE_SELECTOR_STATE_H_
 #define _CYCLE_TEXTURE_SELECTOR_STATE_H_
 
+#include "tstring.h"
+#include "LabelWidget.h"
 #include "ListElementWidget.h"
-
 
 namespace Engine {
 

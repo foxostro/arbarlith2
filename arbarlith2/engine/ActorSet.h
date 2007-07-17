@@ -43,7 +43,7 @@ using std::queue;
 namespace Engine {
 
 class Frustum;
-class Zone;
+class World;
 
 /** Collection of associated actors, by reference */
 class ActorSet : public map<const Engine::OBJECT_ID, Engine::Actor*>
@@ -60,7 +60,7 @@ public:
 	@param xml The XML data source
 	@param zone The home zone of the object
 	*/
-	ActorSet(CPropBag &xml, Zone *zone)
+	ActorSet(PropertyBag &xml, World *zone)
 	{
 		ASSERT(zone!=0, _T("zone was NULL"));
 		clear();
@@ -75,33 +75,10 @@ public:
 	@param xml The XML data source
 	@param zone The home zone of the object
 	*/
-	void load(CPropBag &xml, Zone *zone);
+	void load(PropertyBag &xml, World *zone);
 
 	/** Saves the set of objects to an XML data source */
-	CPropBag save(void) const;
-
-	/**
-	Tests to see if the mouse picked any object
-	@return The picked object
-	*/
-	OBJECT_ID mousePick(void);
-
-	/**
-	Casts a ray and sees which objects it hits
-	@param caster The object casting the ray is excluded from the test
-	@param start Origin of the ray
-	@param dir The direction of the ray's travel
-	@return Object ID of the object the ray hit first
-	*/
-	OBJECT_ID rayCast(OBJECT_ID caster, const vec3 &start, const vec3 &dir);
-
-	/**
-	Tests to see if the mouse picked any object
-	@param mx The mouse cursor X
-	@param my The mouse cursor Y
-	@return The picked object
-	*/
-	OBJECT_ID pick(int mx, int my);
+	PropertyBag save(void) const;
 
 	/**
 	Determines whether an object is a member of the ActorSet
@@ -117,7 +94,7 @@ public:
 	@param zone The starting realm of the object
 	@return The unique identifier to the new object
 	*/
-	OBJECT_ID create(const _tstring &type, Zone *zone);
+	OBJECT_ID create(const _tstring &type, World *zone);
 
 	/**
 	Creates an object
@@ -125,7 +102,7 @@ public:
 	@param zone The starting realm of the object
 	@return a pointer to the object
 	*/
-	Actor* createPtr(const _tstring &type, Zone *zone);
+	Actor* createPtr(const _tstring &type, World *zone);
 
 	/**
 	Gets an object from the set
@@ -176,7 +153,7 @@ public:
 	@param deltaTime The milliseconds between now and the last tick
 	@param zone zone
 	*/
-	void update(float deltaTime, Zone *zone);
+	void update(float deltaTime, World *zone);
 
 	/**
 	Add the objects from one actor set to another.
@@ -360,14 +337,14 @@ public:
 	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
-	void spawnNow(const _tstring &dataFile, const vec3 &position, Zone *zone);
+	void spawnNow(const _tstring &dataFile, const vec3 &position, World *zone);
 
 	/**
 	request that an actor be spawned on the next update
 	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
-	void spawnNow(CPropBag &xml, const vec3 &position, Zone *zone);
+	void spawnNow(PropertyBag &xml, const vec3 &position, World *zone);
 
 	/**
 	request that an actor be spawned on the next update
@@ -380,7 +357,7 @@ public:
 	request that an actor be spawned on the next update
 	@param dataFile The datafile of the actor (specifies type)
 	*/
-	Actor& spawnNow(CPropBag &xml, Zone *zone);
+	Actor& spawnNow(PropertyBag &xml, World *zone);
 
 private:
 	typedef pair<float,OBJECT_ID> Tuple;
@@ -429,16 +406,6 @@ private:
 			(p.second)->zombie = true;
 		}
 	}
-
-	/**
-	Cast a ray at an Actor
-	@param caster This actor should be ignored during ray casts
-	@param start The start of the ray
-	@param dir The direction of the ray
-	@param p The target actor
-	@return a tuple containing the distance to the intersection and the ID of the object that was intersected
-	*/
-	static pair<float,OBJECT_ID> rayIntersectActor(OBJECT_ID caster, const vec3 &start, const vec3 &dir, Actor *p);
 
 	/**
 	If the actor is within the viewing frustum, draw the actor

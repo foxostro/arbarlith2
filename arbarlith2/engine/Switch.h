@@ -10,13 +10,13 @@ E-Mail: mailto:andrewfox@cmu.edu
 #include "Trigger.h"
 #include "TriggerPrompt.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Abstract class for a Trigger that is activated through player input */
 class Switch : public Trigger
 {
 public:
-	GEN_RTTI(Switch)
+	GEN_RTTI(Switch, "class Engine::Switch")
 
 public:
 	/**
@@ -51,8 +51,8 @@ public:
 	@param xml The XML data source
 	@return true if successful, false otherwise
 	*/
-	virtual bool LoadXml(CPropBag &xml);
-	
+	virtual bool LoadXml(PropertyBag &xml);
+
 	/**
 	Activate the switch
 	@param a The actor that uses the switch
@@ -82,7 +82,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Text that describes the Player's action on the switch "Use", "Activate", "Ring the bell" */
 	_tstring actionLabel;

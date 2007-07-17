@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gl.h"
 #include "World.h"
-#include "Zone.h"
 #include "PerformanceLabel.h"
 #include "Dimmer.h"
 #include "LinearInterpolator.h"
@@ -42,8 +41,9 @@ namespace Engine {
 
 vec2 Project(const vec3 &p); // stdafx.cpp
 
-GameStateSpellMenu::GameStateSpellMenu(void)
-:dimness(0.7f)
+GameStateSpellMenu::GameStateSpellMenu(Application &app)
+: GameState(app),
+  dimness(0.7f)
 {
 	TRACE(_T("Constructing GameStateSpellMenu... "));
 
@@ -65,26 +65,28 @@ void GameStateSpellMenu::update(float)
 {
 	if(!World::GetSingletonPtr())
 	{
-		g_Application.changeGameState(GAME_STATE_MENU);
+		application.changeGameState(GAME_STATE_MENU);
 	}
 	else
 	{
-		for(size_t i=0; i<g_World.getNumOfPlayers(); ++i)
+		World &world = application.getWorld();
+
+		const size_t numOfPlayers = world.getNumOfPlayers();
+
+		for(size_t i=0; i<numOfPlayers; ++i)
 		{
 			updateForPlayer(i);
 		}
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		g_World.getPlayer().getZone().draw();
+		world.draw();
 		dim.draw();
 
 		effect_Begin(effect_GUI);
 
-			const size_t numOfPlayers = g_World.getNumOfPlayers();
-
 			if(numOfPlayers==1)
 			{
-				Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(g_World.getPlayer(0));
+				Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(world.getPlayer(0));
 				drawForPlayer(player, 512, 384, 250.0f);
 			}
 			else
@@ -93,7 +95,7 @@ void GameStateSpellMenu::update(float)
 
 				for(size_t i=0; i<numOfPlayers; ++i)
 				{
-					Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(g_World.getPlayer(i));
+					Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(world.getPlayer(i));
 
 					vec2 win = Project(player.getPos());
 
@@ -108,7 +110,7 @@ void GameStateSpellMenu::updateForPlayer(size_t playerNumber)
 {
 	ASSERT(playerNumber < MAX_PLAYERS, _T("invalid player number"));
 
-	Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(g_World.getPlayer(playerNumber));
+	Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(application.getWorld().getPlayer(playerNumber));
 
 	vector<Arbarlith2::Spell*> spellList = player.getSpellList();
 	int activeIdx = player.getActiveSpell();
@@ -180,20 +182,20 @@ void GameStateSpellMenu::drawForPlayer(Arbarlith2::MyPlayer &player, float cx, f
 	{
 		glPushMatrix();
 		glTranslatef(cx - radius, cy + radius + 50, 0);
-		g_Application.fontLarge.write(activeSpell.getDescriptionText(), white, FONT_SIZE_NORMAL);
+		application.fontLarge.write(activeSpell.getDescriptionText(), white, FONT_SIZE_NORMAL);
 		glPopMatrix();
 	}
 }
 
 void GameStateSpellMenu::onEnter(void)
 {
-	g_Application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, 0.0f, dimness, 333));
+	application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, 0.0f, dimness, 333));
 	g_SoundSystem.play(_T("data/sound/activate.wav"));
 }
 
 void GameStateSpellMenu::onExit(void)
 {
-	g_Application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, dimness, 0.0f, 333));
+	application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, dimness, 0.0f, 333));
 	g_SoundSystem.play(_T("data/sound/disabled.wav"));
 }
 
@@ -203,4 +205,4 @@ void GameStateSpellMenu::release(void)
 void GameStateSpellMenu::reaquire(void)
 {}
 
-}; // namespace
+} // namespace Engine

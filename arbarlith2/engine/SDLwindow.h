@@ -9,12 +9,12 @@
 
  //haven't figured out how to do multi-window with SDL yet
 #include "singleton.h"
+
 #include "myassert.h"
 
+#include "Application.h"
 
 namespace Engine {
-
-
 
 class SDLInput
 {
@@ -53,30 +53,37 @@ public:
 		NUM_COLORFORMATS
 	};
 
-	//handle linkage of SDL in constructor/destructor
-	SDLWindow()
-	{
-		SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
-		windowSurface = 0;
-	}
+	/**
+	handle linkage of SDL in constructor/destructor
+	@param app Application that spawned the window
+	*/
+	SDLWindow(Application &app);
 
-	~SDLWindow() { SDL_Quit(); }
+	~SDLWindow();
 
-	//create a window with the given properties
-	void Create(const _tstring &title, unsigned int width,
-		        unsigned int height, const ColorFormat &format,
-		        unsigned int zdepth, bool fullscreen);
+	/**
+	Create a window with the given properties
+	*/
+	void Create
+	(
+		const _tstring &title,
+		unsigned int width,
+		unsigned int height,
+		const ColorFormat &format,
+		unsigned int zdepth,
+		bool fullscreen
+	);
 
 	//destroy the currently active window
 	void Kill();
 
 	//Swap the backbuffer and the frontbuffer
-	void Flip() { SDL_GL_SwapBuffers(); }
+	void Flip();
 
 	//mutators for certain window properties; otherwise, just create a new window
-	void SetFullscreen(const bool fullscreen);
+	void SetFullscreen(bool fullscreen);
 	void SetTitle(const _tstring &title);
-	void Resize(const int width, const int height);
+	void Resize(int width, int height);
 
 	//accessors for window properties; behavior is undefined/stupid if no window exists
 	unsigned int GetWidth() const { return width; }
@@ -91,6 +98,7 @@ public:
 	SDLInput input;
 
 private:
+	Application &application;
 	SDL_Surface *windowSurface;
 	unsigned int width, height, zdepth;
 	bool fullscreen;

@@ -77,7 +77,7 @@ void Monster::update(float deltaTime)
 	Creature::update(deltaTime);
 }
 
-bool Monster::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool Monster::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveTag(xml, dataFile, _T("preferredSpell"), preferredSpell);
 
@@ -95,7 +95,7 @@ bool Monster::saveTidy(CPropBag &xml, CPropBag &dataFile) const
 	return Creature::saveTidy(xml, dataFile);
 }
 
-bool Monster::LoadXml(CPropBag &xml)
+bool Monster::LoadXml(PropertyBag &xml)
 {
 	if(!Creature::LoadXml(xml))
 		return false;

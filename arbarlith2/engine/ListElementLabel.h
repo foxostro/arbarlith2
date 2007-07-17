@@ -61,7 +61,7 @@ public:
 	  myLabel(0),
 	  isActive(false)
 	{
-		myLabel = new LabelWidget(label, 12, 2);
+		myLabel = new LabelWidget(label, vec2(12,2));
 		myLabel->dumb = true;
 		AddChild(myLabel);
 	}
@@ -79,7 +79,7 @@ public:
 	  myLabel(0),
 	  isActive(false)
 	{
-		myLabel = new LabelWidget(label, 12, 2);
+		myLabel = new LabelWidget(label, vec2(12,2));
 		AddChild(myLabel);
 	}
 

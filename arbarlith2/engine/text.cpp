@@ -73,20 +73,20 @@ void TextWriter::setup(const _tstring &fileName)
 {
 	this->fileName = fileName;
 
-	CPropBag xml;
+	PropertyBag xml;
 	xml.Load(fileName);
 
 	setup(xml);
 }
 
-void TextWriter::setup(CPropBag &xml)
+void TextWriter::setup(PropertyBag &xml)
 {
-	CPropBag FontBag;
+	PropertyBag FontBag;
 	_tstring fontImageFileName = File::fixFilename(_T("data/fonts/default.png")); // default font image
 
 	// Load the font configuration files
-	xml.Get(_T("font"), FontBag);
-	FontBag.Get(_T("image"), fontImageFileName);
+	xml.get(_T("font"), FontBag);
+	FontBag.get(_T("image"), fontImageFileName);
 
 	fontImageFileName = File::fixFilename(fontImageFileName);
 
@@ -97,10 +97,10 @@ void TextWriter::setup(CPropBag &xml)
 	float s = 8.f;
 
 	// Load the font sizes
-	FontBag.Get(_T("huge"), h);
-	FontBag.Get(_T("large"), l);
-	FontBag.Get(_T("normal"), n);
-	FontBag.Get(_T("small"), s);
+	FontBag.get(_T("huge"), h);
+	FontBag.get(_T("large"), l);
+	FontBag.get(_T("normal"), n);
+	FontBag.get(_T("small"), s);
 
 	fontSize.clear();
 	fontSize.insert(make_pair(FONT_SIZE_HUGE, h));

@@ -41,7 +41,7 @@ namespace Engine {
 class Listener : public Trigger
 {
 public:
-	GEN_RTTI(Listener)
+	GEN_RTTI(Listener, "class Engine::Listener")
 
 public:
 	/**
@@ -58,7 +58,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(Engine::CPropBag &xml);
+	virtual bool LoadXml(Engine::PropertyBag &xml);
 
 	/**
 	Updates the object without displaying it
@@ -92,7 +92,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/**
 	Creates the editor toolbar for the Creature

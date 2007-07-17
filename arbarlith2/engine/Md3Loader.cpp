@@ -280,21 +280,21 @@ AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
 {
 	_tstring md3;
 
-	CPropBag xml;
+	PropertyBag xml;
 	xml.Load(fileName);
 
-	// Allocateen a blank animation controller
+	// Allocate a blank animation controller
 	AnimationController *controller = new AnimationController();
 
 	// Get key frames from the first source
-	xml.Get(_T("md3"), md3, 0);
+	xml.get(_T("md3"), md3, 0);
 	vector<KeyFrame> keyFrames = loadKeyFrames(md3);
 
 	// Get the rest of the key frames
-	int numMD3 = xml.GetNumInstances(_T("md3"));
-	for(int i=1; i<numMD3; ++i)
+	const size_t numMD3 = xml.getNumInstances(_T("md3"));
+	for(size_t i=1; i<numMD3; ++i)
 	{
-		xml.Get(_T("md3"), md3, i);
+		xml.get(_T("md3"), md3, i);
 
 		vector<KeyFrame> k = loadKeyFrames(md3);
 
@@ -305,10 +305,10 @@ AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
 	}
 
 	// Build the animations from these keyframes
-	int numAnimations = xml.GetNumInstances(_T("animation"));
-	for(int i=0; i<numAnimations; ++i)
+	const size_t numAnimations = xml.getNumInstances(_T("animation"));
+	for(size_t i=0; i<numAnimations; ++i)
 	{
-		CPropBag animation;
+		PropertyBag animation;
 		_tstring name;
 		bool looping=false;
 		int start=0;
@@ -316,7 +316,7 @@ AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
 		int length=0;
 		float fps=0;
 
-		xml.Get(_T("animation"), animation, i);
+		xml.get(_T("animation"), animation, i);
 		animation.getSym(name);
 		animation.getSym(priority);
 		animation.getSym(looping);
@@ -364,7 +364,7 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 	header.magicNumber[1] == _T('D') && 
 	header.magicNumber[2] == _T('P') && 
 	header.magicNumber[3] == _T('3'),
-	_tstring(_T("Magic number failed to validate! This file is not an MD3 file: ")) + fileName
+	_T("Magic number failed to validate! This file is not an MD3 file: ") + fileName
 	);
 
 	// Allocate Frame objects

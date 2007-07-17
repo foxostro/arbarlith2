@@ -30,21 +30,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "World.h"
-#include "Zone.h"
 #include "Player.h"
+#include "World.h"
 #include "Dimmer.h"
 #include "LinearInterpolator.h"
 #include "GameStateRun.h"
 
 namespace Engine { 
 	
-GameStateRun::GameStateRun(void)
+GameStateRun::GameStateRun(Application &app)
+: GameState(app)
 {
 	// add a few widgets to the GUI
-	g_GUI.addWidget(triggerPrompt = new TriggerPrompt());
-	g_GUI.addWidget(performanceLabel = new PerformanceLabel(60, 650));
-	g_GUI.addWidget(debugLabel = new DebugLabel(60, 600));
+	g_GUI.addWidget(  triggerPrompt = new TriggerPrompt()  );
+	g_GUI.addWidget(  performanceLabel = new PerformanceLabel(vec2(60,650), application)  );
+	g_GUI.addWidget(  debugLabel = new DebugLabel(vec2(60,600), application)  );
 }
 
 GameStateRun::~GameStateRun(void)
@@ -53,27 +53,27 @@ GameStateRun::~GameStateRun(void)
 void GameStateRun::update(float deltaTime)
 {
 	if(!World::GetSingletonPtr())
-		g_Application.changeGameState(GAME_STATE_MENU);
+		application.changeGameState(GAME_STATE_MENU);
 	else
 	{
 		ASSERT(0!=performanceLabel, _T("performanceLabel was null"));
 		ASSERT(0!=debugLabel, _T("debugLabel was null"));
 		
-		performanceLabel->m_bVisible = g_Application.displayFPS;
-		debugLabel->m_bVisible = g_Application.displayDebugData;
+		performanceLabel->m_bVisible = application.displayFPS;
+		debugLabel->m_bVisible = application.displayDebugData;
 
 		// update
-		g_World.update(deltaTime);
+		application.getWorld().update(deltaTime);
 		g_GUI.update(deltaTime);
 		
 		// draw
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		g_World.getPlayer().getZone().draw();
+		application.getWorld().draw();
 		dim.draw();
 		g_GUI.draw();
 
 		// Draw the blur over top
-		if(g_Application.useBlurEffects)
+		if(application.useBlurEffects)
 		{
 			blurEffect.update(deltaTime);
 			blurEffect.draw();

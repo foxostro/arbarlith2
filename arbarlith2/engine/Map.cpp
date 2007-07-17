@@ -77,27 +77,26 @@ void Map::destroyMaterialsLegend(void)
 	materialsLegend.clear();
 }
 
-void Map::loadMaterialsLegend(CPropBag &materialsLegend)
+void Map::loadMaterialsLegend(PropertyBag &materialsLegend)
 {
 	destroyMaterialsLegend();
 
-	int numberOfEntries = materialsLegend.GetNumInstances(_T("material"));
-
-	for(int i=0; i<numberOfEntries;++i)
+	const size_t numberOfEntries = materialsLegend.getNumInstances(_T("material"));
+	for(size_t i=0; i<numberOfEntries;++i)
 	{
 		_tstring materialFileName;
-		materialsLegend.Get(_T("material"), materialFileName, i);
+		materialsLegend.get(_T("material"), materialFileName, i);
 		loadMapMaterial(materialFileName);
 	}
 }
 
-CPropBag Map::saveMaterialsLegend(void) const
+PropertyBag Map::saveMaterialsLegend(void) const
 {
-	CPropBag xml;
+	PropertyBag xml;
 
 	for(MAP_MATERIAL_ID i=0; (size_t)i<materialsLegend.size(); ++i)
 	{
-		xml.Add(  _T("material"), File::fixFilename(materialsLegend[i]->getName())  );
+		xml.add(  _T("material"), File::fixFilename(materialsLegend[i]->getName())  );
 	}
 
 	return xml;
@@ -128,7 +127,7 @@ const Material* Map::getMapMaterial(MAP_MATERIAL_ID materialID) const
 	return ((size_t)materialID<materialsLegend.size()) ? materialsLegend[materialID] : 0;
 }
 
-void Map::create(CPropBag &xml)
+void Map::create(PropertyBag &xml)
 {
 	PROFILE
 
@@ -136,20 +135,20 @@ void Map::create(CPropBag &xml)
 	destroy();
 
 	// Get the scaling of the map along the X and Z directions
-	xml.Get(_T("tileMetersX"), tileMetersX);
+	xml.get(_T("tileMetersX"), tileMetersX);
 
 	// Load materials used in this map
-	CPropBag materialsLegend;
-	xml.Get(_T("materialsLegend"), materialsLegend);
+	PropertyBag materialsLegend;
+	xml.get(_T("materialsLegend"), materialsLegend);
 	loadMaterialsLegend(materialsLegend);
 
 	// Get the dimensions of the map
-	xml.Get(_T("width"), width);
-	xml.Get(_T("height"), height);
+	xml.get(_T("width"), width);
+	xml.get(_T("height"), height);
 
 	// Get the name of the binary map file
 	_tstring tileDataFileName;
-	if(!xml.Get(_T("tileDataFileName"), tileDataFileName))
+	if(!xml.get(_T("tileDataFileName"), tileDataFileName))
 	{
 		FAIL(_T("Failed to retrieve the name of the binary tile data file from the Map definition!"));
 	}
@@ -214,18 +213,18 @@ void Map::resize(int width)
 	quadTree = new QuadTreeNode(grid, 0, 0, width, width, tileMetersX);
 }
 
-void Map::save(CPropBag &xml, const _tstring &zoneName)
+void Map::save(PropertyBag &xml, const _tstring &zoneName)
 {
-	xml.Add(_T("width"), width);
-	xml.Add(_T("height"), height);
-	xml.Add(_T("tileMetersX"), tileMetersX);
+	xml.add(_T("width"), width);
+	xml.add(_T("height"), height);
+	xml.add(_T("tileMetersX"), tileMetersX);
 
 	// Save materials used in this map
-	xml.Add(_T("materialsLegend"), saveMaterialsLegend());
+	xml.add(_T("materialsLegend"), saveMaterialsLegend());
 
 	// save tile data	
 	_tstring tileDataFileName = pathAppend(_T("data/zones"), zoneName + _T(".bin"));
-	xml.Add(_T("tileDataFileName"), tileDataFileName);
+	xml.add(_T("tileDataFileName"), tileDataFileName);
 
 	File file;
 	for(int i=0; i<width*height; ++i)

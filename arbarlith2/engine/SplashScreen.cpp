@@ -30,9 +30,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "SplashScreen.h"
+#include "SDLwindow.h"
 #include "Image.h"
 #include "TextureHandle.h"
+#include "SplashScreen.h"
 
 namespace Engine {
 

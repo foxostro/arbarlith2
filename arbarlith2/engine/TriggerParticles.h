@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Trigger.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -42,7 +42,7 @@ namespace Engine {
 class TriggerParticles : public Trigger
 {
 public:
-	GEN_RTTI(TriggerParticles)
+	GEN_RTTI(TriggerParticles, "class Engine::TriggerParticles")
 
 public:
 	/**
@@ -56,7 +56,7 @@ public:
 	@param xml The XML data source
 	@return true if successful, false otherwise
 	*/
-	bool LoadXml(CPropBag &xml);
+	bool LoadXml(PropertyBag &xml);
 
 protected:
 	/**
@@ -65,7 +65,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/**
 	Creates the editor toolbar for the Creature

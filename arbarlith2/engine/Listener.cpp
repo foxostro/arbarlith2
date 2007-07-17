@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "ActorSet.h"
 #include "World.h"
-#include "Zone.h"
 #include "WaitScreen.h"
 #include "ListPaneWidget.h"
 #include "ListElementTweaker.h"
@@ -115,7 +114,7 @@ void Listener::setupSignals(const _tstring &expression)
 	}
 }
 
-bool Listener::LoadXml(CPropBag &xml)
+bool Listener::LoadXml(PropertyBag &xml)
 {
 	Trigger::LoadXml(xml);
 
@@ -125,7 +124,7 @@ bool Listener::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool Listener::saveTidy(CPropBag &xml, CPropBag &editorData) const
+bool Listener::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
 	saveTag(xml, editorData, _T("expression"), expression);
 	return Trigger::saveTidy(xml, editorData);

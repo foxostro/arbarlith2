@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "engine/ActorSet.h"
 #include "engine/Creature.h"
-#include "engine/Zone.h"
+#include "engine/World.h"
 #include "Explosion.h"
 
 namespace Arbarlith2 {
@@ -48,21 +48,20 @@ int splashDamage(float radius, float distance, int baseDamage)
 	return (int)floorf(baseDamage * powf((float)M_E, -SQR(distance/radius)));
 }
 
-void createExplosion(Zone &zone, const vec3 &position, int damageValue, OBJECT_ID attackerID, const _tstring &explosionParticleFile, const _tstring &soundEffectFileName)
+void createExplosion(World &world, const vec3 &position, int damageValue, float radius, OBJECT_ID attackerID, const _tstring &explosionParticleFile, const _tstring &soundEffectFileName)
 {
 	// spawn some explosion FX
-	size_t particleHandle = zone.SpawnPfx(explosionParticleFile, position);
+	world.SpawnPfx(explosionParticleFile, position);
 	g_SoundSystem.play(soundEffectFileName);
 
-	// Get the radius of the particle system
-	float radius = zone.particles[particleHandle]->getRadius();
-
 	// Get the set of objects in the zone and within the radius
-	ActorSet s = zone.getObjects().typeFilter<Creature>();
+	ActorSet s = world.getObjects().typeFilter<Creature>();
 
 	for(ActorSet::iterator i = s.begin(); i != s.end(); ++i)
 	{
 		Creature *a = dynamic_cast<Creature*>(i->second);
+
+		ASSERT(a!=0, _T("Object included in filtered set \'world.getObjects().typeFilter<Creature>()\' was nnot a Creature!"));
 
 		int finalDamage = splashDamage(radius, vec3(position - a->getPos()).getMagnitude(), damageValue);
 

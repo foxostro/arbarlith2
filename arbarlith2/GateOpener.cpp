@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "engine/ActorSet.h"
 #include "engine/World.h"
-#include "engine/Zone.h"
 #include "engine/Random.h"
 #include "engine/WaitScreen.h"
 #include "engine/ListPaneWidget.h"
@@ -74,7 +73,7 @@ void GateOpener::onTrigger(void)
 	}
 }
 
-bool GateOpener::LoadXml(CPropBag &xml)
+bool GateOpener::LoadXml(PropertyBag &xml)
 {
 	Listener::LoadXml(xml);
 
@@ -84,7 +83,7 @@ bool GateOpener::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool GateOpener::saveTidy(CPropBag &xml, CPropBag &editorData) const
+bool GateOpener::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
 	saveTag(xml, editorData, _T("gateName"), gateName);
 	saveTag(xml, editorData, _T("open"), open);

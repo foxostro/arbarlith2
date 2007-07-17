@@ -44,7 +44,7 @@ void SpellHeal::clear()
 	spellRadius = 5.0f;
 }
 
-void SpellHeal::load(CPropBag &xml, Engine::Zone *zone, Engine::OBJECT_ID ownerID)
+void SpellHeal::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ownerID)
 {
 	Spell::load(xml, zone, ownerID);
 

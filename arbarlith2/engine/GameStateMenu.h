@@ -41,8 +41,11 @@ namespace Engine {
 class GameStateMenu : public GameState, public Singleton<GameStateMenu>
 {
 public:
-	/** Constructor */
-	GameStateMenu(void);
+	/**
+	Constructor
+	@param app Game engine kernel. The application framework that is running the game.
+	*/
+	GameStateMenu(Application &app);
 
 	/** Destructor */
 	virtual ~GameStateMenu(void);

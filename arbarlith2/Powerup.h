@@ -45,7 +45,7 @@ class MyPlayer;
 class Powerup : public Switch
 {
 public:
-	GEN_RTTI(Powerup);
+	GEN_RTTI(Powerup, "class Arbarlith2::Powerup")
 
 public:
 	/**

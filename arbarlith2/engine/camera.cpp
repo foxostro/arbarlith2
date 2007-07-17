@@ -45,28 +45,28 @@ void Camera::setCamera(void)
 	moved = false;
 }
 
-CPropBag Camera::toXml(void)
+PropertyBag Camera::toXml(void)
 {
-	CPropBag xml;
+	PropertyBag xml;
 
-	xml.Add(_T("z"),	orientation.getAxisZ());
-	xml.Add(_T("y"),	orientation.getAxisY());
-	xml.Add(_T("x"),	orientation.getAxisX());
-	xml.Add(_T("pos"),	position);
+	xml.add(_T("z"),	orientation.getAxisZ());
+	xml.add(_T("y"),	orientation.getAxisY());
+	xml.add(_T("x"),	orientation.getAxisX());
+	xml.add(_T("pos"),	position);
 
 	return xml;
 }
 
-void Camera::fromXml(CPropBag &xml)
+void Camera::fromXml(PropertyBag &xml)
 {
 	destroy();
 
 	vec4 x, y, z;
 
-	xml.Get(_T("z"),	x);
-	xml.Get(_T("y"),	y);
-	xml.Get(_T("x"),	z);
-	xml.Get(_T("pos"),	position);
+	xml.get(_T("z"),	x);
+	xml.get(_T("y"),	y);
+	xml.get(_T("x"),	z);
+	xml.get(_T("pos"),	position);
 
 	orientation.set(position, x, y, z);
 

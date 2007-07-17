@@ -76,7 +76,7 @@ void TileGate::onTrigger(void)
 	}
 }
 
-bool TileGate::LoadXml(CPropBag &xml)
+bool TileGate::LoadXml(PropertyBag &xml)
 {
 	Actor::LoadXml(xml);
 
@@ -103,7 +103,7 @@ bool TileGate::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool TileGate::saveTidy(CPropBag &xml, CPropBag &editorData) const
+bool TileGate::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
 	saveTag(xml, editorData, _T("lockedHeight"),	lockedHeight);
 	saveTag(xml, editorData, _T("unlockedHeight"),	unlockedHeight);
@@ -185,7 +185,7 @@ void TileGate::onUnlocked(void)
 
 Tile& TileGate::getTile(void)
 {
-	Zone &zone = getZone();
+	World &zone = getZone();
 	Map &map = zone.getMap();
 	return map.getTile(getPos().x, getPos().z);
 }

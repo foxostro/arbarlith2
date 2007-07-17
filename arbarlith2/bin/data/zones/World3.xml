@@ -1,3 +1,7 @@
+<player>
+	<file>data/monsters/startingPlayer.xml</file>
+	<pos>&vec(22, 0, 22)</pos>
+</player>
 <ambientLight>0.5</ambientLight>
 <fog>
 	<blue>0.3</blue>

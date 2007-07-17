@@ -72,14 +72,14 @@ public:
 	Saves the fog to XML
 	@return XML reprentation of the fog
 	*/
-	CPropBag save(void) const;
+	PropertyBag save(void) const;
 
 	/**
 	Loads the fog settings from XML
 	@param xml XML source
 	@return true if successful, false otherwise
 	*/
-	bool load(CPropBag &xml);
+	bool load(PropertyBag &xml);
 
 	/** Activate the fog settings */
 	void activate(void) const;

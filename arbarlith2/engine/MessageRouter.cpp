@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "Object.h"
-#include "ActorSet.h"
 #include "World.h"
 #include "MessageRouter.h"
 
@@ -39,8 +38,8 @@ namespace Engine {
 
 
 
-MessageRouter::MessageRouter(ActorSet &actorSet)
-: m_Objects(actorSet)
+MessageRouter::MessageRouter(void)
+: zone(0)
 {
 	for(size_t i=0; i<NUM_SIGNALS; ++i)
 	{
@@ -48,11 +47,18 @@ MessageRouter::MessageRouter(ActorSet &actorSet)
 	}
 }
 
+void MessageRouter::setZone(World *theZone)
+{
+	zone = theZone;
+}
+
 bool MessageRouter::Send(Message_s &Msg)
 {
+	ASSERT(zone != 0, _T("zone was null"));
+
 	// Set the time stamp member
 	Msg.m_bSent = false;
-	Msg.m_Timestamp = g_World.getClockTicks();
+	Msg.m_Timestamp = zone->getClockTicks();
 
 	// Should the message be sent immediately or be delayed
 	if(Msg.m_TimeDelay == 0.0)
@@ -90,18 +96,21 @@ bool MessageRouter::Send(Message_s &Msg)
 
 void MessageRouter::MailIt(Message_s Msg)
 {
-	ASSERT(m_Objects.isMember(Msg.m_Recipient), _T("MessageRouter::MailIt  ->  Recipient does not exist"));
+	ASSERT(zone != 0, _T("zone was null"));
+	ASSERT(zone->getObjects().isMember(Msg.m_Recipient), _T("Recipient does not exist"));
 
-	if(m_Objects.isMember(Msg.m_Recipient))
+	if(zone->getObjects().isMember(Msg.m_Recipient))
 	{
-		Actor &object = m_Objects.get(Msg.m_Recipient);
+		Actor &object = zone->getObjects().get(Msg.m_Recipient);
 		object.OnMessage(Msg);
 	}
 }
 
 void MessageRouter::update(float deltaTime)
 {
-	double Time = g_World.getClockTicks();
+	ASSERT(zone != 0, _T("zone was null"));
+
+	double Time = zone->getClockTicks();
 
 	vector< vector<Message_s>::iterator > ToDelete;
 
@@ -186,4 +195,4 @@ void MessageRouter::unsubscribeToAllSignals(OBJECT_ID id)
 	}
 }
 
-}; // namespace
+} // namespace Engine

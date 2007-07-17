@@ -32,15 +32,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _DebugDisplayToggleKeyDetector_H_
 
 #include "Task.h"
+#include "Application.h"
 
 namespace Engine {
 
 /** Listens for and handles key events to toggle the display of debug data */
 class DebugDisplayToggleKeyDetector : public Task
 {
+private:
+	Application &application;
+
 public:
 	/** Constructor */
-	DebugDisplayToggleKeyDetector(void);
+	DebugDisplayToggleKeyDetector(Application &app);
 
 	/**
 	Polls for screen shot events

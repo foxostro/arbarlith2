@@ -39,46 +39,45 @@ namespace Engine {
 
 
 
-CPropBag MusicEngine::saveMusicTag(vector<_tstring> &music)
+PropertyBag MusicEngine::saveMusicTag(vector<_tstring> &music)
 {
-	CPropBag bag;
+	PropertyBag bag;
 
 	for(size_t i=0; i<music.size(); ++i)
 	{
 		_tstring clip = music[i];
-		bag.Add(_T("clip"), clip);
+		bag.add(_T("clip"), clip);
 	}
 
 	return bag;
 }
 
-void MusicEngine::save(CPropBag &bag)
+void MusicEngine::save(PropertyBag &bag)
 {
-	bag.Add(_T("clips"), saveMusicTag(clips));
+	bag.add(_T("clips"), saveMusicTag(clips));
 }
 
-void MusicEngine::loadMusicTag(CPropBag &bag, vector<_tstring> &music)
+void MusicEngine::loadMusicTag(PropertyBag &bag, vector<_tstring> &music)
 {
 	music.clear();
 
-	int n = bag.GetNumInstances(_T("clip"));
-
-	for(int i=0; i<n; ++i)
+	const size_t n = bag.getNumInstances(_T("clip"));
+	for(size_t i=0; i<n; ++i)
 	{
 		_tstring file;
 
-		if(bag.Get(_T("clip"), file, i))
+		if(bag.get(_T("clip"), file, i))
 		{
 			music.push_back(file);
 		}
 	}
 }
 
-void MusicEngine::load(CPropBag &bag)
+void MusicEngine::load(PropertyBag &bag)
 {
-	CPropBag clipsBag;
+	PropertyBag clipsBag;
 
-	if(bag.Get(_T("clips"), clipsBag))
+	if(bag.get(_T("clips"), clipsBag))
 	{
 		loadMusicTag(clipsBag, clips);
 	}

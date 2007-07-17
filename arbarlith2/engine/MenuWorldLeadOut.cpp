@@ -66,9 +66,6 @@ void MenuWorldLeadOut::populateElements(void)
 			break;
 		}
 	}
-
-	// Save the setings
-	g_Application.saveXmlConfigFiles();
 }
 
 void MenuWorldLeadOut::activateElement(int selectedIndex)

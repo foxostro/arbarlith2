@@ -39,7 +39,7 @@ CycleTextureSelectorState::CycleTextureSelectorState(TEXTURE_SELECTOR_STATE *val
   statusLbl(0)
 {
 	// Create the status label
-	AddChild(statusLbl = new LabelWidget(myLabel, 12.0f, 1.0f));
+	AddChild(  statusLbl = new LabelWidget(myLabel, vec2(12.0f,1.0f))  );
 	statusLbl->dumb = true;
 	statusLbl->setLabel(getLabel(*myValue));
 }

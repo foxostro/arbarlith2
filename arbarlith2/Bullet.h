@@ -41,7 +41,7 @@ namespace Arbarlith2 {
 class Bullet : public Trigger
 {
 public:
-	GEN_RTTI(Bullet)
+	GEN_RTTI(Bullet, "class Arbarlith2::Bullet")
 
 public:
 	/**

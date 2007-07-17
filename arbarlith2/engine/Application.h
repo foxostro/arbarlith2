@@ -40,10 +40,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "OpenGL.h"
 #include "widgetmanager.h"
 #include "SoundSystem.h"
-#include "SDLWindow.h"
 #include "TextureManager.h"
 #include "Camera.h"
-#include "GameState.h"
 
 namespace Engine {
 
@@ -58,6 +56,8 @@ enum GAME_STATE
 };
 
 // Class Prototypes
+class SDLWindow;
+class GameState;
 class Actor;
 class World;
 
@@ -319,7 +319,6 @@ private:
 // Proxies
 #define g_Application	(::Engine::Application::GetSingleton())
 #define g_SoundSystem	(::Engine::Application::GetSingleton().getSoundSystem())
-#define g_World		(::Engine::Application::GetSingleton().getWorld())
 #define g_TextureMgr	(::Engine::Application::GetSingleton().getTextureManager())
 #define g_Camera	(::Engine::Application::GetSingleton().getCamera())
 #define g_Window	(::Engine::SDLWindow::GetSingleton())

@@ -66,7 +66,7 @@ protected:
 	}
 
 public:
-	GEN_RTTI(DetectorProximity)
+	GEN_RTTI(DetectorProximity, "class Engine::DetectorProximity")
 };
 
 } // namespace Engine

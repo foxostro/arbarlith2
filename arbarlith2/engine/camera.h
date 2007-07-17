@@ -68,7 +68,7 @@ public:
 	Loads the camera from an XML source
 	@param tag XML source
 	*/
-	Camera(CPropBag &tag)
+	Camera(PropertyBag &tag)
 	{
 		clear();
 		fromXml(tag);
@@ -146,17 +146,17 @@ public:
 	Creates an xml tag to represent the object
 	@return The tag representing this object
 	*/
-	virtual CPropBag toXml(void);
+	virtual PropertyBag toXml(void) const;
 
 	/**
 	Creates the object from an xml tag
 	@param xml The tag representing the object
 	*/
-	virtual void fromXml(CPropBag &xml);
+	virtual void fromXml(PropertyBag &xml);
 
 	/**
 	Determines whether the camera has moved since the last tick
-	@return true if thw camera has moved, false otherwise
+	@return true if the camera has moved, false otherwise
 	*/
 	bool hasMoved(void) const
 	{

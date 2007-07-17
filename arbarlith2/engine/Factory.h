@@ -40,12 +40,12 @@ const OBJECT_ID INVALID_ID = -1;
 #include "tstring.h"
 
 // Generates static RTTI accessor methods for a class
-#define GEN_RTTI(TYPE)                                                                    \
-static _tstring getTypeString()                                                           \
+#define GEN_RTTI(TYPE, NAME)                                                              \
+static _tstring getTypeString(void)                                                       \
 {                                                                                         \
-	return toTString(typeid(TYPE).name());                                            \
+	return _T( NAME );                                                                \
 }                                                                                         \
-static OBJECT_TYPE getType()                                                              \
+static OBJECT_TYPE getType(void)                                                          \
 {                                                                                         \
 	const type_info *typePtr = &typeid(TYPE);                                         \
 	return (OBJECT_TYPE)(typePtr);                                                    \

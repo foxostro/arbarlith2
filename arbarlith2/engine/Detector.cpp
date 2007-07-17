@@ -34,7 +34,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ToggleWidgetText.h"
 #include "ActorSet.h"
 #include "World.h"
-#include "Zone.h"
 #include "Detector.h"
 
 namespace Engine {
@@ -93,7 +92,7 @@ void Detector::update(float deltaTime)
 	}
 }
 
-bool Detector::LoadXml(CPropBag &xml)
+bool Detector::LoadXml(PropertyBag &xml)
 {
 	Trigger::LoadXml(xml);
 
@@ -104,7 +103,7 @@ bool Detector::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool Detector::saveTidy(CPropBag &xml, CPropBag &editorData) const
+bool Detector::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
 	saveTag(xml, editorData, _T("signalSuccess"), signalSuccess);
 	saveTag(xml, editorData, _T("signalFail"), signalFail);

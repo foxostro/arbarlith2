@@ -75,7 +75,7 @@ enum MSG_Scope
 class StateMachine
 {
 public:
-	GEN_RTTI(StateMachine)
+	GEN_RTTI(StateMachine, "class Engine::StateMachine")
 
 public:
 	/** Destructor */
@@ -104,14 +104,14 @@ public:
 	@return true if the calling child class should save fully, false
 	if the calling child class should save just enough for editor mode
 	*/
-	virtual bool SaveXml(CPropBag &bag);
+	virtual bool SaveXml(PropertyBag &bag);
 
 	/**
 	Load from XML
 	@param bag XML source
 	@return true if successful
 	*/
-	virtual bool LoadXml(CPropBag &bag);
+	virtual bool LoadXml(PropertyBag &bag);
 
 	int GetState( void )						{ return( m_currentState ); }
 	double GetTimeInState( void );

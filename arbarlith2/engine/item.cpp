@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "Player.h"
-#include "Zone.h"
+#include "World.h"
 #include "Item.h"
 
 
@@ -49,9 +49,9 @@ Item::Item(OBJECT_ID ID)
 
 void Item::onUse(Actor *a)
 {
-	ASSERT(getZone().getObjects().isMember(m_ID), _T("Somehow, the item is not part of the objects in this Zone."));
+	ASSERT(getZone().getObjects().isMember(m_ID), _T("Somehow, the item is not part of the objects in this World."));
 
-	// Remove ourselves from the Zone
+	// Remove ourselves from the World
 	zombie = true;
 
 	// Add to the player inventory

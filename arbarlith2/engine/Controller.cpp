@@ -40,6 +40,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
+#include "SDLwindow.h"
 #include "Controller.h"
 
 namespace Engine {
@@ -491,7 +492,7 @@ vector<_tstring> Controller::getKeyName(ACTION_CODE actionCode)
 
 bool Controller::load(const _tstring &fileName)
 {
-	CPropBag Bag;
+	PropertyBag Bag;
 	if(!Bag.Load(fileName))
 	{
 		return false;
@@ -499,23 +500,23 @@ bool Controller::load(const _tstring &fileName)
 
 	setDefaults();
 
-	int numActions = Bag.GetNumInstances(_T("action"));
-	for(int j=0; j<numActions; ++j)
+	const size_t numActions = Bag.getNumInstances(_T("action"));
+	for(size_t j=0; j<numActions; ++j)
 	{
-		CPropBag actionBag;
+		PropertyBag actionBag;
 		_tstring actionName;
 
-		Bag.Get(_T("action"), actionBag, j);
-		actionBag.Get(_T("name"), actionName);
+		Bag.get(_T("action"), actionBag, j);
+		actionBag.get(_T("name"), actionName);
 
 		ACTION_CODE actionCode = createAction(actionName);
 
 		// Load one or more keys for this action
-		int numBindings = Bag.GetNumInstances(_T("binding"));
-		for(int i=0; i<numBindings; ++i)
+		const size_t numBindings = Bag.getNumInstances(_T("binding"));
+		for(size_t i=0; i<numBindings; ++i)
 		{
 			_tstring keyName;
-			if(Bag.Get(actionName, keyName, i))
+			if(Bag.get(actionName, keyName, i))
 			{
 				bindings.insert(make_pair(actionCode, keyName)); // multimap allows duplicate keys
 			}
@@ -527,15 +528,15 @@ bool Controller::load(const _tstring &fileName)
 
 bool Controller::save(const _tstring &filename)
 {
-	CPropBag Bag;
+	PropertyBag Bag;
 
 	for(map<ACTION_CODE, _tstring>::const_iterator iter = actionNames.begin(); iter != actionNames.end(); ++iter)
 	{
 		const ACTION_CODE &actionCode = iter->first;
 		const _tstring &actionName = iter->second;
 
-		CPropBag actionBag;
-		actionBag.Add(_T("name"), actionName);
+		PropertyBag actionBag;
+		actionBag.add(_T("name"), actionName);
 
 		if(bindings.find(actionCode) != bindings.end())
 		{
@@ -545,12 +546,12 @@ bool Controller::save(const _tstring &filename)
 			// Save the (possibly) multiple bindings for this action
 			while(i!=stop)
 			{
-				actionBag.Add(_T("binding"), i->second);
+				actionBag.add(_T("binding"), i->second);
 				++i;
 			}
 		}
 
-		Bag.Add(_T("action"), actionBag);
+		Bag.add(_T("action"), actionBag);
 	}
 
 	Bag.saveToFile(filename);

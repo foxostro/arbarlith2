@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/vec4.h"
 #include "engine/PropBag.h"
 #include "engine/Material.h"
-#include "engine/Zone.h"
+#include "engine/World.h"
 
 namespace Arbarlith2 {
 
@@ -65,7 +65,7 @@ public:
 	Loads spell data
 	@param xml XML source for the Spell
 	*/
-	virtual void create(Engine::CPropBag &xml);
+	virtual void create(Engine::PropertyBag &xml);
 
 	/** draws the spell icon orthogonal to the screen in worldspace */
 	void drawIcon(bool active, const Engine::vec3 &pos, float size) const;
@@ -84,7 +84,7 @@ public:
 	@param zone The zone in which the spell applies
 	@param ownerID Handle to the owner in the new zone
 	*/
-	void setZone(Engine::Zone *zone, Engine::OBJECT_ID ownerID);
+	void setZone(Engine::World *zone, Engine::OBJECT_ID ownerID);
 
 	/**
 	Draws spell effects
@@ -128,7 +128,7 @@ public:
 	@param zone The zone in which the spell applies
 	@param ownerID Spell caster owner
 	*/
-	void loadFromFile(const _tstring &fileName, Engine::Zone *zone, Engine::OBJECT_ID ownerID);
+	void loadFromFile(const _tstring &fileName, Engine::World *zone, Engine::OBJECT_ID ownerID);
 
 	/**
 	Returns diagnostic data about the spell in a string of text
@@ -153,7 +153,7 @@ protected:
 	@param zone The zone in which the spell applies
 	@param ownerID Spell caster owner
 	*/
-	virtual void load(Engine::CPropBag &xml, Engine::Zone *zone, Engine::OBJECT_ID ownerID);
+	virtual void load(Engine::PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ownerID);
 
 	/** Actually casts the spell */
 	virtual void castSpell(void);
@@ -177,8 +177,8 @@ protected:
 	/** Spell Owner */
 	Engine::OBJECT_ID ownerID;
 
-	/** Zone in which the spell applies */
-	Engine::Zone *zone;
+	/** World in which the spell applies */
+	Engine::World *zone;
 
 private:
 	/** Text to describe the spell on the spell selection menu */

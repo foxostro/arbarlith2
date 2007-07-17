@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _QUAD_TREE_NODE_H_
 #define _QUAD_TREE_NODE_H_
 
-#include "3dmath.h"
+#include "BoundingBox.h"
 
 namespace Engine {
 

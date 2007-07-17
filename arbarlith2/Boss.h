@@ -39,7 +39,7 @@ namespace Arbarlith2 {
 class Boss : public Monster
 {
 public:
-	GEN_RTTI(Boss)
+	GEN_RTTI(Boss, "class Arbarlith2::Boss")
 
 public:
 	/**

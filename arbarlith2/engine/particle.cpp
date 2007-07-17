@@ -63,142 +63,141 @@ vec3 GetRandomVector(float length)
 typedef ParticleElement* ELEMENT_PTR;
 
 ParticleBody::ParticleBody(void)
-: m_vPosition(0,0,0),
+: position(0,0,0),
 initialVelocity(0,0,0),
-m_Age(0),
-m_vInitialPosition(0,0,0),
-m_vConstantAcceleration(0,0,0),
+age(0),
+initialPosition(0,0,0),
+constantAcceleration(0,0,0),
 center(0,0,0),
 initialRadialVelocity(0)
 {}
 
-ParticleBody::ParticleBody(CPropBag &Bag)
-: m_vPosition(0,0,0),
+ParticleBody::ParticleBody(PropertyBag &Bag)
+: position(0,0,0),
 initialVelocity(0,0,0),
-m_Age(0),
-m_vInitialPosition(0,0,0),
-m_vConstantAcceleration(0,0,0),
+age(0),
+initialPosition(0,0,0),
+constantAcceleration(0,0,0),
 center(0,0,0),
 initialRadialVelocity(0)
 {
-	LoadXml(Bag);
+	load(Bag);
 }
 
 ParticleBody::ParticleBody(const ParticleBody &body)
-: m_vPosition(body.m_vPosition),
+: position(body.position),
 initialVelocity(body.initialVelocity),
-m_Age(body.m_Age),
-m_vInitialPosition(body.m_vInitialPosition),
-m_vConstantAcceleration(body.m_vConstantAcceleration),
+age(body.age),
+initialPosition(body.initialPosition),
+constantAcceleration(body.constantAcceleration),
 center(body.center),
 initialRadialVelocity(body.initialRadialVelocity)
 {}
 
-bool ParticleBody::LoadXml(CPropBag &Bag)
+void ParticleBody::load(PropertyBag &Bag)
 {
-	Bag.Get(_T("position"),				&m_vInitialPosition);
-	Bag.Get(_T("acceleration"),			&m_vConstantAcceleration);
-	Bag.Get(_T("initialRadialVelocity"), initialRadialVelocity);
+	Bag.get(_T("position"),              &initialPosition);
+	Bag.get(_T("acceleration"),          &constantAcceleration);
+	Bag.get(_T("initialRadialVelocity"),  initialRadialVelocity);
 
-	// The Body starts, of course, at the initial position
-	m_vPosition = m_vInitialPosition;
+	position = initialPosition; // the Body starts, of course, at the initial position
 
-	// Reset age to zero
-	m_Age = 0.0;
-
-	return true;
+	age = 0.0f;
 }
 
-void ParticleBody::Update(float dTime)
+void ParticleBody::update(float dTime)
 {
-	m_Age += dTime;
+	age += dTime;
 
-	float Time = m_Age / 1000.0f;
+	float Time = age / 1000.0f;
 
-	m_vPosition = (m_vConstantAcceleration * 0.5f * SQR(Time)) +
+	position = (constantAcceleration * 0.5f * SQR(Time)) +
 		          (initialVelocity * Time) +
-				   m_vInitialPosition;
+				   initialPosition;
 }
 
 void ParticleBody::setPosition(const vec3 &position, const vec3 &center)
 {
-	m_vInitialPosition = position;
+	initialPosition = position;
 	this->center = center;
 
-	initialVelocity = vec3(m_vInitialPosition-center).getNormal() * initialRadialVelocity * FRAND_RANGE(0.8f, 1.2f);
+	initialVelocity = vec3(initialPosition-center).getNormal() * initialRadialVelocity * FRAND_RANGE(0.8f, 1.2f);
+}
+
+void ParticleBody::setPosition(const vec3 &position)
+{
+	initialPosition = position;
+	this->center = position;
+
+	initialVelocity = vec3(0,0,0);
 }
 
 ParticleGraph::ParticleGraph(void)
-: m_MinX(0.0f),
-  m_MaxX(0.0f),
-  m_MinY(0.0f),
-  m_MaxY(0.0f)
-{}
-
-ParticleGraph::ParticleGraph(CPropBag &)
-: m_MinX(0.0f),
-  m_MaxX(0.0f),
-  m_MinY(0.0f),
-  m_MaxY(0.0f)
-{}
-
-bool ParticleGraph::LoadXml(CPropBag &Bag)
 {
-	m_Points.clear();
+	points.clear();
 
-	m_MinX = 0.0f;
-	m_MaxX = 0.0f;
-	m_MinY = 0.0f;
-	m_MaxY = 0.0f;
-
-	size_t nPoints = Bag.GetNumInstances(_T("point"));
-
-	for(size_t i=0; i<nPoints; ++i)
-	{
-		CPropBag PointBag;
-		Point2 pt;
-
-		Bag.Get(_T("point"), PointBag, (int)i);
-		PointBag.Get(_T("x"), pt.x);
-		PointBag.Get(_T("y"), pt.y);
-
-		m_Points.push_back(pt);
-
-		if(pt.x < m_MinX) m_MinX = pt.x;
-		if(pt.y < m_MinY) m_MinY = pt.y;
-		if(pt.x > m_MaxX) m_MaxX = pt.x;
-		if(pt.y > m_MaxY) m_MaxY = pt.y;
-	}
-
-	return true;
+	min = vec2(0,0);
+	max = vec2(0,0);
 }
 
-float ParticleGraph::GetValue(float x)
+ParticleGraph::ParticleGraph(PropertyBag & xml)
 {
-	size_t nSize=m_Points.size();
+	load(xml);
+}
 
-	if(nSize == 0)
+void ParticleGraph::load(const PropertyBag &xml)
+{
+	points.clear();
+
+	min = vec2(0,0);
+	max = vec2(0,0);
+
+	const size_t numberOfPoints = xml.getNumInstances(_T("point"));
+	for(size_t i=0; i<numberOfPoints; ++i)
+	{
+		PropertyBag PointBag;
+		Point2 pt;
+
+		xml.get(_T("point"), PointBag, i);
+		PointBag.get(_T("x"), pt.x);
+		PointBag.get(_T("y"), pt.y);
+
+		points.push_back(pt);
+
+		if(pt.x < min.x) min.x = pt.x;
+		if(pt.y < min.y) min.y = pt.y;
+		if(pt.x > max.x) max.x = pt.x;
+		if(pt.y > max.y) max.y = pt.y;
+	}
+}
+
+float ParticleGraph::getValue(float t) const
+{
+	ASSERT(t >= 0.0f && t <= 1.0f, _T("Parameter \'t\' is invalid: ") + ftoa(t));
+
+	size_t numberOfPoints = points.size();
+
+	if(numberOfPoints == 0)
 	{
 		return 0.0f;
 	}
-	else if(nSize == 1) // If there is only one point
+	
+	if(numberOfPoints == 1)
 	{
-		return (m_Points[0].y);
+		return (points[0].y);
 	}
-	else
+	
+	for(size_t i=0; i<numberOfPoints-1; ++i)
 	{
-		for(size_t i=0; i<nSize-1; ++i)
+		const Point2 &one = points[i+0];
+		const Point2 &two = points[i+1];
+
+		if(t >= one.x && t <= two.x)
 		{
-			Point2 one = m_Points[i+0];
-			Point2 two = m_Points[i+1];
+			float slope = (two.y - one.y) / (two.x - one.x);
+			float value = slope * (t - one.x) + one.y;
 
-			if(x >= one.x && x <= two.x)
-			{
-				float slope = (two.y - one.y) / (two.x - one.x);
-				float value = slope*(x - one.x) + one.y;
-
-				return value;
-			}
+			return value;
 		}
 	}
 
@@ -207,145 +206,142 @@ float ParticleGraph::GetValue(float x)
 
 ParticleElement::ParticleElement(void)
 : ParticleBody(),
-  m_nMaterialHandle(0),
-  m_pOwner(0),
-  m_LifeSpan(0.0f),
-  m_bRandomRotationDirection(false),
-  m_bRotationDirection(true),
-  m_SizeMul(1.0f),
-  m_RotationImmediate(0.0f),
-  m_SizeImmediate(0.0f),
-  m_AlphaImmediate(0.0f),
-  m_RedImmediate(0.0f),
-  m_GreenImmediate(0.0f),
-  m_BlueImmediate(0.0f)
+  materialHandle(0),
+  owner(0),
+  lifeSpan(0.0f),
+  pickRandomRotationDirection(false),
+  rotationDirection(CLOCKWISE),
+  sizeMultiplier(1.0f),
+  graphRotationImmediate(0.0f),
+  graphSizeImmediate(0.0f),
+  graphAlphaImmediate(0.0f),
+  graphRedImmediate(0.0f),
+  graphGreenImmediate(0.0f),
+  graphBlueImmediate(0.0f)
 {}
 
-ParticleElement::ParticleElement(CPropBag &Bag, ParticleSystem &system)
+ParticleElement::ParticleElement(PropertyBag &Bag, ParticleSystem &system)
 : ParticleBody(Bag),
-  m_nMaterialHandle(0),
-  m_pOwner(&system),
-  m_LifeSpan(1000.0f),
-  m_bRandomRotationDirection(false),
-  m_bRotationDirection(true),
-  m_SizeMul(1.0f),
-  m_RotationImmediate(0.0f),
-  m_SizeImmediate(0.0f),
-  m_AlphaImmediate(0.0f),
-  m_RedImmediate(0.0f),
-  m_GreenImmediate(0.0f),
-  m_BlueImmediate(0.0f)
+  materialHandle(0),
+  owner(&system),
+  lifeSpan(1000.0f),
+  pickRandomRotationDirection(false),
+  rotationDirection(CLOCKWISE),
+  sizeMultiplier(1.0f),
+  graphRotationImmediate(0.0f),
+  graphSizeImmediate(0.0f),
+  graphAlphaImmediate(0.0f),
+  graphRedImmediate(0.0f),
+  graphGreenImmediate(0.0f),
+  graphBlueImmediate(0.0f)
 {
-	LoadXml(Bag, system);
+	load(Bag, system);
 }
 
 ParticleElement::ParticleElement(const ParticleElement &element)
 : ParticleBody(element),
-  m_nMaterialHandle(element.m_nMaterialHandle),
-  m_pOwner(element.m_pOwner),
-  m_LifeSpan(element.m_LifeSpan),
-  m_strName(element.m_strName),
-  m_bRandomRotationDirection(element.m_bRandomRotationDirection),
-  m_bRotationDirection(element.m_bRotationDirection),
-  m_SizeMul(element.m_SizeMul),
-  m_RotationGraph(element.m_RotationGraph),
-  m_SizeGraph(element.m_SizeGraph),
-  m_AlphaGraph(element.m_AlphaGraph),
-  m_RedGraph(element.m_RedGraph),
-  m_GreenGraph(element.m_GreenGraph),
-  m_BlueGraph(element.m_BlueGraph),
-  m_RotationImmediate(element.m_RotationImmediate),
-  m_SizeImmediate(element.m_SizeImmediate),
-  m_AlphaImmediate(element.m_AlphaImmediate),
-  m_RedImmediate(element.m_RedImmediate),
-  m_GreenImmediate(element.m_GreenImmediate),
-  m_BlueImmediate(element.m_BlueImmediate)
+  materialHandle(element.materialHandle),
+  owner(element.owner),
+  lifeSpan(element.lifeSpan),
+  typeName(element.typeName),
+  pickRandomRotationDirection(element.pickRandomRotationDirection),
+  rotationDirection(element.rotationDirection),
+  sizeMultiplier(element.sizeMultiplier),
+  graphRotation(element.graphRotation),
+  graphSize(element.graphSize),
+  graphAlpha(element.graphAlpha),
+  graphRed(element.graphRed),
+  graphGreen(element.graphGreen),
+  graphBlue(element.graphBlue),
+  graphRotationImmediate(element.graphRotationImmediate),
+  graphSizeImmediate(element.graphSizeImmediate),
+  graphAlphaImmediate(element.graphAlphaImmediate),
+  graphRedImmediate(element.graphRedImmediate),
+  graphGreenImmediate(element.graphGreenImmediate),
+  graphBlueImmediate(element.graphBlueImmediate)
 {}
 
-bool ParticleElement::LoadXml(CPropBag &Bag, ParticleSystem &system)
+void ParticleElement::load(PropertyBag &Bag, ParticleSystem &system)
 {
-	m_pOwner = &system;
+	owner = &system;
 
-	CPropBag RotationGraph, SizeGraph, AlphaGraph, RedGraph, GreenGraph, BlueGraph;
+	PropertyBag RotationGraph, SizeGraph, AlphaGraph, RedGraph, GreenGraph, BlueGraph;
 
 	// Reset defaults
-	m_LifeSpan = 1000.0f;
+	lifeSpan = 1000.0f;
 
 	// Get misc. data
-	Bag.Get(_T("name"),                      m_strName);
-	Bag.Get(_T("random rotation direction"), m_bRandomRotationDirection);
-	Bag.Get(_T("rotation direction"),        m_bRotationDirection);
+	Bag.get(_T("name"),                      typeName);
+	Bag.get(_T("random rotation direction"), pickRandomRotationDirection);
+	//Bag.Get(_T("rotation direction"),        rotationDirection);
 
 	// Load material data
 	_tstring strMatName;
-	Bag.Get(_T("material"), strMatName);
-	m_nMaterialHandle = m_pOwner->GetMaterialHandle(strMatName); // Have the system give us the material's handle
+	Bag.get(_T("material"), strMatName);
+	materialHandle = owner->getMaterialHandle(strMatName); // Have the system give us the material's handle
 
 	// Load graph data
-	Bag.Get(_T("rotation"), RotationGraph);
-	Bag.Get(_T("size"),     SizeGraph);
-	Bag.Get(_T("alpha"),    AlphaGraph);
-	Bag.Get(_T("red"),      RedGraph);
-	Bag.Get(_T("green"),    GreenGraph);
-	Bag.Get(_T("blue"),     BlueGraph);
+	Bag.get(_T("rotation"), RotationGraph);
+	Bag.get(_T("size"),     SizeGraph);
+	Bag.get(_T("alpha"),    AlphaGraph);
+	Bag.get(_T("red"),      RedGraph);
+	Bag.get(_T("green"),    GreenGraph);
+	Bag.get(_T("blue"),     BlueGraph);
 
-	m_RotationGraph.LoadXml(RotationGraph);
-	m_SizeGraph.LoadXml(SizeGraph);
-	m_AlphaGraph.LoadXml(AlphaGraph);
-	m_RedGraph.LoadXml(RedGraph);
-	m_GreenGraph.LoadXml(GreenGraph);
-	m_BlueGraph.LoadXml(BlueGraph);
+	graphRotation   .   load(RotationGraph);
+	graphSize       .   load(SizeGraph);
+	graphAlpha      .   load(AlphaGraph);
+	graphRed        .   load(RedGraph);
+	graphGreen      .   load(GreenGraph);
+	graphBlue       .   load(BlueGraph);
 
-	// Gets the first values for the graph data
-	m_RotationImmediate = m_RotationGraph.GetValue(0.0f);
-	m_SizeImmediate     = m_SizeGraph.GetValue(0.0f);
-	m_AlphaImmediate    = m_AlphaGraph.GetValue(0.0f);
-	m_RedImmediate      = m_RedGraph.GetValue(0.0f);
-	m_GreenImmediate    = m_GreenGraph.GetValue(0.0f);
-	m_BlueImmediate     = m_BlueGraph.GetValue(0.0f);
+	// Gets the initial values from the graph data
+	graphRotationImmediate = graphRotation   .   getValue(0.0f);
+	graphSizeImmediate     = graphSize       .   getValue(0.0f);
+	graphAlphaImmediate    = graphAlpha      .   getValue(0.0f);
+	graphRedImmediate      = graphRed        .   getValue(0.0f);
+	graphGreenImmediate    = graphGreen      .   getValue(0.0f);
+	graphBlueImmediate     = graphBlue       .   getValue(0.0f);
 
-	// Load physics data
-	ParticleBody::LoadXml(Bag);
-
-	return true;
+	ParticleBody::load(Bag);
 }
 
 ParticleElement &ParticleElement::operator=(const ParticleElement &element)
 {
-	m_vPosition             = element.m_vPosition;
+	position             = element.position;
 	initialRadialVelocity	= element.initialRadialVelocity;
 	initialVelocity         = element.initialVelocity;
 	center                  = element.center;
-	m_vConstantAcceleration = element.m_vConstantAcceleration;
+	constantAcceleration = element.constantAcceleration;
 
-	m_AlphaGraph               = element.m_AlphaGraph;
-	m_AlphaImmediate           = element.m_AlphaImmediate;
-	m_BlueGraph                = element.m_BlueGraph;
-	m_BlueImmediate            = element.m_BlueImmediate;
-	m_bRandomRotationDirection = element.m_bRandomRotationDirection;
-	m_bRotationDirection       = element.m_bRotationDirection;
-	m_GreenGraph               = element.m_GreenGraph;
-	m_GreenImmediate           = element.m_GreenImmediate;
-	m_LifeSpan                 = element.m_LifeSpan;
-	m_RedGraph                 = element.m_RedGraph;
-	m_RedImmediate             = element.m_RedImmediate;
-	m_RotationGraph            = element.m_RotationGraph;
-	m_RotationImmediate        = element.m_RotationImmediate;
-	m_SizeGraph                = element.m_SizeGraph;
-	m_SizeImmediate            = element.m_SizeImmediate;
-	m_strName                  = element.m_strName;
-	m_pOwner                   = element.m_pOwner;
-    m_SizeMul                  = element.m_SizeMul;
-	m_nMaterialHandle          = element.m_nMaterialHandle;
+	graphAlpha               = element.graphAlpha;
+	graphAlphaImmediate           = element.graphAlphaImmediate;
+	graphBlue                = element.graphBlue;
+	graphBlueImmediate            = element.graphBlueImmediate;
+	pickRandomRotationDirection = element.pickRandomRotationDirection;
+	rotationDirection       = element.rotationDirection;
+	graphGreen               = element.graphGreen;
+	graphGreenImmediate           = element.graphGreenImmediate;
+	lifeSpan                 = element.lifeSpan;
+	graphRed                 = element.graphRed;
+	graphRedImmediate             = element.graphRedImmediate;
+	graphRotation            = element.graphRotation;
+	graphRotationImmediate        = element.graphRotationImmediate;
+	graphSize                = element.graphSize;
+	graphSizeImmediate            = element.graphSizeImmediate;
+	typeName                  = element.typeName;
+	owner                   = element.owner;
+    sizeMultiplier                  = element.sizeMultiplier;
+	materialHandle          = element.materialHandle;
 
 	return(*this);
 }
 
-void ParticleElement::PrepareForRender(float x0, float x1, float y0, float y1, float z0, float z1)
+void ParticleElement::prepareForRender(float x0, float x1, float y0, float y1, float z0, float z1)
 {
-	const vec3 pos(m_vPosition);
+	const vec3 pos(position);
 
-	float radius = m_SizeMul*m_SizeImmediate;
+	float radius = sizeMultiplier*graphSizeImmediate;
 
 	A = vec3(pos.x - x1*radius, pos.y - y1*radius, pos.z - z1*radius);
 	B = vec3(pos.x + x0*radius, pos.y + y0*radius, pos.z + z0*radius);
@@ -353,15 +349,13 @@ void ParticleElement::PrepareForRender(float x0, float x1, float y0, float y1, f
 	D = vec3(pos.x - x0*radius, pos.y - y0*radius, pos.z - z0*radius);
 }
 
-void ParticleElement::Render(void)
+void ParticleElement::draw(void) const
 {
-	glColor4f(m_RedImmediate, m_GreenImmediate, m_BlueImmediate, m_AlphaImmediate);
-	Material &material = m_pOwner->GetMaterial(m_nMaterialHandle);
+	glColor4f(graphRedImmediate, graphGreenImmediate, graphBlueImmediate, graphAlphaImmediate);
+	Material &material = owner->getMaterial(materialHandle);
 	material.bind();
-	if(material.glow)
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    else
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	glBlendFunc(GL_SRC_ALPHA, (material.glow) ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA);
 
 	// Render the billboard
 	glBegin(GL_QUADS);
@@ -381,535 +375,445 @@ void ParticleElement::Render(void)
 	glEnd();
 }
 
-void ParticleElement::Update(float dTime)
+void ParticleElement::update(float deltaTime)
 {
-	if(IsDead() == false)
-	{
-		ParticleBody::Update(dTime);
+	if(isDead()) return;
 
-		ASSERT(m_LifeSpan!=0.0, _T("m_LifeSpan==0.0, and causes division by zero."));
+	ASSERT(lifeSpan!=0.0f, _T("m_LifeSpan==0.0, and causes division by zero."));
 
-		float Percent = m_Age / m_LifeSpan;
+	const float percent = age / lifeSpan;
 
-		m_RotationImmediate = m_RotationGraph.GetValue(Percent);
-		m_SizeImmediate     = m_SizeGraph.GetValue(Percent);
-		m_AlphaImmediate    = m_AlphaGraph.GetValue(Percent);
-		m_RedImmediate      = m_RedGraph.GetValue(Percent);
-		m_GreenImmediate    = m_GreenGraph.GetValue(Percent);
-		m_BlueImmediate     = m_BlueGraph.GetValue(Percent);
-	}
+	graphRotationImmediate = graphRotation   .   getValue(percent);
+	graphSizeImmediate     = graphSize       .   getValue(percent);
+	graphAlphaImmediate    = graphAlpha      .   getValue(percent);
+	graphRedImmediate      = graphRed        .   getValue(percent);
+	graphGreenImmediate    = graphGreen      .   getValue(percent);
+	graphBlueImmediate     = graphBlue       .   getValue(percent);
+
+	ParticleBody::update(deltaTime);
 }
 
-ParticleEmitter::ParticleEmitter(CPropBag &Bag, ParticleSystem &Owner)
-: m_pOwner(&Owner),
-  m_bRandomRotationDirection(false),
-  m_bRotationDirection(true),
-  m_vRotationAxis(0.0f, 1.0f, 0.0f),
-  m_RotationImmediate(0.0f),
-  m_HotspotRadius(1.0f),
-  m_FalloffRadius(1.0f),
-  m_EmissionRateImmediate(0.0f),
-  m_SpeedImmediate(0.0f),
-  m_SizeMulImmediate(0.0f),
-  m_LifeSpanImmediate(0.0),
-  m_Time(0.0f),
-  m_Length(0.0f),
-  m_bLooping(false),
-  m_iNumCycles(0)
+ParticleEmitter::ParticleEmitter(PropertyBag &Bag, ParticleSystem &Owner)
+: owner(&Owner),
+  radiusFalloff(1.0f),
+  graphSpeedImmediate(0.0f),
+  graphSizeMultiplierImmediate(0.0f),
+  graphLifeSpanImmediate(0.0),
+  age(0.0f),
+  lifeSpan(0.0f),
+  looping(false),
+  numberOfLifeCycles(0)
 {
-	ASSERT(m_pOwner!=NULL, _T("ParticleEmitter::Emitter  ->  Null Pointer: m_pOwner."));
+	ASSERT(owner!=0, _T("owner was null"));
 
 	// Get the particle template
-	_tstring strTemplate;
-	Bag.Get(_T("template"), strTemplate);
-	m_Template = m_pOwner->GetTemplate(strTemplate);
+	_tstring templateName;
+	Bag.get(_T("template"), templateName);
+	particleTemplate = owner->getTemplate(templateName);
 
-	CPropBag Rate;
-	Bag.Get(_T("rate"), Rate);
-	m_EmissionRateGraph.LoadXml(Rate);
-	m_EmissionRateImmediate = m_EmissionRateGraph.GetValue(0.0f);
+	PropertyBag Rate;
+	Bag.get(_T("rate"), Rate);
+	graphEmissionRate.load(Rate);
 
-	CPropBag Speed;
-	Bag.Get(_T("speed"), Speed);
-	m_SpeedGraph.LoadXml(Speed);
-	m_SpeedImmediate = m_SpeedGraph.GetValue(0.0f);
+	PropertyBag Speed;
+	Bag.get(_T("speed"), Speed);
+	graphSpeed.load(Speed);
+	graphSpeedImmediate = graphSpeed.getValue(0.0f);
 
-	CPropBag SizeMul;
-	Bag.Get(_T("sizemul"), SizeMul);
-	m_SizeMulGraph.LoadXml(SizeMul);
-	m_SizeMulImmediate = m_SizeMulGraph.GetValue(0.0f);
+	PropertyBag SizeMul;
+	Bag.get(_T("sizemul"), SizeMul);
+	graphSizeMultiplier.load(SizeMul);
+	graphSizeMultiplierImmediate = graphSizeMultiplier.getValue(0.0f);
 
-	CPropBag LifeBag;
-	Bag.Get(_T("lifespan"), LifeBag);
-	m_LifeSpanGraph.LoadXml(LifeBag);
-	m_LifeSpanImmediate = m_LifeSpanGraph.GetValue(0.0f);
-	ASSERT(m_LifeSpanImmediate!=0.0, _T("m_LifeSpan==0.0, and causes division by zero."));
+	PropertyBag LifeBag;
+	Bag.get(_T("lifespan"), LifeBag);
+	graphLifeSpan.load(LifeBag);
+	graphLifeSpanImmediate = graphLifeSpan.getValue(0.0f);
+	ASSERT(graphLifeSpanImmediate!=0.0f, _T("m_LifeSpan==0.0, and causes division by zero."));
 
-	Bag.Get(_T("random rotation direction"), m_bRandomRotationDirection);
-	Bag.Get(_T("rotation direction"),        m_bRotationDirection);
-	Bag.Get(_T("rotation axis"),            &m_vRotationAxis);
-	Bag.Get(_T("hotspot"),                   m_HotspotRadius);
-	Bag.Get(_T("falloff"),                   m_FalloffRadius);
-	Bag.Get(_T("length"),                    m_Length);
-	Bag.Get(_T("looping"),                   m_bLooping);
-	Bag.Get(_T("cycles"),                    m_iNumCycles);
+	Bag.get(_T("falloff"),                   radiusFalloff);
+	Bag.get(_T("length"),                    lifeSpan);
+	Bag.get(_T("looping"),                   looping);
+	Bag.get(_T("cycles"),                    numberOfLifeCycles);
 }
 
 ParticleEmitter::ParticleEmitter(const ParticleEmitter &emitter)
-: m_pOwner(emitter.m_pOwner),
-  m_Template(emitter.m_Template),
-  m_bRandomRotationDirection(emitter.m_bRandomRotationDirection),
-  m_bRotationDirection(emitter.m_bRotationDirection),
-  m_vRotationAxis(emitter.m_vRotationAxis),
-  m_RotationGraph(emitter.m_RotationGraph),
-  m_RotationImmediate(emitter.m_RotationImmediate),
-  m_HotspotRadius(emitter.m_HotspotRadius),
-  m_FalloffRadius(emitter.m_FalloffRadius),
-  m_EmissionRateGraph(emitter.m_EmissionRateGraph),
-  m_EmissionRateImmediate(emitter.m_EmissionRateImmediate),
-  m_SpeedGraph(emitter.m_SpeedGraph),
-  m_SpeedImmediate(emitter.m_SpeedImmediate),
-  m_SizeMulGraph(emitter.m_SizeMulGraph),
-  m_SizeMulImmediate(emitter.m_SizeMulImmediate),
-  m_LifeSpanGraph(emitter.m_LifeSpanGraph),
-  m_LifeSpanImmediate(emitter.m_LifeSpanImmediate),
-  m_Time(emitter.m_Time),
-  m_Length(emitter.m_Length),
-  m_bLooping(emitter.m_bLooping),
-  m_iNumCycles(emitter.m_iNumCycles)
+: owner(emitter.owner),
+  particleTemplate(emitter.particleTemplate),
+  radiusFalloff(emitter.radiusFalloff),
+  graphEmissionRate(emitter.graphEmissionRate),
+  graphSpeed(emitter.graphSpeed),
+  graphSpeedImmediate(emitter.graphSpeedImmediate),
+  graphSizeMultiplier(emitter.graphSizeMultiplier),
+  graphSizeMultiplierImmediate(emitter.graphSizeMultiplierImmediate),
+  graphLifeSpan(emitter.graphLifeSpan),
+  graphLifeSpanImmediate(emitter.graphLifeSpanImmediate),
+  age(emitter.age),
+  lifeSpan(emitter.lifeSpan),
+  looping(emitter.looping),
+  numberOfLifeCycles(emitter.numberOfLifeCycles)
 {
-	ASSERT(m_pOwner!=0, _T("m_pOwner was null"));
+	ASSERT(owner!=0, _T("owner was null"));
 }
 
 ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
 {
-	m_pOwner                        = emitter.m_pOwner;
-	m_Template                      = emitter.m_Template;
-	m_bRandomRotationDirection      = emitter.m_bRandomRotationDirection;
-	m_bRotationDirection            = emitter.m_bRotationDirection;
-	m_vRotationAxis                 = emitter.m_vRotationAxis;
-	m_RotationGraph                 = emitter.m_RotationGraph;
-	m_RotationImmediate             = emitter.m_RotationImmediate;
-	m_HotspotRadius                 = emitter.m_HotspotRadius;
-	m_FalloffRadius                 = emitter.m_FalloffRadius;
-	m_EmissionRateGraph             = emitter.m_EmissionRateGraph;
-	m_Time                          = emitter.m_Time;
-	m_Length                        = emitter.m_Length;
-	m_bLooping                      = emitter.m_bLooping;
-	m_iNumCycles                    = emitter.m_iNumCycles;
-	m_EmissionRateImmediate         = emitter.m_EmissionRateImmediate;
-	m_SpeedImmediate                = emitter.m_SpeedImmediate;
-	m_SpeedGraph                    = emitter.m_SpeedGraph;
-	m_SizeMulImmediate              = emitter.m_SizeMulImmediate;
-	m_SizeMulGraph                  = emitter.m_SizeMulGraph;
-	m_LifeSpanImmediate             = emitter.m_LifeSpanImmediate;
-	m_LifeSpanGraph                 = emitter.m_LifeSpanGraph;
+	ASSERT(emitter.owner!=0, _T("emitter.owner was null"));
 
-	ASSERT(m_pOwner!=0, _T("m_pOwner was null"));
+	owner                          =   emitter.owner;
+	particleTemplate               =   emitter.particleTemplate;
+	radiusFalloff                  =   emitter.radiusFalloff;
+	graphEmissionRate              =   emitter.graphEmissionRate;
+	age                            =   emitter.age;
+	lifeSpan                       =   emitter.lifeSpan;
+	looping                        =   emitter.looping;
+	numberOfLifeCycles             =   emitter.numberOfLifeCycles;
+	graphSpeedImmediate            =   emitter.graphSpeedImmediate;
+	graphSpeed                     =   emitter.graphSpeed;
+	graphSizeMultiplierImmediate   =   emitter.graphSizeMultiplierImmediate;
+	graphSizeMultiplier            =   emitter.graphSizeMultiplier;
+	graphLifeSpanImmediate         =   emitter.graphLifeSpanImmediate;
+	graphLifeSpan                  =   emitter.graphLifeSpan;
 
 	return(*this);
 }
 
-void ParticleEmitter::Update(float dTime)
+void ParticleEmitter::update(float deltaTime)
 {
-	ASSERT(m_Length!=0.0, _T("m_Length==0.0, and causes division by zero."));
+	ASSERT(owner!=0, _T("owner was null"));
+	ASSERT(lifeSpan!=0.0f, _T("lifeSpan==0 -> will cause division by zero"));
 
-	m_Time += dTime;
+	age += deltaTime;
 
-	// Reset, if looping
-	if(m_bLooping && m_Time>m_Length)
+	if(looping && age>lifeSpan)
 	{
-		m_Time = 0.0f;
+		age = 0.0f;
 
-		if(m_iNumCycles>0)
-			m_iNumCycles--;
+		if(numberOfLifeCycles>0)
+			numberOfLifeCycles--;
 	}
 
-	if(!IsDead())
+	if(isDead())
 	{
-		ASSERT(m_pOwner!=0, _T("m_pOwner was null"));
+		return;
+	}
 
-		// Update immediate graph values
-		float Percent = m_Time / m_Length;
-		m_EmissionRateImmediate = m_EmissionRateGraph.GetValue(Percent);
-		m_SpeedImmediate		= m_SpeedGraph.GetValue(Percent);
-		m_SizeMulImmediate		= m_SizeMulGraph.GetValue(Percent);
-		m_LifeSpanImmediate		= m_LifeSpanGraph.GetValue(Percent);
-		ASSERT(m_LifeSpanImmediate!=0.0, _T("m_LifeSpanImmediate==0.0, and causes division by zero."));
+	const float percent = age / lifeSpan;
 
-		// Spawn new particles
-		size_t nEmits = (size_t)ceil(m_EmissionRateImmediate);
+	graphSpeedImmediate          = graphSpeed          .   getValue(percent);
+	graphSizeMultiplierImmediate = graphSizeMultiplier .   getValue(percent);
+	graphLifeSpanImmediate       = graphLifeSpan       .   getValue(percent);
 
-		for(size_t i=0; i < nEmits; ++i)
-		{
-			ParticleElement particle(m_Template);
+	ASSERT(graphLifeSpanImmediate!=0.0f, _T("m_LifeSpanImmediate==0.0, and causes division by zero."));
 
-			vec3 origin = m_pOwner->getPosition();
+	size_t numberOfEmittedParticles = (size_t)ceil(graphEmissionRate.getValue(percent));
+	for(size_t i=0; i < numberOfEmittedParticles; ++i)
+	{
+		ParticleElement particle(particleTemplate);
 
-			// Ignore m_HotSpot
-			// Very much like a normal distribution
-			float x = FRAND_RANGE(0,2);
-			float y = (1 - powf((float)M_E, -SQR(x))) * m_FalloffRadius;
-			particle.setPosition(origin + GetRandomVector(y), origin);
+		particle.setSizeMultiplier(graphSizeMultiplierImmediate);
 
-			// Set other relevant data members
-			particle.SizeMul()  = m_SizeMulImmediate;
-			particle.m_LifeSpan = m_LifeSpanImmediate;
+		particle.setLifeSpan(graphLifeSpanImmediate);
 
-			// Spawn the particle
-			m_pOwner->Spawn(particle);
-		}
+		/*
+		Chooses a point at a random distance away from the emitter position, and a random direction.
+		The random distance follows a Gaussian distribution as radius increases.
+		*/
+		particle.setPosition(   owner->getPosition() + GetRandomVector(   radiusFalloff * (1 - powf((float)M_E, -SQR(FRAND_RANGE(0,2))))   )   );
+
+		owner->spawn(particle);
 	}
 }
 
-ParticleSystem::ParticleSystem(CPropBag &Bag)
-: ParticleBody(Bag),
-  m_nMaxParticles(0),
-  m_ppElements(NULL),
-  m_Behavior(EMIT_WAIT)
+bool ParticleEmitter::isDead(void) const
 {
-	LoadXml(Bag);
+	return (!looping) ? (age>lifeSpan) : (numberOfLifeCycles==0);
+}
+
+void ParticleEmitter::kill(void)
+{
+	age = lifeSpan + 1.0f; // Run past the length of the animation
+	numberOfLifeCycles = 0; // Do not loop
+}
+
+ParticleSystem::ParticleSystem(PropertyBag &Bag)
+: ParticleBody(Bag),
+  maxNumberOfParticles(0),
+  elements(0),
+  emissionBehavior(IGNORE_EMISSION)
+{
+	load(Bag);
 }
 
 ParticleSystem::ParticleSystem(const ParticleSystem &system)
 : ParticleBody(system),
-  m_Emitters(system.m_Emitters),
-  m_nMaxParticles(system.m_nMaxParticles),
-  m_ppElements(NULL),
-  m_Behavior(system.m_Behavior)
+  emitters(system.emitters),
+  maxNumberOfParticles(system.maxNumberOfParticles),
+  elements(0),
+  emissionBehavior(system.emissionBehavior)
 {
 	// Allocate the m_pElements array
-	m_ppElements = new ELEMENT_PTR[m_nMaxParticles];
-	ASSERT(m_ppElements!=NULL,  _T("ParticleSystem::System  ->  Null Pointer: m_ppElements."));
-	memset(m_ppElements, 0, sizeof(ELEMENT_PTR) * m_nMaxParticles); // Zero the element pointers in the array
+	elements = new ELEMENT_PTR[maxNumberOfParticles];
+	ASSERT(elements!=0,  _T("ParticleSystem::System  ->  Null Pointer: m_ppElements."));
+	memset(elements, 0, sizeof(ELEMENT_PTR) * maxNumberOfParticles); // Zero the element pointers in the array
 
 	// Copy the particle data
-	for(size_t i=0; i<m_nMaxParticles; ++i)
+	for(size_t i=0; i<maxNumberOfParticles; ++i)
 	{
-		m_ppElements[i] = NULL;
+		elements[i] = NULL;
 
-		if(system.m_ppElements[i]) // Assumes that system.m_ppElements[i] is a valid pointer
+		if(system.elements[i]) // Assumes that system.m_ppElements[i] is a valid pointer
 		{
-			m_ppElements[i] = new ParticleElement(*system.m_ppElements[i]);
-			ASSERT(m_ppElements[i]!=NULL,  _T("ParticleSystem::ParticleSystem  ->  Null Pointer: m_ppElements[i]."));
+			elements[i] = new ParticleElement(*system.elements[i]);
+			ASSERT(elements[i]!=NULL,  _T("ParticleSystem::ParticleSystem  ->  Null Pointer: m_ppElements[i]."));
 		}
 	}
 }
+
+ParticleSystem::ParticleSystem( const _tstring &fileName )
+: ParticleBody(),
+  maxNumberOfParticles(0),
+  elements(0),
+  emissionBehavior(IGNORE_EMISSION)
+{
+	PropertyBag Bag;
+	Bag.Load(fileName);
+	load(Bag);
+}
+
+ParticleSystem::ParticleSystem(void)
+: ParticleBody(),
+  maxNumberOfParticles(0),
+  elements(0),
+  emissionBehavior(IGNORE_EMISSION)
+{}
 
 ParticleSystem::~ParticleSystem(void)
 {
-	if(m_ppElements)
+	if(elements)
 	{
-		for(size_t i=0; i<m_nMaxParticles; ++i)
+		for(size_t i=0; i<maxNumberOfParticles; ++i)
 		{
-			delete(m_ppElements[i]);
+			delete(elements[i]);
 		}
 
-		delete[](m_ppElements);
+		delete[](elements);
 	}
 }
 
-bool ParticleSystem::LoadXml(CPropBag &Bag)
+void ParticleSystem::load(PropertyBag &Bag)
 {
-	int iTemp=0;
-
 	// Clear the old system
-	m_Emitters.clear();
-	m_Templates.clear();
-	m_Materials.clear();
-	m_Frames.clear();
+	emitters.clear();
+	templatesByName.clear();
+	materials.clear();
 
 	// Delete all particles
-	if(m_ppElements)
+	if(elements)
 	{
-		for(size_t i=0; i<m_nMaxParticles; ++i)
+		for(size_t i=0; i<maxNumberOfParticles; ++i)
 		{
-			delete(m_ppElements[i]);
+			delete(elements[i]);
 		}
 
-		delete[](m_ppElements);
+		delete[](elements);
 	}
 
 	// Get the number of tags to expect
-	int nMaterials = Bag.GetNumInstances(_T("material"));
-	int nTemplates = Bag.GetNumInstances(_T("template"));
-	int nEmitters = Bag.GetNumInstances(_T("emitter"));
+	const size_t nMaterials = Bag.getNumInstances(_T("material"));
+	const size_t nTemplates = Bag.getNumInstances(_T("template"));
+	const size_t nEmitters = Bag.getNumInstances(_T("emitter"));
 
 	ASSERT(nMaterials>0, _T("particle system does not specify any materials"));
 	ASSERT(nTemplates>0, _T("particle system does not specify any templates"));
 	ASSERT(nEmitters>0, _T("particle system does not specify any emitters"));
 
 	// Get the max number of particles
-	Bag.Get(_T("max"), iTemp);
-	m_nMaxParticles = (size_t)iTemp;
-	ASSERT(m_nMaxParticles>0, _T("particle system does not give m_nMaxParticles>0"));
+	Bag.get(_T("max"), maxNumberOfParticles);
+	ASSERT(maxNumberOfParticles>0, _T("particle system does not give maxNumberOfParticles>0"));
 
 	// Allocate the m_pElements array
-	m_ppElements = new ELEMENT_PTR[m_nMaxParticles];
-	ASSERT(m_ppElements!=NULL, _T("Null Pointer: m_ppElements."));
-	memset(m_ppElements, 0, sizeof(ELEMENT_PTR) * m_nMaxParticles);
+	elements = new ELEMENT_PTR[maxNumberOfParticles];
+	ASSERT(elements!=0, _T("elements was null"));
+	memset(elements, 0, sizeof(ELEMENT_PTR) * maxNumberOfParticles);
 
 	// Load the materials from XML for particles
-	for(int i=0; i<nMaterials; ++i)
+	for(size_t i=0; i<nMaterials; ++i)
 	{
-		CPropBag MatBag;
+		PropertyBag MatBag;
 		Material mat;
 		_tstring name, imageFilename;
 
 		// Get material data
-		Bag.Get(_T("material"), MatBag, i);
-		MatBag.Get(_T("name"), name);
-		MatBag.Get(_T("image"), imageFilename);
-		MatBag.Get(_T("glow"), mat.glow);
+		Bag.get(_T("material"), MatBag, i);
+		MatBag.get(_T("name"), name);
+		MatBag.get(_T("image"), imageFilename);
+		MatBag.get(_T("glow"), mat.glow);
 
 		// Create the material
 		mat.setName(name);
 		mat.loadTexture(imageFilename, 0);
 
 		// Record it.
-		m_Materials.push_back(mat);
-		m_Frames.push_back(0);
+		materials.push_back(mat);
 	}
 
 	// Load the particle templates
-	for(int i=0; i<nTemplates; ++i)
+	for(size_t i=0; i<nTemplates; ++i)
 	{
-		CPropBag ElBag;
-
-		// Load the particle template
-		Bag.Get(_T("template"), ElBag, i);
-		ParticleElement element(ElBag, *this);
-
-		// Record it.
-		m_Templates.insert(make_pair(element.GetName(), element));
+		PropertyBag data;
+		Bag.get(_T("template"), data, i);
+		ParticleElement element(data, *this);
+		templatesByName.insert(make_pair(element.getName(), element));
 	}
 
 	// Load the emitters
-	for(int i=0; i<nEmitters; ++i)
+	for(size_t i=0; i<nEmitters; ++i)
 	{
-		CPropBag EmitterBag;
-
-		Bag.Get(_T("emitter"), EmitterBag, i);
+		PropertyBag EmitterBag;
+		Bag.get(_T("emitter"), EmitterBag, i);
 		ParticleEmitter emitter(EmitterBag, *this);
-
-		m_Emitters.push_back(emitter);
+		emitters.push_back(emitter);
 	}
 
 	// Load the base class
-	ParticleBody::LoadXml(Bag);
+	ParticleBody::load(Bag);
 
-	ASSERT(!m_Materials.empty(), _T("after loading, there are no particle materials in system"));
-	ASSERT(!m_Templates.empty(), _T("after loading, there are no particle templates in emitter"));
-	ASSERT(!m_Emitters.empty(), _T("after loading, there are no particle emitters in system"));
-
-	return true;
+	ASSERT(!materials.empty(),       _T("after loading, there are no particle materials in system"));
+	ASSERT(!templatesByName.empty(), _T("after loading, there are no particle templates in emitter"));
+	ASSERT(!emitters.empty(),        _T("after loading, there are no particle emitters in system"));
 }
 
-void ParticleSystem::Render(void)
+void ParticleSystem::draw(void) const
 {
-	vec3 vPos = getPosition();
+	ASSERT(elements!=0, _T("Cannot draw particles because none were allocated!"));
+
+	float matrix[16] = {0};
+
+	glGetFloatv(GL_MODELVIEW_MATRIX,matrix);
 
 	glPushMatrix();
+	glDepthMask(GL_FALSE);
 
-	if(m_ppElements)
-	{
-		float matrix[16];
-
-		glGetFloatv(GL_MODELVIEW_MATRIX,matrix);
-
-		float x0 = matrix[0] - matrix[1];
-		float x1 = matrix[0] + matrix[1];
-
-		float y0 = matrix[4] - matrix[5];
-		float y1 = matrix[4] + matrix[5];
-
-		float z0 = matrix[8] - matrix[9];
-		float z1 = matrix[8] + matrix[9];
-
-		// Prepare particles
-		for(size_t i = 0; i<m_nMaxParticles; ++i)
+		for(size_t i = 0; i<maxNumberOfParticles; ++i)
 		{
-			if(m_ppElements[i])
-			{
-				if(m_ppElements[i]->IsDead() == false)
-				{
-					m_ppElements[i]->PrepareForRender(x0, x1, y0, y1, z0, z1);
-				}
-			}
-		} // end for
+			if(!elements[i]) continue;
+			if(elements[i]->isDead()) continue;
 
-		m_ppSorted = m_ppElements;
-
-		// For each particle
-		glDepthMask(GL_FALSE);
-		for(size_t i = 0; i<m_nMaxParticles; ++i)
-		{
-			if(m_ppSorted[i])
-			{
-				if(m_ppSorted[i]->IsDead() == false)
-				{
-					m_ppSorted[i]->Render();
-				}
-			}
+			elements[i]->prepareForRender
+			(
+				matrix[0] - matrix[1],
+				matrix[0] + matrix[1],
+				matrix[4] - matrix[5],
+				matrix[4] + matrix[5],
+				matrix[8] - matrix[9],
+				matrix[8] + matrix[9]
+			);
+			
+			elements[i]->draw();
 		}
 
-		glDepthMask(GL_TRUE);
-	}
-
+	glDepthMask(GL_TRUE);
 	glPopMatrix();
 }
 
-void ParticleSystem::Update(float dTime)
+void ParticleSystem::update(float dTime)
 {
-	// Update the system as a physical body
-	ParticleBody::Update(dTime);
+	for(size_t i=0; i<emitters.size(); ++i)
+		emitters[i].update(dTime);
 
-	// Process all the emitters
-	for(size_t i=0; i<m_Emitters.size(); ++i)
-	{
-		m_Emitters[i].Update(dTime);
-	}
+	ASSERT(elements!=0, _T("Cannot update particles: no particle storage has even been allocated!"));
 
-	// Process all the particles
-	if(m_ppElements)
+	for(size_t i=0; i<maxNumberOfParticles; ++i)
 	{
-		for(size_t i=0; i<m_nMaxParticles; ++i)
+		if(!elements[i] || (elements[i] && elements[i]->isDead()))
 		{
-			if(m_ppElements[i])
-			{
-				if(m_ppElements[i]->IsDead() == false)
-				{
-					m_ppElements[i]->Update(dTime);
-				}
-				else
-				{
-					ParticleElement *pParticle = m_ppElements[i];
-					delete(pParticle);
-					m_ppElements[i] = 0;
-				}
-			}
-		} // end for
+			delete(elements[i]);
+			elements[i] = 0;
+		}
+		else
+		{
+			elements[i]->update(dTime);
+		}
 	}
+
+	ParticleBody::update(dTime);
 }
 
-void ParticleSystem::Spawn(const ParticleElement &element)
+void ParticleSystem::spawn(const ParticleElement &element)
 {
-	float Oldest=0.0f;
-	size_t iOldest=0;
+	ASSERT(elements!=0, _T("Cannot spawn particle: no particle storage was allocated!"));
 
-	if(m_ppElements)
+	for(size_t i=0; i<maxNumberOfParticles; ++i)
 	{
-		size_t i;
-		for(i=0; i<m_nMaxParticles; ++i)
+		if(elements[i] == 0)
 		{
-			if(m_ppElements[i] == NULL)
-			{
-				m_ppElements[i] = new ParticleElement(element);
-				ASSERT(m_ppElements[i]!=NULL, _T("ParticleSpawn::Spawn  ->  Null Pointer: m_ppElements[i]."));
-				return;
-			}
-			else
-			{
-				// Find the oldest particle in case we need to EMIT_REPLACE_OLDEST
-				if(m_ppElements[i]->GetAge() > Oldest)
-				{
-					Oldest = m_ppElements[i]->GetAge();
-					iOldest = i;
-				}
-			}
-		} // end for
-
-		if(m_Behavior == EMIT_REPLACE_OLDEST)
-		{
-			delete(m_ppElements[iOldest]);
-			m_ppElements[iOldest] = new ParticleElement(element);
-			ASSERT(m_ppElements[iOldest]!=NULL, _T("ParticleSpawn::Spawn  ->  Replace Oldest; Null Pointer: m_ppElements[iOldest]."));
-			return;
-		}
-		else if(m_Behavior == EMIT_REPLACE_RANDOM)
-		{
-			i = IRAND_RANGE(0, m_nMaxParticles-1);
-
-			delete(m_ppElements[i]);
-			m_ppElements[i] = new ParticleElement(element);
-			ASSERT(m_ppElements[i]!=NULL, _T("ParticleSpawn::Spawn  ->  Replace Random; Null Pointer: m_ppElements[i]."));
+			elements[i] = new ParticleElement(element);
 			return;
 		}
 	}
-}
 
-ParticleElement ParticleSystem::GetTemplate(_tstring strName)
-{
-	std::multimap<_tstring, ParticleElement>::iterator iter = m_Templates.find(strName);
-
-	ASSERT(iter!=m_Templates.end(), _T("ParticleSystem::GetTemplate  ->  Invalid Iterator"));
-
-	return(iter->second);
-}
-
-size_t ParticleSystem::GetMaterialHandle(const _tstring &strName) const
-{
-	for(size_t i=0; i<m_Materials.size(); ++i)
+	if(emissionBehavior == REPLACE_RANDOM)
 	{
-		if(m_Materials[i].getName() == strName)
+		size_t i = IRAND_RANGE(0, maxNumberOfParticles-1);
+
+		delete(elements[i]);
+		elements[i] = new ParticleElement(element);
+
+		return;
+	}
+}
+
+const ParticleElement& ParticleSystem::getTemplate(const _tstring &name)
+{
+	ASSERT(templatesByName.find(name)!=templatesByName.end(), _T("Particle template could not be found: ") + name);
+
+	return(templatesByName.find(name)->second);
+}
+
+size_t ParticleSystem::getMaterialHandle(const _tstring &materialName) const
+{
+	for(size_t i=0; i<materials.size(); ++i)
+	{
+		if(materials[i].getName() == materialName)
 		{
 			return i;
 		}
 	}
 
+	FAIL(_T("Particle material could not be found: ") + materialName);
 	return 0;
 }
 
-Material& ParticleSystem::GetMaterial(size_t nHandle)
+Material& ParticleSystem::getMaterial(size_t materialHandle)
 {
-	ASSERT(nHandle < m_Materials.size(), _T("ParticleSystem::GetTemplate  ->  Index out of bounds."));
+	ASSERT(materialHandle < materials.size(), _T("Parameter \'materialHandle\' out of bounds!"));
 
-	return m_Materials[nHandle];
+	return materials[materialHandle];
 }
 
-bool ParticleSystem::IsDead()
+bool ParticleSystem::isDead(void) const
 {
-	bool bResult=false;
-
-	// If all of the emitters are dead, then we are dead too.
-	for(size_t i=0; i<m_Emitters.size(); ++i)
+	for(size_t i=0; i<emitters.size(); ++i)
 	{
-		ParticleEmitter &emitter = m_Emitters[i];
-
-		bResult &= emitter.IsDead();
+		if(!emitters[i].isDead()) return false;
 	}
 
-	return bResult;
+	return true;
 }
 
-float ParticleSystem::getRadius(void) const
+void ParticleSystem::kill(void)
 {
-	float radius = 0;
-
-	for(size_t i=0; i<m_Emitters.size(); ++i)
+	for(size_t i=0; i<emitters.size(); ++i)
 	{
-		radius = max(radius, m_Emitters[i].getFalloffRadius());
+		emitters[i].kill();
 	}
 
-	return radius;
-}
-
-void ParticleSystem::Kill()
-{
-	size_t i=0;
-
-	for(i=0; i<m_Emitters.size(); ++i)
+	for(size_t i=0; i<maxNumberOfParticles; ++i)
 	{
-		m_Emitters[i].Kill();
-	}
-
-	// Kill all particles here
-	for(i=0; i<m_nMaxParticles; ++i)
-	{
-		ParticleElement *pParticle = m_ppElements[i];
-		delete(pParticle);
-		m_ppElements[i] = 0;
+		delete(elements[i]);
+		elements[i] = 0;
 	}
 }
 
-}; // namespace
+} // namespace Engine

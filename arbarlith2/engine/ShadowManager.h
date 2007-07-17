@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-class Zone;
+class World;
 
 const size_t MAX_SHADOWS = 6;
 
@@ -71,7 +71,7 @@ public:
 	Sets the scene
 	@param zone Scene
 	*/
-	void setZone(Zone *zone);
+	void setZone(World *zone);
 
 	/**
 	Update the shadows in the world
@@ -98,7 +98,7 @@ private:
 	vector<Shadow*> shadows;
 
 	/** The scene */
-	Zone *zone;
+	World *zone;
 
 	/** times milliseconds until our periodic calculations */
 	float periodicTimer;

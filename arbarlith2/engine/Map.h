@@ -66,13 +66,13 @@ private:
 	Loads the complete materials legend from XML
 	@param materialsLegend XML for the materials legend
 	*/
-	void loadMaterialsLegend(CPropBag &materialsLegend);
+	void loadMaterialsLegend(PropertyBag &materialsLegend);
 
 	/**
 	Saves the material legend
 	@return XML for the materials legend
 	*/
-	CPropBag saveMaterialsLegend(void) const;
+	PropertyBag saveMaterialsLegend(void) const;
 
 	/** Destroy the materials legend */
 	void destroyMaterialsLegend(void);
@@ -111,23 +111,23 @@ public:
 	Creates a map from data in an XML source
 	@param xml The XML source
 	*/
-	void create(CPropBag &xml);
+	void create(PropertyBag &xml);
 
 	/**
 	Saves the map
 	@param xml The XML source
-	@param zoneName Name of the Zone
+	@param zoneName Name of the World
 	*/
-	void save(CPropBag &xml, const _tstring &zoneName);
+	void save(PropertyBag &xml, const _tstring &zoneName);
 
 	/**
 	Saves the map
 	@return xml resultant XML element
-	@param zoneName Name of the Zone
+	@param zoneName Name of the World
 	*/
-	CPropBag save(const _tstring &zoneName)
+	PropertyBag save(const _tstring &zoneName)
 	{
-		CPropBag xml;
+		PropertyBag xml;
 		save(xml, zoneName);
 		return xml;
 	}

@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "gl.h"
 #include "priority_queue.h"
 #include "Frustum.h"
-#include "Zone.h"
 #include "World.h"
 #include "Player.h"
 #include "LightManager.h"
@@ -128,7 +127,7 @@ void LightManager::update(float deltaTime)
 
 void LightManager::computeActiveSet(void)
 {
-	ASSERT(World::GetSingletonPtr()!=0, _T("World is null!  This is especially odd since the LightManager is owned by the world singleton :P"));
+	ASSERT(World::GetSingletonPtr()!=0, _T("World is null"));
 	
 	Player *playerPtr = World::GetSingleton().getPlayerPtr(0);
 

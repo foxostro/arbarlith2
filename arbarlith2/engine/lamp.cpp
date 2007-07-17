@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListElementTweaker.h"
 #include "ToggleWidgetText.h"
 #include "Light.h"
-#include "Zone.h"
+#include "World.h"
 #include "Player.h"
 #include "Lamp.h"
 
@@ -97,7 +97,7 @@ void Lamp::update(float deltaTime)
 			);
 }
 
-bool Lamp::LoadXml(CPropBag &xml)
+bool Lamp::LoadXml(PropertyBag &xml)
 {
 	Switch::LoadXml(xml);
 
@@ -113,13 +113,13 @@ bool Lamp::LoadXml(CPropBag &xml)
 	newLight->linearAttenuation = linear;
 	newLight->quadraticAttenuation = quadratic;
 
-	// Add the light to the Zone
+	// Add the light to the World
 	light = getZone().getLightManager().addLight(newLight);
 
 	return true;
 }
 
-bool Lamp::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool Lamp::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveTag(xml, dataFile, _T("active"), active);
 	saveTag(xml, dataFile, _T("constant"), constant);

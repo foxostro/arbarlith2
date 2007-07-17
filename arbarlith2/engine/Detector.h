@@ -39,7 +39,7 @@ namespace Engine {
 class Detector : public Trigger
 {
 public:
-	GEN_RTTI(Detector)
+	GEN_RTTI(Detector, "class Engine::Detector")
 
 public:
 	/**
@@ -56,7 +56,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(Engine::CPropBag &xml);
+	virtual bool LoadXml(Engine::PropertyBag &xml);
 
 protected:
 	/**
@@ -78,7 +78,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/**
 	Creates the editor toolbar for the Creature

@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Singleton.h"
 #include "Widget.h"
-#include "MessageBoxManager.h"
 
 namespace Engine {
 
@@ -59,15 +58,6 @@ public:
 	*/
 	void addWidget(Widget *widget);
 
-	/**
-	Gets the message box manager
-	@return Message Box Manager
-	*/
-	inline MessageBoxManager& getMsgBox(void)
-	{
-		return *m_MsgBox;
-	}
-
 	/** indicates that the mouse is over a widget */
 	bool mouseOverSomeWidget;
 
@@ -75,9 +65,6 @@ public:
 	bool clickAlreadyProcessedThisTick;
 
 private:
-	/** the message box manager */
-	MessageBoxManager *m_MsgBox;
-
 	/** the root widget */
 	Widget m_RootWidget;
 };

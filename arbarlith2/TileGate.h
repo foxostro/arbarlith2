@@ -41,7 +41,7 @@ namespace Arbarlith2 {
 class TileGate : public Actor
 {
 public:
-	GEN_RTTI(TileGate)
+	GEN_RTTI(TileGate, "class Arbarlith2::TileGate")
 
 public:
 	/**
@@ -58,7 +58,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(Engine::CPropBag &xml);
+	virtual bool LoadXml(Engine::PropertyBag &xml);
 
 	/** Unlocks the gate after the reaction time delay has passed */
 	void unlockGate(void);
@@ -82,7 +82,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Gets the tile that the gate is modifying */
 	Tile &getTile(void);

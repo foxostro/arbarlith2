@@ -128,7 +128,7 @@ void ProfileInit( void )
 
    g_startProfile = GetExactTime();
 
-   g_ProfileText = new Engine::LabelWidget(_T("blank"), 100, 768/2, Engine::white, Engine::FONT_SIZE_NORMAL);
+   g_ProfileText = new Engine::LabelWidget(_T("blank"), vec2(100.0f, 768.0f / 2));
    g_GUI.addWidget(g_ProfileText);
 }
 

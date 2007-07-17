@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "gl.h"
 #include "Frustum.h"
-#include "Zone.h"
+#include "World.h"
 #include "Shadow.h"
 
 namespace Engine {

@@ -162,7 +162,7 @@ public:
 	Setup the font
 	@param xml XML source for the font data
 	*/
-	void setup(CPropBag &xml);
+	void setup(PropertyBag &xml);
 
 	/** reloads all font textures again */
 	void reaquire(void);

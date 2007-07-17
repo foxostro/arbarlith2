@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "engine/World.h"
-#include "engine/Zone.h"
 #include "engine/CallbackTask.h"
 #include "engine/GameStateRun.h"
 #include "engine/ListPaneWidget.h"
@@ -58,7 +57,7 @@ void PowerupHeal::onPickup(MyPlayer &player)
 	player.heal(healValue); // TODO: healTime does nothing
 }
 
-bool PowerupHeal::LoadXml(CPropBag &xml)
+bool PowerupHeal::LoadXml(PropertyBag &xml)
 {
 	Powerup::LoadXml(xml);
 
@@ -68,7 +67,7 @@ bool PowerupHeal::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool PowerupHeal::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool PowerupHeal::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveTag(xml, dataFile, _T("healValue"), healValue);
 	saveTag(xml, dataFile, _T("healTime"), healTime);

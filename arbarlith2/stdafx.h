@@ -53,7 +53,6 @@ using namespace std;
 #include "engine/WaitScreen.h"
 #include "engine/Creature.h"
 #include "engine/Player.h"
-#include "engine/Zone.h"
 #include "engine/World.h"
 #include "engine/Application.h"
 #include "engine/misc.h"

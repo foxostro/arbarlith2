@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "engine/ActorSet.h"
 #include "engine/World.h"
-#include "engine/Zone.h"
 #include "Explosion.h"
 #include "Bullet.h"
 
@@ -103,7 +102,7 @@ bool Bullet::pollConditions(void) const
 {
 	OBJECT_ID unused;
 
-	// Only consider Creature from our Zone that are not the Bullet owner
+	// Only consider Creature from our World that are not the Bullet owner
 	ActorSet s = getZone().getObjects().typeFilter<Creature>().exclude(owner);
 
 	return isAnythingInProximity(s, unused);
@@ -113,7 +112,7 @@ void Bullet::onTrigger(void)
 {
 	OBJECT_ID id = INVALID_ID;
 
-	// Only consider Creature from our Zone that are not the Bullet owner
+	// Only consider Creature from our World that are not the Bullet owner
 	ActorSet s = getZone().getObjects().typeFilter<Creature>().exclude(owner);
 
 	if(isAnythingInProximity(s, id))
@@ -134,12 +133,19 @@ void Bullet::kill(void)
 {
 	zombie=true;
 
-	// release the particle system now that we are done with it
-	ParticleSystem *s = getZone().particles[particleHandle];
-	s->Kill();
+	// release the particle system too
+	(getZone().particles[particleHandle])->kill();
 
-	// splash damage explosion
-	createExplosion(getZone(), getPos(), damageValue/2, owner, explosionParticleFile, explosionSoundEffectFile);
+	createExplosion
+	(
+		getZone(),
+		getPos(),
+		damageValue/2,
+		1.0f,
+		owner,
+		explosionParticleFile,
+		explosionSoundEffectFile
+	);
 }
 
 bool Bullet::isInProximity(OBJECT_ID actor, float triggerRadius) const

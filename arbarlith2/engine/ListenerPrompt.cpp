@@ -66,7 +66,7 @@ void ListenerPrompt::onTrigger(void)
 	}
 }
 
-bool ListenerPrompt::LoadXml(CPropBag &xml)
+bool ListenerPrompt::LoadXml(PropertyBag &xml)
 {
 	Listener::LoadXml(xml);
 
@@ -76,7 +76,7 @@ bool ListenerPrompt::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool ListenerPrompt::saveTidy(CPropBag &xml, CPropBag &editorData) const
+bool ListenerPrompt::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
 	saveTag(xml, editorData, _T("message"), message);
 	saveTag(xml, editorData, _T("timeOut"), timeOut);

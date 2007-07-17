@@ -42,7 +42,7 @@ namespace Engine {
 class MonsterFSM : public StateMachine
 {
 public:
-	GEN_RTTI(MonsterFSM)
+	GEN_RTTI(MonsterFSM, "class Engine::MonsterFSM")
 
 public:
 	/** Constructs the FSM for a particular Creature */

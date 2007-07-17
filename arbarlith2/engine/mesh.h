@@ -31,7 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _MESH_H_
 #define _MESH_H_
 
-#include "3dmath.h"
+#include "mat4.h"
+#include "BoundingBox.h"
 #include "material.h"
 #include "file.h"
 #include "propbag.h"

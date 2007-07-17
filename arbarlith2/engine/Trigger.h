@@ -40,7 +40,7 @@ namespace Engine {
 class Trigger : public Actor
 {
 public:
-	GEN_RTTI(Trigger)
+	GEN_RTTI(Trigger, "class Engine::Trigger")
 
 public:
 	/**
@@ -66,7 +66,7 @@ public:
 	@param xml The XML data source
 	@return true if successful, false otherwise
 	*/
-	virtual bool LoadXml(CPropBag &xml);
+	virtual bool LoadXml(PropertyBag &xml);
 
 	/**
 	Creates the editor toolbar for the Creature
@@ -101,7 +101,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Gets the sound effect file to play when the Trigger activates */
 	_tstring getTriggerSfx(void) const;

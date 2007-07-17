@@ -31,279 +31,549 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "gl.h"
 #include "profile.h"
-
-#include "Zone.h"
-#include "World.h"
-#include "WaitScreen.h"
 #include "SearchFile.h"
+#include "priority_queue.h"
+
+#include "WaitScreen.h"
 #include "Player.h"
+#include "frustum.h"
+#include "EditorToolBar.h"
+#include "Dimmer.h"
+#include "EffectSig.h"
+#include "EffectManager.h"
+
+#include "World.h"
 
 namespace Engine {
 
-World::World(const _tstring &fileName)
+vec3 projectVector(const vec3 &obj); // opengl.cpp
+
+extern GLenum lightNames[7];
+
+GLenum textureStages[32] =
+{
+	GL_TEXTURE0_ARB,
+	GL_TEXTURE1_ARB,
+	GL_TEXTURE2_ARB,
+	GL_TEXTURE3_ARB,
+	GL_TEXTURE4_ARB,
+	GL_TEXTURE5_ARB,
+	GL_TEXTURE6_ARB,
+	GL_TEXTURE7_ARB,
+	GL_TEXTURE8_ARB,
+	GL_TEXTURE9_ARB,
+	GL_TEXTURE10_ARB,
+	GL_TEXTURE11_ARB,
+	GL_TEXTURE12_ARB,
+	GL_TEXTURE13_ARB,
+	GL_TEXTURE14_ARB,
+	GL_TEXTURE15_ARB,
+	GL_TEXTURE16_ARB,
+	GL_TEXTURE17_ARB,
+	GL_TEXTURE18_ARB,
+	GL_TEXTURE19_ARB,
+	GL_TEXTURE20_ARB,
+	GL_TEXTURE21_ARB,
+	GL_TEXTURE22_ARB,
+	GL_TEXTURE23_ARB,
+	GL_TEXTURE24_ARB,
+	GL_TEXTURE25_ARB,
+	GL_TEXTURE26_ARB,
+	GL_TEXTURE27_ARB,
+	GL_TEXTURE28_ARB,
+	GL_TEXTURE29_ARB,
+	GL_TEXTURE30_ARB,
+	GL_TEXTURE31_ARB
+};
+
+
+
+World::World(void)
 {
 	clear();
-
-	g_WaitScreen.Render();
-	LoadXml(fileName);
-	TRACE(_T("Finished loading the game from file: ") + fileName);
-	g_WaitScreen.Render();
+	router.setZone(this);
 }
 
 World::~World()
 {
 	destroy();
+	xmlCache.clear();
 }
 
-bool World::SaveXml(const _tstring &fileName)
+void World::clear()
 {
-	CPropBag bag;
-	SaveXml(bag);
+	name = _T("Pudonk");
 
-	TRACE(_T("Writing the game to file"));
-	g_WaitScreen.Render();
+	loaded = false;
 
-	bag.saveToFile(fileName);
+	particles.clear();
+	objects.clear();
+	lightManager.clear();
+	shadowManager.clear();
+	map.clear();
+	clockTicks=0.0f;
 
-	TRACE(_tstring(_T("World has been saved to")) + fileName);
-	g_WaitScreen.Render();
-	return true;
-}
-
-bool World::SaveXml(CPropBag &Bag)
-{
-	CPropBag AllRealmsBag, clientBag;
-
-	// Do the waitscreen every so often
-	TRACE(_T("Saving the game"));
-	g_WaitScreen.Render();
-
-	// Save the game clock
-	Bag.Add(_T("ticks"), m_ClockTicks);
-
-	// Save the realms
-	TRACE(_T("Beginning to save game world realm data"));
-	for(vector<Zone*>::iterator iter=m_Realms.begin(); iter!=m_Realms.end(); ++iter)
-	{
-		Zone *realm = (*iter);
-
-		if(realm)
-		{
-			TRACE(_tstring(_T("Saving realm: ")) + realm->getName());
-
-			// Save the realm
-			CPropBag RealmBag;
-			realm->SaveXml(RealmBag);
-			AllRealmsBag.Add(_T("realm"), RealmBag);
-		}
-	}
-
-	Bag.Add(_T("startingRealm"), getPlayer().getZone().getName());
-
-	TRACE(_T("Writing all realms to disc. This may take a moment..."));
-	Bag.Add(_T("allrealms"), AllRealmsBag);
-
-	TRACE(_T("Saving the player"));
-	Bag.Add(_T("player"), getPlayer().save());
-
-	// Return with success
-	TRACE(_T("Save completed successfully"));
-	return true;
-}
-
-size_t World::getRealmIdx(const _tstring &realmName)
-{
-	const _tstring name = toLowerCase(realmName);
-
-	for(size_t i=0; i<m_Realms.size(); ++i)
-	{
-		Zone *realm = m_Realms[i];
-		ASSERT(realm!=0, _T("zone was NULL"));
-
-		if(toLowerCase(realm->getName()) == name)
-		{
-			return i;
-		}
-	}
-
-	FAIL(_T("Realm does not exist: ") + realmName);
-	return 0;
-}
-
-Zone& World::getZone(const _tstring &zoneName)
-{
-	Zone *zone = getZonePtr(zoneName);
-
-	if(zone == 0)
-		FAIL(_tstring(_T("Zone does not exist: ")) + zoneName);
-
-	return(*zone);
-}
-
-Zone* World::getZonePtr(const _tstring &zoneName)
-{
-	const _tstring name = toLowerCase(zoneName);
-
-	for(size_t i=0; i<m_Realms.size(); ++i)
-	{
-		Zone *zone = m_Realms[i];
-		ASSERT(zone!=0, _T("zone was NULL"));
-
-		if(toLowerCase(zone->getName()) == toLowerCase(name))
-		{
-			// Have the realm load itself now, if necessary
-			return getZonePtr(i);
-		}
-	}
-
-	return 0;
-}
-
-Zone* World::getZonePtr(size_t idx)
-{
-	ASSERT(idx < getNumRealms(), _T("Invalid realm index"));
-
-	Zone *realm = m_Realms[idx];
-
-	ASSERT(realm!=0, _T("realm was NULL"));
-
-	// Determine whether the realm has loaded itself from XML yet
-	if(realm->isLoaded() == false)
-	{
-		// No?
-
-		TRACE(_tstring(_T("Loading realm: ")) + realm->getName());
-		g_WaitScreen.Render();
-		realm->LoadXml(realm->xmlCache);
-	}
-
-	return realm;
-}
-
-Zone& World::getZone(size_t idx)
-{
-	return *getZonePtr(idx);
-}
-
-Zone* World::cacheZone(const _tstring &fileName)
-{
-	TRACE(_T("Started caching a Zone from disc"));
-	g_WaitScreen.Render();
-
-	Zone* zone = new Zone;
-
-	ASSERT(zone != 0, _T("Failed to allocate zone"));
-
-	if(!zone->xmlCache.Load(fileName))
-	{
-		ERR(_T("Failed to cache zone: failed to load file \"") + fileName + _T("\""));
-		return 0;
-	}
-
-	if(!zone->xmlCache.Get(_T("name"), zone->name))
-	{
-		ERR(_T("Failed to cache zone: failed to retrieve name from XML"));
-		return 0;
-	}
-
-	m_Realms.push_back(zone);
-
-
-	g_WaitScreen.Render();
-	TRACE(_tstring(_T("Finished caching zone: ")) + zone->getName());
-	return zone;
-}
-
-bool World::LoadXml(const _tstring &fileName)
-{
-	CPropBag bag;
-	bool result=false;
-
-#ifdef ENABLE_PROFILER
-	Profiler::ProfileBegin("Load World");
-#endif
-
-	g_WaitScreen.Render();
-
-	bag.Load(fileName);
-	result = LoadXml(bag);
-
-#ifdef ENABLE_PROFILER
-	Profiler::ProfileEnd("Load World");
-	Profiler::ProfileDumpOutputToBuffer();
-	TRACE(_T("Outputing Timing Data:\n") + Profiler::ProfileGetBuffer());
-#endif
-
-	return result;
-}
-
-bool World::LoadXml(CPropBag &xml)
-{
-	TRACE(_T("Loading game world..."));
-	g_WaitScreen.Render();
-
-	destroy();
-
-	// Load the game time
-	xml.Get(_T("ticks"), m_ClockTicks);
-
-	// Load the starting realm
-	xml.Get(_T("startingRealm"), startingRealm);
-	Zone *defaultZone = cacheZone(  _T("data/zones/") + startingRealm + _T(".xml")  );
-	ASSERT(defaultZone!=0, _T("defaultZone is null: ") + startingRealm);
-	defaultZone->LoadXml(defaultZone->xmlCache);
-
-	// Load the Player
-	reloadPlayer(xml);
-
-	TRACE(_T("...finished (Loading game world)"));
-	return true;
+	for(int i=0; i<MAX_PLAYERS; ++i)
+		player[i]=0;
+	NumOfPlayers = 0;
 }
 
 void World::destroy(void)
 {
-	TRACE(_T("Destroying the current world..."));
+	map.destroy();
+	lightManager.destroy();
+	shadowManager.destroy();
+	objects.destroy();
 
-	g_WaitScreen.Render();
-
-	for_each(m_Realms.begin(), m_Realms.end(), bind(delete_arg(), _1));
 	clear();
-
-	TRACE(_T("...finished"));
-}
-
-void World::clear(void)
-{
-	m_Realms.clear();
-	m_ClockTicks=0.0f;
-
-	for(int i=0; i<MAX_PLAYERS; ++i)
-	{
-		player[i]=0;
-	}
-
-	NumOfPlayers = 0;
 }
 
 void World::release(void)
 {
-	for_each(m_Realms.begin(), m_Realms.end(), bind(&Engine::Zone::release, _1));
+	map.release();
+	lightManager.release();
+	shadowManager.release();
 }
 
 void World::reaquire(void)
 {
-	for_each(m_Realms.begin(), m_Realms.end(), bind(&Engine::Zone::reaquire, _1));
+	map.reaquire();
+	lightManager.reaquire();
+	shadowManager.reaquire();
+}
+
+bool World::SaveXml(PropertyBag &Bag)
+{
+	TRACE(_T("Loading game world..."));
+	g_WaitScreen.Render();
+
+	if(isLoaded() == false)
+	{
+		// If the realm was never loaded, then save the XML cache
+		Bag = xmlCache;
+	}
+	else
+	{
+		// Save dynamic objects
+		Bag.Add(_T("objects"), getObjects().save());
+
+		// Save player template
+		Bag.Add(_T("player"), getPlayer(0).save());
+
+		// Save the map
+		Bag.Add(_T("map"), map.save(name));
+
+		// Add in misc items
+		Bag.Add(_T("name"), name);
+
+		// Save the fog settings
+		Bag.Add(_T("fog"), fog.save());
+
+		// Load the ambient lighting intensity for the World
+		Bag.Add(_T("ambientLight"), getLightManager().ambientLight);
+
+		// Save the music engine
+		PropertyBag musicEngine;
+		music.save(musicEngine);
+		Bag.Add(_T("music"), musicEngine);
+	}
+
+	TRACE(_T("...finished"));
+
+	return true;
+}
+
+bool World::LoadXml(PropertyBag &Bag)
+{
+	TRACE(_T("Loading game world..."));
+	g_WaitScreen.Render();
+
+	_tstring strDataFile;
+
+	// Get the data file, if one is specified
+	if(Bag.getNumInstances(_T("file")) > 0)
+	{
+		Bag.get(_T("file"), strDataFile);
+
+		// wait screen
+		TRACE(_tstring(_T("External data file: ")) + strDataFile);
+		g_WaitScreen.Render();
+
+		// Merge the data
+		Bag.LoadMerge(strDataFile);
+
+		// wait screen
+		TRACE(_T("External data file loaded"));
+		g_WaitScreen.Render();
+	}
+
+	// Load data
+	LoadData(Bag);
+
+	/*
+	Invalidate the XML cache. Bag either was a reference to  it, and we don't need 
+	it anymore, or another XML source was optioned, and we don't need it anymore.
+	*/
+	xmlCache.clear();
+
+	// The realm has been loaded successfully :)
+	loaded = true;
+
+	TRACE(_T("...finished"));
+
+	return true;
+}
+
+bool World::LoadData(PropertyBag &Bag)
+{
+	// wait screen
+	TRACE(_T("Loading World data"));
+	g_WaitScreen.Render();
+
+	_tstring rtti;
+
+	// Destroy any old instance of this realm
+	destroy();
+	TRACE(_T("Destroyed old World data"));
+	g_WaitScreen.Render();	
+
+	// Load the realm's name
+	if(!Bag.getSym(name))
+	{
+		ERR(_T("No name tag in World definition."));
+	}
+
+// Load the music set
+	PropertyBag musicBag;
+	if(Bag.get(_T("music"), musicBag))
+	{
+		TRACE(getName() + _T(": Loading music data"));
+
+		music.load(musicBag);
+		music.update();
+	}
+
+	// Load the fog
+	PropertyBag fogBag;
+	if(Bag.get(_T("fog"), fogBag))
+	{
+		TRACE(getName() + _T(": Loading fog data"));
+		fog.load(fogBag);
+	}
+
+	// Load the ambient lighting intensity for the World
+	Bag.get(_T("ambientLight"), getLightManager().ambientLight);
+	Light::BRIGHTNESS = 1.0f; // reset
+	Dimmer::alphaBlur = 0.0f;
+	
+// Load the map
+	PropertyBag mapBag;
+	if(Bag.get(_T("map"), mapBag))
+	{
+		map.create(mapBag);
+	}
+
+// Initialize the lighting system
+	lightManager.create();
+	shadowManager.create();
+	shadowManager.setZone(this);
+	
+// Load the objects bags
+	PropertyBag ObjectsBag;
+
+	if(Bag.get(_T("objects"), ObjectsBag)==false)
+	{
+		ERR(name + _T(": No objects tag in World definition."));
+	}
+
+	// load
+	getObjects().load(ObjectsBag, this);
+
+	TRACE(getName() + _T(": All Objects Loaded"));
+
+
+// Load the players
+	PropertyBag PlayerBag;
+
+	if(Bag.get(_T("player"), PlayerBag)==false)
+	{
+		ERR(name + _T(": No player tag in World definition."));
+	}
+
+	// load
+	reloadPlayers(PlayerBag);
+
+
+
+
+	// return with success
+	TRACE(getName() + _T(": Load Successful"));
+	return true;
+}
+
+void World::draw(void) const
+{
+	PROFILE
+
+	CHECK_GL_ERROR();
+
+	if(g_Application.getState() == GAME_STATE_EDITOR)
+	{
+		drawEditorScene();
+	}
+	else
+	{
+		switch(g_Application.graphicsMode)
+		{
+		case Application::SHADOWS_AND_LIGHTING_ENABLED:		drawScene();			break;
+		case Application::LIGHTING_ENABLED:			drawShadowlessScene(true);	break;
+		case Application::SHADOWS_AND_LIGHTING_DISABLED:	drawShadowlessScene(false);	break;
+		};
+	}
+}
+
+void World::drawEditorScene(void) const
+{
+CHECK_GL_ERROR();
+
+	g_Camera.setCamera();
+
+	// draw the scene geometry
+	effect_Begin(effect_TEXTURE_REPLACE);
+		map.draw();
+		objects.draw(g_Camera.getFrustum());
+	effect_End();
+
+CHECK_GL_ERROR();
+}
+
+void World::drawShadowlessScene(bool useLights) const
+{
+CHECK_GL_ERROR();
+
+	g_Camera.setCamera();
+
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, white*lightManager.ambientLight*Light::BRIGHTNESS); // scene ambient light
+	lightManager.bindAll();
+	fog.activate();
+
+	// draw the scene geometry
+	effect_Begin(useLights ? effect_TEXTURE_LIT : effect_TEXTURE_REPLACE);
+		map.draw();
+		objects.draw(g_Camera.getFrustum());
+	effect_End();
+
+	// particles last
+	drawParticles();
+
+CHECK_GL_ERROR();
+}
+
+void World::drawScene(void) const
+{
+CHECK_GL_ERROR();
+
+	/*
+	Algorithm summary:
+	1) Draw areas that might be in shadow into the stencil buffer
+	2) In areas that are definitely not affected by shadows, draw with full lighting
+	3) In areas that might be affected by shadows:
+		4) Draw with ambient light
+		5) Draw with full lighting, but fail fragments that are in shadow
+			* Alphatest
+			* Shadowmap projection to achieve the failing alpha values
+	*/
+
+	// set the ambient light
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, white*lightManager.ambientLight*Light::BRIGHTNESS);
+
+
+
+	// set the camera
+	g_Camera.setCamera();
+
+
+	// Draw areas that might be affected shadows into the stencil buffer
+	effect_Begin(effect_RED);
+		glPushAttrib(GL_ENABLE_BIT);
+			glDisable(GL_LIGHTING);
+			glEnable(GL_STENCIL_TEST);
+			glStencilFunc(GL_ALWAYS, 1, 0xFFFF);
+			glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		
+			for(unsigned int i=0; i<shadowManager.getMaxShadows(); ++i)
+			{
+				const Shadow &s = shadowManager.getShadow(i);
+				if(s.isInUse())
+				{
+					s.getFrustum().beginClipping();
+					drawShadowReceivers();
+				}
+			}
+		glPopAttrib();
+	effect_End();
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+
+
+
+	// draw the scene with shadows
+	glPushAttrib(GL_ALL_ATTRIB_BITS);
+	
+		// for the following steps, we need to enable the stencil test but refrain from modifying the stencil itself
+		glEnable(GL_STENCIL_TEST);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+		
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFFFF); // only where shadows are garaunteed to not be cast
+
+				// draw areas of the scene unaffected by shadows
+				effect_Begin(effect_TEXTURE_LIT);
+					lightManager.bindAll();
+					drawShadowReceivers();
+				effect_End();
+
+		glStencilFunc(GL_EQUAL, 1, 0xFFFF); // only where shadows might be cast
+
+				// ambient pass of the scene
+				if(g_Application.displayDebugData)
+				{
+					effect_Begin(effect_RED);
+				}
+				else
+				{
+					effect_Begin(effect_TEXTURE_LIT);
+					lightManager.disableAll(); // ambient light only
+				}
+					drawShadowReceivers();
+				effect_End();
+
+				// draw the shadowed portions of the map
+				effect_Begin(effect_CLASS_RECEIVE_SHADOWS);
+					
+					lightManager.bindAll(); // full lighting
+
+					// bind all shadows that are in use
+					unsigned int tex=1;
+					for(unsigned int i=0; i<shadowManager.getMaxShadows(); ++i)
+					{
+						const Shadow &s = shadowManager.getShadow(i);
+						if(s.isInUse())
+						{
+							s.bind(getObjects(), tex++);
+						}
+					}
+					
+					drawShadowReceivers();
+
+				effect_End();
+	glPopAttrib();
+
+	if(g_Application.displayDebugData)
+	{
+		shadowManager.getShadow(0).testDepthTexture();
+		shadowManager.getShadow(0).drawFrustum();
+	}
+
+	// last
+	drawParticles();
+
+CHECK_GL_ERROR();
+}
+
+void World::drawShadowReceivers(void) const
+{
+	map.draw();
+	objects.draw(g_Camera.getFrustum());
+}
+
+void World::drawParticles(void) const
+{
+	// Render particles in the realm
+	if(g_Application.useParticleEffects && particles.size()>0)
+	{
+		effect_Begin(effect_PARTICLE_FX);
+
+		for(vector<ParticleSystem*>::const_iterator iter=particles.begin();
+		    iter!=particles.end();
+		    ++iter)
+		{
+			ParticleSystem *system = (*iter);
+
+			ASSERT(system!=0, _T("system was NULL"));
+
+			if(!system->isDead())
+			{
+				system->draw();
+			}
+		}
+
+		effect_End();
+	}
+}
+
+void World::updateParticles(float deltaTime)
+{
+	if(g_Application.useParticleEffects && particles.size()>0)
+	{
+		vector<ParticleSystem*>::iterator i = particles.begin();
+
+		while(i != particles.end())
+		{
+			ParticleSystem *s = (*i);
+			if(s==0 || (s!=0 && s->isDead()))
+			{
+				delete s;
+				i = particles.erase(i);
+			}
+			else
+			{
+				s->update(deltaTime);
+				++i;
+			}
+		}
+	}
 }
 
 void World::update(float deltaTime)
 {
-	m_ClockTicks += double(deltaTime); // Update the game clock
+	PROFILE
+		
+	clockTicks += double(deltaTime); // Update the game clock
+
+	objects.update(deltaTime, this);
+
+	router.update(deltaTime);
+
+	lightManager.update(deltaTime);
+
+	updateParticles(deltaTime);
+
+	updateShadows(deltaTime);
 
 	recalculateAveragePlayerPosition();
+	updateCamera();
+}
 
-	Player &player = getPlayer(0);
-	Zone &zone = player.getZone();
-	zone.update(deltaTime);
+void World::updateShadows(float deltaTime)
+{
+	if(g_Application.graphicsMode == Application::SHADOWS_AND_LIGHTING_ENABLED)
+	{
+		PROFILE
+		shadowManager.update(getObjects(), deltaTime);
+	}
+}
+
+size_t World::SpawnPfx(_tstring strFile, const vec3 &position)
+{
+	ASSERT(!strFile.empty(), _T("Bad parameter strFile specifies no filename"));
+
+	ParticleSystem *s = new ParticleSystem(strFile);
+	s->setPosition(position);
+
+	particles.push_back(s);
+
+	// Return the particle system's ID
+	return(particles.size()-1);
 }
 
 const Player& World::getPlayer(size_t playerNum) const
@@ -334,70 +604,66 @@ const Player* World::getPlayerPtr(size_t playerNum) const
 
 Player* World::getPlayerPtr(size_t playerNum)
 {
+	ASSERT(playerNum < MAX_PLAYERS, _T("invalid player number"));
 	return player[playerNum];
 }
 
-void World::reloadPlayer(CPropBag &newGame)
+void World::reloadPlayers(PropertyBag &playerBag)
 {
-	TRACE(_T("Reloading the player..."));
+	TRACE(_T("Reloading all the players..."));
 
-	CPropBag playerBag;
 
-	if(newGame.Get(_T("player"), playerBag))
+	_tstring file, type;
+
+	if(playerBag.getSym(file))
 	{
-		_tstring file, type;
+		// The type is defined in an external file
+		PropertyBag external;
+		external.Load(file);
+		external.getSym(type);
+	}
+	else
+	{
+		// No exernal data file
+		playerBag.getSym(type);
+	}
 
-		if(playerBag.getSym(file))
-		{
-			// The type is defined in an external file
-			CPropBag external;
-			external.Load(file);
-			external.getSym(type);
-		}
-		else
-		{
-			// No exernal data file
-			playerBag.getSym(type);
-		}
-
-		int numOfJoysticks = SDL_NumJoysticks();
+	int numOfJoysticks = SDL_NumJoysticks();
 
 #if _PLAYER_ONE_HAS_NO_JOYSTICK_
-		TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player 1 will always be on the keyboard"));
-		NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks + 1, MAX_PLAYERS);
+	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player 1 will always be on the keyboard"));
+	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks + 1, MAX_PLAYERS);
 #else
-		TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is not defined, so player 1 will always be on the keyboard and joystick #1"));
-		NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks, MAX_PLAYERS);
+	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is not defined, so player 1 will always be on the keyboard and joystick #1"));
+	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks, MAX_PLAYERS);
 #endif
 
-		// Create the players
-		Zone *defaultZone = &getZone(startingRealm);
-		for(int i = 0; (size_t)i < NumOfPlayers; ++i)
+	// Create the players
+	for(int i = 0; (size_t)i < NumOfPlayers; ++i)
+	{
+		Actor *p = getObjects().createPtr(type, this);
+
+		player[i] = dynamic_cast<Player*>(p);
+
+		ASSERT(player[i]!=0, _T("Failed to construct player #") + itoa(i));
+
+		player[i]->LoadXml(playerBag);
+		TRACE(_T("Loaded player #") + itoa(i));
+
+		player[i]->setPlayerNumber(i);
+		TRACE(_T("Actually set player number to ") + itoa(i));
+
+		if(NumOfPlayers>1)
 		{
-			Actor *p = defaultZone->getObjects().createPtr(type, defaultZone);
+			float angle = 2.0f * ((float)i/NumOfPlayers) * (float)M_PI;
+			vec3 offset = vec3(cosf(angle), 0, sinf(angle)) * 1.2f;
+			player[i]->Place(player[i]->getPos() + offset);
 
-			player[i] = dynamic_cast<Player*>(p);
-
-			ASSERT(player[i]!=0, _T("Failed to construct player #") + itoa(i));
-
-			player[i]->LoadXml(playerBag);
-			TRACE(_T("Loaded player #") + itoa(i));
-
-			player[i]->setPlayerNumber(i);
-			TRACE(_T("Actually set player number to ") + itoa(i));
-
-			if(NumOfPlayers>1)
-			{
-				float angle = 2.0f * ((float)i/NumOfPlayers) * (float)M_PI;
-				vec3 offset = vec3(cosf(angle), 0, sinf(angle)) * 1.2f;
-				player[i]->Place(player[i]->getPos() + offset);
-
-				TRACE(_T("Placed player #") + itoa(i) + _T("in the game world."));
-			}
+			TRACE(_T("Placed player #") + itoa(i) + _T("in the game world."));
 		}
 	}
 
-	TRACE(_T("...finished (Reloading the player)"));
+	TRACE(_T("...finished (Reloading the players)"));
 }
 
 vec3 World::findAveragePlayerPosition(void) const
@@ -423,7 +689,7 @@ void World::updateCamera(void)
 	const float minCameraDistance = 6.0f;
 	float cameraDistance = minCameraDistance;
 	const vec3 averagePlayerPosition = getAveragePlayerPosition();
-	const size_t numOfPlayers = g_World.getNumOfPlayers();
+	const size_t numOfPlayers = getNumOfPlayers();
 
 	if(numOfPlayers>1)
 	{
@@ -442,4 +708,4 @@ void World::updateCamera(void)
 	g_Camera.lookAt(averagePlayerPosition + vec3(cameraDistance,cameraDistance,cameraDistance), averagePlayerPosition, vec3(0,1,0));
 }
 
-}; // namespace
+} // namespace Engine

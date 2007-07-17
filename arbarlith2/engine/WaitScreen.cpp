@@ -7,9 +7,10 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
 #include "stdafx.h"
 #include "gl.h"
-#include "WaitScreen.h"
+#include "SDLwindow.h"
 #include "Image.h"
 #include "TextureHandle.h"
+#include "WaitScreen.h"
 
 namespace Engine {
 

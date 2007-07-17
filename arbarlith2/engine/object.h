@@ -36,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef ACTOR_H
 #define ACTOR_H
 
+#include "mat4.h"
 #include "tstring.h"
 #include "ActorFactory.h"
 #include "EffectSig.h"
@@ -45,7 +46,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Engine {
 
 class ActorSet;
-class Zone;
+class World;
 class Map;
 class ListPaneWidget;
 
@@ -59,7 +60,7 @@ that exists for a more advanced system to build upon.
 class Actor
 {
 public:
-	GEN_RTTI(Actor);
+	GEN_RTTI(Actor, "class Engine::Actor")
 
 public:
 	/**
@@ -82,14 +83,14 @@ public:
 	Saves the object state to an XML data source
 	@return The XML data source returned
 	*/
-	virtual CPropBag save(void) const;
+	virtual PropertyBag save(void) const;
 
 	/**
 	Loads the object state from an XML data source
 	@param xml The XML data source
 	@return true if successful, false otherwise
 	*/
-	virtual bool LoadXml(CPropBag &xml);
+	virtual bool LoadXml(PropertyBag &xml);
 
 	/**
 	Gets the distance in the XZ-plane that the actots are from one another
@@ -237,7 +238,7 @@ public:
 
 	/**
 	Called in the event that the object is placed
-	It is possible that our Zone has been changed in the process
+	It is possible that our World has been changed in the process
 	*/
 	virtual void OnPlace(void);
 
@@ -409,7 +410,7 @@ public:
 	Notify the creature that it has been moved to a new zone
 	@param zone The zone that the creature has been moved into
 	*/
-	inline void setZone(Zone *zone)
+	inline void setZone(World *zone)
 	{
 		ASSERT(zone!=0, _T("myZone was NULL"));
 		myZone = zone;
@@ -417,9 +418,9 @@ public:
 
 	/**
 	Gets the zone that the creature believes that it is located within
-	@return The Zone
+	@return The World
 	*/
-	inline Zone& getZone(void)
+	inline World& getZone(void)
 	{
 		ASSERT(myZone!=0, _T("myZone was NULL"));
 
@@ -428,9 +429,9 @@ public:
 
 	/**
 	Gets the zone that the creature believes that it is located within
-	@return The Zone
+	@return The World
 	*/
-	inline const Zone& getZone(void) const
+	inline const World& getZone(void) const
 	{
 		ASSERT(myZone!=0, _T("myZone was NULL"));
 
@@ -474,14 +475,6 @@ public:
 	@param pane The actor properties pane
 	*/
 	virtual void createToolBar(ListPaneWidget *pane);
-
-	/**
-	Determines whether or not the ray interesects the bounding sphere of the Actor
-	@param rayPoint A point on the ray
-	@param rayDirection The direction of the ray
-	@return true if the ray intersects the bounding sphere of the Actor
-	*/
-	virtual bool rayIntersect(const vec3 &rayPoint, const vec3 &rayDirection) const;
 
 	/**
 	Determines whether any collisions with other objects were recorded last tick
@@ -535,7 +528,7 @@ protected:
 	@param name The name of the item set
 	@param list The list items to return
 	*/
-	virtual void loadList(CPropBag& xml, const _tstring& name, vector<_tstring>& strList);
+	virtual void loadList(PropertyBag& xml, const _tstring& name, vector<_tstring>& strList);
 
 	/**
 	Saves a list of strings to XML
@@ -543,7 +536,7 @@ protected:
 	@param name The name of the item set
 	@param list The list items to return
 	*/
-	virtual void saveList(CPropBag& xml, const _tstring& name, const vector<_tstring>& strList) const;
+	virtual void saveList(PropertyBag& xml, const _tstring& name, const vector<_tstring>& strList) const;
 
 	/**
 	Saves a tag, but only if the default data is different
@@ -553,13 +546,13 @@ protected:
 	@param data The data to save
 	*/
 	template<class T>
-	bool saveTag(CPropBag &xml, CPropBag &editorData, const _tstring &tagName, T data) const
+	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const _tstring &tagName, T data) const
 	{
 		T defaultValue;
-		bool contains = editorData.Get(tagName, defaultValue);
+		bool contains = editorData.get(tagName, defaultValue);
 		if(!contains || (contains && defaultValue!=data))
 		{
-			xml.Add(tagName, data);
+			xml.add(tagName, data);
 			return true;
 		}
 		else
@@ -568,13 +561,13 @@ protected:
 		}
 	}
 
-	bool saveTag(CPropBag &xml, CPropBag &editorData, const _tstring &tagName, _tstring data) const
+	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const _tstring &tagName, _tstring data) const
 	{
 		_tstring defaultValue;
-		bool contains = editorData.Get(tagName, defaultValue);
+		bool contains = editorData.get(tagName, defaultValue);
 		if(!contains || (contains && defaultValue!=data))
 		{
-			xml.Add(tagName, data);
+			xml.add(tagName, data);
 			return true;
 		}
 		else
@@ -583,13 +576,13 @@ protected:
 		}
 	}
 
-	bool saveTag(CPropBag &xml, CPropBag &editorData, const _tstring &tagName, vec4 data) const
+	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const _tstring &tagName, vec4 data) const
 	{
 		vec4 defaultValue;
-		bool contains = editorData.Get(tagName, defaultValue);
+		bool contains = editorData.get(tagName, defaultValue);
 		if(!contains || (contains && defaultValue!=data))
 		{
-			xml.Add(tagName, data);
+			xml.add(tagName, data);
 			return true;
 		}
 		else
@@ -604,7 +597,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/**
 	When the toolbar is active data values may be changed at
@@ -691,7 +684,7 @@ protected:
 
 private:
 	/** The realm that the object is currently located within */
-	Zone *myZone;
+	World *myZone;
 
 	/** Position of the actor. Garaunteed to result in a valid, non-colliding position */
 	vec3 validatedPos;

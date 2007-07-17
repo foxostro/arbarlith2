@@ -41,9 +41,12 @@ namespace Engine {
 /** State of the game where the credits are displayed */
 class GameStateCredits : public GameState, public Singleton<GameStateCredits>
 {
-public:
-	/** Constructor */
-	GameStateCredits(void);
+public:	
+	/**
+	Constructor
+	@param app Game engine kernel. The application framework that is running the game.
+	*/
+	GameStateCredits(Application &app);
 
 	/** Destructor */
 	virtual ~GameStateCredits(void);

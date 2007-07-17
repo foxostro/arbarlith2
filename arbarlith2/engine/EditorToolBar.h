@@ -49,6 +49,9 @@ It displays the available tools, options, and Editor Mode specific data.
 class EditorToolBar : public Widget
 {
 private:
+	/** World currently bound to the editor */
+	World *world;
+
 	/** the current type for a new tile */
 	TILE_TYPE tileEditor_type;
 
@@ -94,7 +97,7 @@ private:
 	/** This holds the tile properties widgets */
 	ListPaneWidget *toolBarTilePropreties;
 
-	/** This holds the secondary toolbar for Zone specific data */
+	/** This holds the secondary toolbar for World specific data */
 	ListPaneWidget *toolBarZone;
 
 	/** This holds the options for new objects */
@@ -214,7 +217,7 @@ public:
 	void clear(void);
 
 	/** Cleanly destroy and clear the tool bar */
-	virtual void destroy(void);
+	void destroy(void);
 
 	/** Initialize the tool bar*/
 	void create(void);
@@ -239,6 +242,35 @@ public:
 
 	/** Hides the actor pane */
 	void hideActorPane(void);
+
+	/**
+	Gets the world currently bound to the editor
+	@return world
+	*/
+	inline World& getWorld(void)
+	{
+		ASSERT(world!=0, _T("world was null"));
+		return *world;
+	}
+
+	/**
+	Gets the world currently bound to the editor
+	@return world
+	*/
+	inline const World& getWorld(void) const
+	{
+		ASSERT(world!=0, _T("world was null"));
+		return *world;
+	}
+
+	/**
+	Sets the world currently bound to the editor
+	@param world the world to bind the editor to
+	*/
+	inline void setZone(World *world)
+	{
+		this->world = world;
+	}
 };
 
 } // namespace Engine

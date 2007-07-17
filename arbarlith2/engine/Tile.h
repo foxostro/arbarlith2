@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _TILE_H_
 #define _TILE_H_
 
-#include "3dmath.h"
+#include "BoundingBox.h"
 #include "Material.h"
 
 namespace Engine {

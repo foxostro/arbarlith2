@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "ActorSet.h"
 #include "World.h"
-#include "Zone.h"
 #include "Player.h"
 #include "DetectorProximity.h"
 

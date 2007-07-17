@@ -45,8 +45,11 @@ public:
 	virtual ~GameStateEditor(void)
 	{}
 
-	/** Constructor */
-	GameStateEditor(void);
+	/**
+	Constructor
+	@param app Game engine kernel. The application framework that is running the game.
+	*/
+	GameStateEditor(Application &app);
 
 	/**
 	Updates the task every tick as long as the task has not been frozen

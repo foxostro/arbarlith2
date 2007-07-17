@@ -35,8 +35,8 @@ namespace Engine {
 
 
 
-ItemWidget::ItemWidget(float x, float y)
-: LabelWidget(_T("[nill]"), x, y, white, FONT_SIZE_LARGE),
+ItemWidget::ItemWidget(const vec2 &pos)
+: LabelWidget(_T("[nill]"), pos, white, FONT_SIZE_LARGE, g_Application.fontLarge),
   item(0)
 {
 	setItem(0);

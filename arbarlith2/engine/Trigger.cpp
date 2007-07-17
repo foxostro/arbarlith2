@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListPaneWidget.h"
 #include "ToggleWidgetText.h"
 #include "ListElementTweaker.h"
-#include "Zone.h"
+#include "World.h"
 #include "Player.h"
 #include "Trigger.h"
 
@@ -73,9 +73,9 @@ void Trigger::update(float deltaTime)
 
 bool Trigger::playerIsInProximity(OBJECT_ID &player) const
 {
-	for(size_t i=0; i<g_World.getNumOfPlayers(); ++i)
+	for(size_t i=0; i<getZone().getNumOfPlayers(); ++i)
 	{
-		const Actor &a = g_World.getPlayer(i);
+		const Actor &a = getZone().getPlayer(i);
 
 		const ActorSet &s = getZone().getObjects();
 
@@ -113,7 +113,7 @@ void Trigger::onTrigger(void)
 	g_SoundSystem.play3D(getTriggerSfx(), getPos(), false, 2.0f);
 }
 
-bool Trigger::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool Trigger::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveList(xml, _T("sounds"), sounds);
 	saveTag(xml, dataFile, _T("triggerRadius"), triggerRadius);
@@ -121,7 +121,7 @@ bool Trigger::saveTidy(CPropBag &xml, CPropBag &dataFile) const
 	return Actor::saveTidy(xml, dataFile);
 }
 
-bool Trigger::LoadXml(CPropBag &xml)
+bool Trigger::LoadXml(PropertyBag &xml)
 {
 	Actor::LoadXml(xml);
 

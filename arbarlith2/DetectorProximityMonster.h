@@ -59,7 +59,7 @@ protected:
 	virtual bool isInProximity(OBJECT_ID actor, float triggerRadius) const;
 
 public:
-	GEN_RTTI(DetectorProximityMonster)
+	GEN_RTTI(DetectorProximityMonster, "class Arbarlith2::DetectorProximityMonster")
 };
 
 } // namespace Arbarlith2

@@ -33,48 +33,75 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "application.h"
 #include "LabelWidget.h"
 
-namespace Engine { 
+namespace Engine {
 
-LabelWidget::LabelWidget(_tstring strLabel,
-						   float x,
-						   float y,
-						   const COLOR &color,
-						   FONT_SIZE FontSize)
+LabelWidget::LabelWidget
+			(
+				const _tstring &label,
+				const vec2 &pos
+			)
+: fontSize(FONT_SIZE_NORMAL),
+  font(0)
 {
-	Init(strLabel, x, y, color, FontSize);
+	setFont(g_Application.fontLarge);
+	setFontSize(FONT_SIZE_NORMAL);
+	setLabel(label);
+	setColor(white);
+	setRelativePos(pos);
 }
 
-void LabelWidget::Init(_tstring strLabel,
-						float x,
-						float y,
-						const COLOR &color,
-						FONT_SIZE FontSize)
+LabelWidget::LabelWidget
+			(
+				const _tstring &label,
+				const vec2 &pos,
+				const COLOR &color,
+				FONT_SIZE FontSize,
+				TextWriter &font
+			)
+: fontSize(FONT_SIZE_NORMAL),
+  font(0)
 {
-	m_Color = color;
-	m_FontSize = FontSize;
-
-	font = &g_Application.fontSmall;
-
-	setWidth(0);
-	setHeight(0);
-	setRelativePos(vec2(x,y));
-	setLabel(strLabel);
+	setFont(font);
+	setFontSize(FontSize);
+	setLabel(label);
+	setColor(color);
+	setRelativePos(pos);
 }
 
-void LabelWidget::setLabel(const _tstring& label)
+void LabelWidget::setLabel(const _tstring& labelTxt)
 {
-	m_strLabel = label;
+	ASSERT(font != 0, _T("font was null!  Call setFont method first!"));
 
-	vec2 dim = font->getDimensions(label, m_FontSize);
+	labelText = labelTxt;
 
+	vec2 dim = font->getDimensions(labelText, fontSize);
 	setWidth(dim.x);
 	setHeight(dim.y);
 }
 
-void LabelWidget::draw(void) const
+void LabelWidget::setColor(const COLOR &color)
 {
-	if(isVisible())
-		font->write(m_strLabel, m_Color, m_FontSize);
+	this->m_Color = color;
 }
 
-}; // namespace
+void LabelWidget::setFont(TextWriter &font)
+{
+	this->font = &font;
+}
+
+void LabelWidget::setFontSize(FONT_SIZE fontSize)
+{
+	this->fontSize = fontSize;
+}
+
+void LabelWidget::draw(void) const
+{
+	ASSERT(font != 0, _T("font is null!  call setFont method first!"));
+
+	if(isVisible())
+	{
+		font->write(labelText, m_Color, fontSize);
+	}
+}
+
+} // namespace Engine

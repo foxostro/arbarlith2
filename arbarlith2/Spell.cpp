@@ -65,7 +65,7 @@ void Spell::clear(void)
 	descriptionText = _T("ERROR: no description available for this spell");
 }
 
-void Spell::setZone(Zone *zone, OBJECT_ID ownerID)
+void Spell::setZone(World *zone, OBJECT_ID ownerID)
 {
 	ASSERT(zone!=0, _T("zone is null"));
 	ASSERT(zone->getObjects().isMember(ownerID), _T("owner is not present in the active zone"));
@@ -74,16 +74,16 @@ void Spell::setZone(Zone *zone, OBJECT_ID ownerID)
 	this->ownerID = ownerID;
 }
 
-void Spell::loadFromFile(const _tstring &fileName, Engine::Zone *zone, Engine::OBJECT_ID ownerID)
+void Spell::loadFromFile(const _tstring &fileName, Engine::World *zone, Engine::OBJECT_ID ownerID)
 {
-	CPropBag xml;
+	PropertyBag xml;
 	if(xml.Load(fileName))
 	{
 		load(xml, zone, ownerID);
 	}
 }
 
-void Spell::load(CPropBag &xml, Engine::Zone *zone, Engine::OBJECT_ID ownerID)
+void Spell::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ownerID)
 {
 	_tstring activeIcon;
 	_tstring inactiveIcon;
@@ -115,7 +115,7 @@ void Spell::loadIcon(const _tstring &active, const _tstring &inactive)
 	matInactive.loadTexture(inactive, 0);
 }
 
-void Spell::create(CPropBag &xml)
+void Spell::create(PropertyBag &xml)
 {
 	destroy();
 
@@ -248,24 +248,21 @@ void Spell::draw(const vec3 &center) const
 {
 	if(timer < 1000.0f)
 	{
-		float y = 0;
-		float MAX_Y = 0.3f;
+		const float MAX_Y = 0.3f;
 
 		switch(state)
 		{
 		case COOLING:
-			y = MAX_Y;
+			drawIcon(true, center + vec3(0,MAX_Y,0), 0.6f);
 			break;
 
 		case CASTING:
-			y = MAX_Y * (1 - (timer / castTime));
+			drawIcon(true, center + vec3(0,MAX_Y,0)*(1-(timer/castTime)), 0.6f);
 			break;
 
 		case READY:
 			break; // Do nothing
 		};
-
-		drawIcon(true, center + vec3(0, y, 0), 0.6f);
 	}
 }
 

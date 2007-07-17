@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2004-2007 Game Creation Society
+Copyright © 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -28,30 +28,61 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _MESSAGEBOXMANAGER_H_
-#define _MESSAGEBOXMANAGER_H_
+#ifndef _BOUNDING_BOX_H_
+#define _BOUNDING_BOX_H_
 
-#include "MessageBox.h"
+#include "vec4.h"
 
 namespace Engine {
 
-/** Manages a collection of message boxes */
-class MessageBoxManager : public Widget
+/**
+Bounding boxes are used to represent the
+volume of an object and test for collisions
+@author Andrew Fox
+*/
+class BoundingBox
 {
 public:
-	/**
-	Opens a new message box
-	@param text The message text
+	/** Position of the box */
+	vec3 m_Pos;
+
+	/** Minimum vertex of the box relative to m_Pos */
+	vec3 m_Min;
+
+	/** Maximum vertex of the box relative to m_Pos*/
+	vec3 m_Max;
+
+	/*
+	Determines whether a collision between two boxes has occurred
+	@param box The bounding box to test against
+	@return Returns true if this bounding box intersects the given bounding box, otherwise, returns false.
 	*/
-	void open(const _tstring &text);
+	bool Collision(BoundingBox &box);
 
-protected:
-	/** Removes and deletes all dead children */
-	virtual void pruneDeadChildren(void);
+	/**
+	Determines whether the point is within the vertical projection of the box
+	@param p The point to test
+	@return Returns true if the point resides within the vertical projection of the box and false otherwise
+	*/
+	bool Collision(vec2 p)
+	{
+		return Collision(p.x, p.y);
+	}
+	/**
+	Determines whether the point is within the vertical projection of the box
+	@param x The x-coordinate of the point to test
+	@param z The y-coordinate of the point to test
+	@return Returns true if the point resides within the vertical projection of the box and false otherwise
+	*/
+	bool Collision(float x, float z);
 
-private:
-	/** Active message boxes */
-	list<MsgBox*> boxes;
+	/**
+	Tests whether a sphere intersects the bounding box
+	@param center The center of the sphere
+	@param radius The radius of the sphere
+	@return true if the two intersect
+	*/
+	bool testBoxVersusSphere(const vec3 &center, float radius) const;
 };
 
 } // namespace Engine

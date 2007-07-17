@@ -30,6 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
+#include "SDLwindow.h"
 #include "Application.h"
 #include "GameStateMenu.h"
 #include "MenuOptions.h"

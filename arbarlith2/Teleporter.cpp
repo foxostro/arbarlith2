@@ -51,19 +51,19 @@ void Teleporter::clear(void)
 
 void Teleporter::onUse(Actor*)
 {
-	const size_t numOfPlayers = g_World.getNumOfPlayers();
+	const size_t numOfPlayers = getZone().getNumOfPlayers();
 
 	if(numOfPlayers < 2)
 	{
 		// Place the single player at the destination point
-		g_World.getPlayer(0).Place(destinationPosition);
+		getZone().getPlayer(0).Place(destinationPosition);
 	}
 	else
 	{
 		// Place players around the destination point
 		for(size_t i=0; i<numOfPlayers; ++i)
 		{
-			Player &player = g_World.getPlayer(i);
+			Player &player = getZone().getPlayer(i);
 
 			float angle = 2.0f * ((float)i/numOfPlayers) * (float)M_PI;
 			vec3 offset = vec3(cosf(angle), 0, sinf(angle)) * 2.0f;
@@ -84,7 +84,7 @@ void Teleporter::createToolBar(ListPaneWidget *pane)
 	pane->addElement(new ListElementTweakerXML(	_T("Destination Position"),	&destinationPosition));
 }
 
-bool Teleporter::LoadXml(CPropBag &xml)
+bool Teleporter::LoadXml(PropertyBag &xml)
 {
 	Switch::LoadXml(xml);
 
@@ -93,7 +93,7 @@ bool Teleporter::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool Teleporter::saveTidy(CPropBag &xml, CPropBag &editorData) const
+bool Teleporter::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
 	saveTag(xml, editorData, _T("destinationPosition"),	destinationPosition);
 

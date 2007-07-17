@@ -32,36 +32,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _WORLD_H_
 
 #include "vec4.h"
-#include "ActorFactory.h"
-#include "PropBag.h"
 #include "Singleton.h"
+#include "PropBag.h"
+
+#include "ActorSet.h"
+#include "ActorFactory.h"
+#include "messagerouter.h"
+#include "particle.h"
+#include "LightManager.h"
+#include "ShadowManager.h"
+#include "MusicEngine.h"
+#include "Map.h"
+#include "fog.h"
+
 
 #define MAX_PLAYERS 4
+
 
 namespace Engine {
 
 // class prototype
+class EditorToolBar;
 class Player;
-class Zone;
 
-/** handles the game world by tracking the game Zones */
+/** handles the game world */
 class World : public Singleton<World>
 {
+	friend class EditorToolBar; // FIXME: remove this statement! needed so that the toolbar can edit the World name... correct this
+
 public:
-	/**
-	Constructs the World and loads the game from the given filename
-	@param fileName
-	*/
-	World(const _tstring &fileName);
+	/** Default constructor */
+	World(void);
 
 	/** Destructor */
-	virtual ~World(void);
+	~World(void);
 
-	/** Cleanly destroys the world */
-	void destroy(void);
-
-	/** Resets all data fields to a just-constructed state */
+	/** Clears the zone to a just-constructed state */
 	void clear(void);
+
+	/** Cleanly destroys and clears the zone */
+	void destroy(void);
 
 	/** Release assets */
 	void release(void);
@@ -75,92 +85,123 @@ public:
 	@return true if the calling child class should save fully, false
 	if the calling child class should save just enough for editor mode
 	*/
-	virtual bool SaveXml(CPropBag &bag);
+	bool SaveXml(PropertyBag &bag);
 
 	/**
 	Load from XML
 	@param bag XML source
 	@return true if successful
 	*/
-	virtual bool LoadXml(CPropBag &bag);
+	bool LoadXml(PropertyBag &bag);
 
 	/**
 	Save to XML
 	@param fileName XML source
 	@return true if success, false if failure
 	*/
-	virtual bool SaveXml(const _tstring &fileName);
+	void SaveXml(const _tstring &fileName)
+	{
+		PropertyBag bag;
+		SaveXml(bag);
+		bag.saveToFile(fileName);
+	}
 
 	/**
 	Load from XML
 	@param fileName XML source
 	@return true if successful
 	*/
-	virtual bool LoadXml(const _tstring &fileName);
+	bool LoadXml(const _tstring &fileName)
+	{
+		PropertyBag bag;
+		bag.Load(fileName);
+		return LoadXml(bag);
+	}
 
 	/**
-	Updates the tak every tick as long as the task has not been frozen
-	@param deltaTime The millesonds since the last tick
+	Retrieves the name of the realm
+	@return Name of the realm
+	*/
+	const _tstring& getName(void) const
+	{
+		return name;
+	}
+
+	/**
+	Determines whether the realm has loaded data from XML yet or not
+	@return true if the realm has loaded data from XML, false otherwise
+	*/
+	bool isLoaded(void) const
+	{
+		return loaded;
+	}
+
+	/**
+	Gets the object database
+	@return object database
+	*/
+	ActorSet& getObjects(void)
+	{
+		return objects;
+	}
+
+	/**
+	Gets the object database
+	@return object database
+	*/
+	const ActorSet& getObjects(void) const
+	{
+		return objects;
+	}
+
+	/**
+	Gets the tile-based representation of the game world
+	@return a reference to the map object
+	*/
+	Map& getMap(void)
+	{
+		return map;
+	}
+
+	/**
+	Gets the tile-based representation of the game world
+	@return a reference to the map object
+	*/
+	const Map& getMap(void) const
+	{
+		return map;
+	}
+
+	/** Render the current zone */
+	void draw(void) const;
+
+	/**
+	Update the World
+	@param deltaTime Time elapsed since the last update
 	*/
 	void update(float deltaTime);
 
-	/** Return the number of realms in the game world */
-	size_t getNumRealms(void) const
+	/**
+	Update particles and delete stale particle systems
+	@param deltaTime Time elapsed since the last update
+	*/
+	void updateParticles(float deltaTime);
+
+	/**
+	Spawns a particle system
+	@param strFile Source file of the particle system
+	@param vPos The starting position of the particle system
+	@return Handle to the particle system
+	*/
+	size_t SpawnPfx(_tstring strFile, const vec3 &vPos);
+
+	/**
+	Gets the light manager
+	@return the light manager
+	*/
+	LightManager& getLightManager(void)
 	{
-		return m_Realms.size();
-	}
-
-	/**
-	Searches for a realm of the given name
-	@param realmName The name of the realm
-	@return The index for the realm
-	*/
-	size_t getRealmIdx(const _tstring &realmName);
-
-	/**
-	Searches for a realm of the given name
-	@param realmName The name of the realm
-	@return The realm that has been found
-	*/
-	Zone& getZone(const _tstring &realmName);
-
-	/**
-	Searches for a realm of the given name
-	@param realmName The name of the realm
-	@return The realm that has been found
-	*/
-	Zone* getZonePtr(const _tstring &realmName);
-
-	/**
-	Retrieve a realm by its index
-	@param idx The realm index
-	@return The realm
-	*/
-	Zone& getZone(size_t idx);
-
-	/**
-	Retrieve a realm by its index
-	@param idx The realm index
-	@return The realm
-	*/
-	Zone* getZonePtr(size_t idx);
-
-	/**
-	Gets the current time in the game, in milliseconds
-	@return milliseconds
-	*/
-	inline double getClockTicks(void) const
-	{
-		return m_ClockTicks;
-	}
-
-	/**
-	Gets the name of the starting Zone
-	@return milliseconds
-	*/
-	inline const _tstring& getStartingZone(void) const
-	{
-		return startingRealm;
+		return lightManager;
 	}
 
 	/**
@@ -201,10 +242,10 @@ public:
 	Player* getPlayerPtr(size_t playerNum);
 
 	/**
-	Reloads the player
+	Reloads all the players
 	@param newGame The "new game" file
 	*/
-	void reloadPlayer(CPropBag &newGame);
+	void reloadPlayers(PropertyBag &newGame);
 
 	/** Harmonizes the camera with the current player positions */
 	void updateCamera(void);
@@ -218,31 +259,50 @@ public:
 		return averagePlayerPosition;
 	}
 
+	/**
+	Gets the current time in the game, in milliseconds
+	@return milliseconds
+	*/
+	inline double getClockTicks(void) const
+	{
+		return clockTicks;
+	}
+
 private:
-	/** The name of the starting Zone */
-	_tstring startingRealm;
-
-	/** Milliseconds since this game began */
-	double m_ClockTicks;
-
-	/** This is a list of the realms that are living at the current moment */
-	vector<Zone*> m_Realms;
-
-	/** Storage for all possible players */
-	Player *player[MAX_PLAYERS];
-
-	/** The number of players less than the maximum that are actually in use */
-	size_t NumOfPlayers;
-
-	/** Periodically calculates and caches the average player position */
-	vec3 averagePlayerPosition;
+	/**
+	Loads and processes XML data
+	@param Bag XML-Source
+	@return true if succesful, false otherwise
+	*/
+	bool LoadData(PropertyBag &Bag);
 
 	/**
-	Attempts to cache a Zone stored on disc
-	@param The file name of the Zone to attempt to cache
-	@return a pointer to the cached Zone, or 0
+	Draws the scene without shadows
+	@param useLights When true, the shadowless scene is rendered with lighting.
+	Otherwise, only full ambient light is used.
 	*/
-	Zone* cacheZone(const _tstring &fileName);
+	void drawShadowlessScene(bool useLights) const;
+
+	/** Draws the scene for the editor */
+	void drawEditorScene(void) const;
+
+	/** Draws the particles in the scene */
+	void drawParticles(void) const;
+
+	/** Draws the scene with shadows */
+	void drawScene(void) const;
+
+	/**
+	Draws the shadow receiving geometry of the scene.
+	Assumes that appropriate states are already setup for the operation.
+	*/
+	void drawShadowReceivers(void) const;
+
+	/**
+	Update the shadows
+	@param deltaTime Time elapsed since the last update
+	*/
+	void updateShadows(float deltaTime);
 
 	/** Periodically calculates and caches the average player position */
 	void recalculateAveragePlayerPosition(void)
@@ -255,6 +315,57 @@ private:
 	@return aveerage position of all the players
 	*/
 	vec3 findAveragePlayerPosition(void) const;
+
+public:
+	/** Music to play in the realm */
+	MusicEngine music;
+
+	/** Game Object Message Router */
+	MessageRouter router;
+
+	/** Collection of particle systems in the world */
+	vector<ParticleSystem*> particles;
+
+private:
+	/** All lights in the World */
+	LightManager lightManager;
+
+	/** All shadows in the World */
+	ShadowManager shadowManager;
+
+	/** Manages fog settings */
+	Fog fog;
+
+	/**
+	Flags whether or not the realm has been loaded from XML yet.
+	If the cache exists, this determines whether the realm has
+	been created from it or not.
+	*/
+	bool loaded;
+
+	/** Caches the data for the World until the World is loaded, as indicated by the 'Engine::World::loaded' property */
+	PropertyBag xmlCache;
+
+	/** Name of the World */
+	_tstring name;
+
+	/** Set of objects that reside within this World */
+	ActorSet objects;
+
+	/** Brick and Mortar walls of the World */
+	Map map;
+
+	/** Storage for all possible players */
+	Player *player[MAX_PLAYERS];
+
+	/** The number of players less than the maximum that are actually in use */
+	size_t NumOfPlayers;
+
+	/** Periodically calculates and caches the average player position */
+	vec3 averagePlayerPosition;
+
+	/** Milliseconds since this game began */
+	double clockTicks;
 };
 
 } // namespace Engine

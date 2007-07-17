@@ -35,14 +35,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "LightManager.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 /** Device that creates a Light and can be brken or repaired */
 class Lamp : public Switch
 {
 public:
-	GEN_RTTI(Lamp)
+	GEN_RTTI(Lamp, "class Engine::Lamp")
 
 public:
 	/**
@@ -68,7 +68,7 @@ public:
 	@param xml The XML data source
 	@return true if successful, false otherwise
 	*/
-	bool LoadXml(CPropBag &xml);
+	bool LoadXml(PropertyBag &xml);
 
 protected:
 	/**
@@ -83,7 +83,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Sync data in editor mode */
 	void sync(void);

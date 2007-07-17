@@ -43,7 +43,7 @@ void SpellIncinerate::clear(void)
 	spellRadius = 3.0f;
 }
 
-void SpellIncinerate::load(CPropBag &xml, Engine::Zone *zone, Engine::OBJECT_ID ownerID)
+void SpellIncinerate::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ownerID)
 {
 	Spell::load(xml, zone, ownerID);
 
@@ -72,7 +72,7 @@ void SpellIncinerate::castSpell(void)
 		{
 			Creature &creature = dynamic_cast<Creature&>(s.get(id));
 
-			createExplosion(owner.getZone(), creature.getPos(), damageValue, ownerID, _T("data/particle/fireball-explosion.xml"), _T("data/sound/s_explosion.wav"));
+			createExplosion(owner.getZone(), creature.getPos(), damageValue, 1.0f, ownerID, _T("data/particle/fireball-explosion.xml"), _T("data/sound/s_explosion.wav"));
 		}
 	}
 }

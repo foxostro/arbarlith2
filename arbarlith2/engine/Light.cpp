@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h" // Master Header
 #include "gl.h"
 #include "COLOR.h"
-#include "zone.h"
 #include "Light.h"
 
 namespace Engine { 
@@ -91,7 +90,7 @@ void Light::create()
 	destroy();
 }
 
-bool Light::fromXml(CPropBag &xml)
+bool Light::fromXml(PropertyBag &xml)
 {
 	destroy();
 
@@ -114,9 +113,9 @@ bool Light::fromXml(CPropBag &xml)
     return true;
 }
 
-CPropBag Light::toXml(void)
+PropertyBag Light::toXml(void)
 {
-	CPropBag xml;
+	PropertyBag xml;
 
 	xml.addSym(constantAttenuation);
 	xml.addSym(linearAttenuation);

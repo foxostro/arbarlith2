@@ -69,7 +69,7 @@ public:
 	Sets the current zone for the Blur to re-render it as necessary
 	@param zone the current zone
 	*/
-	void setZone(Zone * zone)
+	void setZone(World * zone)
 	{
 		blur.setZone(zone);
 	}

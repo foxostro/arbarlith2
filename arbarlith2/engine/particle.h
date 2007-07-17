@@ -32,437 +32,468 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _PARTICLE_H_
 
 #include "propbag.h"
-#include "3dmath.h"
 #include "vec4.h"
-#include "mesh.h" // BoundingBox
+#include "BoundingBox.h"
+#include "Material.h"
 
 namespace Engine {
 
-		class ParticleSystem; // Prototype definition
-
-		/** A body that follows the laws of physics */
-		class ParticleBody
-		{
-		protected:
-			/** Position of the body */
-			vec3 m_vPosition;
-
-			vec3 initialVelocity;
-
-			/** Milliseconds since creation*/
-			float m_Age;
-
-		public:
-			vec3 m_vInitialPosition;
-			vec3 m_vConstantAcceleration;
-			vec3 center;
-			float initialRadialVelocity;
-
-		public:
-			/** Constructor */
-			ParticleBody();
-
-			/**
-			Constructor
-			@param Bag Reference to a loaded xml data class
-			*/
-			ParticleBody(CPropBag &Bag);
-
-			/**
-			Loads data from xml and returns success(true) or failure(false)
-			@param Bag Reference to a loaded xml data class
-			@return true if the data loads successfully
-			*/
-			bool LoadXml(CPropBag &Bag);
-
-			/**
-			Copy Constructor
-			@param body The object to copy
-			*/
-			ParticleBody(const ParticleBody &body);
-
-			///  Name: Body::Update
-			///  Desc: Updates the particle position and sets the immediate values for graph related data
-			/// Param: float dTime  --  Delta time (milliseconds) since last update
-			virtual void Update(float dTime);
-
-			///  Name: Body::getPosition
-			///  Desc: Returns the position of the Body
-			/// Param: void
-			const vec3& getPosition() const { return m_vPosition; }
-
-			void setPosition(const vec3 &position, const vec3 &center);
-		};
-
-		// Records a list of 2D points and can calculate the graph's value for any x-value
-		class ParticleGraph
-		{
-		private:
-			vector<Point2> m_Points;
-
-		public:
-			///  Name: Graph::Graph
-			///  Desc: Constructor
-			/// Param: void
-			ParticleGraph(void);
-
-			///  Name: Graph::Graph
-			///  Desc: Constructor
-			/// Param: CPropBag &Bag  --  Reference to a loaded xml data class
-			ParticleGraph(CPropBag &Bag);
-
-			///  Name: Graph::LoadXml
-			///  Desc: Loads graph data from xml and returns success(true) or failure(false)
-			/// Param: CPropBag &Bag  --  Reference to a loaded xml data class
-			bool LoadXml(CPropBag &Bag);
-
-			///  Name: Graph::GetValue
-			///  Desc: Returns the value of the graph when x equals the given value.
-			/// Param: float x  --  Arbitrary x value on graph and within its domain.
-			float GetValue(float x);
-
-			float m_MinX, m_MaxX;
-			float m_MinY, m_MaxY;
-		};
-
-		// A particle
-		class ParticleElement : public ParticleBody
-		{
-		public:
-			/** This handle could be passed to the System to obtain the material we want to use */
-			size_t m_nMaterialHandle;
-
-			/** ParticleSystem that owns this element */
-			ParticleSystem *m_pOwner;
-
-			/** Milliseconds that this element will be alive for */
-			float m_LifeSpan;
-
-		private:
-			// Name of the particle type
-			_tstring m_strName;
-
-			// Rotation of the particle versus time
-			// Please note that no angular kinematics are performed, this data
-			// is only for rendering purposes
-			bool m_bRandomRotationDirection; // Choose rotation direction apon creation randomly?
-			bool m_bRotationDirection; // Left or right?
-
-			float m_SizeMul;
-
-			// Graph related data
-			ParticleGraph m_RotationGraph; // Rotation in radians over time
-			ParticleGraph m_SizeGraph;     // Size in meters over time
-			ParticleGraph m_AlphaGraph;    // Alpha component over time
-			ParticleGraph m_RedGraph;      // Red component over time
-			ParticleGraph m_GreenGraph;    // Green component over time
-			ParticleGraph m_BlueGraph;     // Blue component over time
-
-			// All graph related data must have an immediate value for the current cycle.
-			float m_RotationImmediate;
-			float m_SizeImmediate;
-			float m_AlphaImmediate;
-			float m_RedImmediate;
-			float m_GreenImmediate;
-			float m_BlueImmediate;
-
-			// Billboard vertices
-			vec3 A, B, C, D;
-
-		public:
-			/** Destructor */
-			virtual ~ParticleElement(void)
-			{}
-
-			///  Name: Element::Element
-			///  Desc: Constructor
-			/// Param: void
-			ParticleElement(void);
-
-			///  Name: Element::Element
-			///  Desc: Constructor
-			/// Param: CPropBag &Bag             --  Reference to a loaded xml data class
-			///        Particle::System &system  --  Reference yo the particle system that owns this element
-			ParticleElement(CPropBag &Bag, ParticleSystem &system);
-
-			///  Name: Element::Element
-			///  Desc: Copy Constructor
-			ParticleElement(const ParticleElement &element);
-
-			/// Name: operator=
-			/// Desc: Assignment Operator
-			ParticleElement &operator=(const ParticleElement &element);
-
-			///  Name: Element::LoadXml
-			///  Desc: Loads data from xml and returns success (true) or failure (false)
-			/// Param: CPropBag &Bag             --  Reference to a loaded xml data class
-			///        Particle::System &system  --  Reference yo the particle system that owns this element
-			bool LoadXml(CPropBag &Bag, ParticleSystem &system);
-
-			/// Name: Element::PrepareForRender
-			///  Desc: Calculates the billboard vertices for Particle::Element::Render
-			/// Param: float x0                --  matrix[0] - matrix[1]
-			///        float x1                --  matrix[0] + matrix[1]
-			///        float y0                --  matrix[4] - matrix[5]
-			///        float y1                --  matrix[4] + matrix[5]
-			///        float z0                --  matrix[8] - matrix[9]
-			///        float z1                --  matrix[8] + matrix[9]
-			///             (matrix[16] represents the modelview matrix)
-			void PrepareForRender(float x0, float x1, float y0, float y1, float z0, float z1);
-
-			///  Name: Element::Render
-			///  Desc: Renders the particle
-			void Render();
-
-			///  Name: Element::Update
-			///  Desc: Updates the particle position and sets the immediate values for graph related data
-			/// Param: float dTime  --  Delta time (milliseconds) since last update
-			void Update(float dTime);
-
-			///  Name: Element::IsDead
-			///  Desc: Is the particle dead?
-			/// Param: void
-			inline bool IsDead(void)
-			{
-				return m_Age>m_LifeSpan;
-			}
-
-			///  Name: Element::GetName
-			///  Desc: Returns the name of the particle
-			/// Param: void
-			inline _tstring GetName(void) { return m_strName; }
-
-			///  Name: Element::SizeMul
-			///  Desc: Returns a reference to the size multiplier
-			inline float& SizeMul() { return m_SizeMul; }
-
-			///  Name: Element::GetAge
-			///  Desc: Returns the age of the particle
-			inline float GetAge() { return m_Age; }
-		};
-
-		// Creates particles in the parent System accordign to rules loaded from xml.
-		class ParticleEmitter
-		{
-		private:
-			// Owner system
-			ParticleSystem *m_pOwner;
-
-			// Particle template for all Elements emitted by this object
-			ParticleElement m_Template;
-
-			// Rotation of the emitter versus time
-			// Please note that no angular kinematics are performed, this data
-			// is only for rendering purposes
-			bool m_bRandomRotationDirection; // Choose rotation direction apon creation randomly?
-			bool m_bRotationDirection;       // Left or right?
-			vec3 m_vRotationAxis;        // Rotation axis
-			ParticleGraph m_RotationGraph;           // Rotation in radians over time
-			float m_RotationImmediate;       // Immediate rotation in radians for this cycle
-
-			// Emission data
-			float m_HotspotRadius;         // Radius of sphere where there is a full probability of a particle
-			float m_FalloffRadius;         // Radius of area where probabilty drops to zero.
-			ParticleGraph m_EmissionRateGraph;     // Rate of emission over time
-			float m_EmissionRateImmediate; // Immediate Rate of emission
-
-			// Particle stats on emission
-			ParticleGraph m_SpeedGraph;     // Speed in direction of emitter on emission over time
-			float m_SpeedImmediate; // Immediate Speed in direction of emitter on emission over time
-
-			ParticleGraph m_SizeMulGraph;     // Size multiplier on emission over time
-			float m_SizeMulImmediate; // Immediate Size multiplier on emmision
-
-			ParticleGraph m_LifeSpanGraph;     // Element life span on emission over time
-			float m_LifeSpanImmediate; // immediate Element life span on emission
-
-			// Whether it loops or not, how many times does it loop.
-			float m_Time;
-			float m_Length;
-			bool m_bLooping;
-			int m_iNumCycles; // Number of cycles remaining. (If < 0, then infinite)
-
-		public:
-			///  Name: Emitter::Emitter
-			///  Desc: Constructor
-			/// Param: CPropBag &Bag  --  Reference to a loaded xml data class
-			ParticleEmitter(CPropBag &Bag, ParticleSystem &Owner);
-
-			///  Name: Emitter::Emitter
-			///  Desc: Copy Constructor
-			ParticleEmitter(const ParticleEmitter &emitter);
-
-			/// Name: operator=
-			/// Desc: Assignment Operator
-			ParticleEmitter &operator=(const ParticleEmitter &emitter);
-
-			///  Name: Emitter::Update
-			///  Desc: Updates the emitter
-			/// Param: float dTime  --  Delta time (milliseconds) since last update
-			void Update(float dTime);
-
-			///  Name: Emitter::IsDead
-			///  Desc: Is the particle dead?
-			/// Param: void
-			inline bool IsDead(void)
-			{
-				if(m_bLooping == false)
-				{
-					return(m_Time>m_Length);
-				}
-				else
-				{
-					return(m_iNumCycles==0); // if it is negative, then the pfx should be kept alive indefinitely
-				}
-			}
-
-			///  Name: Emitter::Kill
-			///  Desc: Kills the emitter
-			/// Param: none
-			void Kill()
-			{
-				m_Time = m_Length + 1.0f; // Run past the length of the animation
-				m_iNumCycles = 0;         // Do not loop
-			}
-
-			/**
-			Gets the falloff radius of the emitter
-			@return the falloff radius of the emitter
-			*/
-			float getFalloffRadius(void) const
-			{
-				return m_FalloffRadius;
-			}
-		};
-
-		// Contains a list of particle emitters and manages all particles created by them.
-		class ParticleSystem : public ParticleBody
-		{
-		public:
-			enum EMIT_MAX_BEHAVIOR
-			{
-				EMIT_WAIT,
-				EMIT_REPLACE_OLDEST,
-				EMIT_REPLACE_RANDOM
-			};
-
-		private:
-			// List of particle templates loaded at creation
-			std::multimap<_tstring, ParticleElement> m_Templates;
-
-			// List of materials loaded at creation
-			vector<Material> m_Materials;
-
-			// Holds the current frame of animation for all materials
-			vector<float> m_Frames;
-
-			// List of all emitters managed by the System
-			vector<ParticleEmitter> m_Emitters;
-
-			// Particles in the system
-			size_t m_nMaxParticles;
-			ParticleElement **m_ppElements; // Array of dynamically allocated particles
-			ParticleElement **m_ppSorted; // Particles sorted by z depth
-			EMIT_MAX_BEHAVIOR m_Behavior;
-
-		public:
-			///  Name: System::System
-			///  Desc: Constructor
-			/// Param: void
-			ParticleSystem(void)
-			: ParticleBody(),
-			  m_nMaxParticles(0),
-			  m_ppElements(NULL),
-			  m_Behavior(EMIT_WAIT)
-			{}
-
-			///  Name: System::System
-			///  Desc: Constructor
-			/// Param: _tstring strFile  --  File to load xml from
-			ParticleSystem(_tstring strFile)
-			: ParticleBody(),
-			  m_nMaxParticles(0),
-			  m_ppElements(NULL),
-			  m_Behavior(EMIT_WAIT)
-			{
-				CPropBag Bag;
-				Bag.Load(strFile);
-				LoadXml(Bag);
-			}
-
-			///  Name: System::System
-			///  Desc: Constructor
-			/// Param: CPropBag &Bag  --  Reference to a loaded xml data class
-			ParticleSystem(CPropBag &Bag);
-
-			///  Name: System::System
-			///  Desc: Copy Constructor
-			ParticleSystem(const ParticleSystem &system);
-
-			/** Destructor */
-			virtual ~ParticleSystem(void);
-
-			///  Name: System::LoadXml
-			///  Desc: Loads data from xml and returns success (true) or failure (false)
-			/// Param: CPropBag &Bag  --  Reference to a loaded xml data class
-			bool LoadXml(CPropBag &Bag);
-
-			///  Name: System::Render
-			///  Desc: Renders the system
-			/// Param: void
-			void Render(void);
-
-			///  Name: System::Update
-			///  Desc: Updates the system
-			/// Param: float dTime  --  Delta time (milliseconds) since last update
-			void Update(float dTime);
-
-			///  Name: System::Spawn
-			///  Desc: Spawns a new particle
-			/// Param: const Element &element  --  The particle to copy
-			void Spawn(const ParticleElement &element);
-
-			///  Name: System::GetTemplate
-			///  Desc: Returns a copy of the template element specified
-			/// Param: _tstring strName  --  Name of the template element
-			ParticleElement GetTemplate(_tstring strName);
-
-			///  Name: System::GetMaterialHandle
-			///  Desc: Returns a handle to the material specified
-			/// Param: _tstring strName  --  Name of the material
-			size_t GetMaterialHandle(const _tstring &strName) const;
-
-			///  Name: System::GetMaterial
-			///  Desc: Returns the material specified
-			/// Param: size_t nHandle  --  Handle of the material
-			Material& GetMaterial(size_t nHandle);
-
-			///  Name: System::IsDead
-			///  Desc: Polls the emitters and returns true if all emitters are dead, else returns false
-			/// Param: none
-			bool IsDead();
-
-			///  Name: System::Kill
-			///  Desc: Kills each particle emitter
-			/// Param: none
-			void Kill();
-
-			/**
-			Retrieves the maximum falloff radius of the particle system
-			@return falloff radius
-			*/
-			float getRadius(void) const;
-
-			void setPosition(const vec3 &position)
-			{
-				m_vInitialPosition = position;
-				center = position;
-				initialVelocity.zero();
-			}
-		};
+/**
+Physical body in the particle engine.
+Follows some notion of the laws of Physics, respecting acceleration and velocity over time.
+*/
+class ParticleBody
+{
+protected:
+	/** Position of the body */
+	vec3 position;
+
+	/** Initial velocity of the body (meters per second) */
+	vec3 initialVelocity;
+
+	/** Milliseconds since creation*/
+	float age;
+
+public:
+	/** Initial position of the body */
+	vec3 initialPosition;
+
+	/** The acceleration of the body */
+	vec3 constantAcceleration;
+
+	vec3 center;
+
+	/** Initial radial velocity of the particle */
+	float initialRadialVelocity;
+
+public:
+	/** Destructor */
+	virtual ~ParticleBody(void) {}
+
+	/** Default Constructor */
+	ParticleBody(void);
+
+	/**
+	Copy Constructor
+	@param body The object to copy
+	*/
+	ParticleBody(const ParticleBody &body);
+
+	/**
+	Constructor
+	@param data Data describing the body
+	*/
+	ParticleBody(PropertyBag &data);
+
+	/**
+	Loads data from xml and returns success(true) or failure(false)
+	@param data Data to describe the body
+	@return true if the data loads successfully
+	*/
+	virtual void load(PropertyBag &data);
+
+	/**
+	Updates the particle position and sets the immediate values for graph related data
+	@param deltaTime milliseconds since last update
+	*/
+	virtual void update(float deltaTime);
+
+	/**
+	Gets the position of the Body
+	@return position of the Body
+	*/
+	inline const vec3& getPosition(void) const
+	{
+		return position;
+	}
+
+	/**
+	Sets the position of the body
+	@param position Position of the body
+	@param center Center of the body
+	*/
+	void setPosition(const vec3 &position, const vec3 &center);
+
+	/**
+	Sets the position of the body
+	@param position Position of the body
+	*/
+	void setPosition(const vec3 &position);
+};
+
+/**
+Represents the curve of some value over time.
+The particle engine makes extensive use of the ParticleGraph class to model
+arbitrary curves in the graph over time of the properties of particles and particle
+systems e.g. colors, size.
+*/
+class ParticleGraph
+{
+public:
+	/** Min. corner of the graph */
+	vec2 min;
+
+	/** Max. corner of the graph */
+	vec2 max;
+
+private:
+	/** data points */
+	vector<Point2> points;
+
+public:
+	/** Default Constructor */
+	ParticleGraph(void);
+
+	/**
+	Constructor
+	@param xml data on the curve
+	*/
+	ParticleGraph(PropertyBag &xml);
+
+	/**
+	Loads graph data from xml
+	@param xml data on the curve
+	*/
+	void load(const PropertyBag &xml);
+
+	/**
+	Calculates the value at the specified time
+	@param t [0.0, 1.0] representing progress through time on the curve
+	*/
+	float getValue(float t) const;
+};
+
+class ParticleSystem; // Prototype
+
+/** A single particle element. */
+class ParticleElement : public ParticleBody
+{
+public:
+	/** This handle could be passed to the System to obtain the material we want to use */
+	size_t materialHandle;
+
+	/** ParticleSystem that owns this element */
+	ParticleSystem *owner;
+
+	/** Milliseconds that this element will be alive for */
+	float lifeSpan;
+
+private:
+	/** Name of the particle type */
+	_tstring typeName;
+
+	/** Choose rotation direction upon creation randomly? */
+	bool pickRandomRotationDirection;
+
+	/** Direction of particle rotation */
+	enum { CLOCKWISE, COUNTER_CLOCKWISE } rotationDirection;
+
+	/** Multiplier for the size of the particle */
+	float sizeMultiplier;
+
+	/** Rotation in radians over time */
+	ParticleGraph graphRotation;
+	
+	/** Size in meters over time */
+	ParticleGraph graphSize;
+	
+	/** Alpha component over time */
+	ParticleGraph graphAlpha;
+	
+	/** Red component over time */
+	ParticleGraph graphRed;
+	
+	/** Green component over time */
+	ParticleGraph graphGreen;
+	
+	/** Blue component over time */
+	ParticleGraph graphBlue;
+
+	/** Rotation speed component at the immediate moment */
+	float graphRotationImmediate;
+
+	/** Particle size component at the immediate moment */
+	float graphSizeImmediate;
+
+	/** Particle Alpha component at the immediate moment */
+	float graphAlphaImmediate;
+
+	/** Particle Red component at the immediate moment */
+	float graphRedImmediate;
+
+	/** Particle Green component at the immediate moment */
+	float graphGreenImmediate;
+
+	/** Particle Blue component at the immediate moment */
+	float graphBlueImmediate;
+
+	/** Billboard vertices */
+	vec3 A, B, C, D;
+
+public:
+	/** Default Constructor */
+	ParticleElement(void);
+
+	/**
+	Constructor
+	@param data Data to describe the element
+	@param system Particle system that owns the emitter
+	*/
+	ParticleElement(PropertyBag &data, ParticleSystem &system);
+
+	/** Copy Constructor */
+	ParticleElement(const ParticleElement &element);
+
+	/** Assignment Operator */
+	ParticleElement &operator=(const ParticleElement &element);
+
+	/**
+	Loads particle data
+	@param data Data to describe the element
+	@param system Particle system that owns the emitter
+	*/
+	void load(PropertyBag &data, ParticleSystem &system);
+
+	/** Calculates the billboard vertices for drawing
+	(matrix[16] represents the modelview matrix)
+	@param x0 matrix[0] - matrix[1]
+	@param x1 matrix[0] + matrix[1]
+	@param y0 matrix[4] - matrix[5]
+	@param y1 matrix[4] + matrix[5]
+	@param z0 matrix[8] - matrix[9]
+	@param z1 matrix[8] + matrix[9]
+	*/
+	void prepareForRender(float x0, float x1, float y0, float y1, float z0, float z1);
+
+	/** Draws Renders the particle */
+	void draw(void) const;
+
+	/**
+	Updates the particle element
+	@param deltaTime Milliseconds since the last update
+	*/
+	void update(float deltaTime);
+
+	/**
+	Determines whether the particle is dead or not
+	@return true if the particle is now dead
+	*/
+	inline bool isDead(void) const
+	{
+		return age>lifeSpan;
+	}
+
+	inline const _tstring& getName(void) const
+	{
+		return typeName;
+	}
+
+	inline float getSizeMultiplier(void) const
+	{
+		return sizeMultiplier;
+	}
+
+	inline float getAge(void) const
+	{
+		return age;
+	}
+
+	inline float setSizeMultiplier(float x)
+	{
+		return(sizeMultiplier = x);
+	}
+
+	inline float setLifeSpan(float x)
+	{
+		return(lifeSpan = x);
+	}
+};
+
+/**
+Emits particle for a ParticleSystem.
+Creates particles in the parent ParticleSystem according to rules loaded from xml.
+*/
+class ParticleEmitter
+{
+private:
+	/** The particle system that owns this emitter */
+	ParticleSystem *owner;
+
+	/** Particle template for all Elements emitted by this object */
+	ParticleElement particleTemplate;
+
+	/** The probability of a particle being created drops to zero between the hot spot radius and the falloff radius. */
+	float radiusFalloff;
+	
+	/** Rate of emission over time */
+	ParticleGraph graphEmissionRate;
+
+	/** immediate rate of emission */
+	float graphEmissionRateImmediate;
+
+	/** The speed at which the particles are ejected from the emitter, over time */
+	ParticleGraph graphSpeed;
+
+	/** Immediate speed at which the particles are ejected from the emitter */
+	float graphSpeedImmediate;
+
+	/** Size multiplier on emission over time */
+	ParticleGraph graphSizeMultiplier;
+
+	/** Immediate Size multiplier on emission */
+	float graphSizeMultiplierImmediate;
+
+	/** Elements are given a life span when they are spawned, however, this may change over time */
+	ParticleGraph graphLifeSpan;
+
+	/** Elements are given a life span when they are spawned */
+	float graphLifeSpanImmediate;
+
+	/** Age of the emitter */
+	float age;
+
+	/** Life span of the emitter */
+	float lifeSpan;
+
+	/** If true, then the emitter will repeat after its lifespan has expired */
+	bool looping;
+
+	/**
+	The number of times (remaining) to allow a looping emitter to repeat.
+	If this is negative, then the emitter will continue to repeat forever.
+	*/
+	int numberOfLifeCycles;
+
+public:
+	/**
+	Constructor
+	@param data Data to describe the behavior of the emitter
+	@param owner ParticleSystem that owns the emitter
+	*/
+	ParticleEmitter(PropertyBag &data, ParticleSystem &owner);
+
+	/** Copy Constructor */
+	ParticleEmitter(const ParticleEmitter &emitter);
+
+	/** Assignment Operator */
+	ParticleEmitter &operator=(const ParticleEmitter &emitter);
+
+	/**
+	Updates the emitter over time
+	@param deltaTime Milliseconds since the last update
+	*/
+	void update(float deltaTime);
+
+	/** Kills the emitter */
+	void kill(void);
+
+	/**
+	Determines whether the emitter is dead or alive.
+	@return true if the emitter is dead
+	*/
+	bool isDead(void) const;
+};
+
+/**
+System of particles and particle emitters.
+Manages a collection of particle emitters and a fixed number of particles (per system)\
+spawned from those emitters.
+*/
+class ParticleSystem : public ParticleBody
+{
+private:
+	/** Particle-Template's Name -> Particle-Template */
+	map<_tstring, ParticleElement> templatesByName;
+
+	/** Particle materials available for a template to specify */
+	vector<Material> materials;
+
+	/** Particle emitters managed by the ParticleSystem */
+	vector<ParticleEmitter> emitters;
+
+	/** Hard maximum number of particles that may be maintained by the ParticleSystem */
+	size_t maxNumberOfParticles;
+
+	/** Behavior to follow when max. particles are in use and we want to spawn a new particle */
+	enum
+	{
+		IGNORE_EMISSION,
+		REPLACE_RANDOM
+	} emissionBehavior;
+
+	/** Array of particles allocated for the ParticleSystem */
+	ParticleElement **elements;
+
+public:
+	/** Destructor */
+	virtual ~ParticleSystem(void);
+
+	/** Default Constructor */
+	ParticleSystem(void);
+
+	/**
+	Constructor
+	@param fileName File to load data from
+	*/
+	ParticleSystem(const _tstring &fileName);
+
+	/**
+	Constructor
+	@param data Data describing the system
+	*/
+	ParticleSystem(PropertyBag &data);
+
+	/** Copy Constructor */
+	ParticleSystem(const ParticleSystem &system);
+
+	/**
+	Loads data from xml and returns success(true) or failure(false)
+	@param data Data to describe the body
+	@return true if the data loads successfully
+	*/
+	virtual void load(PropertyBag &data);
+
+	/** Draws the particles in the system */
+	void draw(void) const;
+
+	/**
+	Updates the particle system
+	@param deltaTime Milliseconds since the last update
+	*/
+	void update(float deltaTime);
+
+	/**
+	Spawns a new particle
+	@param element Particle to copy when spawning the new one
+	*/
+	void spawn(const ParticleElement &element);
+
+	/**
+	Retrieves a particle template given its name
+	@param name Name of the particle template
+	*/
+	const ParticleElement& getTemplate(const _tstring &name);
+
+	/**
+	Gets the material handle when given a material name
+	@param name Name of the material
+	@return handle to the material
+	*/
+	size_t getMaterialHandle(const _tstring &name) const;
+
+	/**
+	Retrieves a material given its handle
+	@param materialHandle Handle of the material
+	*/
+	Material& getMaterial(size_t materialHandle);
+
+	/** Polls the emitters and returns true if all emitters are dead, else returns false */
+	bool isDead(void) const;
+
+	/** Kills each particle emitter */
+	void kill(void);
+};
 
 } // namespace Engine
-
-typedef vector<Engine::ParticleSystem*> PARTICLE_SYSTEMS;
 
 #endif

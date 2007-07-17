@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
+#include "SDLwindow.h"
 #include "ActorSet.h"
-#include "Zone.h"
 #include "Player.h"
 #include "World.h"
 #include "ShadowManager.h"
@@ -95,7 +95,7 @@ void ShadowManager::reaquire(void)
 		shadows[i]->reaquire();*/
 }
 
-void ShadowManager::setZone(Zone *zone)
+void ShadowManager::setZone(World *zone)
 {
 	this->zone = zone;
 }
@@ -156,7 +156,7 @@ void ShadowManager::reassignShadows(void)
 			shadows[i]->setLight(light);
 
 		// Assign shadow[0] to the player
-		Player &player = g_World.getPlayer();
+		Player &player = zone->getPlayer(0);
 		shadows[0]->setActor(player.m_ID);
 
 #if 1

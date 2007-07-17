@@ -29,8 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "gl.h"
 #include "LinearInterpolator.h"
+#include "gl.h"
+#include "SDLwindow.h"
 #include "WaitScreen.h"
 #include "Dimmer.h"
 #include "Menu.h"

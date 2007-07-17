@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "engine/ActorSet.h"
 #include "engine/World.h"
-#include "engine/Zone.h"
 #include "engine/Random.h"
 #include "engine/WaitScreen.h"
 #include "engine/ListElementTweaker.h"
@@ -90,7 +89,7 @@ void Spawn::onTrigger(void)
 	}
 }
 
-bool Spawn::LoadXml(CPropBag &xml)
+bool Spawn::LoadXml(PropertyBag &xml)
 {
 	Listener::LoadXml(xml);
 
@@ -102,7 +101,7 @@ bool Spawn::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool Spawn::saveTidy(CPropBag &xml, CPropBag &editorData) const
+bool Spawn::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
 	saveTag(xml, editorData, _T("monsterDatafile"),		monsterDatafile);
 	saveTag(xml, editorData, _T("minMonsters"),		minMonsters);

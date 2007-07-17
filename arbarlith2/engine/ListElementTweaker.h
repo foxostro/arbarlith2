@@ -56,7 +56,7 @@ public:
 	*/
 	ListElementTweaker(const _tstring &label, TYPE *value)
 	{
-		tweaker = new TweakerWidget<TYPE>(label, value, 12.0f, 1.0f);
+		tweaker = new TweakerWidget<TYPE>(label, value, vec2(12.0f,1.0f));
 		tweaker->dumb = true;
 		AddChild(tweaker);
 	}
@@ -109,7 +109,7 @@ public:
 	*/
 	ListElementTweakerString(const _tstring &label, _tstring *value)
 	{
-		tweaker = new TweakerWidgetString(label, value, 12.0f, 1.0f);
+		tweaker = new TweakerWidgetString(label, value, vec2(12.0f,1.0f));
 		tweaker->dumb = true;
 		AddChild(tweaker);
 	}
@@ -161,7 +161,7 @@ public:
 	*/
 	ListElementTweakerXML(const _tstring &label, XmlDataType *value)
 	{
-		tweaker = new TweakerWidgetXML(label, value, 12.0f, 1.0f);
+		tweaker = new TweakerWidgetXML(label, value, vec2(12.0f,1.0f));
 		tweaker->dumb = true;
 		AddChild(tweaker);
 	}

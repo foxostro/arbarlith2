@@ -39,7 +39,7 @@ namespace Engine {
 class Teleporter : public Switch
 {
 public:
-	GEN_RTTI(Teleporter)
+	GEN_RTTI(Teleporter, "class Engine::Teleporter")
 
 public:
 	/**
@@ -62,7 +62,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(Engine::CPropBag &xml);
+	virtual bool LoadXml(Engine::PropertyBag &xml);
 
 protected:
 	/**
@@ -77,7 +77,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 private:
 	/** Destination position for the player party */

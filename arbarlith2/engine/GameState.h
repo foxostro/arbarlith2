@@ -31,12 +31,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _GAME_STATE_H_
 #define _GAME_STATE_H_
 
+#include "Application.h"
+
 namespace Engine {
 
 /** State of the game */
 class GameState
 {
+protected:
+	/** Game engine kernel. The application framework that is running the game. */
+	Application &application;
+
 public:
+	/**
+	Constructor
+	@param app Game engine kernel. The application framework that is running the game.
+	*/
+	GameState(Application &app)
+	: application(app)
+	{}
+
 	/**
 	Updates the task every tick as long as the task has not been frozen
 	@param deltaTime The millesonds since the last tick

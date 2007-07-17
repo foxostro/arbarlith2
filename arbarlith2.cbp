@@ -6,6 +6,7 @@
 		<Option title="Arbarlith 2"/>
 		<Option makefile="Makefile"/>
 		<Option makefile_is_custom="0"/>
+		<Option active_target="0"/>
 		<Option compiler="0"/>
 		<Build>
 			<Target title="default">
@@ -191,7 +192,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="112" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\Spell.h">
 			<Option compilerVar=""/>
@@ -288,8 +288,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="493" enabled="1" pass="0" />
-			<Breakpoint line="512" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\3dsLoader.h">
 			<Option compilerVar=""/>
@@ -765,7 +763,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="46" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateSpellMenu.h">
 			<Option compilerVar=""/>
@@ -907,7 +904,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="409" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\Md3Loader.h">
 			<Option compilerVar=""/>
@@ -1191,8 +1187,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="39" enabled="1" pass="0" />
-			<Breakpoint line="43" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\SplashScreen.h">
 			<Option compilerVar=""/>
@@ -1260,9 +1254,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="132" enabled="1" pass="0" />
-			<Breakpoint line="137" enabled="1" pass="0" />
-			<Breakpoint line="123" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\TextureManager.h">
 			<Option compilerVar=""/>
@@ -1287,8 +1278,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="37" enabled="1" pass="0" />
-			<Breakpoint line="53" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\ToggleWidget.h">
 			<Option compilerVar=""/>
@@ -1416,8 +1405,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="111" enabled="1" pass="0" />
-			<Breakpoint line="117" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\camera.cpp">
 			<Option compilerVar="CPP"/>
@@ -1498,13 +1485,17 @@
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
+		<Unit filename="arbarlith2\engine\il.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+			<Option target="debug"/>
+		</Unit>
 		<Unit filename="arbarlith2\engine\image.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="131" enabled="1" pass="0" />
-			<Breakpoint line="119" enabled="1" pass="0" />
-			<Breakpoint line="53" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\image.h">
 			<Option compilerVar=""/>
@@ -1596,8 +1587,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="113" enabled="1" pass="0" />
-			<Breakpoint line="53" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\material.h">
 			<Option compilerVar=""/>
@@ -1665,7 +1654,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="666" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\particle.h">
 			<Option compilerVar=""/>
@@ -1847,9 +1835,6 @@
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
-			<Breakpoint line="46" enabled="1" pass="0" />
-			<Breakpoint line="56" enabled="1" pass="0" />
-			<Breakpoint line="72" enabled="1" pass="0" />
 		</Unit>
 		<Unit filename="arbarlith2\engine\windowwidget.h">
 			<Option compilerVar=""/>

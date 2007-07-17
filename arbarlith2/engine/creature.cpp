@@ -34,7 +34,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListPaneWidget.h"
 #include "ListElementTweaker.h"
 #include "World.h"
-#include "Zone.h"
 #include "Player.h"
 #include "StateMachineFactory.h"
 #include "StateMachine.h"
@@ -172,7 +171,7 @@ void Creature::OnAttacked(Creature &attacker, int finalDamage)
 
 bool Creature::LoadXml(_tstring strFilename)
 {
-	CPropBag Bag;
+	PropertyBag Bag;
 	Bag.Load(strFilename);
 	LoadXml(Bag);
 	return true;
@@ -379,7 +378,7 @@ void Creature::createToolBar(ListPaneWidget *pane)
 	pane->addElement(new ListElementTweaker<float>(_T("Top Speed"), &topSpeed));
 }
 
-bool Creature::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool Creature::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveTag(xml, dataFile, _T("healthPoints"),				healthPoints);
 	saveTag(xml, dataFile, _T("maxHealthPoints"),			maxHealthPoints);
@@ -400,7 +399,7 @@ bool Creature::saveTidy(CPropBag &xml, CPropBag &dataFile) const
 	return Actor::saveTidy(xml, dataFile);
 }
 
-bool Creature::LoadXml(CPropBag &Bag)
+bool Creature::LoadXml(PropertyBag &Bag)
 {
 	starMaterial.loadTexture(_T("data/particle/star.png"), 0);
 
@@ -430,7 +429,7 @@ bool Creature::LoadXml(CPropBag &Bag)
 			_tstring strFSM = _T("none");
 			delete(m_pFSM);
 
-			Bag.Get(_T("fsm"), strFSM);
+			Bag.get(_T("fsm"), strFSM);
 			setFSM(strFSM);
 		}
 
@@ -1094,27 +1093,4 @@ void Creature::drawFloatingBar(float y, float p, COLOR CA, COLOR CB) const
 	glPopAttrib();
 }
 
-list<Actor*> Creature::getCollisions(const ActorSet &s) const
-{
-#if 0
-	list<Actor*> colliders;
-
-	size_t numOfPlayers = g_World.getNumOfPlayers();
-	for(size_t i=0; i<numOfPlayers; ++i)
-	{
-		Player * const a = g_World.getPlayerPtr(i);
-
-		if(m_ID!=a->m_ID && isCollision(*a))
-		{
-			colliders.push_front(a);
-		}
-	}
-
-	return colliders;
-#else
-	return Actor::getCollisions(s);
-#endif
-}
-
-
-}; // namespace
+} // namespace Engine

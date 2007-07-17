@@ -35,13 +35,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/Creature.h"
 #include "Spell.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 /** Monster creature */
 class Monster : public Creature
 {
 public:
-	GEN_RTTI(Monster)
+	GEN_RTTI(Monster, "class Arbarlith2::Monster")
 
 public:
 	/**
@@ -73,7 +73,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(CPropBag &xml);
+	virtual bool LoadXml(PropertyBag &xml);
 
 	/**
 	Gets the Monster's preferred spell.  Returns null when the Monster cannot cast spells
@@ -83,7 +83,7 @@ public:
 	{
 		return spell;
 	}
-	
+
 	/** Called in the event that the actor slid against a wall */
 	virtual void onSlidOnWall(void);
 
@@ -94,8 +94,8 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
-	
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
+
 	/** The spell that this monster will use */
 	Arbarlith2::Spell *spell;
 

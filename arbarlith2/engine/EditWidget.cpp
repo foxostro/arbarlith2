@@ -42,8 +42,8 @@ namespace Engine {
 
 EditWidget *EditWidget::currentlyFocused = 0;
 
-EditWidget::EditWidget(const _tstring &label, float x, float y, FONT_SIZE size)
-: LabelWidget(label, x, y, white, size),
+EditWidget::EditWidget(const _tstring &label, const vec2 &pos)
+: LabelWidget(label, pos),
   debounce(false),
   shift(false),
   lastKey(0),
@@ -52,23 +52,23 @@ EditWidget::EditWidget(const _tstring &label, float x, float y, FONT_SIZE size)
 
 void EditWidget::onAcquireFocus(void)
 {
-	m_Color = red;
+	setColor(red);
 }
 
 void EditWidget::onLostFocus(void)
 {
-	m_Color = white;
+	setColor(white);
 }
 
 void EditWidget::onMouseEnter(void)
 {
 	if(hasFocus())
 	{
-		m_Color = red;
+		setColor(red);
 	}
 	else
 	{
-		m_Color = yellow;
+		setColor(yellow);
 	}
 }
 
@@ -76,11 +76,11 @@ void EditWidget::onMouseExit(void)
 {
 	if(hasFocus())
 	{
-		m_Color = red;
+		setColor(red);
 	}
 	else
 	{
-		m_Color = white;
+		setColor(white);
 	}
 }
 

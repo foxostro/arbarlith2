@@ -23,15 +23,38 @@ unsigned int blueBits[SDLWindow::NUM_COLORFORMATS] = { 8 };
 unsigned int alphaBits[SDLWindow::NUM_COLORFORMATS] = { 8 };
 unsigned int depth[SDLWindow::NUM_COLORFORMATS] = { 32 };
 
+SDLWindow::SDLWindow(Application &app)
+: application(app),
+  windowSurface(0),
+  width(800),
+  height(600),
+  zdepth(16),
+  fullscreen(false),
+  format(R8G8B8A8),
+  title(_T("SDL Window"))
+{
+	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
+}
+
+SDLWindow::~SDLWindow()
+{
+	SDL_Quit();
+}
 
 unsigned int SDLWindow::GetColorDepth() const
 {
 	return depth[format];
 }
 
-void SDLWindow::Create(const _tstring &title, unsigned int width,
-					   unsigned int height, const ColorFormat &format,
-		               unsigned int zdepth, bool fullscreen)
+void SDLWindow::Create
+(
+	const _tstring &title,
+	unsigned int width,
+	unsigned int height,
+	const ColorFormat &format,
+	unsigned int zdepth,
+	bool fullscreen
+)
 {
 	//kill any pre-existing window
 	Kill();
@@ -81,20 +104,25 @@ void SDLWindow::Kill()
 	SDL_FreeSurface(windowSurface);
 }
 
-void SDLWindow::SetFullscreen(const bool fullscreen)
+void SDLWindow::Flip()
+{
+	SDL_GL_SwapBuffers();
+}
+
+void SDLWindow::SetFullscreen(bool fullscreen)
 {
 	if(this->fullscreen != fullscreen)
 	{
-		this->fullscreen = fullscreen;;
+		this->fullscreen = fullscreen;
 
-		g_Application.release();
+		application.release();
 
 		Create(title,width,height,format,zdepth,fullscreen);
 	
 		OpenGL::GetSingleton().InitGL();
 		OpenGL::GetSingleton().ReSizeGLScene(width,height);
 
-		g_Application.reaquire();
+		application.reaquire();
 	}
 }
 
@@ -105,14 +133,14 @@ void SDLWindow::Resize(const int width, const int height)
 		this->width = width;
 		this->height = height;
 
-		g_Application.release();
+		application.release();
 
 		Create(title,width,height,format,zdepth,fullscreen);
 	
 		OpenGL::GetSingleton().InitGL();
 		OpenGL::GetSingleton().ReSizeGLScene(width,height);
 
-		g_Application.reaquire();
+		application.reaquire();
 	}
 }
 
@@ -120,9 +148,7 @@ void SDLWindow::SetTitle(const _tstring &title)
 {
 	this->title = title;
 
-	const char *titlestr = toAnsiString(title).c_str();
-
-	SDL_WM_SetCaption(titlestr, titlestr);
+	SDL_WM_SetCaption(toAnsiString(title).c_str(), 0);
 }
 
 SDLInput::SDLInput()
@@ -196,5 +222,4 @@ void SDLInput::Pump()
 	LastMouseY = MouseY;
 }
 
-
-}; // namespace
+} // namespace Engine

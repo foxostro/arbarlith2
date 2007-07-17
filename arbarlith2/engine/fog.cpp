@@ -47,30 +47,30 @@ Fog::Fog(void)
   shouldBeUsed(true)
 {}
 
-CPropBag Fog::save(void) const
+PropertyBag Fog::save(void) const
 {
-	CPropBag xml;
+	PropertyBag xml;
 
 	// Load the data
-	xml.Add(_T("near"),    fnear);
-	xml.Add(_T("far"),     ffar);
-	xml.Add(_T("red"),     red);
-	xml.Add(_T("green"),   green);
-	xml.Add(_T("blue"),    blue);
-	xml.Add(_T("enabled"), shouldBeUsed);
+	xml.add(_T("near"),    fnear);
+	xml.add(_T("far"),     ffar);
+	xml.add(_T("red"),     red);
+	xml.add(_T("green"),   green);
+	xml.add(_T("blue"),    blue);
+	xml.add(_T("enabled"), shouldBeUsed);
 
 	return xml;
 }
 
-bool Fog::load(CPropBag &xml)
+bool Fog::load(PropertyBag &xml)
 {
 	// Load the fog settings
-	xml.Get(_T("enabled"), shouldBeUsed);
-	xml.Get(_T("near"),    fnear);
-	xml.Get(_T("far"),     ffar);
-	xml.Get(_T("red"),     red);
-	xml.Get(_T("green"),   green);
-	xml.Get(_T("blue"),    blue);
+	xml.get(_T("enabled"), shouldBeUsed);
+	xml.get(_T("near"),    fnear);
+	xml.get(_T("far"),     ffar);
+	xml.get(_T("red"),     red);
+	xml.get(_T("green"),   green);
+	xml.get(_T("blue"),    blue);
 
 	OpenGL::GetSingleton().SetClippingPlanes(0.01f, ffar);
 

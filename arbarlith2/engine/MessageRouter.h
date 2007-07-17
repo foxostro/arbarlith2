@@ -38,13 +38,15 @@ namespace Engine {
 
 
 
-class ActorSet;
+class World;
 
 const size_t NUM_SIGNALS = 22;
 
 class MessageRouter
 {
-	ActorSet &m_Objects;
+private:
+	/** World that the router operates within */
+	World *zone;
 
 	vector<Message_s> m_Messages;
 
@@ -56,7 +58,16 @@ public:
 	float signals[NUM_SIGNALS];
 
 public:
-	MessageRouter(ActorSet &actorSet);
+	/**
+	Constructor
+	*/
+	MessageRouter(void);
+
+	/**
+	Sets the World for the router
+	@param theZone World that the router operates within
+	*/
+	void setZone(World *theZone);
 
 	bool Send(Message_s &Msg);
 

@@ -41,7 +41,7 @@ namespace Engine {
 class Key : public Item
 {
 public:
-	GEN_RTTI(Key)
+	GEN_RTTI(Key, "class Engine::Key")
 
 public:
 	/**

@@ -38,10 +38,7 @@ namespace Engine {
 WidgetManager::WidgetManager(void)
 :mouseOverSomeWidget(false),
 clickAlreadyProcessedThisTick(false)
-{
-	// create the message box manager
-	addWidget(m_MsgBox = new MessageBoxManager); 
-}
+{}
 
 void WidgetManager::addWidget(Widget *widget)
 {

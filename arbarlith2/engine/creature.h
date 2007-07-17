@@ -40,14 +40,14 @@ namespace Engine {
 
 // class prototypes
 class StateMachine;
-class Zone;
+class World;
 
 
 /** Active AI entity */
 class Creature : public Actor
 {
 public:
-	GEN_RTTI(Creature)
+	GEN_RTTI(Creature, "class Engine::Creature")
 
 public:
 	/** Senses sort objects by one of several qualities */
@@ -80,7 +80,7 @@ public:
 	@param Bag The XML source
 	@return true When successful, false otherwise
 	*/
-	virtual bool LoadXml(CPropBag &Bag);
+	virtual bool LoadXml(PropertyBag &Bag);
 
 	/**
 	Loads data from XML
@@ -459,12 +459,6 @@ private:
 
 protected:
 	/**
-	Tests for collisions between this object and all objects in the given actor set
-	@return list of all objects this object is colliding with
-	*/
-	virtual list<Actor*> getCollisions(const ActorSet &set) const;
-
-	/**
 	Draws stars floating above the creature's head
 	@param y Height above the ground beneath the player
 	*/
@@ -522,7 +516,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Cancels the current order and goes to the next one */
 	void gotoNextOrder(void);

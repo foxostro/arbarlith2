@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
+#include "SDLwindow.h"
 #include "EffectManager.h"
 #include "Application.h"
 #include "WaitScreen.h"
@@ -141,7 +142,7 @@ void Application::start(void)
 	addTask(new SpellMenuKeyDetector);
 	TRACE(_T("Started spell-menu hotkey task"));
 
-	addTask(new DebugDisplayToggleKeyDetector);
+	addTask(new DebugDisplayToggleKeyDetector(*this));
 	TRACE(_T("Started debug-info hotkey task"));
 
 	addTask(new FPSDisplayToggleKeyDetector);
@@ -164,19 +165,19 @@ void Application::start(void)
 	// set up the game states
 	TRACE(_T("Creating game state objects..."));
 	{
-		states[GAME_STATE_RUN] = new GameStateRun();
+		states[GAME_STATE_RUN] = new GameStateRun(*this);
 		TRACE(_T("...created GameStateRun..."));
 
-		states[GAME_STATE_EDITOR] = new GameStateEditor();
+		states[GAME_STATE_EDITOR] = new GameStateEditor(*this);
 		TRACE(_T("...created GameStateEditor..."));
 
-		states[GAME_STATE_MENU] = new GameStateMenu();
+		states[GAME_STATE_MENU] = new GameStateMenu(*this);
 		TRACE(_T("...created GameStateMenu..."));
 
-		states[GAME_STATE_SPELL_MENU] = new GameStateSpellMenu();
+		states[GAME_STATE_SPELL_MENU] = new GameStateSpellMenu(*this);
 		TRACE(_T("...created GameStateSpellMenu..."));
 
-		states[GAME_STATE_CREDITS] = new GameStateCredits();
+		states[GAME_STATE_CREDITS] = new GameStateCredits(*this);
 		TRACE(_T("...created GameStateCredits..."));
 	}
 	TRACE(_T("...finished (Creating game state objects)"));
@@ -348,7 +349,7 @@ void Application::startDevIL()
 
 void Application::startOpenGL()
 {
-	CPropBag xml, window;
+	PropertyBag xml, window;
 
 
 
@@ -383,7 +384,7 @@ void Application::startOpenGL()
 
 
 	// Create an instance of OpenGL
-	new SDLWindow();
+	new SDLWindow(*this);
 	g_Window.Create(_T("Game Creation Society"),
 					width,
 					height,
@@ -405,7 +406,7 @@ void Application::startOpenGL()
 void Application::saveXmlConfigFiles(void)
 {
 	// Load the engine setup file
-	CPropBag BaseBag, FogBag, PerfBag, window;
+	PropertyBag BaseBag, FogBag, PerfBag, window;
 
 	// Save the mouse sensitivity value
 	BaseBag.addSym(mouseSensitivity);
@@ -420,13 +421,13 @@ void Application::saveXmlConfigFiles(void)
 	PerfBag.addSym(textureFilter);
 	PerfBag.addSym(aniostropy);
 
-	BaseBag.Add(_T("performance"), PerfBag);
+	BaseBag.add(_T("performance"), PerfBag);
 
 	// Save the window settings too
-	window.Add(_T("width"), (int)g_Window.GetWidth());
-	window.Add(_T("height"), (int)g_Window.GetHeight());
-	window.Add(_T("depth"), (int)g_Window.GetColorDepth());
-	window.Add(_T("fullscreen"), (bool)g_Window.GetFullscreen());
+	window.add(_T("width"), (int)g_Window.GetWidth());
+	window.add(_T("height"), (int)g_Window.GetHeight());
+	window.add(_T("depth"), (int)g_Window.GetColorDepth());
+	window.add(_T("fullscreen"), (bool)g_Window.GetFullscreen());
 	BaseBag.addSym(window);
 
 	// We'll save settings to the home directory
@@ -439,7 +440,7 @@ void Application::saveXmlConfigFiles(void)
 void Application::loadXmlConfigFiles(void)
 {
 	// Load the engine setup file
-	CPropBag BaseBag, FogBag, PerfBag;
+	PropertyBag BaseBag, FogBag, PerfBag;
 
 
 
@@ -458,7 +459,7 @@ void Application::loadXmlConfigFiles(void)
 	BaseBag.getSym(soundEnabled);
 
 	// Load settings
-	BaseBag.Get(_T("performance"), PerfBag);
+	BaseBag.get(_T("performance"), PerfBag);
 	PerfBag.getSym(useParticleEffects);
 	PerfBag.getSym(useBlurEffects);
 	PerfBag.getSym(textureFilter);
@@ -485,9 +486,9 @@ void Application::enterWorld(int worldNum)
 
 	const _tstring worlds[] =
 	{
-		_T("data/worlds/world1.sav.xml"),
-		_T("data/worlds/world2.sav.xml"),
-		_T("data/worlds/world3.sav.xml")
+		_T("data/zones/World1.xml"),
+		_T("data/zones/World2.xml"),
+		_T("data/zones/World3.xml")
 	};
 
 	const _tstring &worldFileName = worlds[worldNum];
@@ -495,7 +496,8 @@ void Application::enterWorld(int worldNum)
 	TRACE(_T("Starting the game from file: ") + worldFileName);
 
 	delete world;
-	world = new World(worldFileName);
+	world = new World;
+	world->LoadXml(worldFileName);
 
 	changeGameState(GAME_STATE_RUN);
 }
@@ -531,8 +533,8 @@ void Application::release(void)
 	TRACE(_T("Releasing game world resources"));
 	g_WaitScreen.Render();
 
-	if(World::GetSingletonPtr())
-		g_World.release();
+	if(world!=0)
+		world->release();
 
 	fontLarge.release();
 	fontSmall.release();
@@ -550,8 +552,8 @@ void Application::reaquire(void)
 	TRACE(_T("Reaquiring game world resources"));
 	g_WaitScreen.Render();
 
-	if(World::GetSingletonPtr())
-		g_World.reaquire();
+	if(world!=0)
+		world->reaquire();
 
 	TRACE(_T("Reaquiring game state resources"));
 	g_WaitScreen.Render();

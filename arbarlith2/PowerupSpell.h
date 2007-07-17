@@ -39,7 +39,7 @@ namespace Arbarlith2 {
 class PowerupSpell : public Powerup
 {
 public:
-	GEN_RTTI(PowerupSpell);
+	GEN_RTTI(PowerupSpell, "class Arbarlith2::PowerupSpell")
 
 public:
 	/**
@@ -56,7 +56,7 @@ public:
 	@param xml The XML data source
 	@return true if successful, false otherwise
 	*/
-	bool LoadXml(CPropBag &xml);
+	bool LoadXml(PropertyBag &xml);
 
 protected:
 	/**
@@ -71,7 +71,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/**
 	Creates the editor toolbar for the Creature

@@ -4,7 +4,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 */
 
 #include "stdafx.h"
-#include "Zone.h"
+#include "World.h"
 #include "Player.h"
 #include "CallbackTask.h"
 #include "GameStateRun.h"
@@ -36,7 +36,7 @@ void Switch::clear(void)
 	Trigger::clear();
 }
 
-bool Switch::LoadXml(CPropBag &xml)
+bool Switch::LoadXml(PropertyBag &xml)
 {
 	Trigger::LoadXml(xml);
 
@@ -46,7 +46,7 @@ bool Switch::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool Switch::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool Switch::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveTag(xml, dataFile, _T("actionLabel"), actionLabel);
 	saveTag(xml, dataFile, _T("time"), time);

@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _DEBUG_LABEL_H_
 #define _DEBUG_LABEL_H_
 
+#include "Application.h"
 #include "LabelWidget.h"
 
 namespace Engine {
@@ -38,13 +39,17 @@ namespace Engine {
 /** Displays debugging data */
 class DebugLabel : public LabelWidget
 {
+private:
+	/** The application is our source for all Debug info */
+	Application &application;
+
 public:
 	/**
 	Constructor
-	@param x X
-	@param y Y
+	@param pos Position of the label
+	@param app The application is our source for all Debug info 
 	*/
-	DebugLabel(float x, float y);
+	DebugLabel(const vec2 &pos, Application &app);
 
 	/**
 	Updates the widget

@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "gl.h"
 
 #include "Player.h"
-#include "Zone.h"
 #include "World.h"
 #include "Light.h"
 #include "ListElementTweaker.h"
@@ -159,13 +158,13 @@ void Player::OnDeath(void)
 	}
 }
 
-bool Player::allPlayersAreDead(Zone &)
+bool Player::allPlayersAreDead(World &zone)
 {
-	const size_t numOfPlayers = g_World.getNumOfPlayers();
+	const size_t numOfPlayers = zone.getNumOfPlayers();
 
 	for(size_t i=0; i<numOfPlayers; ++i)
 	{
-		const Player &player = g_World.getPlayer(i);
+		const Player &player = zone.getPlayer(i);
 
 		if(player.state != DYING && player.state != DEAD && player.state != GHOST)
 		{
@@ -176,13 +175,13 @@ bool Player::allPlayersAreDead(Zone &)
 	return true;
 }
 
-bool Player::LoadXml(CPropBag &xml)
+bool Player::LoadXml(PropertyBag &xml)
 {
 	Creature::LoadXml(xml);
 
 	// Load the inventory
-	CPropBag invBag;
-	if(xml.Get(_T("inventory"), invBag))
+	PropertyBag invBag;
+	if(xml.get(_T("inventory"), invBag))
 	{
 		inventory.load(invBag, &getZone());
 	}
@@ -200,9 +199,9 @@ bool Player::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool Player::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool Player::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	xml.Add(_T("inventory"), inventory.save()); // Save the inventory, the default value doesn't matter
+	xml.add(_T("inventory"), inventory.save()); // Save the inventory, the default value doesn't matter
 	return Creature::saveTidy(xml, dataFile);
 }
 
@@ -514,7 +513,7 @@ const _tstring Player::getWalkAnim(float speed) const
 
 float Player::getDistanceFromAveragePosition(void) const
 {
-	const vec3 &averagePlayerPosition = g_World.getAveragePlayerPosition();
+	const vec3 &averagePlayerPosition = getZone().getAveragePlayerPosition();
 	return vec3(position.x-averagePlayerPosition.x, 0, position.z-averagePlayerPosition.z).getMagnitude();
 }
 

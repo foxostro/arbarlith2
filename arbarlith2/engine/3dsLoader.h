@@ -39,7 +39,7 @@ namespace Engine {
 class _3dsLoader : public ModelLoader
 {
 private:
-	/**Engine::_3dsLoader
+	/**
 	Loads a model from file
 	@param fileName The file name of the model
 	*/
@@ -49,10 +49,10 @@ private:
 	class Wrapper
 	{
 	private:
-		vector<Engine::Material> materials;
+		vector<Material> materials;
 
 	public:
-		Engine::Model model;
+		Model model;
 
 		void addMaterial(const Material &material)
 		{

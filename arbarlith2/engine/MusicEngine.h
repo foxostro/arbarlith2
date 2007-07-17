@@ -52,27 +52,27 @@ private:
 	@param music Music clip file names
 	@return Returns the XML source
 	*/
-	static CPropBag saveMusicTag(vector<_tstring> &music);
+	static PropertyBag saveMusicTag(vector<_tstring> &music);
 
 	/**
 	Loads a tag containing a collection of music
 	@param bag XML source
 	@param music Returns the music segemts contained within
 	*/
-	static void loadMusicTag(CPropBag &bag, vector<_tstring> &music);
+	static void loadMusicTag(PropertyBag &bag, vector<_tstring> &music);
 
 public:
 	/**
 	Loads the names of music segments from XML
 	@param bag XML source
 	*/
-	void load(CPropBag &bag);
+	void load(PropertyBag &bag);
 
 	/**
 	Save the names of music segments to XML
 	@param bag XML source
 	*/
-	void save(CPropBag &bag);
+	void save(PropertyBag &bag);
 
 	/**
 	Called when a new music segment should be played.

@@ -72,9 +72,6 @@ void MenuWorldSelection::populateElements(void)
 		case MENU_WORLD_SELECTION_WORLD3: elements.push_back(getLabel(3)); break;
 		}
 	}
-
-	// Save the setings
-	g_Application.saveXmlConfigFiles();
 }
 
 void MenuWorldSelection::activateElement(int selectedIndex)

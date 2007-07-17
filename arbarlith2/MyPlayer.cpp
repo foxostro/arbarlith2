@@ -113,7 +113,7 @@ void MyPlayer::setupControllerBindings(int playerNumber)
 	}
 }
 
-bool MyPlayer::LoadXml(CPropBag &xml)
+bool MyPlayer::LoadXml(PropertyBag &xml)
 {
 	if(!Player::LoadXml(xml))
 		return false;
@@ -165,7 +165,7 @@ void MyPlayer::update(float deltaTime)
 
 	if(g_Keys.isKeyDown(KEY_TEST))
 	{
-		g_World.getPlayer(0).kill();
+		getZone().getPlayer(0).kill();
 	}
 
 	Player::update(deltaTime);

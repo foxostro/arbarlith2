@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "engine/World.h"
-#include "engine/Zone.h"
 #include "engine/CallbackTask.h"
 #include "engine/ListPaneWidget.h"
 #include "engine/GameStateRun.h"
@@ -56,7 +55,7 @@ void PowerupSpell::onPickup(MyPlayer &player)
 	player.setCanCast(spellIdx, true);
 }
 
-bool PowerupSpell::LoadXml(CPropBag &xml)
+bool PowerupSpell::LoadXml(PropertyBag &xml)
 {
 	Powerup::LoadXml(xml);
 
@@ -65,7 +64,7 @@ bool PowerupSpell::LoadXml(CPropBag &xml)
 	return true;
 }
 
-bool PowerupSpell::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool PowerupSpell::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveTag(xml, dataFile, _T("spellIdx"), spellIdx);
 

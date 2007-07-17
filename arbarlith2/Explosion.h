@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _EXPLOSION_H_
 
 #include "engine/tstring.h"
-#include "engine/Zone.h"
+#include "engine/World.h"
 
 using namespace Engine;
 
@@ -40,14 +40,15 @@ namespace Arbarlith2 {
 
 /**
 Creates an explosion that damages nearby creatures
-@param zone The zone in which to create the explosion
+@param world The world in which to create the explosion
 @param position The position of the explosion
 @param damageValue base splash damage done by the explosion
+@param radius Radius of the blast
 @param attackerID The ID of the attacking creature or INVALID_ID if this is not applicable
 @param explosionParticleFile file name of the explosion particle system description file
 @param soundEffectFileName the sound effect to play for the explosion
 */
-void createExplosion(Zone &zone, const vec3 &position, int damageValue, OBJECT_ID attackerID, const _tstring &explosionParticleFile, const _tstring &soundEffectFileName);
+void createExplosion(World &world, const vec3 &position, int damageValue, float radius, OBJECT_ID attackerID, const _tstring &explosionParticleFile, const _tstring &soundEffectFileName);
 
 } // namespace Arbarlith2
 

@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _LABELWIDGET_H_
 #define _LABELWIDGET_H_
 
+#include "tstring.h"
 #include "COLOR.h"
 #include "Widget.h"
 #include "text.h"
@@ -40,22 +41,15 @@ namespace Engine {
 class LabelWidget : public Widget
 {
 public:
+	LabelWidget(const _tstring &label, const vec2 &pos);
+
 	LabelWidget
 		(
-			_tstring strLabel = _T("Insert Label Here"),
-			float x=0.0f,
-			float y=0.0f,
-			const COLOR &color = white,
-			FONT_SIZE FontSize = FONT_SIZE_NORMAL
-		);
-
-	virtual void Init
-		(
-			_tstring strLabel = _T("Insert Label Here"),
-			float x=0.0f,
-			float y=0.0f,
-			const COLOR &color = white,
-			FONT_SIZE FontSize = FONT_SIZE_NORMAL
+			const _tstring &label,
+			const vec2 &pos,
+			const COLOR &color,
+			FONT_SIZE FontSize,
+			TextWriter &font
 		);
 
 	/**
@@ -64,7 +58,7 @@ public:
 	*/
 	inline const _tstring& getLabel(void) const
 	{
-		return m_strLabel;
+		return labelText;
 	}
 
 	/**
@@ -74,21 +68,43 @@ public:
 	*/
 	void setLabel(const _tstring& label);
 
+	/**
+	Sets the label font
+	@param label The new label text
+	*/
+	void setFont(TextWriter &font);
+
+	/**
+	Sets the label color
+	@param color The new label color
+	*/
+	void setColor(const COLOR &color);
+
+	/**
+	Sets the label font size
+	@param color The new label font size
+	*/
+	void setFontSize(FONT_SIZE fontSize);
+
+public:
+	/** Label color */
 	COLOR m_Color;
 
 protected:
 	/** draws the widget*/
 	virtual void draw(void) const;
 
+private:
+	/** Label text */
+	_tstring labelText;
+
+	/** Font size */
+	FONT_SIZE fontSize;
+
 	/** The current font */
 	TextWriter *font;
-
-private:
-	_tstring m_strLabel;
-	FONT_SIZE m_FontSize;
 };
 
-
-} //namespace Engine
+} // namespace Engine
 
 #endif

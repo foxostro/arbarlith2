@@ -29,7 +29,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include "stdafx.h"
 #include "engine/World.h"
-#include "engine/Zone.h"
 #include "DetectorProximityMonster.h"
 
 namespace Arbarlith2 {

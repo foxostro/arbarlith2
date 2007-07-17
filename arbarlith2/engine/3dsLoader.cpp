@@ -82,32 +82,32 @@ const unsigned short OBJECT_UV = 0x4140;
 
 AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 {
-    CPropBag xml;
+	PropertyBag xml;
 	_tstring skin;
 	bool truespaceModel=false;
 
 	if(!xml.Load(fileName))
 	{
-		ERR(_tstring(_T("File failed to open: ")) + fileName);
-		FAIL(_tstring(_T("File failed to open: ")) + fileName);
+		ERR(_T("File failed to open: ") + fileName);
+		FAIL(_T("File failed to open: ") + fileName);
 		return 0;
 	}
 
 	AnimationController* controller = new AnimationController();
 
-	xml.Get(_T("Truespace"), truespaceModel);
-	xml.Get(_T("forceSkin"), skin);
+	xml.get(_T("Truespace"), truespaceModel);
+	xml.get(_T("forceSkin"), skin);
 
-	size_t numAnimations = xml.GetNumInstances(_T("animation"));
+	const size_t numAnimations = xml.getNumInstances(_T("animation"));
 	for(size_t i=0; i<numAnimations; ++i)
 	{
-		CPropBag animation;
+		PropertyBag animation;
 		_tstring name;
 		bool looping=false;
 		float priority=0;
 		float fps=0;
 
-		xml.Get(_T("animation"), animation, (int)i);
+		xml.get(_T("animation"), animation, i);
 		animation.getSym(name);
 		animation.getSym(priority);
 		animation.getSym(looping);
@@ -115,13 +115,13 @@ AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 
 		// Load all the keyframes
 		vector<KeyFrame> keyFrames;
-		int length = animation.GetNumInstances(_T("keyframe"));
-		for(int j=0; j<length; ++j)
+		const size_t length = animation.getNumInstances(_T("keyframe"));
+		for(size_t j=0; j<length; ++j)
 		{
 			_tstring keyFrameFile;
-			animation.Get(_T("keyframe"), keyFrameFile, j);
+			animation.get(_T("keyframe"), keyFrameFile, j);
 
-			Engine::Model keyFrame = loadKeyFrame(keyFrameFile);
+			Model keyFrame = loadKeyFrame(keyFrameFile);
 
 			cullDegenerateMeshes(keyFrame);
 

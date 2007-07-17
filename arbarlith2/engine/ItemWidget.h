@@ -43,10 +43,9 @@ class ItemWidget : public LabelWidget
 public:
 	/**
 	Constructs the Item widget
-	@param x The X-Coord of the widget
-	@param y The Y-Coord of the widget
+	@param pos Position of the widget
 	*/
-	ItemWidget(float x, float y);
+	ItemWidget(const vec2 &pos);
 
 	/**
 	Change the item tht will be displayed

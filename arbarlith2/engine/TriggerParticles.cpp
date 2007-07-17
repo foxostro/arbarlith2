@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "ListPaneWidget.h"
 #include "ListElementTweaker.h"
-#include "Zone.h"
+#include "World.h"
 #include "TriggerParticles.h"
 
 
@@ -54,7 +54,7 @@ void TriggerParticles::onTrigger(void)
 	Trigger::onTrigger();
 }
 
-bool TriggerParticles::saveTidy(CPropBag &xml, CPropBag &dataFile) const
+bool TriggerParticles::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
 	saveTag(xml, dataFile, _T("pfxFileName"), pfxFileName);
 	saveTag(xml, dataFile, _T("pfxLocation"), pfxLocation);
@@ -62,7 +62,7 @@ bool TriggerParticles::saveTidy(CPropBag &xml, CPropBag &dataFile) const
 	return Trigger::saveTidy(xml, dataFile);
 }
 
-bool TriggerParticles::LoadXml(CPropBag &xml)
+bool TriggerParticles::LoadXml(PropertyBag &xml)
 {
 	Trigger::LoadXml(xml);
 

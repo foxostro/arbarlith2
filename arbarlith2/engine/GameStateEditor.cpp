@@ -28,18 +28,19 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include "stdafx.h"
-#include "OpenGL.h"
 #include "gl.h"
-#include "World.h"
-#include "Zone.h"
-#include "Player.h"
+#include "OpenGL.h"
+#include "SDLwindow.h"
 #include "WaitScreen.h"
+#include "World.h"
+#include "Player.h"
 #include "GameStateEditor.h"
 
 namespace Engine {
 
-GameStateEditor::GameStateEditor(void)
-:editorToolBar(0)
+GameStateEditor::GameStateEditor(Application &app)
+: GameState(app),
+  editorToolBar(0)
 {}
 
 void GameStateEditor::update(float deltaTime)
@@ -54,7 +55,8 @@ void GameStateEditor::update(float deltaTime)
 
 		// draw
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		if(World::GetSingletonPtr()) World::GetSingleton().getPlayer().getZone().draw();
+		if(World::GetSingletonPtr())
+			World::GetSingleton().draw();
 		editorToolBar->drawInWorldSpace();
 		g_GUI.draw();
 	}
@@ -83,7 +85,7 @@ void GameStateEditor::onEnter(void)
 
 void GameStateEditor::onExit(void)
 {
-	g_World.getPlayer().getZone().getMap().reaquire();
+	application.getWorld().getMap().reaquire();
 
 	// hide the editor toolbar
 	editorToolBar->m_bVisible = false;

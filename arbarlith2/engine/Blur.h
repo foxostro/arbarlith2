@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-class Zone;
+class World;
 
 /**
 Blurs the screen
@@ -86,7 +86,7 @@ public:
 	Sets the current zone for the Blur to re-render it as necessary
 	@param zone the current zone
 	*/
-	inline void setZone(Zone * zone)
+	inline void setZone(World * zone)
 	{
 		this->zone = zone;
 	}
@@ -108,7 +108,7 @@ private:
 	int BLUR_TEXTURE_HEIGHT;
 
 	/** The current zone */
-	Zone *zone;
+	World *zone;
 };
 
 } //namespace Engine

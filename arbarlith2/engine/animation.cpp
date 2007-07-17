@@ -33,7 +33,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-AnimationSequence::AnimationSequence(vector<KeyFrame> keyFrames, const _tstring &name, float priority, bool looping, int start, int length, float fps)
+AnimationSequence::AnimationSequence
+(
+	vector<KeyFrame> keyFrames,
+	const _tstring &name,
+	float priority,
+	bool looping,
+	size_t start,
+	size_t length,
+	float fps
+)
 : m_strName(name),
   m_Priority(priority),
   m_Time(0.0f),
@@ -42,7 +51,7 @@ AnimationSequence::AnimationSequence(vector<KeyFrame> keyFrames, const _tstring 
   fps(fps),
   m_bFinished(false)
 {
-	for(int i=0; i<length; ++i)
+	for(size_t i=0; i<length; ++i)
 	{
 		this->keyFrames.push_back(keyFrames[start+i]);
 	}

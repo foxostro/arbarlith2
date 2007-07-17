@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef PERFORMANCE_LABEL_H
 #define PERFORMANCE_LABEL_H
 
+#include "Application.h"
 #include "LabelWidget.h"
 
 namespace Engine {
@@ -38,13 +39,17 @@ namespace Engine {
 /** Displays performance statistics */
 class PerformanceLabel : public LabelWidget
 {
+private:
+	/** The application is our source for all Debug info */
+	Application &application;
+
 public:
 	/**
 	Constructor
-	@param x X
-	@param y Y
+	@param pos Position of the widget
+	@param app The application is our source for all Debug info 
 	*/
-	PerformanceLabel(float x, float y);
+	PerformanceLabel(const vec2 &pos, Application &app);
 
 	/**
 	Updates the widget

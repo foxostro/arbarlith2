@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2004-2007 Game Creation Society
+Copyright © 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,38 +29,81 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "MessageBox.h"
-#include "world.h"
+#include "BoundingBox.h"
 
 namespace Engine {
 
-MsgBox::MsgBox(float x, float y)
-: WindowWidget(x, y, _T("data/sprites/msgbox.tga"), _T("data/sprites/msgbox_down.tga")),
-  m_pLblMessage(0)
+bool BoundingBox::testBoxVersusSphere(const vec3 &center, float radius) const
 {
-	m_bVisible = false;
-	m_pLblMessage = new LabelWidget(_T("text\nhere"), 0.0f, 0.0f);
-	AddChild(m_pLblMessage);
+	float s, d = 0;
+
+	const vec3 pos = m_Pos;
+	const vec3 min = m_Min + pos;
+	const vec3 max = m_Max + pos;
+
+	//find the square of the distance
+	//from the sphere to the box
+
+	// X
+	if( center.x < min.x )
+	{
+		s = center.x - min.x;
+		d += s*s;
+	}
+	else if( center.x > max.x )
+	{
+		s = center.x - max.x;
+		d += s*s;
+	}
+	
+	// Z
+	if( center.z < min.z )
+	{
+		s = center.z - min.z;
+		d += s*s;
+	}
+	else if( center.z > max.z )
+	{
+		s = center.z - max.z;
+		d += s*s;
+	}
+
+	return(d <= SQR(radius));
 }
 
-void MsgBox::onMouseClick(void)
+bool BoundingBox::Collision(BoundingBox &box)
 {
-	Close();
-	WindowWidget::onMouseClick();
+	float left1   = m_Min.x + m_Pos.x;
+	float right1  = m_Max.x + m_Pos.x;
+	float top1    = m_Max.x + m_Pos.x;
+	float bottom1 = m_Min.x + m_Pos.x;
+	float left2   = box.m_Min.x +box. m_Pos.x;
+	float right2  = box.m_Max.x + box.m_Pos.x;
+	float top2    = box.m_Max.z + box.m_Pos.z;
+	float bottom2 = box.m_Min.z + box.m_Pos.z;
+
+	return
+	(
+		!(bottom1 < top2)
+			&&
+		!(top1 > bottom2)
+			&&
+		!(right1 < left2)
+			&&
+		!(left1 > right2)
+	);
 }
 
-void MsgBox::Open(const _tstring &strLabel)
+bool BoundingBox::Collision(float x, float y)
 {
-	m_bVisible = true;
+	float left   = m_Min.x + m_Pos.x;
+	float bottom = m_Min.z + m_Pos.z;
+	float width  = m_Max.x - m_Min.x;
+	float height = m_Max.z - m_Min.z;
+	float right  = left + width;
+	float top    = bottom + height;
 
-	// Recreate the label widget
-	m_pLblMessage->Init(strLabel, 64, 236);
+	return(x > left && x < right && y > top && y < bottom);
 }
 
-void MsgBox::Close()
-{
-	m_bVisible = false;
-	dead = true;
-}
-
-}; // namespace
+} // namespace Engine

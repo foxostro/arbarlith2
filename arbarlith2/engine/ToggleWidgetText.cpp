@@ -38,12 +38,13 @@ ToggleWidgetText::ToggleWidgetText(const _tstring& label, bool *value)
   myLabel(label),
   statusLbl(0)
 {
+	ASSERT(myValue!=0, _T("value was NULL"));
+
 	// Create the status label
-	AddChild(statusLbl = new LabelWidget(myLabel, 12.0f, 1.0f));
+	AddChild(  statusLbl = new LabelWidget(myLabel, vec2(12.0f,1.0f))  );
 	statusLbl->dumb = true;
 
 	// Set up the initial status
-	ASSERT(value!=0, _T("ToggleWidgetText::ToggleWidgetText  ->  value was NULL"));
 	if(getValue())
 	{
 		OnTurnsOn();

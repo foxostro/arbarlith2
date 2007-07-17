@@ -37,7 +37,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Tile.h"
 #include "Map.h"
-#include "Zone.h"
 #include "World.h"
 #include "Object.h"
 #include "Creature.h"
@@ -136,6 +135,7 @@ void Actor::clear(void)
 	slidOnWall			= false;
 	frictionAcceleration		= 32.0f;
 	minWalkingVelocity		= 0.5f;
+	m_pModel                        = 0;
 
 	hasMoved			= true;
 	hasAnimated			= true;
@@ -360,13 +360,6 @@ void Actor::DoCollisionDetection(const ActorSet &s)
 	PROFILE
 
 	m_Collisions = getCollisions(s);
-
-	/*
-	if(isCollision(g_World.getPlayer()))
-	{
-		m_Collisions.push_front(&g_World.getPlayer());
-	}
-	*/
 }
 
 void Actor::DoCollisionResponse(void)
@@ -584,19 +577,19 @@ void Actor::drawObjectDebugData(void) const
 	glPopMatrix();
 }
 
-CPropBag Actor::save(void) const
+PropertyBag Actor::save(void) const
 {
-	CPropBag Bag;
-	CPropBag dataFile;
+	PropertyBag Bag;
+	PropertyBag dataFile;
 
 	if(editorDataFile.empty())
 	{
-		Bag.Add(_T("type"), getTypeString());
+		Bag.add(_T("type"), getTypeString());
 	}
 	else
 	{
 		// Save a reference to the data file
-		Bag.Add(_T("file"), editorDataFile);
+		Bag.add(_T("file"), editorDataFile);
 
 		// We will make comparisons to stored data
 		dataFile.Load(editorDataFile);
@@ -607,7 +600,7 @@ CPropBag Actor::save(void) const
 	return Bag;
 }
 
-bool Actor::saveTidy(CPropBag &Bag, CPropBag &dataFile) const
+bool Actor::saveTidy(PropertyBag &Bag, PropertyBag &dataFile) const
 {
 	saveTag(Bag, dataFile, _T("height"),			m_desiredHeight);
 	saveTag(Bag, dataFile, _T("mass"),				m_Mass);
@@ -622,18 +615,18 @@ bool Actor::saveTidy(CPropBag &Bag, CPropBag &dataFile) const
 	saveTag(Bag, dataFile, _T("up"),				orientation.getAxisY());
 	saveTag(Bag, dataFile, _T("frictionAcceleration"),	frictionAcceleration);
 
-	Bag.Add(_T("pos"), position);
+	Bag.add(_T("pos"), position);
 
 	return true;
 }
 
-bool Actor::LoadXml(CPropBag &Bag)
+bool Actor::LoadXml(PropertyBag &Bag)
 {
 	// Free any used memory and destroy the old object
 	destroy();
 
 	// Allow an external data file
-	if(Bag.Get(_T("file"), editorDataFile))
+	if(Bag.get(_T("file"), editorDataFile))
 	{
 		TRACE(_tstring(_T("Loading external data file: ")) + editorDataFile);
 		Bag.LoadMerge(editorDataFile);
@@ -641,13 +634,13 @@ bool Actor::LoadXml(CPropBag &Bag)
 	}
 
 	// kept to support previous versions of the file format
-	if(Bag.Get(_T("radius"), m_desiredHeight)) m_desiredHeight*=2.0f;
+	if(Bag.get(_T("radius"), m_desiredHeight)) m_desiredHeight*=2.0f;
 
 	// Load the object data
-	Bag.Get(_T("height"),			m_desiredHeight);
-	Bag.Get(_T("mass"),			m_Mass);
-	Bag.Get(_T("speed"),			topSpeed);
-	Bag.Get(_T("name"),			m_strName);
+	Bag.get(_T("height"),			m_desiredHeight);
+	Bag.get(_T("mass"),			m_Mass);
+	Bag.get(_T("speed"),			topSpeed);
+	Bag.get(_T("name"),			m_strName);
 
 	Bag.getSym(showModel);
 	Bag.getSym(solid);
@@ -656,7 +649,7 @@ bool Actor::LoadXml(CPropBag &Bag)
 
 	// Set the orientation matrix
 	vec3 zAxis (0,0,1), yAxis(0,1,0), xAxis(1,0,0);
-	Bag.Get(_T("look"), &zAxis);
+	Bag.get(_T("look"), &zAxis);
 	xAxis = yAxis.cross(zAxis).getNormal();
 
 	orientation.setAxisZ(zAxis);
@@ -665,20 +658,20 @@ bool Actor::LoadXml(CPropBag &Bag)
 	orientation.setPos(vec3(0,0,0));
 
 	// Set the spawn point and location of the object
-	Bag.Get(_T("pos"), &position);
+	Bag.get(_T("pos"), &position);
 	spawnPoint = validatedPos = position;
 
 	ASSERT(getZone().getMap().onATile(position.x, position.z), _T("position is outside of the bounds of the map"));
 
 	// Load model data from xml, then load the specified resources
-	if(Bag.Get(_T("model"), m_strModelFilename) == true)
+	if(Bag.get(_T("model"), m_strModelFilename) == true)
 	{
 		LoadModel(m_strModelFilename);
 	}
 
 	// Is the object supposed to be lit?
-	Bag.Get(_T("isLit"),		isLit);
-	Bag.Get(_T("castShadows"),	castShadows);
+	Bag.get(_T("isLit"),		isLit);
+	Bag.get(_T("castShadows"),	castShadows);
 
 	// Return with success
 	return true;
@@ -762,25 +755,6 @@ void Actor::sync(void)
 	validatedPos = position;
 }
 
-bool Actor::rayIntersect(const vec3 &rayPoint, const vec3 &rayDirection) const
-{
-	if(showModel || g_Application.getState() == GAME_STATE_EDITOR)
-	{
-		float radius = getSphereRadius();
-
-		vec3 center = getPos() + vec3(0, radius, 0);
-
-		return rayDoesIntersectSphere(rayPoint,
-									  rayDirection,
-									  center,
-									  radius);
-	}
-	else
-	{
-		return false;
-	}
-}
-
 float Actor::getRealAngleY(void) const
 {
 	const vec3 axis(1, 0, 0);
@@ -790,28 +764,29 @@ float Actor::getRealAngleY(void) const
 	return acosf(axis.dot(x));
 }
 
-void Actor::saveList(CPropBag& xml, const _tstring& name, const vector<_tstring>& list) const
+void Actor::saveList(PropertyBag& xml, const _tstring& name, const vector<_tstring>& list) const
 {
-	CPropBag bag;
+	PropertyBag bag;
 
 	for(vector<_tstring>::const_iterator iter=list.begin(); iter!=list.end(); ++iter)
 	{
-		bag.Add(_T("file"), (*iter));
+		bag.add(_T("file"), (*iter));
 	}
 
-	xml.Add(name, bag);
+	xml.add(name, bag);
 }
 
-void Actor::loadList(CPropBag& xml, const _tstring& name, vector<_tstring>& list)
+void Actor::loadList(PropertyBag& xml, const _tstring& name, vector<_tstring>& list)
 {
-	CPropBag bag;
+	PropertyBag bag;
 
-	if(true == xml.Get(name, bag))
+	if(xml.get(name, bag))
 	{
-		for(int i=0; i<bag.GetNumInstances(_T("file")); ++i)
+		const size_t numberOfFiles = bag.getNumInstances(_T("file"));
+		for(size_t i=0; i<numberOfFiles; ++i)
 		{
 			_tstring fileName;
-			bag.Get(_T("file"), fileName, i);
+			bag.get(_T("file"), fileName, i);
 			list.push_back(fileName);
 		}
 	}

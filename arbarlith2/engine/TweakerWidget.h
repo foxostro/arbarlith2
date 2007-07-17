@@ -48,8 +48,8 @@ private:
 	_tstring myLabel;
 
 public:
-	TweakerWidgetString(const _tstring &label, _tstring *value, float x, float y)
-	:EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL)
+	TweakerWidgetString(const _tstring &label, _tstring *value, const vec2 &pos)
+	:EditWidget(_T("null"), pos)
 	{
 		myLabel = label;
 		myValue = value;
@@ -109,8 +109,8 @@ private:
 	TYPE *myValue;
 
 public:
-	TweakerWidget(const _tstring &label, TYPE *value, float x, float y)
-	: EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL),
+	TweakerWidget(const _tstring &label, TYPE *value, const vec2 &pos)
+	: EditWidget(_T("null"), pos),
 	  myLabel(label),
 	  myValue(value)
 	{}
@@ -176,8 +176,8 @@ private:
 	_tstring myLabel;
 
 public:
-	TweakerWidgetXML(const _tstring &label, XmlDataType *value, float x, float y)
-	:EditWidget(_T("null"), x, y, FONT_SIZE_NORMAL)
+	TweakerWidgetXML(const _tstring &label, XmlDataType *value, const vec2 &pos)
+	:EditWidget(_T("null"), pos)
 	{
 		myLabel = label;
 		myValue = value;

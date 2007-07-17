@@ -30,31 +30,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "MessageRouter.h"
-#include "Player.h"
-#include "Zone.h"
 #include "World.h"
 #include "DebugLabel.h"
 
 namespace Engine { 
 
-DebugLabel::DebugLabel(float x, float y)
-:LabelWidget(_T("DebugLabel has not gathered stats yet"), x, y, white, FONT_SIZE_HUGE)
+DebugLabel::DebugLabel(const vec2 &pos, Application &app)
+: LabelWidget(_T("DebugLabel has not gathered stats yet"), pos, white, FONT_SIZE_HUGE, app.fontLarge),
+  application(app)
 {
 	m_bVisible = true;
-	font = &g_Application.fontLarge;
 }
 
 void DebugLabel::update(float)
 {
-	const MessageRouter &router = g_World.getPlayer().getZone().router;
 	_tstring output = _T("Signals: ");
 
 	for(size_t i=0; i<NUM_SIGNALS; ++i)
 	{
-		output += router.signals[i]<300.0f ? _T("1 ") : _T("0 ");
+		output += (application.getWorld().router.signals[i]<300.0f)
+			? _T("1 ")
+			: _T("0 ");
 	}
 
 	setLabel(output);
 }
 
-}; // namespace
+} // namespace Engine

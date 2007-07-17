@@ -31,12 +31,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _TOGGLE_TEXT_WIDGET_H_
 #define _TOGGLE_TEXT_WIDGET_H_
 
+#include "tstring.h"
+#include "LabelWidget.h"
 #include "ListElementWidget.h"
 
-
 namespace Engine {
-
-
 
 /** Toggles a variable to true or false when it is clicked. The text used for the label depends on the value of the variable. */
 class ToggleWidgetText : public ListElementWidget

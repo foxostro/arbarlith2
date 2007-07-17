@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "gl.h"
 #include "World.h"
-#include "Zone.h"
 #include "Player.h"
 #include "PerformanceLabel.h"
 #include "Dimmer.h"
@@ -41,10 +40,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine { 
 	
-GameStateCredits::GameStateCredits(void)
-:dimness(0.4f),
-scrollSpeed(70.0f),
-y(600.0f)
+GameStateCredits::GameStateCredits(Application &app)
+: GameState(app),
+  dimness(0.4f),
+  scrollSpeed(70.0f),
+  y(600.0f)
 {
 	File file(_T("credits.txt"), false);
 
@@ -82,7 +82,7 @@ void GameStateCredits::update(float deltaTime)
 
 	if(World::GetSingletonPtr())
 	{
-		g_World.getPlayer(0).getZone().draw();
+		application.getWorld().draw();
 		dim.draw();
 	}
 	

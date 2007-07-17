@@ -31,15 +31,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "gl.h"
 #include "OpenGL.h"
-
+#include "SDLWindow.h"
 #include "WaitScreen.h"
 #include "frustum.h"
-#include "ActorSet.h"
 #include "ActorFactory.h"
 #include "priority_queue.h"
 #include "profile.h"
-
 #include "Player.h"
+#include "ActorSet.h"
 
 
 namespace Engine {
@@ -70,14 +69,14 @@ void ActorSet::destroy(void)
 	clear();
 }
 
-Actor* ActorSet::createPtr(const _tstring &type, Zone *zone)
+Actor* ActorSet::createPtr(const _tstring &type, World *zone)
 {
 	OBJECT_ID handle = create(type, zone);
 
 	return getPtr(handle);
 }
 
-OBJECT_ID ActorSet::create(const _tstring &type, Zone *zone)
+OBJECT_ID ActorSet::create(const _tstring &type, World *zone)
 {
 	ActorFactory &factory = Engine::getActorFactory();
 
@@ -157,7 +156,7 @@ void ActorCollisionResponse(pair<OBJECT_ID,Actor*> p)
 	}
 }
 
-void ActorSet::update(float deltaTime, Zone *zone)
+void ActorSet::update(float deltaTime, World *zone)
 {
 	PROFILE
 
@@ -341,28 +340,28 @@ void ActorSet::spawn(const _tstring &dataFile, const vec3 &position)
 	requestedSpawns.push_back(request);
 }
 
-void ActorSet::spawnNow(const _tstring &dataFile, const vec3 &position, Zone *zone)
+void ActorSet::spawnNow(const _tstring &dataFile, const vec3 &position, World *zone)
 {
-	CPropBag xml;
+	PropertyBag xml;
 	xml.Load(dataFile);
 	spawnNow(xml, position, zone);
 }
 
-Actor& ActorSet::spawnNow(CPropBag &xml, Zone *zone)
+Actor& ActorSet::spawnNow(PropertyBag &xml, World *zone)
 {
 	_tstring fileName, rtti;
 
-	if(xml.Get(_T("file"), fileName))
+	if(xml.get(_T("file"), fileName))
 	{
 		// The type is defined in an external file
-		CPropBag external;
+		PropertyBag external;
 		external.Load(fileName);
-		external.Get(_T("type"), rtti);
+		external.get(_T("type"), rtti);
 	}
 	else
 	{
 		// No exernal data file
-		xml.Get(_T("type"), rtti);
+		xml.get(_T("type"), rtti);
 	}
 
 	// Create the object inside the game world
@@ -377,12 +376,12 @@ Actor& ActorSet::spawnNow(CPropBag &xml, Zone *zone)
 	return object;
 }
 
-void ActorSet::spawnNow(CPropBag &xml, const vec3 &position, Zone *zone)
+void ActorSet::spawnNow(PropertyBag &xml, const vec3 &position, World *zone)
 {
 	spawnNow(xml, zone).Place(position);
 }
 
-void ActorSet::load(CPropBag &xml, Zone *zone)
+void ActorSet::load(PropertyBag &xml, World *zone)
 {
 	ASSERT(zone!=0, _T("zone was null"));
 
@@ -391,15 +390,13 @@ void ActorSet::load(CPropBag &xml, Zone *zone)
 	TRACE(_T("Loading ActorSet"));
 	g_WaitScreen.Render();
 
-	// Get the number ofobjects coming up
-	int numObjects = xml.GetNumInstances(_T("object"));
-
 	// Load the objects
-	for(int i=0; i<numObjects; ++i)
+	const size_t numObjects = xml.getNumInstances(_T("object"));
+	for(size_t i=0; i<numObjects; ++i)
 	{
-		CPropBag ThisObjBag;
+		PropertyBag ThisObjBag;
 
-		xml.Get(_T("object"), ThisObjBag, i);
+		xml.get(_T("object"), ThisObjBag, i);
 
 		spawnNow(ThisObjBag, zone);
 	}
@@ -411,9 +408,9 @@ void ActorSet::load(CPropBag &xml, Zone *zone)
 	g_WaitScreen.Render();
 }
 
-CPropBag ActorSet::save(void) const
+PropertyBag ActorSet::save(void) const
 {
-	CPropBag xml;
+	PropertyBag xml;
 
 	for(const_iterator i = begin(); i != end(); ++i)
 	{
@@ -422,84 +419,16 @@ CPropBag ActorSet::save(void) const
 		// Do not save Creatures.  We are saving spawns instead and the player data is separate
 		if(!instanceof(a, Creature))
 		{
-			xml.Add(_T("object"), a.save());
+			xml.add(_T("object"), a.save());
 		}
 	}
 
 	return xml;
 }
 
-pair<float,OBJECT_ID> ActorSet::rayIntersectActor(OBJECT_ID caster, const vec3 &start, const vec3 &dir, Actor *p)
-{
-	ASSERT(p!=0, _T("Null parameter! p was null"));
-	return make_pair(
-						(p->m_ID!=caster && p->rayIntersect(start, dir)) ? vec3(p->getPos() - start).getMagnitude() : 9999.f,
-						p->m_ID
-					);
-}
-
-OBJECT_ID ActorSet::rayCast(OBJECT_ID caster, const vec3 &start, const vec3 &dir)
-{
-	vector< pair<float,OBJECT_ID> > intersections;
-
-	transform(begin(), end(), back_inserter(intersections), bind(&ActorSet::rayIntersectActor, caster, start, dir, bind(&toActor, _1)));
-
-	if(intersections.empty())
-	{
-		return INVALID_ID;
-	}
-	else
-	{
-		sort(intersections.begin(), intersections.end(), tuple_less());
-
-		return(intersections[0].second);
-	}
-}
-
 ActorSet::Tuple ActorSet::getDistance(pair<OBJECT_ID, Actor*> a, vec3 p)
 {
 	return make_pair(vec3((a.second)->getPos().x - p.x, 0, (a.second)->getPos().z - p.z).getMagnitude(), (a.second)->m_ID);
-}
-
-OBJECT_ID ActorSet::mousePick(void)
-{
-	return pick(g_Input.MouseX, g_Input.MouseY);
-}
-
-OBJECT_ID ActorSet::pick(int mx, int my)
-{
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-	g_Camera.setCamera();
-
-
-
-	OBJECT_ID id = INVALID_ID;
-
-	// Create the mouse ray
-	vec3 mouse1 = UnProject(mx, my, 0.0f);
-	vec3 mouse2 = UnProject(mx, my, 10.0f);
-	vec3 delta = mouse2 - mouse1;
-
-
-
-
-	id = rayCast(INVALID_ID, mouse1, delta);
-
-
-
-
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-
-	return id;
 }
 
 void ActorSet::removeObjectNow(OBJECT_ID id)

@@ -45,7 +45,7 @@ public:
 	@param ownerID Spell caster owner
 	@param fileName Loads spell data from the file
 	*/
-	SpellIncinerate(Zone *zone, OBJECT_ID ownerID, const _tstring &fileName)
+	SpellIncinerate(World *zone, OBJECT_ID ownerID, const _tstring &fileName)
 	{
 		loadFromFile(fileName, zone, ownerID);
 	}
@@ -60,7 +60,7 @@ protected:
 	@param zone The zone in which the spell applies
 	@param ownerID Spell caster owner
 	*/
-	virtual void load(CPropBag &xml, Engine::Zone *zone, Engine::OBJECT_ID ownerID);
+	virtual void load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ownerID);
 
 	/** Actually casts the spell */
 	virtual void castSpell(void);

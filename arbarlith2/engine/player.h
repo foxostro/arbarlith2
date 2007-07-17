@@ -43,14 +43,14 @@ namespace Engine {
 
 
 // class prototype
-class Zone;
+class World;
 class Item;
 
-/** Represents the user's avatar in the game World */
+/** Represents the user's avatar */
 class Player : public Creature
 {
 public:
-	GEN_RTTI(Player)
+	GEN_RTTI(Player, "class Engine::Player")
 
 public:
 	/**
@@ -73,7 +73,7 @@ public:
 	@param xml XML source
 	@return true if the XML loaded successfully
 	*/
-	virtual bool LoadXml(CPropBag &xml);
+	virtual bool LoadXml(PropertyBag &xml);
 
 	/** Gets the name of the proper pain animation */
 	virtual const _tstring getPainAnim(void) const;
@@ -232,7 +232,7 @@ protected:
 	@param dataFile The data file containing the default values
 	@return true if successful, false otherwise
 	*/
-	virtual bool saveTidy(CPropBag &xml, CPropBag &dataFile) const;
+	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Directly control the player */
 	virtual void directControl(void);
@@ -284,7 +284,7 @@ private:
 	@param zone The zone to examine
 	@return true if all players in the specified zone are dead
 	*/
-	static bool allPlayersAreDead(Zone &zone);
+	static bool allPlayersAreDead(World &zone);
 
 	/** Enters the game menu screen */
 	void enterGameOverScreen(void);

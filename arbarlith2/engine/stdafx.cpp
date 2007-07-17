@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h" // Master Header
 #include "gl.h"
+#include "SDLwindow.h"
 #include "text.h"
-#include "3dmath.h"
 
 namespace Engine {
 

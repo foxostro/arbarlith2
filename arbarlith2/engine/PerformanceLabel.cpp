@@ -33,16 +33,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine { 
 
-PerformanceLabel::PerformanceLabel(float x, float y)
-:LabelWidget(_T("PerformanceLabel has not gathered stats yet"), x, y, white, FONT_SIZE_HUGE)
+PerformanceLabel::PerformanceLabel(const vec2 &pos, Application &app)
+: LabelWidget(_T("PerformanceLabel has not gathered stats yet"), pos, white, FONT_SIZE_HUGE, app.fontLarge),
+  application(app)
 {
 	m_bVisible = true;
-	font = &g_Application.fontLarge;
 }
 
 void PerformanceLabel::update(float)
 {
-	setLabel(_tstring(_T("FPS: ")) + itoa(g_Application.getFrameRate()));
+	setLabel(_tstring(_T("FPS: ")) + itoa(application.getFrameRate()));
 }
 
-}; // namespace
+} // namespace Engine
