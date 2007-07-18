@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _PARTICLE_H_
 #define _PARTICLE_H_
 
-#include "propbag.h"
+#include "PropertyBag.h"
 #include "vec4.h"
 #include "BoundingBox.h"
 #include "Material.h"

@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef FOG_H
 #define FOG_H
 
-#include "propbag.h"
+#include "PropertyBag.h"
 
 
 namespace Engine {

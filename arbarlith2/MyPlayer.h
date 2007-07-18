@@ -195,7 +195,15 @@ private:
 	/** The list of available spells*/
 	vector<Spell*> spellList;
 
-	/** The active spell */
+	/**
+	The active spell:
+		0 - Fireball
+		1 - Arctic Wind
+		2 - Incinerate
+		3 - Chill
+		4 - Heal
+		5 - Ice Blast
+	*/
 	int activeIdx;
 
 	/** debounce the spell cast key */

@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "gl.h"
 
-#include "priority_queue.h"
 #include "primitivedatatypes.h"
 
 #include "EffectManager.h"
@@ -101,7 +100,7 @@ void EffectManager::create(void)
 	for(LinkTable::iterator iter = temp.begin(); iter!=temp.end(); ++iter)
 	{
 		Effect *effect = (iter->second);
-		ASSERT(effect != 0, _T("EffectManager::create  ->  null Effect class"));
+		ASSERT(effect != 0, _T("null Effect"));
 
 		// Do we have enough texture units to use the effect?
 		if(effect->getRequiredTextureUnits() > g_MultitextureUnits)
@@ -161,21 +160,18 @@ void EffectManager::create(void)
 	TRACE(_T("Linking Effects to effect signature templates"));
 	for(size_t i=0; i<sizeof(effects); ++i)
 	{
-		PriorityQueue_Less_I options;
+		priority_queue< pair<int,Effect*>, vector< pair<int,Effect*> >, less< pair<int,Effect*> > > options;
 
 		effect_sig sig = effects[i];
 
 		// For each effect class, determine the priority for this signature
 		for(LinkTable::iterator iter = rawEffects.begin(); iter!=rawEffects.end(); ++iter)
 		{
-			Effect *effect = (iter->second);
-
-			prioritize p = {effect->howGood(sig), effect};
-			options.push(p);
+			options.push( make_pair( (iter->second)->howGood(sig), iter->second ) );
 		}
 
 		// Select the highest priority for this signature
-		Effect *best = (Effect*)options.top().object;
+		Effect *best = options.top().second;
 
 		// Link to the best effect that was found for this signature
 		linkTable.insert(  make_pair(sig, best)  );

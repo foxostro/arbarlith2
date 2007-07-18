@@ -30,7 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "priority_queue.h"
 #include "Frustum.h"
 #include "World.h"
 #include "Player.h"
@@ -127,19 +126,9 @@ void LightManager::update(float deltaTime)
 
 void LightManager::computeActiveSet(void)
 {
-	ASSERT(World::GetSingletonPtr()!=0, _T("World is null"));
+	priority_queue< pair<float,const Light*>, vector< pair<float,const Light*> >, less< pair<float,const Light*> > > q;
 
-	Player *playerPtr = World::GetSingleton().getPlayerPtr(0);
-
-	if(playerPtr == 0)
-	{
-		activeSet.clear(); // reset
-		return;
-	}
-
-	PriorityQueue_Less_F q;
-
-	const Player &player = *playerPtr;
+	const Player &player = g_Application.getWorld().getPlayer(0);
 	const vec3 playerPos = player.getPos() + vec3(0, player.getSphereRadius(), 0);
 
 	for(LIGHTS::const_iterator iter=lights.begin(); iter!=lights.end(); ++iter)
@@ -149,16 +138,14 @@ void LightManager::computeActiveSet(void)
 		// Only consider lights that are allowed to be enabled
 		if(light->enable)
 		{
-			float distance = vec3(  playerPos - light->getPosition()  ).getMagnitude();
-			prioritize_f p = {distance, (void*)(light)};
-			q.push(p);
+			q.push(make_pair(vec3(playerPos-light->getPosition()).getMagnitude(), light));
 		}
 	}
 
 	activeSet.clear(); // reset
 	while(!q.empty())
 	{
-		activeSet.push_back(static_cast<const Light*>(q.top().object));
+		activeSet.push_back(q.top().second);
 		q.pop();
 	}
 }

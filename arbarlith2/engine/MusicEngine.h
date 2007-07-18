@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _MUSIC_ENGINE_H_
 #define _MUSIC_ENGINE_H_
 
-#include "propbag.h"
+#include "PropertyBag.h"
 
 namespace Engine {
 

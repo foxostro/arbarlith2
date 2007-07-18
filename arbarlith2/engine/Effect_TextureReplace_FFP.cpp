@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "propbag.h"
+#include "PropertyBag.h"
 #include "Effect_TextureReplace_FFP.h"
 
 

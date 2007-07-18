@@ -149,7 +149,7 @@ PropertyBag::PropertyBag(const PropertyBag &r)
 PropertyBag::PropertyBag(const _tstring &s)
 {
 	clear();
-	loadFromString(s);
+	loadMergeFromString(s, true);
 }
 
 PropertyBag::~PropertyBag(void)
@@ -332,13 +332,13 @@ void PropertyBag::loadFromFile(const _tstring &filename, bool merge)
 		data.clear();
 	}
 
-	if(!loadMergeFromString(fileContents))
+	if(!loadMergeFromString(fileContents, true))
 	{
 		FAIL(_T("Failed to merge file contents on load: ") + filename);
 	}
 }
 
-bool PropertyBag::loadMergeFromString(const _tstring &data)
+bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritance)
 {
 	enum eElanPropBagReadState
 	{
@@ -433,14 +433,29 @@ bool PropertyBag::loadMergeFromString(const _tstring &data)
 		previous = b;
 	}
 
+	// Possibly inherit properties from another file
+	if(allowInheritance)
+	{
+		const _tstring inheritTag = _T("@inherit");
+		_tstring parentFileName = _T("nill");
+		if(get(inheritTag, parentFileName))
+		{
+			PropertyBag data, prototype;
+			prototype.loadFromFile(parentFileName); // may recurse
+
+			// Merge in the data specific to this creature (or add it to begin with)
+			data = prototype;
+			data.merge(*this, true);
+
+			// Remove the <@inherit> ... </@inherit> element
+			data.remove(inheritTag);
+
+			// 'data' contains the entire merged structure
+			(*this) = data;
+		}
+	}
+
 	return(true);
-}
-
-bool PropertyBag::loadFromString(const _tstring &contents)
-{
-	data.clear();
-
-	return loadMergeFromString(contents);
 }
 
 void PropertyBag::insertTag(const _tstring &tagName, const _tstring &tagValue)
@@ -638,7 +653,7 @@ void PropertyBag::copy(const PropertyBag &copyMe)
 	TODO: This has GOT to be much slower than it has to be
 	*/
 	//merge(copyMe, false);
-	loadFromString(copyMe.save());
+	loadMergeFromString(copyMe.save(), false);
 
 	ASSERT(copyMe == (*this), _T("Failed to copy bag"));
 }

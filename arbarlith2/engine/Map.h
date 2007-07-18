@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _MAP_H_
 #define _MAP_H_
 
-#include "propbag.h"
+#include "PropertyBag.h"
 #include "Tile.h"
 #include "QuadTreeNode.h"
 

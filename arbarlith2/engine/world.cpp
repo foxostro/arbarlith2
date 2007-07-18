@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "gl.h"
 #include "profile.h"
 #include "SearchFile.h"
-#include "priority_queue.h"
 
 #include "WaitScreen.h"
 #include "Player.h"
@@ -163,32 +162,10 @@ PropertyBag World::save(void) const
 	return bag;
 }
 
-void World::load(const PropertyBag &_xml)
+void World::load(const PropertyBag &bag)
 {
 	TRACE(_T("Loading game world..."));
 	g_WaitScreen.Render();
-
-	PropertyBag xml(_xml);
-
-	// Get the data file, if one is specified
-	if(xml.getNumInstances(_T("file")) > 0)
-	{
-		_tstring strDataFile;
-		xml.get(_T("file"), strDataFile);
-
-		TRACE(_T("External data file: ") + strDataFile);
-		xml.loadFromFile(strDataFile, true);
-		TRACE(_T("...External data file loaded"));
-	}
-
-	LoadData(xml);
-
-	TRACE(_T("...finished"));
-}
-
-bool World::LoadData(const PropertyBag &bag)
-{
-	_tstring rtti;
 
 	// Destroy any old instance of this realm
 	destroy();
@@ -222,9 +199,7 @@ bool World::LoadData(const PropertyBag &bag)
 	// Load the players
 	reloadPlayers( bag.getBag(_T("player")) );
 
-	// return with success
-	TRACE(getName() + _T(": Load Successful"));
-	return true;
+	TRACE(_T("...finished (Loading \"") + getName() + _T(")"));
 }
 
 void World::draw(void) const

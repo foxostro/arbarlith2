@@ -1070,8 +1070,15 @@
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
-		<Unit filename="arbarlith2\engine\Propbag.cpp">
+		<Unit filename="arbarlith2\engine\PropertyBag.cpp">
 			<Option compilerVar="CPP"/>
+			<Option target="default"/>
+			<Option target="debug"/>
+		</Unit>
+		<Unit filename="arbarlith2\engine\PropertyBag.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
@@ -1662,26 +1669,12 @@
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
-		<Unit filename="arbarlith2\engine\priority_queue.h">
-			<Option compilerVar=""/>
-			<Option compile="0"/>
-			<Option link="0"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
 		<Unit filename="arbarlith2\engine\profile.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\profile.h">
-			<Option compilerVar=""/>
-			<Option compile="0"/>
-			<Option link="0"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
-		<Unit filename="arbarlith2\engine\propbag.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>

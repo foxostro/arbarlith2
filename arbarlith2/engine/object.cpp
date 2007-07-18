@@ -589,7 +589,7 @@ PropertyBag Actor::save(void) const
 	else
 	{
 		// Save a reference to the data file
-		Bag.add(_T("file"), editorDataFile);
+		Bag.add(_T("@inherit"), editorDataFile);
 
 		// We will make comparisons to stored data
 		dataFile.loadFromFile(editorDataFile);
@@ -620,18 +620,10 @@ bool Actor::saveTidy(PropertyBag &Bag, PropertyBag &dataFile) const
 	return true;
 }
 
-void Actor::load(const PropertyBag &data)
+void Actor::load(const PropertyBag &Bag)
 {
 	// Free any used memory and destroy the old object
 	destroy();
-
-	PropertyBag Bag(data);
-
-	// Allow an external data file
-	if(Bag.get(_T("file"), editorDataFile))
-	{
-		Bag.loadFromFile(editorDataFile, true);
-	}
 
 	// kept to support previous versions of the file format
 	if(Bag.get(_T("radius"), m_desiredHeight)) m_desiredHeight*=2.0f;

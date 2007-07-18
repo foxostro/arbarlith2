@@ -32,8 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _WORLD_H_
 
 #include "vec4.h"
-#include "Singleton.h"
-#include "PropBag.h"
+#include "PropertyBag.h"
 
 #include "ActorSet.h"
 #include "ActorFactory.h"
@@ -55,8 +54,14 @@ namespace Engine {
 class EditorToolBar;
 class Player;
 
-/** handles the game world */
-class World : public Singleton<World>
+/**
+Game world.
+Class contains the data structures (and algorithms that operate on them) for the
+entire game world and game state.  Each "level" or "world" in the game play
+sense is stored in a separate World object.  Though, the Application class 
+usually only cares to update and render one world at a time.
+*/
+class World
 {
 public:
 	/** Destructor */
@@ -310,13 +315,6 @@ public:
 	}
 
 private:
-	/**
-	Loads and processes XML data
-	@param Bag XML-Source
-	@return true if succesful, false otherwise
-	*/
-	bool LoadData(const PropertyBag &Bag);
-
 	/**
 	Draws the scene without shadows
 	@param useLights When true, the shadowless scene is rendered with lighting.

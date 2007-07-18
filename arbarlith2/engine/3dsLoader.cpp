@@ -90,7 +90,7 @@ AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 	bool truespaceModel = false;
 	xml.get(_T("Truespace"), truespaceModel);
 
-	_tstring skin = _T("nill");
+	_tstring skin;
 	xml.get(_T("forceSkin"), skin);
 
 	for(size_t i=0, numAnimations=xml.getNumInstances(_T("animation")); i<numAnimations; ++i)

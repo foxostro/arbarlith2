@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _SPELL_H_
 
 #include "engine/vec4.h"
-#include "engine/PropBag.h"
+#include "engine/PropertyBag.h"
 #include "engine/Material.h"
 #include "engine/World.h"
 

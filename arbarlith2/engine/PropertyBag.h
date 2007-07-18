@@ -8,8 +8,8 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 	Premier Press. 2002.
 */
 
-#ifndef _PROPBAG_H_
-#define _PROPBAG_H_
+#ifndef _PROPERTY_BAG_H_
+#define _PROPERTY_BAG_H_
 
 #include <map>
 
@@ -163,6 +163,9 @@ public:
 	*/
 	PropertyBag(const _tstring &s);
 
+	/** Clear out the property bag */
+	void clear(void);
+
 	/** Assignment operator */
 	PropertyBag &operator=(const PropertyBag &r);
 
@@ -175,9 +178,6 @@ public:
 	@return true when the objects are equal
 	*/
 	virtual bool operator==(const PropertyBagItem &r) const;
-
-	/** Clear out the property bag */
-	void clear(void);
 
 	/**
 	Return a string representation of some XML structure that in turn
@@ -197,35 +197,12 @@ public:
 	Loads the contents of the property bag from file.  It is possible to
 	merge the contents of the file with data that is already loaded.
 	Otherwise, the currently loaded data is completely discarded and
-	replaced by data loaded ftom file.
+	replaced by data loaded from file.
 	@param fileName Name of the file from which to load
 	@param merge If true, then the contents of the file are merged with any
 	existing contents of this bag.
 	*/
 	void loadFromFile(const _tstring &fileName, bool merge = false);
-
-	/**
-	Loads the contents of the property bag from a string
-	@param data String containing contents
-	@return true if successful, false otherwise
-	*/
-	bool loadFromString(const _tstring &data);
-
-	/**
-	Interprets the contents of the string as property bag contents and
-	merges with the existing contents.
-	@param newStuff String containing additional data
-	@return true if successful, false otherwise
-	*/
-	bool loadMergeFromString(const _tstring &newStuff);
-
-	/**
-	Merges the contents of another PropertyBag with this one
-	@param newStuff Contains additional data
-	@param overwrite If true, then conflicts are resolved by overwriting
-	the existing elements.
-	*/
-	void merge(const PropertyBag &newStuff, bool overwrite = true);
 
 	/**
 	Remove all instances of the item
@@ -330,17 +307,34 @@ public:
 
 private:
 	/**
-	Copies the contents of this bag from another
-	@param r Bag to copy
-	*/
-	void copy(const PropertyBag &r);
-
-	/**
 	Inserts a tag into the property bag
 	@param tagName Name of the tag
 	@param tagContent Content if the tag
 	*/
 	void insertTag(const _tstring &tagName, const _tstring &tagContent);
+
+	/**
+	Interprets the contents of the string as property bag contents and
+	merges with the existing contents.
+	@param newStuff String containing additional data
+	@param allowInheritance If true, allows @inherit tags to evaluate
+	@return true if successful, false otherwise
+	*/
+	bool loadMergeFromString(const _tstring &newStuff, bool allowInheritance);
+
+	/**
+	Merges the contents of another PropertyBag with this one
+	@param newStuff Contains additional data
+	@param overwrite If true, then conflicts are resolved by overwriting
+	the existing elements.
+	*/
+	void merge(const PropertyBag &newStuff, bool overwrite = true);
+
+	/**
+	Copies the contents of this bag from another
+	@param r Bag to copy
+	*/
+	void copy(const PropertyBag &r);
 };
 
 } // namespace Engine

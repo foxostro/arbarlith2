@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _CAMERA_H_
 
 #include "mat4.h"
-#include "propbag.h"
+#include "PropertyBag.h"
 #include "frustum.h"
 
 namespace Engine {

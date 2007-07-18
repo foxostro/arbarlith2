@@ -117,12 +117,14 @@ void MyPlayer::load(const PropertyBag &xml)
 {
 	Player::load(xml);
 
-	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/fireball.xml")));    // Fireball
-	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/arctic-wind.xml"))); // Arctic Wind
-	spellList.push_back(new SpellIncinerate (&getZone(), m_ID, _T("data/spells/incinerate.xml")));  // Incinerate
-	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/chill.xml")));       // Chill
-	spellList.push_back(new SpellHeal       (&getZone(), m_ID, _T("data/spells/heal.xml")));        // Heal
-	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/ice-blast.xml")));   // Ice Blast
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/fireball.xml"))    ); // 0 - Fireball
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/arctic-wind.xml")) ); // 1 - Arctic Wind
+	spellList.push_back( new SpellIncinerate (&getZone(), m_ID, _T("data/spells/incinerate.xml"))  ); // 2 - Incinerate
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/chill.xml"))       ); // 3 - Chill
+	spellList.push_back( new SpellHeal       (&getZone(), m_ID, _T("data/spells/heal.xml"))        ); // 4 - Heal
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/ice-blast.xml"))   ); // 5 - Ice Blast
+
+	this->activeIdx = 5;
 }
 
 void MyPlayer::update(float deltaTime)

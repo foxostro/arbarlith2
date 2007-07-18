@@ -47,7 +47,7 @@ using namespace std;
 
 #include "engine/macros.h"
 #include "engine/vec4.h"
-#include "engine/PropBag.h"
+#include "engine/PropertyBag.h"
 #include "engine/ListElementTweaker.h"
 #include "engine/Controller.h"
 #include "engine/WaitScreen.h"

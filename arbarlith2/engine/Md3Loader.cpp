@@ -343,7 +343,7 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 	Tag *tags = 0;
 	Surface *surfaces = 0;
 
-    File file(fileName, true);
+	File file(fileName, true);
 
 	ASSERT(file.loaded(), _T("MD3 file failed to open: ") + fileName);
 

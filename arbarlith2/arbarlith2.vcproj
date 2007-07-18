@@ -916,10 +916,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\engine\priority_queue.h"
-				>
-			</File>
-			<File
 				RelativePath=".\engine\profile.cpp"
 				>
 			</File>
@@ -928,11 +924,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\engine\Propbag.cpp"
+				RelativePath=".\engine\PropertyBag.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\engine\propbag.h"
+				RelativePath=".\engine\PropertyBag.h"
 				>
 			</File>
 			<File

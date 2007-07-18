@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "BoundingBox.h"
 #include "material.h"
 #include "file.h"
-#include "propbag.h"
+#include "PropertyBag.h"
 
 
 namespace Engine {

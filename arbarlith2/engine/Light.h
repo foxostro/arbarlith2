@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "vec4.h"
 #include "mat4.h"
-#include "propbag.h"
+#include "PropertyBag.h"
 #include "Frustum.h"
 
 namespace Engine {

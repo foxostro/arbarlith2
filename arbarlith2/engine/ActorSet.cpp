@@ -35,7 +35,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "WaitScreen.h"
 #include "frustum.h"
 #include "ActorFactory.h"
-#include "priority_queue.h"
 #include "profile.h"
 #include "Player.h"
 #include "ActorSet.h"
@@ -344,25 +343,9 @@ void ActorSet::spawnNow(const _tstring &dataFile, const vec3 &position, World *z
 	spawnNow(xml, position, zone);
 }
 
-Actor& ActorSet::spawnNow(const PropertyBag &specializations, World *zone)
+Actor& ActorSet::spawnNow(const PropertyBag &data, World *zone)
 {
-	PropertyBag data, prototype;
-
-	// If an external data file exists, use it as a prototype
-	_tstring fileName = _T("nill");
-	if(specializations.get(_T("file"), fileName))
-	{
-		prototype.loadFromFile(fileName);
-	}
-
-	// Merge in the data specific to this creature (or add it to begin with)
-	data = prototype;
-	data.merge(specializations, true);
-
-	// Create the object
-	_tstring type = _T("nill");
-	data.getSym(type);
-	OBJECT_ID id = create(type, zone);
+	OBJECT_ID id = create(data.getString(_T("type")), zone);
 	Actor &object = get(id);
 	object.load(data);
 

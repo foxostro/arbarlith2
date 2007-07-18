@@ -159,14 +159,12 @@ void Menu::draw(void)
 
 void Menu::populateElements(void)
 {
-	const bool worldExists = World::GetSingletonPtr()!=0;
-
 	elements.clear();
-	elements.push_back( Element(vec2(200.0f, 600.0f), _T("New Game"), true)        );
-	elements.push_back( Element(vec2(200.0f, 500.0f), _T("Continue"), worldExists) );
-	elements.push_back( Element(vec2(200.0f, 400.0f), _T("Options"),  true)        );
-	elements.push_back( Element(vec2(200.0f, 300.0f), _T("Credits"),  true)        );
-	elements.push_back( Element(vec2(200.0f, 200.0f), _T("Quit"),     true)        );
+	elements.push_back( Element(vec2(200.0f, 600.0f), _T("New Game"), true)                          );
+	elements.push_back( Element(vec2(200.0f, 500.0f), _T("Continue"), g_Application.isWorldLoaded()) );
+	elements.push_back( Element(vec2(200.0f, 400.0f), _T("Options"),  true)                          );
+	elements.push_back( Element(vec2(200.0f, 300.0f), _T("Credits"),  true)                          );
+	elements.push_back( Element(vec2(200.0f, 200.0f), _T("Quit"),     true)                          );
 }
 
 void Menu::activateElement(int selectedIndex)
