@@ -1,9 +1,0 @@
-Menu   ---   01
-
-World 1 --   04 (Pyramid Level)
-
-World 2 --   02 (Labyrinth TODO: remember to make that a bit larger)
-
-World 3 --   03 (Eric's Level)
-
-Credits --   04
