@@ -74,16 +74,14 @@ void Spell::setZone(World *zone, OBJECT_ID ownerID)
 	this->ownerID = ownerID;
 }
 
-void Spell::loadFromFile(const _tstring &fileName, Engine::World *zone, Engine::OBJECT_ID ownerID)
+void Spell::loadFromFile(const _tstring &fileName, Engine::World *world, Engine::OBJECT_ID ownerID)
 {
 	PropertyBag xml;
-	if(xml.Load(fileName))
-	{
-		load(xml, zone, ownerID);
-	}
+	xml.loadFromFile(fileName);
+	load(xml, world, ownerID);
 }
 
-void Spell::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ownerID)
+void Spell::load(PropertyBag &xml, Engine::World *world, Engine::OBJECT_ID ownerID)
 {
 	_tstring activeIcon;
 	_tstring inactiveIcon;
@@ -98,7 +96,7 @@ void Spell::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ownerI
 
 	loadIcon(activeIcon, inactiveIcon);
 
-	setZone(zone, ownerID);
+	setZone(world, ownerID);
 }
 
 void Spell::destroy(void)
@@ -253,11 +251,11 @@ void Spell::draw(const vec3 &center) const
 		switch(state)
 		{
 		case COOLING:
-			drawIcon(true, center + vec3(0,MAX_Y,0), 0.6f);
+			drawIcon(true, center + vec3(0, MAX_Y, 0), 0.6f);
 			break;
 
 		case CASTING:
-			drawIcon(true, center + vec3(0,MAX_Y,0)*(1-(timer/castTime)), 0.6f);
+			drawIcon(true, center + vec3(0, MAX_Y, 0) * (1 - (timer / castTime)), 0.6f);
 			break;
 
 		case READY:
@@ -306,4 +304,4 @@ _tstring Spell::toString(void) const
 	return _T("Spell state: ") + stateString + _T("  ; ") + timeString;
 }
 
-}; // namespace
+} // namespace Engine

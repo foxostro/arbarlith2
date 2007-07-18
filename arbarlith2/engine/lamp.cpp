@@ -97,9 +97,9 @@ void Lamp::update(float deltaTime)
 			);
 }
 
-bool Lamp::LoadXml(PropertyBag &xml)
+void Lamp::load(const PropertyBag &xml)
 {
-	Switch::LoadXml(xml);
+	Switch::load(xml);
 
 	xml.getSym(active);
 	xml.getSym(constant);
@@ -115,8 +115,6 @@ bool Lamp::LoadXml(PropertyBag &xml)
 
 	// Add the light to the World
 	light = getZone().getLightManager().addLight(newLight);
-
-	return true;
 }
 
 bool Lamp::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const

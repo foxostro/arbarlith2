@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2007 Game Creation Society
+Copyright © 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Arbarlith2 {
 
-/** Boss monster */
+/**
+Boss monster.
+Defeating the Boss monster will unlock the next world and bring the game to
+the lead-out screen for the current world.
+*/
 class Boss : public Monster
 {
 public:

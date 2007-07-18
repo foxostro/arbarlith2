@@ -114,14 +114,12 @@ void Listener::setupSignals(const _tstring &expression)
 	}
 }
 
-bool Listener::LoadXml(PropertyBag &xml)
+void Listener::load(const PropertyBag &xml)
 {
-	Trigger::LoadXml(xml);
+	Trigger::load(xml);
 
 	xml.getSym(expression);
 	setupSignals(expression);
-
-	return true;
 }
 
 bool Listener::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

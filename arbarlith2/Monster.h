@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -69,11 +69,10 @@ public:
 	virtual const _tstring getSpellCastAnim(void) const;
 
 	/**
-	Loads Monster from XML
-	@param xml XML source
-	@return true if the XML loaded successfully
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 	/**
 	Gets the Monster's preferred spell.  Returns null when the Monster cannot cast spells

@@ -22,16 +22,6 @@ E-Mail: mailto:andrewfox@cmu.edu
 
 namespace Engine {
 
-template<class T> struct StateMachineRegistrar
-{
-	StateMachineRegistrar(const _tstring typeName)
-	{
-		::Engine::getStateMachineFactory().registerType<T>(typeName);
-	}
-};
-
-#define GEN_FSM_RTTI_CPP(TYPE, NAME) namespace { ::Engine::StateMachineRegistrar< TYPE > _registrar(_T(NAME)); }
-
 
 //State Machine Language Macros (put these keywords in the file USERTYPE.DAT in the same directory as MSDEV.EXE)
 #if 0
@@ -99,19 +89,10 @@ public:
 	}
 
 	/**
-	Save to XML
-	@param bag XML source
-	@return true if the calling child class should save fully, false
-	if the calling child class should save just enough for editor mode
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool SaveXml(PropertyBag &bag);
-
-	/**
-	Load from XML
-	@param bag XML source
-	@return true if successful
-	*/
-	virtual bool LoadXml(PropertyBag &bag);
+	virtual void load(const PropertyBag &data);
 
 	int GetState( void )						{ return( m_currentState ); }
 	double GetTimeInState( void );

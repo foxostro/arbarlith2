@@ -86,8 +86,6 @@ GLenum textureStages[32] =
 	GL_TEXTURE31_ARB
 };
 
-
-
 World::World(void)
 {
 	clear();
@@ -97,25 +95,29 @@ World::World(void)
 World::~World()
 {
 	destroy();
-	xmlCache.clear();
+}
+
+void World::loadFromFile(const _tstring &fileName)
+{
+	PropertyBag bag;
+	bag.loadFromFile(fileName);
+	load(bag);
 }
 
 void World::clear()
 {
-	name = _T("Pudonk");
-
-	loaded = false;
 
 	particles.clear();
 	objects.clear();
 	lightManager.clear();
 	shadowManager.clear();
 	map.clear();
-	clockTicks=0.0f;
 
-	for(int i=0; i<MAX_PLAYERS; ++i)
-		player[i]=0;
+	name = _T("nill");
+	clockTicks=0.0f;
 	NumOfPlayers = 0;
+
+	for(size_t i=0; i<MAX_PLAYERS; ++i) player[i]=0;
 }
 
 void World::destroy(void)
@@ -142,169 +144,83 @@ void World::reaquire(void)
 	shadowManager.reaquire();
 }
 
-bool World::SaveXml(PropertyBag &Bag)
+PropertyBag World::save(void) const
 {
-	TRACE(_T("Loading game world..."));
-	g_WaitScreen.Render();
+	TRACE(_T("Saving game world..."));
 
-	if(isLoaded() == false)
-	{
-		// If the realm was never loaded, then save the XML cache
-		Bag = xmlCache;
-	}
-	else
-	{
-		// Save dynamic objects
-		Bag.Add(_T("objects"), getObjects().save());
+	PropertyBag bag;
 
-		// Save player template
-		Bag.Add(_T("player"), getPlayer(0).save());
-
-		// Save the map
-		Bag.Add(_T("map"), map.save(name));
-
-		// Add in misc items
-		Bag.Add(_T("name"), name);
-
-		// Save the fog settings
-		Bag.Add(_T("fog"), fog.save());
-
-		// Load the ambient lighting intensity for the World
-		Bag.Add(_T("ambientLight"), getLightManager().ambientLight);
-
-		// Save the music engine
-		PropertyBag musicEngine;
-		music.save(musicEngine);
-		Bag.Add(_T("music"), musicEngine);
-	}
+	bag.add(_T("objects"), getObjects().save());
+	bag.add(_T("player"), getPlayer(0).save());
+	bag.add(_T("map"), map.save(name));
+	bag.add(_T("name"), name);
+	bag.add(_T("fog"), fog.save());
+	bag.add(_T("ambientLight"), getLightManager().ambientLight);
+	bag.add(_T("music"), music.save());
 
 	TRACE(_T("...finished"));
 
-	return true;
+	return bag;
 }
 
-bool World::LoadXml(PropertyBag &Bag)
+void World::load(const PropertyBag &_xml)
 {
 	TRACE(_T("Loading game world..."));
 	g_WaitScreen.Render();
 
-	_tstring strDataFile;
+	PropertyBag xml(_xml);
 
 	// Get the data file, if one is specified
-	if(Bag.getNumInstances(_T("file")) > 0)
+	if(xml.getNumInstances(_T("file")) > 0)
 	{
-		Bag.get(_T("file"), strDataFile);
+		_tstring strDataFile;
+		xml.get(_T("file"), strDataFile);
 
-		// wait screen
-		TRACE(_tstring(_T("External data file: ")) + strDataFile);
-		g_WaitScreen.Render();
-
-		// Merge the data
-		Bag.LoadMerge(strDataFile);
-
-		// wait screen
-		TRACE(_T("External data file loaded"));
-		g_WaitScreen.Render();
+		TRACE(_T("External data file: ") + strDataFile);
+		xml.loadFromFile(strDataFile, true);
+		TRACE(_T("...External data file loaded"));
 	}
 
-	// Load data
-	LoadData(Bag);
-
-	/*
-	Invalidate the XML cache. Bag either was a reference to  it, and we don't need 
-	it anymore, or another XML source was optioned, and we don't need it anymore.
-	*/
-	xmlCache.clear();
-
-	// The realm has been loaded successfully :)
-	loaded = true;
+	LoadData(xml);
 
 	TRACE(_T("...finished"));
-
-	return true;
 }
 
-bool World::LoadData(PropertyBag &Bag)
+bool World::LoadData(const PropertyBag &bag)
 {
-	// wait screen
-	TRACE(_T("Loading World data"));
-	g_WaitScreen.Render();
-
 	_tstring rtti;
 
 	// Destroy any old instance of this realm
 	destroy();
-	TRACE(_T("Destroyed old World data"));
-	g_WaitScreen.Render();	
+	TRACE(_T("...destroyed existing World data first..."));
 
-	// Load the realm's name
-	if(!Bag.getSym(name))
-	{
-		ERR(_T("No name tag in World definition."));
-	}
+	name = bag.getString(_T("name"));
 
-// Load the music set
-	PropertyBag musicBag;
-	if(Bag.get(_T("music"), musicBag))
-	{
-		TRACE(getName() + _T(": Loading music data"));
-
-		music.load(musicBag);
-		music.update();
-	}
+	// Load the music set
+	music.load( bag.getBag(_T("music")) );
+	music.update();
 
 	// Load the fog
-	PropertyBag fogBag;
-	if(Bag.get(_T("fog"), fogBag))
-	{
-		TRACE(getName() + _T(": Loading fog data"));
-		fog.load(fogBag);
-	}
+	fog.load( bag.getBag(_T("fog")) );
 
 	// Load the ambient lighting intensity for the World
-	Bag.get(_T("ambientLight"), getLightManager().ambientLight);
-	Light::BRIGHTNESS = 1.0f; // reset
+	Light::BRIGHTNESS = 1.0f;
 	Dimmer::alphaBlur = 0.0f;
-	
-// Load the map
-	PropertyBag mapBag;
-	if(Bag.get(_T("map"), mapBag))
-	{
-		map.create(mapBag);
-	}
+	getLightManager().ambientLight = bag.getFloat(_T("ambientLight"));
 
-// Initialize the lighting system
+	// Load the map
+	map.create( bag.getBag(_T("map")) );
+
+	// Initialize the lighting system
 	lightManager.create();
 	shadowManager.create();
 	shadowManager.setZone(this);
-	
-// Load the objects bags
-	PropertyBag ObjectsBag;
 
-	if(Bag.get(_T("objects"), ObjectsBag)==false)
-	{
-		ERR(name + _T(": No objects tag in World definition."));
-	}
+	// Load the objects bags
+	getObjects().load(bag.getBag(_T("objects")), this);
 
-	// load
-	getObjects().load(ObjectsBag, this);
-
-	TRACE(getName() + _T(": All Objects Loaded"));
-
-
-// Load the players
-	PropertyBag PlayerBag;
-
-	if(Bag.get(_T("player"), PlayerBag)==false)
-	{
-		ERR(name + _T(": No player tag in World definition."));
-	}
-
-	// load
-	reloadPlayers(PlayerBag);
-
-
-
+	// Load the players
+	reloadPlayers( bag.getBag(_T("player")) );
 
 	// return with success
 	TRACE(getName() + _T(": Load Successful"));
@@ -400,7 +316,7 @@ CHECK_GL_ERROR();
 			glEnable(GL_STENCIL_TEST);
 			glStencilFunc(GL_ALWAYS, 1, 0xFFFF);
 			glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-		
+
 			for(unsigned int i=0; i<shadowManager.getMaxShadows(); ++i)
 			{
 				const Shadow &s = shadowManager.getShadow(i);
@@ -419,11 +335,11 @@ CHECK_GL_ERROR();
 
 	// draw the scene with shadows
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	
+
 		// for the following steps, we need to enable the stencil test but refrain from modifying the stencil itself
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-		
+
 		glStencilFunc(GL_NOTEQUAL, 1, 0xFFFF); // only where shadows are garaunteed to not be cast
 
 				// draw areas of the scene unaffected by shadows
@@ -449,7 +365,7 @@ CHECK_GL_ERROR();
 
 				// draw the shadowed portions of the map
 				effect_Begin(effect_CLASS_RECEIVE_SHADOWS);
-					
+
 					lightManager.bindAll(); // full lighting
 
 					// bind all shadows that are in use
@@ -462,7 +378,7 @@ CHECK_GL_ERROR();
 							s.bind(getObjects(), tex++);
 						}
 					}
-					
+
 					drawShadowReceivers();
 
 				effect_End();
@@ -537,7 +453,7 @@ void World::updateParticles(float deltaTime)
 void World::update(float deltaTime)
 {
 	PROFILE
-		
+
 	clockTicks += double(deltaTime); // Update the game clock
 
 	objects.update(deltaTime, this);
@@ -608,7 +524,7 @@ Player* World::getPlayerPtr(size_t playerNum)
 	return player[playerNum];
 }
 
-void World::reloadPlayers(PropertyBag &playerBag)
+void World::reloadPlayers(const PropertyBag &playerBag)
 {
 	TRACE(_T("Reloading all the players..."));
 
@@ -619,7 +535,7 @@ void World::reloadPlayers(PropertyBag &playerBag)
 	{
 		// The type is defined in an external file
 		PropertyBag external;
-		external.Load(file);
+		external.loadFromFile(file);
 		external.getSym(type);
 	}
 	else
@@ -628,39 +544,35 @@ void World::reloadPlayers(PropertyBag &playerBag)
 		playerBag.getSym(type);
 	}
 
-	int numOfJoysticks = SDL_NumJoysticks();
+	const int numOfJoysticks = SDL_NumJoysticks();
 
 #if _PLAYER_ONE_HAS_NO_JOYSTICK_
-	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player 1 will always be on the keyboard"));
+	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player #1 will always be on the keyboard"));
 	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks + 1, MAX_PLAYERS);
 #else
-	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is not defined, so player 1 will always be on the keyboard and joystick #1"));
+	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is NOT defined, so player #1 will always be on the keyboard and joystick #1"));
 	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks, MAX_PLAYERS);
 #endif
+
+	TRACE(_T("Expecting ") + itoa((int)NumOfPlayers) + _T(" players"));
 
 	// Create the players
 	for(int i = 0; (size_t)i < NumOfPlayers; ++i)
 	{
-		Actor *p = getObjects().createPtr(type, this);
-
-		player[i] = dynamic_cast<Player*>(p);
-
+		player[i] = dynamic_cast<Player*>(getObjects().createPtr(type, this));
 		ASSERT(player[i]!=0, _T("Failed to construct player #") + itoa(i));
 
-		player[i]->LoadXml(playerBag);
-		TRACE(_T("Loaded player #") + itoa(i));
-
+		player[i]->load(playerBag);
 		player[i]->setPlayerNumber(i);
-		TRACE(_T("Actually set player number to ") + itoa(i));
 
 		if(NumOfPlayers>1)
 		{
-			float angle = 2.0f * ((float)i/NumOfPlayers) * (float)M_PI;
-			vec3 offset = vec3(cosf(angle), 0, sinf(angle)) * 1.2f;
+			const float angle = 2.0f * ((float)i/NumOfPlayers) * (float)M_PI;
+			const vec3 offset = vec3(cosf(angle), 0, sinf(angle)) * 1.2f;
 			player[i]->Place(player[i]->getPos() + offset);
-
-			TRACE(_T("Placed player #") + itoa(i) + _T("in the game world."));
 		}
+
+		TRACE(_T("Loaded player #") + itoa(i));
 	}
 
 	TRACE(_T("...finished (Reloading the players)"));

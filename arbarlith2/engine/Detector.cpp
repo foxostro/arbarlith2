@@ -92,15 +92,13 @@ void Detector::update(float deltaTime)
 	}
 }
 
-bool Detector::LoadXml(PropertyBag &xml)
+void Detector::load(const PropertyBag &xml)
 {
-	Trigger::LoadXml(xml);
+	Trigger::load(xml);
 
 	xml.getSym(signalSuccess);
 	xml.getSym(signalFail);
 	xml.getSym(onlyTripOnce);
-
-	return true;
 }
 
 bool Detector::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

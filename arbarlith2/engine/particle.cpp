@@ -181,12 +181,12 @@ float ParticleGraph::getValue(float t) const
 	{
 		return 0.0f;
 	}
-	
+
 	if(numberOfPoints == 1)
 	{
 		return (points[0].y);
 	}
-	
+
 	for(size_t i=0; i<numberOfPoints-1; ++i)
 	{
 		const Point2 &one = points[i+0];
@@ -209,10 +209,7 @@ ParticleElement::ParticleElement(void)
   materialHandle(0),
   owner(0),
   lifeSpan(0.0f),
-  pickRandomRotationDirection(false),
-  rotationDirection(CLOCKWISE),
   sizeMultiplier(1.0f),
-  graphRotationImmediate(0.0f),
   graphSizeImmediate(0.0f),
   graphAlphaImmediate(0.0f),
   graphRedImmediate(0.0f),
@@ -225,10 +222,7 @@ ParticleElement::ParticleElement(PropertyBag &Bag, ParticleSystem &system)
   materialHandle(0),
   owner(&system),
   lifeSpan(1000.0f),
-  pickRandomRotationDirection(false),
-  rotationDirection(CLOCKWISE),
   sizeMultiplier(1.0f),
-  graphRotationImmediate(0.0f),
   graphSizeImmediate(0.0f),
   graphAlphaImmediate(0.0f),
   graphRedImmediate(0.0f),
@@ -244,16 +238,12 @@ ParticleElement::ParticleElement(const ParticleElement &element)
   owner(element.owner),
   lifeSpan(element.lifeSpan),
   typeName(element.typeName),
-  pickRandomRotationDirection(element.pickRandomRotationDirection),
-  rotationDirection(element.rotationDirection),
   sizeMultiplier(element.sizeMultiplier),
-  graphRotation(element.graphRotation),
   graphSize(element.graphSize),
   graphAlpha(element.graphAlpha),
   graphRed(element.graphRed),
   graphGreen(element.graphGreen),
   graphBlue(element.graphBlue),
-  graphRotationImmediate(element.graphRotationImmediate),
   graphSizeImmediate(element.graphSizeImmediate),
   graphAlphaImmediate(element.graphAlphaImmediate),
   graphRedImmediate(element.graphRedImmediate),
@@ -267,13 +257,9 @@ void ParticleElement::load(PropertyBag &Bag, ParticleSystem &system)
 
 	PropertyBag RotationGraph, SizeGraph, AlphaGraph, RedGraph, GreenGraph, BlueGraph;
 
-	// Reset defaults
-	lifeSpan = 1000.0f;
+	lifeSpan = 1000.0f; // Reset defaults
 
-	// Get misc. data
-	Bag.get(_T("name"),                      typeName);
-	Bag.get(_T("random rotation direction"), pickRandomRotationDirection);
-	//Bag.Get(_T("rotation direction"),        rotationDirection);
+	Bag.get(_T("name"), typeName);
 
 	// Load material data
 	_tstring strMatName;
@@ -281,84 +267,63 @@ void ParticleElement::load(PropertyBag &Bag, ParticleSystem &system)
 	materialHandle = owner->getMaterialHandle(strMatName); // Have the system give us the material's handle
 
 	// Load graph data
-	Bag.get(_T("rotation"), RotationGraph);
 	Bag.get(_T("size"),     SizeGraph);
 	Bag.get(_T("alpha"),    AlphaGraph);
 	Bag.get(_T("red"),      RedGraph);
 	Bag.get(_T("green"),    GreenGraph);
 	Bag.get(_T("blue"),     BlueGraph);
 
-	graphRotation   .   load(RotationGraph);
-	graphSize       .   load(SizeGraph);
-	graphAlpha      .   load(AlphaGraph);
-	graphRed        .   load(RedGraph);
-	graphGreen      .   load(GreenGraph);
-	graphBlue       .   load(BlueGraph);
+	graphSize   .  load(SizeGraph);
+	graphAlpha  .  load(AlphaGraph);
+	graphRed    .  load(RedGraph);
+	graphGreen  .  load(GreenGraph);
+	graphBlue   .  load(BlueGraph);
 
 	// Gets the initial values from the graph data
-	graphRotationImmediate = graphRotation   .   getValue(0.0f);
-	graphSizeImmediate     = graphSize       .   getValue(0.0f);
-	graphAlphaImmediate    = graphAlpha      .   getValue(0.0f);
-	graphRedImmediate      = graphRed        .   getValue(0.0f);
-	graphGreenImmediate    = graphGreen      .   getValue(0.0f);
-	graphBlueImmediate     = graphBlue       .   getValue(0.0f);
+	graphSizeImmediate     = graphSize   .  getValue(0.0f);
+	graphAlphaImmediate    = graphAlpha  .  getValue(0.0f);
+	graphRedImmediate      = graphRed    .  getValue(0.0f);
+	graphGreenImmediate    = graphGreen  .  getValue(0.0f);
+	graphBlueImmediate     = graphBlue   .  getValue(0.0f);
 
 	ParticleBody::load(Bag);
 }
 
-ParticleElement &ParticleElement::operator=(const ParticleElement &element)
+void ParticleElement::draw(const mat4 &matrix) const
 {
-	position             = element.position;
-	initialRadialVelocity	= element.initialRadialVelocity;
-	initialVelocity         = element.initialVelocity;
-	center                  = element.center;
-	constantAcceleration = element.constantAcceleration;
+	vec3 A, B, C, D; // billboard vertices
 
-	graphAlpha               = element.graphAlpha;
-	graphAlphaImmediate           = element.graphAlphaImmediate;
-	graphBlue                = element.graphBlue;
-	graphBlueImmediate            = element.graphBlueImmediate;
-	pickRandomRotationDirection = element.pickRandomRotationDirection;
-	rotationDirection       = element.rotationDirection;
-	graphGreen               = element.graphGreen;
-	graphGreenImmediate           = element.graphGreenImmediate;
-	lifeSpan                 = element.lifeSpan;
-	graphRed                 = element.graphRed;
-	graphRedImmediate             = element.graphRedImmediate;
-	graphRotation            = element.graphRotation;
-	graphRotationImmediate        = element.graphRotationImmediate;
-	graphSize                = element.graphSize;
-	graphSizeImmediate            = element.graphSizeImmediate;
-	typeName                  = element.typeName;
-	owner                   = element.owner;
-    sizeMultiplier                  = element.sizeMultiplier;
-	materialHandle          = element.materialHandle;
+	// Set up the billboard material
+	{
+		ASSERT(owner!=0, _T("owner was null"));
 
-	return(*this);
-}
+		const Material &material = owner->getMaterial(materialHandle);
+		material.bind();
+		glBlendFunc(GL_SRC_ALPHA, (material.glow) ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA);
+	}
 
-void ParticleElement::prepareForRender(float x0, float x1, float y0, float y1, float z0, float z1)
-{
-	const vec3 pos(position);
+	// Build the billboard vertices
+	{
+		float radius = sizeMultiplier*graphSizeImmediate;
 
-	float radius = sizeMultiplier*graphSizeImmediate;
+		float x0 = matrix[0] - matrix[1];
+		float x1 = matrix[0] + matrix[1];
+		float y0 = matrix[4] - matrix[5];
+		float y1 = matrix[4] + matrix[5];
+		float z0 = matrix[8] - matrix[9];
+		float z1 = matrix[8] + matrix[9];
 
-	A = vec3(pos.x - x1*radius, pos.y - y1*radius, pos.z - z1*radius);
-	B = vec3(pos.x + x0*radius, pos.y + y0*radius, pos.z + z0*radius);
-	C = vec3(pos.x + x1*radius, pos.y + y1*radius, pos.z + z1*radius);
-	D = vec3(pos.x - x0*radius, pos.y - y0*radius, pos.z - z0*radius);
-}
-
-void ParticleElement::draw(void) const
-{
-	glColor4f(graphRedImmediate, graphGreenImmediate, graphBlueImmediate, graphAlphaImmediate);
-	Material &material = owner->getMaterial(materialHandle);
-	material.bind();
-	
-	glBlendFunc(GL_SRC_ALPHA, (material.glow) ? GL_ONE : GL_ONE_MINUS_SRC_ALPHA);
+		A = vec3(position.x - x1*radius, position.y - y1*radius, position.z - z1*radius);
+		B = vec3(position.x + x0*radius, position.y + y0*radius, position.z + z0*radius);
+		C = vec3(position.x + x1*radius, position.y + y1*radius, position.z + z1*radius);
+		D = vec3(position.x - x0*radius, position.y - y0*radius, position.z - z0*radius);
+	}
 
 	// Render the billboard
-	glBegin(GL_QUADS);
+	{
+		glColor4f(graphRedImmediate, graphGreenImmediate, graphBlueImmediate, graphAlphaImmediate);
+
+		glBegin(GL_QUADS);
 
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex3f(A.x, A.y, A.z);
@@ -370,9 +335,10 @@ void ParticleElement::draw(void) const
 		glVertex3f(C.x, C.y, C.z);
 
 		glTexCoord2f(0.0f, 1.0f);
-		glVertex3d(D.x, D.y, D.z);
+		glVertex3f(D.x, D.y, D.z);
 
-	glEnd();
+		glEnd();
+	}
 }
 
 void ParticleElement::update(float deltaTime)
@@ -383,7 +349,6 @@ void ParticleElement::update(float deltaTime)
 
 	const float percent = age / lifeSpan;
 
-	graphRotationImmediate = graphRotation   .   getValue(percent);
 	graphSizeImmediate     = graphSize       .   getValue(percent);
 	graphAlphaImmediate    = graphAlpha      .   getValue(percent);
 	graphRedImmediate      = graphRed        .   getValue(percent);
@@ -539,8 +504,8 @@ void ParticleEmitter::kill(void)
 ParticleSystem::ParticleSystem(PropertyBag &Bag)
 : ParticleBody(Bag),
   maxNumberOfParticles(0),
-  elements(0),
-  emissionBehavior(IGNORE_EMISSION)
+  emissionBehavior(IGNORE_EMISSION),
+  elements(0)
 {
 	load(Bag);
 }
@@ -549,8 +514,8 @@ ParticleSystem::ParticleSystem(const ParticleSystem &system)
 : ParticleBody(system),
   emitters(system.emitters),
   maxNumberOfParticles(system.maxNumberOfParticles),
-  elements(0),
-  emissionBehavior(system.emissionBehavior)
+  emissionBehavior(system.emissionBehavior),
+  elements(0)
 {
 	// Allocate the m_pElements array
 	elements = new ELEMENT_PTR[maxNumberOfParticles];
@@ -573,51 +538,43 @@ ParticleSystem::ParticleSystem(const ParticleSystem &system)
 ParticleSystem::ParticleSystem( const _tstring &fileName )
 : ParticleBody(),
   maxNumberOfParticles(0),
-  elements(0),
-  emissionBehavior(IGNORE_EMISSION)
+  emissionBehavior(IGNORE_EMISSION),
+  elements(0)
 {
 	PropertyBag Bag;
-	Bag.Load(fileName);
+	Bag.loadFromFile(fileName);
 	load(Bag);
 }
 
 ParticleSystem::ParticleSystem(void)
 : ParticleBody(),
   maxNumberOfParticles(0),
-  elements(0),
-  emissionBehavior(IGNORE_EMISSION)
+  emissionBehavior(IGNORE_EMISSION),
+  elements(0)
 {}
 
 ParticleSystem::~ParticleSystem(void)
 {
-	if(elements)
-	{
-		for(size_t i=0; i<maxNumberOfParticles; ++i)
-		{
-			delete(elements[i]);
-		}
+	destroyElements();
+}
 
-		delete[](elements);
+void ParticleSystem::destroyElements(void)
+{
+	for(size_t i=0; elements!=0 && i<maxNumberOfParticles; ++i)
+	{
+		delete(elements[i]);
 	}
+
+	delete [] elements;
 }
 
 void ParticleSystem::load(PropertyBag &Bag)
 {
 	// Clear the old system
+	destroyElements();
 	emitters.clear();
 	templatesByName.clear();
 	materials.clear();
-
-	// Delete all particles
-	if(elements)
-	{
-		for(size_t i=0; i<maxNumberOfParticles; ++i)
-		{
-			delete(elements[i]);
-		}
-
-		delete[](elements);
-	}
 
 	// Get the number of tags to expect
 	const size_t nMaterials = Bag.getNumInstances(_T("material"));
@@ -697,20 +654,8 @@ void ParticleSystem::draw(void) const
 
 		for(size_t i = 0; i<maxNumberOfParticles; ++i)
 		{
-			if(!elements[i]) continue;
-			if(elements[i]->isDead()) continue;
-
-			elements[i]->prepareForRender
-			(
-				matrix[0] - matrix[1],
-				matrix[0] + matrix[1],
-				matrix[4] - matrix[5],
-				matrix[4] + matrix[5],
-				matrix[8] - matrix[9],
-				matrix[8] + matrix[9]
-			);
-			
-			elements[i]->draw();
+			if(elements[i] && !elements[i]->isDead())
+				elements[i]->draw(matrix);
 		}
 
 	glDepthMask(GL_TRUE);

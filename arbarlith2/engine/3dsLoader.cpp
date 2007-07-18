@@ -83,53 +83,43 @@ const unsigned short OBJECT_UV = 0x4140;
 AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 {
 	PropertyBag xml;
-	_tstring skin;
-	bool truespaceModel=false;
-
-	if(!xml.Load(fileName))
-	{
-		ERR(_T("File failed to open: ") + fileName);
-		FAIL(_T("File failed to open: ") + fileName);
-		return 0;
-	}
+	xml.loadFromFile(fileName);
 
 	AnimationController* controller = new AnimationController();
 
+	bool truespaceModel = false;
 	xml.get(_T("Truespace"), truespaceModel);
+
+	_tstring skin = _T("nill");
 	xml.get(_T("forceSkin"), skin);
 
-	const size_t numAnimations = xml.getNumInstances(_T("animation"));
-	for(size_t i=0; i<numAnimations; ++i)
+	for(size_t i=0, numAnimations=xml.getNumInstances(_T("animation")); i<numAnimations; ++i)
 	{
-		PropertyBag animation;
-		_tstring name;
-		bool looping=false;
-		float priority=0;
-		float fps=0;
+		PropertyBag animation = xml.getBag(_T("animation"), i);
+		_tstring name = animation.getString(_T("name"));
+		float fps = animation.getFloat(_T("fps"));
 
-		xml.get(_T("animation"), animation, i);
-		animation.getSym(name);
-		animation.getSym(priority);
-		animation.getSym(looping);
-		animation.getSym(fps);
+		// Optional properties
+		bool looping = false;
+		float priority = 0.0f;
+
+		animation.get(_T("looping"), looping);
+		animation.get(_T("priority"), priority);
 
 		// Load all the keyframes
 		vector<KeyFrame> keyFrames;
-		const size_t length = animation.getNumInstances(_T("keyframe"));
+		const size_t length=animation.getNumInstances(_T("keyframe"));
 		for(size_t j=0; j<length; ++j)
 		{
-			_tstring keyFrameFile;
-			animation.get(_T("keyframe"), keyFrameFile, j);
+			_tstring keyFrameFile = animation.getString(_T("keyframe"), j);
 
 			Model keyFrame = loadKeyFrame(keyFrameFile);
 
 			cullDegenerateMeshes(keyFrame);
 
-			if(!skin.empty())
-				forceSkin(keyFrame, skin);
+			if(!skin.empty()) forceSkin(keyFrame, skin);
 
-			if(truespaceModel)
-				fixTrueSpaceVertices(keyFrame);
+			if(truespaceModel) fixTrueSpaceVertices(keyFrame);
 
 			keyFrames.push_back(keyFrame);
 		}

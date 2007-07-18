@@ -169,14 +169,6 @@ void Creature::OnAttacked(Creature &attacker, int finalDamage)
 	}
 }
 
-bool Creature::LoadXml(_tstring strFilename)
-{
-	PropertyBag Bag;
-	Bag.Load(strFilename);
-	LoadXml(Bag);
-	return true;
-}
-
 void Creature::clear(void)
 {
 	Actor::clear();
@@ -399,46 +391,39 @@ bool Creature::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 	return Actor::saveTidy(xml, dataFile);
 }
 
-bool Creature::LoadXml(PropertyBag &Bag)
+void Creature::load(const PropertyBag &Bag)
 {
+	Actor::load(Bag);
+
+	Bag.getSym(healthPoints);
+	Bag.getSym(maxHealthPoints);
+	Bag.getSym(attackDamage);
+	Bag.getSym(weaponMultiplier);
+	Bag.getSym(armorMultiplier);
+	Bag.getSym(attackCoolDown);
+	Bag.getSym(attackCoolDownMultiplier);
+	Bag.getSym(spellCoolDownMultiplier);
+	Bag.getSym(attackChargeTime);
+	Bag.getSym(damagePercentToStun);
+	Bag.getSym(maxKnockBackTime);
+	Bag.getSym(knockBackSpeed);
+
+	// Load sound FX lists
+	loadList(Bag, _T("dyingSounds"),  dyingSounds);
+	loadList(Bag, _T("painSounds"),   painSounds);
+	loadList(Bag, _T("attackSounds"), attackSounds);
+	loadList(Bag, _T("attnSounds"),   attnSounds);
+
+	// Get the name of the High-Level FSM to use
+	{
+		_tstring strFSM = _T("none");
+		delete(m_pFSM);
+
+		Bag.get(_T("fsm"), strFSM);
+		setFSM(strFSM);
+	}
+
 	starMaterial.loadTexture(_T("data/particle/star.png"), 0);
-
-	if(Actor::LoadXml(Bag))
-	{
-		Bag.getSym(healthPoints);
-		Bag.getSym(maxHealthPoints);
-		Bag.getSym(attackDamage);
-		Bag.getSym(weaponMultiplier);
-		Bag.getSym(armorMultiplier);
-		Bag.getSym(attackCoolDown);
-		Bag.getSym(attackCoolDownMultiplier);
-		Bag.getSym(spellCoolDownMultiplier);
-		Bag.getSym(attackChargeTime);
-		Bag.getSym(damagePercentToStun);
-		Bag.getSym(maxKnockBackTime);
-		Bag.getSym(knockBackSpeed);
-
-		// Load sound FX lists
-		loadList(Bag, _T("dyingSounds"),  dyingSounds);
-		loadList(Bag, _T("painSounds"),   painSounds);
-		loadList(Bag, _T("attackSounds"), attackSounds);
-		loadList(Bag, _T("attnSounds"),   attnSounds);
-
-		// Get the name of the High-Level FSM to use
-		{
-			_tstring strFSM = _T("none");
-			delete(m_pFSM);
-
-			Bag.get(_T("fsm"), strFSM);
-			setFSM(strFSM);
-		}
-
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }
 
 void Creature::setFSM(const _tstring &strFSM)

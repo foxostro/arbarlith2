@@ -61,11 +61,10 @@ public:
 	virtual void destroy(void);
 
 	/**
-	Loads Player from XML
-	@param xml XML source
-	@return true if the XML loaded successfully
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(Engine::PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 	/**
 	Gets the list of available spells

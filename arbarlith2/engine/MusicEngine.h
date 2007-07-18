@@ -33,14 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "propbag.h"
 
-
 namespace Engine {
 
-
-
-/**
-Maintains a collection of music files for a realm.
-*/
+/** Maintains a collection of music files for a realm. */
 class MusicEngine
 {
 private:
@@ -52,31 +47,29 @@ private:
 	@param music Music clip file names
 	@return Returns the XML source
 	*/
-	static PropertyBag saveMusicTag(vector<_tstring> &music);
+	PropertyBag saveMusicTag(const vector<_tstring> &music) const;
 
 	/**
 	Loads a tag containing a collection of music
 	@param bag XML source
 	@param music Returns the music segemts contained within
 	*/
-	static void loadMusicTag(PropertyBag &bag, vector<_tstring> &music);
+	void loadMusicTag(const PropertyBag &bag, vector<_tstring> &music) const;
 
 public:
 	/**
 	Loads the names of music segments from XML
 	@param bag XML source
 	*/
-	void load(PropertyBag &bag);
+	void load(const PropertyBag &bag);
 
 	/**
-	Save the names of music segments to XML
-	@param bag XML source
+	Save the names of music segments
+	@return saved state
 	*/
-	void save(PropertyBag &bag);
+	PropertyBag save(void) const;
 
-	/**
-	Called when a new music segment should be played.
-	*/
+	/** Called when a new music segment should be played. */
 	void update(void);
 };
 

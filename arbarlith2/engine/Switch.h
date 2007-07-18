@@ -47,11 +47,10 @@ public:
 	}
 
 	/**
-	Loads the object state from an XML data source
-	@param xml The XML data source
-	@return true if successful, false otherwise
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 	/**
 	Activate the switch

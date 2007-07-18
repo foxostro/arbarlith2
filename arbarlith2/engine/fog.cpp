@@ -62,7 +62,7 @@ PropertyBag Fog::save(void) const
 	return xml;
 }
 
-bool Fog::load(PropertyBag &xml)
+bool Fog::load(const PropertyBag &xml)
 {
 	// Load the fog settings
 	xml.get(_T("enabled"), shouldBeUsed);

@@ -73,9 +73,9 @@ public:
 	/**
 	Creates a set of objects from an XML data source
 	@param xml The XML data source
-	@param zone The home zone of the object
+	@param world The home world of the object
 	*/
-	void load(PropertyBag &xml, World *zone);
+	void load(const PropertyBag &xml, World *world);
 
 	/** Saves the set of objects to an XML data source */
 	PropertyBag save(void) const;
@@ -344,7 +344,7 @@ public:
 	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
-	void spawnNow(PropertyBag &xml, const vec3 &position, World *zone);
+	void spawnNow(const PropertyBag &xml, const vec3 &position, World *zone);
 
 	/**
 	request that an actor be spawned on the next update
@@ -357,7 +357,7 @@ public:
 	request that an actor be spawned on the next update
 	@param dataFile The datafile of the actor (specifies type)
 	*/
-	Actor& spawnNow(PropertyBag &xml, World *zone);
+	Actor& spawnNow(const PropertyBag &xml, World *zone);
 
 private:
 	typedef pair<float,OBJECT_ID> Tuple;
@@ -385,6 +385,12 @@ private:
 	};
 
 	vector<RequestedSpawn> requestedSpawns;
+
+	/**
+	Handle a requested spawn
+	@param request The requested spawn
+	*/
+	void doSpawnRequest(const RequestedSpawn &request, World *zone);
 
 	/**
 	Gets the distance from a given position to a given actor

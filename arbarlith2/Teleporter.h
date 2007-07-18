@@ -58,11 +58,10 @@ public:
 	virtual void createToolBar(ListPaneWidget *pane);
 
 	/**
-	Loads the teleporter from XML
-	@param xml XML source
-	@return true if the XML loaded successfully
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(Engine::PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 protected:
 	/**

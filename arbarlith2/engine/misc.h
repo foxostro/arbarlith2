@@ -115,7 +115,7 @@ _tstring toLowerCase(const _tstring &in);
 
 void Tokenize(const _tstring& str, vector<_tstring>& tokens, const _tstring& delimiters = _T(" \t\n"));
 
-_tstring Replace(const _tstring &source, const _tstring &find, const _tstring &replace);
+_tstring replace(const _tstring &source, const _tstring &find, const _tstring &replace);
 
 } // namespace
 

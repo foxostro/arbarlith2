@@ -66,14 +66,12 @@ void ListenerPrompt::onTrigger(void)
 	}
 }
 
-bool ListenerPrompt::LoadXml(PropertyBag &xml)
+void ListenerPrompt::load(const PropertyBag &xml)
 {
-	Listener::LoadXml(xml);
+	Listener::load(xml);
 
 	xml.getSym(message);
 	xml.getSym(timeOut);
-
-	return true;
 }
 
 bool ListenerPrompt::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

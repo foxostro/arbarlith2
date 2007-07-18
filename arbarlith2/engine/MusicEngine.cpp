@@ -34,30 +34,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SoundSystem.h"
 #include "musicengine.h"
 
+namespace Engine {
 
-namespace Engine { 
-
-
-
-PropertyBag MusicEngine::saveMusicTag(vector<_tstring> &music)
+PropertyBag MusicEngine::saveMusicTag(const vector<_tstring> &music) const
 {
 	PropertyBag bag;
 
 	for(size_t i=0; i<music.size(); ++i)
 	{
-		_tstring clip = music[i];
-		bag.add(_T("clip"), clip);
+		bag.add(_T("clip"), music[i]);
 	}
 
 	return bag;
 }
 
-void MusicEngine::save(PropertyBag &bag)
-{
-	bag.add(_T("clips"), saveMusicTag(clips));
-}
-
-void MusicEngine::loadMusicTag(PropertyBag &bag, vector<_tstring> &music)
+void MusicEngine::loadMusicTag(const PropertyBag &bag, vector<_tstring> &music) const
 {
 	music.clear();
 
@@ -73,7 +64,14 @@ void MusicEngine::loadMusicTag(PropertyBag &bag, vector<_tstring> &music)
 	}
 }
 
-void MusicEngine::load(PropertyBag &bag)
+PropertyBag MusicEngine::save(void) const
+{
+	PropertyBag bag;
+	bag.add(_T("clips"), saveMusicTag(clips));
+	return bag;
+}
+
+void MusicEngine::load(const PropertyBag &bag)
 {
 	PropertyBag clipsBag;
 
@@ -91,10 +89,10 @@ void MusicEngine::update(void)
 		size_t min = 0;
 		size_t max = clips.size()-1;
 		size_t idx = 0;
-		
+
 		if(max>min)
 			IRAND_RANGE(min, max);
-		
+
 		_tstring clip = clips[idx];
 
 		// Play that clip

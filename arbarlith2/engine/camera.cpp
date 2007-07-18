@@ -12,7 +12,7 @@ E-Mail: mailto:rhalstea@andrew.cmu.edu
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -45,14 +45,14 @@ void Camera::setCamera(void)
 	moved = false;
 }
 
-PropertyBag Camera::toXml(void)
+PropertyBag Camera::toXml(void) const
 {
 	PropertyBag xml;
 
-	xml.add(_T("z"),	orientation.getAxisZ());
-	xml.add(_T("y"),	orientation.getAxisY());
-	xml.add(_T("x"),	orientation.getAxisX());
-	xml.add(_T("pos"),	position);
+	xml.add(_T("z"), orientation.getAxisZ());
+	xml.add(_T("y"), orientation.getAxisY());
+	xml.add(_T("x"), orientation.getAxisX());
+	xml.add(_T("pos"), position);
 
 	return xml;
 }
@@ -182,12 +182,12 @@ Frustum Camera::calculateFrustum(void)
 	Frustum f;
 
 	const mat4 &modl = getTransformation();
-	
+
 	mat4 proj;
 	glGetFloatv(GL_PROJECTION_MATRIX, proj);
 
 	f.CalculateFrustum(modl, proj);
-	
+
 	return f;
 }
 

@@ -103,10 +103,10 @@ struct Header
 	S32 numSkins;
 
 	/** Offset from the start of the MD3 object where the Frame objects start */
-	S32 framesOffset; 
-	
+	S32 framesOffset;
+
 	/** Offset from the start of the MD3 object where the Tag objects start */
-	S32 tagsOffset; 
+	S32 tagsOffset;
 
 	/** Offset from the start of the MD3 object where the Surfaces objects start */
 	S32 surfacesOffset;
@@ -171,9 +171,9 @@ public:
 
 	@todo trignometry (an issue of loading time)
 
-	There are 255 discrete values for encodedNormal.  So 
-	sine/cosine precision is not really an issue.  Do we 
-	need to use the std lib?  A little McClaurin series 
+	There are 255 discrete values for encodedNormal.  So
+	sine/cosine precision is not really an issue.  Do we
+	need to use the std lib?  A little McClaurin series
 	would be much more efficient.
 	*/
 	Mesh* getObject(size_t frame) const;
@@ -281,7 +281,7 @@ AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
 	_tstring md3;
 
 	PropertyBag xml;
-	xml.Load(fileName);
+	xml.loadFromFile(fileName);
 
 	// Allocate a blank animation controller
 	AnimationController *controller = new AnimationController();
@@ -360,9 +360,9 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 
 	ASSERT
 	(
-	header.magicNumber[0] == _T('I') && 
-	header.magicNumber[1] == _T('D') && 
-	header.magicNumber[2] == _T('P') && 
+	header.magicNumber[0] == _T('I') &&
+	header.magicNumber[1] == _T('D') &&
+	header.magicNumber[2] == _T('P') &&
 	header.magicNumber[3] == _T('3'),
 	_T("Magic number failed to validate! This file is not an MD3 file: ") + fileName
 	);
@@ -371,7 +371,7 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 	if(header.numFrames>0) frames = new Frame[header.numFrames];
 
 	// Allocate Tag objects
-	if(header.numTags>0) tags = new Tag[header.numTags]; 
+	if(header.numTags>0) tags = new Tag[header.numTags];
 
 	// Allocate Surface objects
 	if(header.numSurfaces>0) surfaces = new Surface[header.numSurfaces];
@@ -411,7 +411,7 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 
 				// Keep a copy of the material to propagate to the subsequent frames
 				md3Material = mesh->material;
-			}	
+			}
 		}
 		else
 		{// After the first frame, this branch executes instead.
@@ -458,9 +458,9 @@ void Surface::create(File &file, size_t)
 
 	ASSERT
 	(
-	header.magicNumber[0] == _T('I') && 
-	header.magicNumber[1] == _T('D') && 
-	header.magicNumber[2] == _T('P') && 
+	header.magicNumber[0] == _T('I') &&
+	header.magicNumber[1] == _T('D') &&
+	header.magicNumber[2] == _T('P') &&
 	header.magicNumber[3] == _T('3'),
 	_T("MD3::Surface::create  ->  This file is a corrupted MD3 file.")
 	);
@@ -510,7 +510,7 @@ Mesh* Surface::getObject(size_t frame) const
 	mesh->m_numOfFaces		= header.numTris;
 	mesh->m_numOfVerts		= header.numTris * 3;
 	mesh->m_numTexVertex	= header.numTris * 3;
-	
+
 	memcpy(mesh->m_strName, header.name, MAX_QPATH);
 
 	// Allocate memory
@@ -542,7 +542,7 @@ Mesh* Surface::getObject(size_t frame) const
 
 			vec3 out = vec3(0, 0, 0);
 			vec3 in = vec3(v.x, v.y, v.z) * MD3_XYZ_SCALE;
-			
+
 			out = rotation.transformVector(in);
 
 			// Set the vertex

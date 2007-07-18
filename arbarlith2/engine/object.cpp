@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -592,7 +592,7 @@ PropertyBag Actor::save(void) const
 		Bag.add(_T("file"), editorDataFile);
 
 		// We will make comparisons to stored data
-		dataFile.Load(editorDataFile);
+		dataFile.loadFromFile(editorDataFile);
 	}
 
 	saveTidy(Bag, dataFile);
@@ -620,27 +620,27 @@ bool Actor::saveTidy(PropertyBag &Bag, PropertyBag &dataFile) const
 	return true;
 }
 
-bool Actor::LoadXml(PropertyBag &Bag)
+void Actor::load(const PropertyBag &data)
 {
 	// Free any used memory and destroy the old object
 	destroy();
 
+	PropertyBag Bag(data);
+
 	// Allow an external data file
 	if(Bag.get(_T("file"), editorDataFile))
 	{
-		TRACE(_tstring(_T("Loading external data file: ")) + editorDataFile);
-		Bag.LoadMerge(editorDataFile);
-		TRACE(_tstring(_T("Done loading external data file: ")) + editorDataFile);
+		Bag.loadFromFile(editorDataFile, true);
 	}
 
 	// kept to support previous versions of the file format
 	if(Bag.get(_T("radius"), m_desiredHeight)) m_desiredHeight*=2.0f;
 
 	// Load the object data
-	Bag.get(_T("height"),			m_desiredHeight);
-	Bag.get(_T("mass"),			m_Mass);
-	Bag.get(_T("speed"),			topSpeed);
-	Bag.get(_T("name"),			m_strName);
+	Bag.get(_T("height"), m_desiredHeight);
+	Bag.get(_T("mass"),   m_Mass);
+	Bag.get(_T("speed"),  topSpeed);
+	Bag.get(_T("name"),   m_strName);
 
 	Bag.getSym(showModel);
 	Bag.getSym(solid);
@@ -670,11 +670,8 @@ bool Actor::LoadXml(PropertyBag &Bag)
 	}
 
 	// Is the object supposed to be lit?
-	Bag.get(_T("isLit"),		isLit);
-	Bag.get(_T("castShadows"),	castShadows);
-
-	// Return with success
-	return true;
+	Bag.getSym(isLit);
+	Bag.getSym(castShadows);
 }
 
 bool Actor::ChangeAnimation(const _tstring &name, float speed)
@@ -776,7 +773,7 @@ void Actor::saveList(PropertyBag& xml, const _tstring& name, const vector<_tstri
 	xml.add(name, bag);
 }
 
-void Actor::loadList(PropertyBag& xml, const _tstring& name, vector<_tstring>& list)
+void Actor::loadList(const PropertyBag& xml, const _tstring& name, vector<_tstring>& list)
 {
 	PropertyBag bag;
 
@@ -863,7 +860,14 @@ bool Actor::isAnythingInProximity(const ActorSet &s, OBJECT_ID &handle) const
 	return isAnythingInProximity(s, handle, getCylinderRadius());
 }
 
-}; // namespace
+void Actor::loadFromFile(const _tstring &fileName)
+{
+	PropertyBag data;
+	data.loadFromFile(fileName);
+	load(data);
+}
+
+} // namespace Engine
 
 
 
@@ -940,4 +944,4 @@ bool Actor::isCollision(const Actor &a) const
 	return true;
 }
 
-}; // namespace
+} // namespace Engine

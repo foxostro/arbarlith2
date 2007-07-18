@@ -98,7 +98,7 @@ char* toAnsiCharArray(const wstring &unicodestr)
 	}
 	ansistr[lenW] = 0;
 
-	ASSERT(strlen(ansistr)==lenW,     _T("strlen(ansistr) != lenW")     );
+	ASSERT(strlen(ansistr)==lenW, _T("strlen(ansistr) != lenW"));
 
 	return ansistr;
 }

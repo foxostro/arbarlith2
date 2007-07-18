@@ -54,11 +54,10 @@ public:
 	void clear(void);
 
 	/**
-	Loads Player from XML
-	@param xml XML source
-	@return true if the XML loaded successfully
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(Engine::PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 	/** Unlocks the gate after the reaction time delay has passed */
 	void unlockGate(void);

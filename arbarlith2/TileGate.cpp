@@ -76,9 +76,9 @@ void TileGate::onTrigger(void)
 	}
 }
 
-bool TileGate::LoadXml(PropertyBag &xml)
+void TileGate::load(const PropertyBag &xml)
 {
-	Actor::LoadXml(xml);
+	Actor::load(xml);
 
 	xml.getSym(lockedHeight);
 	xml.getSym(unlockedHeight);
@@ -89,7 +89,8 @@ bool TileGate::LoadXml(PropertyBag &xml)
 	xml.getSym(unlockSfx);
 	xml.getSym(lockSfx);
 
-	getTile().setPassable(true); // the tile should not be instrinically impassable, but made impassable by its height
+	// the tile gate should be made impassable only by its height
+	getTile().setPassable(true);
 
 	if(initiallyLocked)
 	{
@@ -99,8 +100,6 @@ bool TileGate::LoadXml(PropertyBag &xml)
 	{
 		unlockGateImmediately();
 	}
-
-	return true;
 }
 
 bool TileGate::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

@@ -74,8 +74,7 @@ void TextWriter::setup(const _tstring &fileName)
 	this->fileName = fileName;
 
 	PropertyBag xml;
-	xml.Load(fileName);
-
+	xml.loadFromFile(fileName);
 	setup(xml);
 }
 

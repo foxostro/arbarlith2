@@ -36,8 +36,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "LinearInterpolator.h"
 #include "GameStateRun.h"
 
-namespace Engine { 
-	
+namespace Engine {
+
 GameStateRun::GameStateRun(Application &app)
 : GameState(app)
 {
@@ -52,32 +52,33 @@ GameStateRun::~GameStateRun(void)
 
 void GameStateRun::update(float deltaTime)
 {
-	if(!World::GetSingletonPtr())
-		application.changeGameState(GAME_STATE_MENU);
-	else
+	if(!application.isWorldLoaded())
 	{
-		ASSERT(0!=performanceLabel, _T("performanceLabel was null"));
-		ASSERT(0!=debugLabel, _T("debugLabel was null"));
-		
-		performanceLabel->m_bVisible = application.displayFPS;
-		debugLabel->m_bVisible = application.displayDebugData;
+		application.changeGameState(GAME_STATE_MENU);
+		return;
+	}
 
-		// update
-		application.getWorld().update(deltaTime);
-		g_GUI.update(deltaTime);
-		
-		// draw
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		application.getWorld().draw();
-		dim.draw();
-		g_GUI.draw();
+	ASSERT(0!=performanceLabel, _T("performanceLabel was null"));
+	ASSERT(0!=debugLabel, _T("debugLabel was null"));
 
-		// Draw the blur over top
-		if(application.useBlurEffects)
-		{
-			blurEffect.update(deltaTime);
-			blurEffect.draw();
-		}
+	performanceLabel->m_bVisible = application.displayFPS;
+	debugLabel->m_bVisible = application.displayDebugData;
+
+	// update
+	application.getWorld().update(deltaTime);
+	g_GUI.update(deltaTime);
+
+	// draw
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	application.getWorld().draw();
+	dim.draw();
+	g_GUI.draw();
+
+	// Draw the blur over top
+	if(application.useBlurEffects)
+	{
+		blurEffect.update(deltaTime);
+		blurEffect.draw();
 	}
 }
 

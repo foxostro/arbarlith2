@@ -79,7 +79,7 @@ public:
 	@param xml XML source
 	@return true if successful, false otherwise
 	*/
-	bool load(PropertyBag &xml);
+	bool load(const PropertyBag &xml);
 
 	/** Activate the fog settings */
 	void activate(void) const;

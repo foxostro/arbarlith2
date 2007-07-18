@@ -86,11 +86,16 @@ public:
 	virtual PropertyBag save(void) const;
 
 	/**
-	Loads the object state from an XML data source
-	@param xml The XML data source
-	@return true if successful, false otherwise
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
+
+	/**
+	Loads the object state
+	@param fileName Name of the file to load
+	*/
+	void loadFromFile(const _tstring &fileName);
 
 	/**
 	Gets the distance in the XZ-plane that the actots are from one another
@@ -528,7 +533,7 @@ protected:
 	@param name The name of the item set
 	@param list The list items to return
 	*/
-	virtual void loadList(PropertyBag& xml, const _tstring& name, vector<_tstring>& strList);
+	virtual void loadList(const PropertyBag& xml, const _tstring& name, vector<_tstring>& strList);
 
 	/**
 	Saves a list of strings to XML

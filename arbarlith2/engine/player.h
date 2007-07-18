@@ -69,11 +69,10 @@ public:
 	virtual void OnDeath(void);
 
 	/**
-	Loads Player from XML
-	@param xml XML source
-	@return true if the XML loaded successfully
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 	/** Gets the name of the proper pain animation */
 	virtual const _tstring getPainAnim(void) const;

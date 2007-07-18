@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Bullet.h"
 #include "SpellFireBall.h"
 
-namespace Arbarlith2 {
+namespace Arbarlith2 { 
 
 void SpellFireBall::clear(void)
 {
@@ -75,12 +75,12 @@ void SpellFireBall::castSpell(void)
 	ASSERT(zone!=0, _T("zone is null"));
 
 	ActorSet &s = zone->getObjects();
-
+	
 	ASSERT(s.isMember(ownerID), _T("owner is not present in the active zone"));
 
 	Actor &owner = s.get(ownerID);
 
-	OBJECT_ID id = s.create(_T("class Arbarlith2::Bullet"), zone);
+	OBJECT_ID id = s.create(Bullet::getTypeString(), zone);
 
 	Bullet &bullet = dynamic_cast<Bullet&>(s.get(id));
 

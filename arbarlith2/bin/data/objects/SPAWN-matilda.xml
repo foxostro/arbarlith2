@@ -17,7 +17,7 @@
 <solid>false</solid>
 <up>&vec(0, 1, 0)</up>
 
-<monsterDatafile>data/monsters/matilda.xml</monsterDatafile>
+<monsterDataFile>data/monsters/matilda.xml</monsterDataFile>
 <minMonsters>1</minMonsters>
 <maxMonsters>2</maxMonsters>
 <separationRadius>2.0</separationRadius>

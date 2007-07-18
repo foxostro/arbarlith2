@@ -1,3 +1,5 @@
+<forceSkin>data/shop/shop_texture.jpg</forceSkin>
+
 <animation>
 	<name>idle</name>
 	<priority>0.0</priority>

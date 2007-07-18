@@ -63,47 +63,46 @@ GameStateSpellMenu::~GameStateSpellMenu(void)
 
 void GameStateSpellMenu::update(float)
 {
-	if(!World::GetSingletonPtr())
+	if(!application.isWorldLoaded())
 	{
 		application.changeGameState(GAME_STATE_MENU);
+		return;
 	}
-	else
+
+	World &world = application.getWorld();
+
+	const size_t numOfPlayers = world.getNumOfPlayers();
+
+	for(size_t i=0; i<numOfPlayers; ++i)
 	{
-		World &world = application.getWorld();
-
-		const size_t numOfPlayers = world.getNumOfPlayers();
-
-		for(size_t i=0; i<numOfPlayers; ++i)
-		{
-			updateForPlayer(i);
-		}
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		world.draw();
-		dim.draw();
-
-		effect_Begin(effect_GUI);
-
-			if(numOfPlayers==1)
-			{
-				Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(world.getPlayer(0));
-				drawForPlayer(player, 512, 384, 250.0f);
-			}
-			else
-			{
-				const float radius = 100.0f;
-
-				for(size_t i=0; i<numOfPlayers; ++i)
-				{
-					Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(world.getPlayer(i));
-
-					vec2 win = Project(player.getPos());
-
-					drawForPlayer(player, win.x, win.y, radius);
-				}
-			}
-		effect_End();
+		updateForPlayer(i);
 	}
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	world.draw();
+	dim.draw();
+
+	effect_Begin(effect_GUI);
+
+		if(numOfPlayers==1)
+		{
+			Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(world.getPlayer(0));
+			drawForPlayer(player, 512, 384, 250.0f);
+		}
+		else
+		{
+			const float radius = 100.0f;
+
+			for(size_t i=0; i<numOfPlayers; ++i)
+			{
+				Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(world.getPlayer(i));
+
+				vec2 win = Project(player.getPos());
+
+				drawForPlayer(player, win.x, win.y, radius);
+			}
+		}
+	effect_End();
 }
 
 void GameStateSpellMenu::updateForPlayer(size_t playerNumber)

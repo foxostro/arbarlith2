@@ -66,7 +66,7 @@ private:
 	Loads the complete materials legend from XML
 	@param materialsLegend XML for the materials legend
 	*/
-	void loadMaterialsLegend(PropertyBag &materialsLegend);
+	void loadMaterialsLegend(const PropertyBag &materialsLegend);
 
 	/**
 	Saves the material legend
@@ -111,21 +111,21 @@ public:
 	Creates a map from data in an XML source
 	@param xml The XML source
 	*/
-	void create(PropertyBag &xml);
+	void create(const PropertyBag &xml);
 
 	/**
 	Saves the map
 	@param xml The XML source
 	@param zoneName Name of the World
 	*/
-	void save(PropertyBag &xml, const _tstring &zoneName);
+	void save(PropertyBag &xml, const _tstring &zoneName) const;
 
 	/**
 	Saves the map
 	@return xml resultant XML element
 	@param zoneName Name of the World
 	*/
-	PropertyBag save(const _tstring &zoneName)
+	PropertyBag save(const _tstring &zoneName) const
 	{
 		PropertyBag xml;
 		save(xml, zoneName);
@@ -144,7 +144,7 @@ public:
 	@param z The z-coordinate of the Tile, in tile-space
 	@return true if the positionis within the tile map
 	*/
-	bool onATile(int x, int z) const
+	inline bool onATile(int x, int z) const
 	{
 		return(x >= 0 && x < width && z >= 0 && z < height);
 	}
@@ -155,7 +155,7 @@ public:
 	@param z The z-coordinate of the Tile, in tile-space
 	@return true if the positionis within the tile map
 	*/
-	bool onATile(float x, float z) const
+	inline bool onATile(float x, float z) const
 	{
 		int tileX = (int)floorf(x / tileMetersX);
 		int tileZ = (int)floorf(z / tileMetersX);
@@ -168,7 +168,7 @@ public:
 	@param z The z-coordinate of the Tile, in tile-space
 	@return a reference to the Tile
 	*/
-	Tile& getTile(int x, int z)
+	inline Tile& getTile(int x, int z)
 	{
 		ASSERT(x >= 0 && x < width,  _T("x is invalid"));
 		ASSERT(z >= 0 && z < height, _T("z is invalid"));
@@ -182,7 +182,7 @@ public:
 	@param z The z-coordinate of the Tile, in tile-space
 	@return a reference to the Tile
 	*/
-	const Tile& getTile(int x, int z) const
+	inline const Tile& getTile(int x, int z) const
 	{
 		ASSERT(x >= 0 && x < width,  _T("x is invalid"));
 		ASSERT(z >= 0 && z < height, _T("z is invalid"));
@@ -196,7 +196,7 @@ public:
 	@param z The z-coordinate of the Tile, in world-space
 	@return a reference to the Tile
 	*/
-	Tile &getTile(float x, float z)
+	inline Tile &getTile(float x, float z)
 	{
 		int tileX = (int)floorf(x / tileMetersX);
 		int tileZ = (int)floorf(z / tileMetersX);
@@ -210,7 +210,7 @@ public:
 	@param z The z-coordinate of the Tile, in world-space
 	@return a reference to the Tile
 	*/
-	const Tile &getTile(float x, float z) const
+	inline const Tile &getTile(float x, float z) const
 	{
 		int tileX = (int)floorf(x / tileMetersX);
 		int tileZ = (int)floorf(z / tileMetersX);
@@ -258,7 +258,7 @@ public:
 	@param wallFileName Specifies the file name of the texture to apply to the tile's walls
 	@param tileHeight The height of te tiles, specified in meters
 	*/
-	void fillBlock(float startX, float startZ, float endX, float endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName, float tileHeight)
+	inline void fillBlock(float startX, float startZ, float endX, float endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName, float tileHeight)
 	{
 		int sX = (int)floorf(startX / tileMetersX);
 		int sZ = (int)floorf(startZ / tileMetersX);
@@ -305,7 +305,7 @@ public:
 	Gets the number of columns in the map
 	@return number of columns
 	*/
-	int getNumColumns(void) const
+	inline int getNumColumns(void) const
 	{
 		return width;
 	}
@@ -314,7 +314,7 @@ public:
 	Gets the number of rows in the map
 	@return number of rows
 	*/
-	int getNumRows(void) const
+	inline int getNumRows(void) const
 	{
 		return height;
 	}
@@ -323,7 +323,7 @@ public:
 	Get the meters on each side of a Tile
 	@return meters per Tile
 	*/
-	float getTileMetersX(void) const
+	inline float getTileMetersX(void) const
 	{
 		return tileMetersX;
 	}

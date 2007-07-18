@@ -39,7 +39,15 @@ class StateMachine;
 
 typedef Factory<StateMachine> StateMachineFactory;
 
-StateMachineFactory& getStateMachineFactory(void);
+StateMachineFactory& getStateMachineFactory(void);template<class T> struct StateMachineRegistrar
+{
+	StateMachineRegistrar(const _tstring typeName)
+	{
+		::Engine::getStateMachineFactory().registerType<T>(typeName);
+	}
+};
+
+#define GEN_FSM_RTTI_CPP(TYPE, NAME) namespace { ::Engine::StateMachineRegistrar< TYPE > _registrar(_T(NAME)); }
 
 } // namespace Engine
 

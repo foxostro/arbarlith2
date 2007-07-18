@@ -175,9 +175,9 @@ bool Player::allPlayersAreDead(World &zone)
 	return true;
 }
 
-bool Player::LoadXml(PropertyBag &xml)
+void Player::load(const PropertyBag &xml)
 {
-	Creature::LoadXml(xml);
+	Creature::load(xml);
 
 	// Load the inventory
 	PropertyBag invBag;
@@ -195,8 +195,6 @@ bool Player::LoadXml(PropertyBag &xml)
 	light->quadraticAttenuation = 0.3f;
 	light->causesShadows = false;
 	playerGlow = getZone().getLightManager().addLight(light);
-
-	return true;
 }
 
 bool Player::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const

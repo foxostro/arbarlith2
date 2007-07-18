@@ -45,21 +45,21 @@ GameStateEditor::GameStateEditor(Application &app)
 
 void GameStateEditor::update(float deltaTime)
 {
-	if(!World::GetSingletonPtr())
-		g_Application.changeGameState(GAME_STATE_MENU);
-	else
+	if(!application.isWorldLoaded())
 	{
-		// update
-		g_GUI.update(deltaTime);
-		g_Camera.updateFlyingCamera(deltaTime);
-
-		// draw
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		if(World::GetSingletonPtr())
-			World::GetSingleton().draw();
-		editorToolBar->drawInWorldSpace();
-		g_GUI.draw();
+		application.changeGameState(GAME_STATE_MENU);
+		return;
 	}
+
+	// update
+	g_GUI.update(deltaTime);
+	g_Camera.updateFlyingCamera(deltaTime);
+
+	// draw
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	application.getWorld().draw();
+	editorToolBar->drawInWorldSpace();
+	g_GUI.draw();
 }
 
 void GameStateEditor::onEnter(void)

@@ -84,13 +84,11 @@ void Teleporter::createToolBar(ListPaneWidget *pane)
 	pane->addElement(new ListElementTweakerXML(	_T("Destination Position"),	&destinationPosition));
 }
 
-bool Teleporter::LoadXml(PropertyBag &xml)
+void Teleporter::load(const PropertyBag &xml)
 {
-	Switch::LoadXml(xml);
+	Switch::load(xml);
 
 	xml.getSym(destinationPosition);
-
-	return true;
 }
 
 bool Teleporter::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

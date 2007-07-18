@@ -182,35 +182,23 @@ private:
 	/** Name of the particle type */
 	_tstring typeName;
 
-	/** Choose rotation direction upon creation randomly? */
-	bool pickRandomRotationDirection;
-
-	/** Direction of particle rotation */
-	enum { CLOCKWISE, COUNTER_CLOCKWISE } rotationDirection;
-
 	/** Multiplier for the size of the particle */
 	float sizeMultiplier;
 
-	/** Rotation in radians over time */
-	ParticleGraph graphRotation;
-	
 	/** Size in meters over time */
 	ParticleGraph graphSize;
-	
+
 	/** Alpha component over time */
 	ParticleGraph graphAlpha;
-	
+
 	/** Red component over time */
 	ParticleGraph graphRed;
-	
+
 	/** Green component over time */
 	ParticleGraph graphGreen;
-	
+
 	/** Blue component over time */
 	ParticleGraph graphBlue;
-
-	/** Rotation speed component at the immediate moment */
-	float graphRotationImmediate;
 
 	/** Particle size component at the immediate moment */
 	float graphSizeImmediate;
@@ -227,9 +215,6 @@ private:
 	/** Particle Blue component at the immediate moment */
 	float graphBlueImmediate;
 
-	/** Billboard vertices */
-	vec3 A, B, C, D;
-
 public:
 	/** Default Constructor */
 	ParticleElement(void);
@@ -244,9 +229,6 @@ public:
 	/** Copy Constructor */
 	ParticleElement(const ParticleElement &element);
 
-	/** Assignment Operator */
-	ParticleElement &operator=(const ParticleElement &element);
-
 	/**
 	Loads particle data
 	@param data Data to describe the element
@@ -254,19 +236,11 @@ public:
 	*/
 	void load(PropertyBag &data, ParticleSystem &system);
 
-	/** Calculates the billboard vertices for drawing
-	(matrix[16] represents the modelview matrix)
-	@param x0 matrix[0] - matrix[1]
-	@param x1 matrix[0] + matrix[1]
-	@param y0 matrix[4] - matrix[5]
-	@param y1 matrix[4] + matrix[5]
-	@param z0 matrix[8] - matrix[9]
-	@param z1 matrix[8] + matrix[9]
+	/**
+	Draws Renders the particle
+	@param matrix Modelview matrix
 	*/
-	void prepareForRender(float x0, float x1, float y0, float y1, float z0, float z1);
-
-	/** Draws Renders the particle */
-	void draw(void) const;
+	void draw(const mat4 &matrix) const;
 
 	/**
 	Updates the particle element
@@ -324,7 +298,7 @@ private:
 
 	/** The probability of a particle being created drops to zero between the hot spot radius and the falloff radius. */
 	float radiusFalloff;
-	
+
 	/** Rate of emission over time */
 	ParticleGraph graphEmissionRate;
 
@@ -492,6 +466,10 @@ public:
 
 	/** Kills each particle emitter */
 	void kill(void);
+
+private:
+	/** Destroy and free all particle elements */
+	void destroyElements(void);
 };
 
 } // namespace Engine

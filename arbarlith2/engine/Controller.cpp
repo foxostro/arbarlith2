@@ -493,33 +493,21 @@ vector<_tstring> Controller::getKeyName(ACTION_CODE actionCode)
 bool Controller::load(const _tstring &fileName)
 {
 	PropertyBag Bag;
-	if(!Bag.Load(fileName))
-	{
-		return false;
-	}
+	Bag.loadFromFile(fileName);
 
 	setDefaults();
 
-	const size_t numActions = Bag.getNumInstances(_T("action"));
-	for(size_t j=0; j<numActions; ++j)
+	for(size_t j=0, numActions=Bag.getNumInstances(_T("action")); j<numActions; ++j)
 	{
-		PropertyBag actionBag;
-		_tstring actionName;
-
-		Bag.get(_T("action"), actionBag, j);
-		actionBag.get(_T("name"), actionName);
+		PropertyBag actionBag = Bag.getBag(_T("action"), j);
+		_tstring actionName = actionBag.getString(_T("name"));
 
 		ACTION_CODE actionCode = createAction(actionName);
 
 		// Load one or more keys for this action
-		const size_t numBindings = Bag.getNumInstances(_T("binding"));
-		for(size_t i=0; i<numBindings; ++i)
+		for(size_t i=0, numBindings=Bag.getNumInstances(_T("binding")); i<numBindings; ++i)
 		{
-			_tstring keyName;
-			if(Bag.get(actionName, keyName, i))
-			{
-				bindings.insert(make_pair(actionCode, keyName)); // multimap allows duplicate keys
-			}
+			bindings.insert(  make_pair(actionCode, Bag.getString(actionName, i))  );
 		}
 	}
 

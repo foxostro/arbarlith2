@@ -15,15 +15,15 @@ namespace Engine
 	class XmlDataType
 	{
 	public:
-        /** Default construtor */
-        XmlDataType(void)
-        {}
+        	/** Default construtor */
+        	XmlDataType(void)
+        	{}
 
 		/**
 		Gets the string representation of the object
 		@return string representation
 		*/
-		virtual _tstring ToString() const = 0;
+		virtual _tstring ToString(void) const = 0;
 
 		/**
 		Retrieve from a string representation

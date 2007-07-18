@@ -57,14 +57,12 @@ void PowerupHeal::onPickup(MyPlayer &player)
 	player.heal(healValue); // TODO: healTime does nothing
 }
 
-bool PowerupHeal::LoadXml(PropertyBag &xml)
+void PowerupHeal::load(const PropertyBag &xml)
 {
-	Powerup::LoadXml(xml);
+	Powerup::load(xml);
 
 	xml.getSym(healValue);
 	xml.getSym(healTime);
-
-	return true;
 }
 
 bool PowerupHeal::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const

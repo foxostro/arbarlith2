@@ -381,6 +381,18 @@
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
+		<Unit filename="arbarlith2\engine\BoundingBox.cpp">
+			<Option compilerVar="CPP"/>
+			<Option target="default"/>
+			<Option target="debug"/>
+		</Unit>
+		<Unit filename="arbarlith2\engine\BoundingBox.h">
+			<Option compilerVar=""/>
+			<Option compile="0"/>
+			<Option link="0"/>
+			<Option target="default"/>
+			<Option target="debug"/>
+		</Unit>
 		<Unit filename="arbarlith2\engine\COLOR.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
@@ -991,30 +1003,6 @@
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
-		<Unit filename="arbarlith2\engine\MessageBox.cpp">
-			<Option compilerVar="CPP"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
-		<Unit filename="arbarlith2\engine\MessageBox.h">
-			<Option compilerVar=""/>
-			<Option compile="0"/>
-			<Option link="0"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
-		<Unit filename="arbarlith2\engine\MessageBoxManager.cpp">
-			<Option compilerVar="CPP"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
-		<Unit filename="arbarlith2\engine\MessageBoxManager.h">
-			<Option compilerVar=""/>
-			<Option compile="0"/>
-			<Option link="0"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
 		<Unit filename="arbarlith2\engine\MessageRouter.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
@@ -1371,18 +1359,6 @@
 			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\WaitScreen.h">
-			<Option compilerVar=""/>
-			<Option compile="0"/>
-			<Option link="0"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
-		<Unit filename="arbarlith2\engine\Zone.cpp">
-			<Option compilerVar="CPP"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
-		<Unit filename="arbarlith2\engine\Zone.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>

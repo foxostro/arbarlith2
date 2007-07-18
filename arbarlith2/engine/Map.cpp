@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Map.h"
 #include "profile.h"
 
-namespace Engine { 
+namespace Engine {
 
 Map::Map(void)
 {
@@ -77,17 +77,20 @@ void Map::destroyMaterialsLegend(void)
 	materialsLegend.clear();
 }
 
-void Map::loadMaterialsLegend(PropertyBag &materialsLegend)
+void Map::loadMaterialsLegend(const PropertyBag &materialsLegend)
 {
+	TRACE(_T("Loading materials legend..."));
+
 	destroyMaterialsLegend();
 
-	const size_t numberOfEntries = materialsLegend.getNumInstances(_T("material"));
-	for(size_t i=0; i<numberOfEntries;++i)
+	TRACE(_T("Expecting to find ") + itoa((int)materialsLegend.getNumInstances(_T("material"))) + _T(" materials"));
+
+	for(size_t i=0, numberOfEntries=materialsLegend.getNumInstances(_T("material")); i<numberOfEntries; ++i)
 	{
-		_tstring materialFileName;
-		materialsLegend.get(_T("material"), materialFileName, i);
-		loadMapMaterial(materialFileName);
+		loadMapMaterial(  materialsLegend.getString(_T("material"), i)  );
 	}
+
+	TRACE(_T("...finished (Loading materials legend)"));
 }
 
 PropertyBag Map::saveMaterialsLegend(void) const
@@ -114,6 +117,8 @@ MAP_MATERIAL_ID Map::loadMapMaterial(const _tstring &materialFileName)
 			return (MAP_MATERIAL_ID)i;
 	}
 
+	TRACE(_T("Loading map material: ") + fixedMaterialFileName);
+
 	materialsLegend.push_back(new Material(fixedMaterialFileName));
 
 	size_t numMaterials = materialsLegend.size();
@@ -127,31 +132,26 @@ const Material* Map::getMapMaterial(MAP_MATERIAL_ID materialID) const
 	return ((size_t)materialID<materialsLegend.size()) ? materialsLegend[materialID] : 0;
 }
 
-void Map::create(PropertyBag &xml)
+void Map::create(const PropertyBag &xml)
 {
 	PROFILE
 
-	
+
 	destroy();
 
 	// Get the scaling of the map along the X and Z directions
-	xml.get(_T("tileMetersX"), tileMetersX);
+	tileMetersX = xml.getFloat(_T("tileMetersX"));
 
 	// Load materials used in this map
-	PropertyBag materialsLegend;
-	xml.get(_T("materialsLegend"), materialsLegend);
-	loadMaterialsLegend(materialsLegend);
+	loadMaterialsLegend( xml.getBag(_T("materialsLegend")) );
 
 	// Get the dimensions of the map
-	xml.get(_T("width"), width);
-	xml.get(_T("height"), height);
+	width = xml.getInt(_T("width"));
+	height = xml.getInt(_T("height"));
 
 	// Get the name of the binary map file
-	_tstring tileDataFileName;
-	if(!xml.get(_T("tileDataFileName"), tileDataFileName))
-	{
-		FAIL(_T("Failed to retrieve the name of the binary tile data file from the Map definition!"));
-	}
+	_tstring tileDataFileName = xml.getString(_T("tileDataFileName"));
+	TRACE(_T("Loading tile data: ") + tileDataFileName);
 
 	// Allocate tile data
 	grid = new Tile[width * height];
@@ -178,7 +178,7 @@ void Map::create(PropertyBag &xml)
 	}
 
 	quadTree = new QuadTreeNode(grid, 0, 0, width, width, tileMetersX);
-	
+
 	// Allocate OpenGL resources
 	reaquire();
 }
@@ -213,7 +213,7 @@ void Map::resize(int width)
 	quadTree = new QuadTreeNode(grid, 0, 0, width, width, tileMetersX);
 }
 
-void Map::save(PropertyBag &xml, const _tstring &zoneName)
+void Map::save(PropertyBag &xml, const _tstring &zoneName) const
 {
 	xml.add(_T("width"), width);
 	xml.add(_T("height"), height);
@@ -222,7 +222,7 @@ void Map::save(PropertyBag &xml, const _tstring &zoneName)
 	// Save materials used in this map
 	xml.add(_T("materialsLegend"), saveMaterialsLegend());
 
-	// save tile data	
+	// save tile data
 	_tstring tileDataFileName = pathAppend(_T("data/zones"), zoneName + _T(".bin"));
 	xml.add(_T("tileDataFileName"), tileDataFileName);
 
@@ -241,7 +241,7 @@ void Map::fill(TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &f
 		for(int x=0; x<width; ++x)
 			getTile(x,y).create(x,y,tileType, properties, tileHeight, floorFileName, wallFileName, *this);
 	}
-	
+
 	reaquire();
 }
 

@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Player.h"
 #include "LightManager.h"
 
-namespace Engine { 
+namespace Engine {
 
 
 GLenum lightNames[7] =
@@ -128,7 +128,7 @@ void LightManager::update(float deltaTime)
 void LightManager::computeActiveSet(void)
 {
 	ASSERT(World::GetSingletonPtr()!=0, _T("World is null"));
-	
+
 	Player *playerPtr = World::GetSingleton().getPlayerPtr(0);
 
 	if(playerPtr == 0)

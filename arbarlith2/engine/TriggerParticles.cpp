@@ -62,16 +62,14 @@ bool TriggerParticles::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 	return Trigger::saveTidy(xml, dataFile);
 }
 
-bool TriggerParticles::LoadXml(PropertyBag &xml)
+void TriggerParticles::load(const PropertyBag &xml)
 {
-	Trigger::LoadXml(xml);
+	Trigger::load(xml);
 
 	xml.getSym(pfxFileName);
 	xml.getSym(pfxLocation);
 
 	showModel = false;
-
-	return true;
 }
 
 void TriggerParticles::createToolBar(ListPaneWidget *pane)

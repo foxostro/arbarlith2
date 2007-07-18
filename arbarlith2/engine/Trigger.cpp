@@ -121,17 +121,15 @@ bool Trigger::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 	return Actor::saveTidy(xml, dataFile);
 }
 
-bool Trigger::LoadXml(PropertyBag &xml)
+void Trigger::load(const PropertyBag &xml)
 {
-	Actor::LoadXml(xml);
+	Actor::load(xml);
 
 	loadList(xml, _T("sounds"), sounds);
 	if(!xml.getSym(triggerRadius))
 	{
 		triggerRadius = getCylinderRadius(); // default
 	}
-
-	return true;
 }
 
 _tstring Trigger::getTriggerSfx(void) const

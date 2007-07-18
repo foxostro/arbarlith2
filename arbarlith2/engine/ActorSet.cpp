@@ -156,7 +156,7 @@ void ActorCollisionResponse(pair<OBJECT_ID,Actor*> p)
 	}
 }
 
-void ActorSet::update(float deltaTime, World *zone)
+void ActorSet::update(float deltaTime, World *world)
 {
 	PROFILE
 
@@ -164,19 +164,11 @@ void ActorSet::update(float deltaTime, World *zone)
 	for_each(begin(), end(), bind(ActorCollisionDetection, _1, this));
 	for_each(begin(), end(), bind(ActorCollisionResponse, _1));
 
-
-
 	// Spawn creatures as requested
-	for(size_t i=0; i<requestedSpawns.size(); ++i)
-	{
-		RequestedSpawn &request = requestedSpawns[i];
-		spawnNow(request.monsterDataFile, request.position, zone);
-	}
+	for_each(requestedSpawns.begin(), requestedSpawns.end(), bind(&ActorSet::doSpawnRequest, this, _1, world));
 	requestedSpawns.clear();
 
-
-
-	garbageCollection(); //   TODO: MAKE THIS A PERIODIC TASK
+	garbageCollection(); // TODO: MAKE THIS A PERIODIC TASK
 }
 
 vector<Actor*> ActorSet::getByName(const _tstring &name)
@@ -340,72 +332,67 @@ void ActorSet::spawn(const _tstring &dataFile, const vec3 &position)
 	requestedSpawns.push_back(request);
 }
 
+void ActorSet::doSpawnRequest(const RequestedSpawn &request, World *zone)
+{
+	spawnNow(request.monsterDataFile, request.position, zone);
+}
+
 void ActorSet::spawnNow(const _tstring &dataFile, const vec3 &position, World *zone)
 {
 	PropertyBag xml;
-	xml.Load(dataFile);
+	xml.loadFromFile(dataFile);
 	spawnNow(xml, position, zone);
 }
 
-Actor& ActorSet::spawnNow(PropertyBag &xml, World *zone)
+Actor& ActorSet::spawnNow(const PropertyBag &specializations, World *zone)
 {
-	_tstring fileName, rtti;
+	PropertyBag data, prototype;
 
-	if(xml.get(_T("file"), fileName))
+	// If an external data file exists, use it as a prototype
+	_tstring fileName = _T("nill");
+	if(specializations.get(_T("file"), fileName))
 	{
-		// The type is defined in an external file
-		PropertyBag external;
-		external.Load(fileName);
-		external.get(_T("type"), rtti);
-	}
-	else
-	{
-		// No exernal data file
-		xml.get(_T("type"), rtti);
+		prototype.loadFromFile(fileName);
 	}
 
-	// Create the object inside the game world
-	OBJECT_ID id = create(rtti, zone);
+	// Merge in the data specific to this creature (or add it to begin with)
+	data = prototype;
+	data.merge(specializations, true);
 
-	// Load the object from XML
+	// Create the object
+	_tstring type = _T("nill");
+	data.getSym(type);
+	OBJECT_ID id = create(type, zone);
 	Actor &object = get(id);
-
-	// Load the object
-	object.LoadXml(xml);
+	object.load(data);
 
 	return object;
 }
 
-void ActorSet::spawnNow(PropertyBag &xml, const vec3 &position, World *zone)
+void ActorSet::spawnNow(const PropertyBag &xml, const vec3 &position, World *zone)
 {
 	spawnNow(xml, zone).Place(position);
 }
 
-void ActorSet::load(PropertyBag &xml, World *zone)
+void ActorSet::load(const PropertyBag &xml, World *world)
 {
-	ASSERT(zone!=0, _T("zone was null"));
+	ASSERT(world!=0, _T("world was null"));
 
-	_tstring rtti;
+	TRACE(_T("Loading ActorSet..."));
 
-	TRACE(_T("Loading ActorSet"));
-	g_WaitScreen.Render();
-
-	// Load the objects
-	const size_t numObjects = xml.getNumInstances(_T("object"));
-	for(size_t i=0; i<numObjects; ++i)
+	for(size_t i=0, numObjects=xml.getNumInstances(_T("object")); i<numObjects; ++i)
 	{
 		PropertyBag ThisObjBag;
 
 		xml.get(_T("object"), ThisObjBag, i);
 
-		spawnNow(ThisObjBag, zone);
+		spawnNow(ThisObjBag, world);
 	}
 
 	// Player data is saved separately
 	deleteActors<Player>();
 
-	TRACE(_T("All Objects Loaded"));
-	g_WaitScreen.Render();
+	TRACE(_T("...finished (Loading ActorSet)"));
 }
 
 PropertyBag ActorSet::save(void) const

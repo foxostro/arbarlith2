@@ -43,7 +43,7 @@ const OBJECT_ID INVALID_ID = -1;
 #define GEN_RTTI(TYPE, NAME)                                                              \
 static _tstring getTypeString(void)                                                       \
 {                                                                                         \
-	return _T( NAME );                                                                \
+	return _tstring(_T( NAME ));                                                      \
 }                                                                                         \
 static OBJECT_TYPE getType(void)                                                          \
 {                                                                                         \

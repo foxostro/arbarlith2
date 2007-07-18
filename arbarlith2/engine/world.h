@@ -46,7 +46,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "fog.h"
 
 
-#define MAX_PLAYERS 4
+#define MAX_PLAYERS (4)
 
 
 namespace Engine {
@@ -58,14 +58,12 @@ class Player;
 /** handles the game world */
 class World : public Singleton<World>
 {
-	friend class EditorToolBar; // FIXME: remove this statement! needed so that the toolbar can edit the World name... correct this
-
 public:
-	/** Default constructor */
-	World(void);
-
 	/** Destructor */
 	~World(void);
+
+	/** Default constructor */
+	World(void);
 
 	/** Clears the zone to a just-constructed state */
 	void clear(void);
@@ -80,67 +78,77 @@ public:
 	void reaquire(void);
 
 	/**
-	Save to XML
-	@param bag XML source
-	@return true if the calling child class should save fully, false
-	if the calling child class should save just enough for editor mode
+	Gets the default file name to save or load the world from
+	@param name The name of the world
 	*/
-	bool SaveXml(PropertyBag &bag);
-
-	/**
-	Load from XML
-	@param bag XML source
-	@return true if successful
-	*/
-	bool LoadXml(PropertyBag &bag);
-
-	/**
-	Save to XML
-	@param fileName XML source
-	@return true if success, false if failure
-	*/
-	void SaveXml(const _tstring &fileName)
+	static _tstring getDefaultSaveFileName(const _tstring &name)
 	{
-		PropertyBag bag;
-		SaveXml(bag);
-		bag.saveToFile(fileName);
+		return _T("data/zones/") + name + _T(".xml");
 	}
 
 	/**
-	Load from XML
-	@param fileName XML source
-	@return true if successful
+	Saves the world state to the PropertyBag data structure
+	@return world state
 	*/
-	bool LoadXml(const _tstring &fileName)
+	PropertyBag save(void) const;
+
+	/**
+	Loads the world state
+	@param xml data source
+	*/
+	void load(const PropertyBag &xml);
+
+	/**
+	Saves the world to file
+	@param fileName Name of the file to write
+	*/
+	inline void saveToFile(const _tstring &fileName) const
 	{
-		PropertyBag bag;
-		bag.Load(fileName);
-		return LoadXml(bag);
+		save().saveToFile(fileName);
+	}
+
+	/** Saves the world to file */
+	inline void saveToFile(void) const
+	{
+		saveToFile(getDefaultSaveFileName(getName()));
+	}
+
+	/**
+	Loads the world from file
+	@param fileName XML source
+	@param xml data source
+	*/
+	void loadFromFile(const _tstring &fileName);
+
+	/** Loads the world from file */
+	inline void loadFromFile(void)
+	{
+		loadFromFile(getDefaultSaveFileName(getName()));
 	}
 
 	/**
 	Retrieves the name of the realm
 	@return Name of the realm
 	*/
-	const _tstring& getName(void) const
+	inline const _tstring& getName(void) const
 	{
 		return name;
 	}
 
 	/**
-	Determines whether the realm has loaded data from XML yet or not
-	@return true if the realm has loaded data from XML, false otherwise
+	Sets the name of the realm
+	@param name New name of the realm
 	*/
-	bool isLoaded(void) const
+	inline void setName(const _tstring &name)
 	{
-		return loaded;
+		this->name = name;
 	}
 
 	/**
 	Gets the object database
 	@return object database
 	*/
-	ActorSet& getObjects(void)
+	inline ActorSet& getObjects(void)
 	{
 		return objects;
 	}
@@ -149,7 +157,7 @@ public:
 	Gets the object database
 	@return object database
 	*/
-	const ActorSet& getObjects(void) const
+	inline const ActorSet& getObjects(void) const
 	{
 		return objects;
 	}
@@ -158,7 +166,7 @@ public:
 	Gets the tile-based representation of the game world
 	@return a reference to the map object
 	*/
-	Map& getMap(void)
+	inline Map& getMap(void)
 	{
 		return map;
 	}
@@ -167,7 +175,7 @@ public:
 	Gets the tile-based representation of the game world
 	@return a reference to the map object
 	*/
-	const Map& getMap(void) const
+	inline const Map& getMap(void) const
 	{
 		return map;
 	}
@@ -199,7 +207,16 @@ public:
 	Gets the light manager
 	@return the light manager
 	*/
-	LightManager& getLightManager(void)
+	inline LightManager& getLightManager(void)
+	{
+		return lightManager;
+	}
+
+	/**
+	Gets the light manager
+	@return the light manager
+	*/
+	inline const LightManager& getLightManager(void) const
 	{
 		return lightManager;
 	}
@@ -245,7 +262,7 @@ public:
 	Reloads all the players
 	@param newGame The "new game" file
 	*/
-	void reloadPlayers(PropertyBag &newGame);
+	void reloadPlayers(const PropertyBag &newGame);
 
 	/** Harmonizes the camera with the current player positions */
 	void updateCamera(void);
@@ -268,13 +285,37 @@ public:
 		return clockTicks;
 	}
 
+	/**
+	Gets a particle system, given its handle
+	@param handle The handle to the particle system
+	@return particle system
+	*/
+	inline ParticleSystem& getParticleSystem(size_t handle)
+	{
+		ASSERT(handle<particles.size(), _T("handle is invalid!"));
+		ASSERT(particles[handle]!=0, _T("particles[handle] is null!"));
+		return *particles[handle];
+	}
+
+	/**
+	Gets a particle system, given its handle
+	@param handle The handle to the particle system
+	@return particle system
+	*/
+	inline const ParticleSystem& getParticleSystem(size_t handle) const
+	{
+		ASSERT(handle<particles.size(), _T("handle is invalid!"));
+		ASSERT(particles[handle]!=0, _T("particles[handle] is null!"));
+		return *particles[handle];
+	}
+
 private:
 	/**
 	Loads and processes XML data
 	@param Bag XML-Source
 	@return true if succesful, false otherwise
 	*/
-	bool LoadData(PropertyBag &Bag);
+	bool LoadData(const PropertyBag &Bag);
 
 	/**
 	Draws the scene without shadows
@@ -305,7 +346,7 @@ private:
 	void updateShadows(float deltaTime);
 
 	/** Periodically calculates and caches the average player position */
-	void recalculateAveragePlayerPosition(void)
+	inline void recalculateAveragePlayerPosition(void)
 	{
 		averagePlayerPosition = findAveragePlayerPosition();
 	}
@@ -323,8 +364,11 @@ public:
 	/** Game Object Message Router */
 	MessageRouter router;
 
-	/** Collection of particle systems in the world */
-	vector<ParticleSystem*> particles;
+	/**
+	Name of the World
+	@todo Engine::World::name should be made private
+	*/
+	_tstring name;
 
 private:
 	/** All lights in the World */
@@ -335,19 +379,6 @@ private:
 
 	/** Manages fog settings */
 	Fog fog;
-
-	/**
-	Flags whether or not the realm has been loaded from XML yet.
-	If the cache exists, this determines whether the realm has
-	been created from it or not.
-	*/
-	bool loaded;
-
-	/** Caches the data for the World until the World is loaded, as indicated by the 'Engine::World::loaded' property */
-	PropertyBag xmlCache;
-
-	/** Name of the World */
-	_tstring name;
 
 	/** Set of objects that reside within this World */
 	ActorSet objects;
@@ -366,6 +397,9 @@ private:
 
 	/** Milliseconds since this game began */
 	double clockTicks;
+
+	/** Collection of particle systems in the world */
+	vector<ParticleSystem*> particles;
 };
 
 } // namespace Engine

@@ -113,19 +113,16 @@ void MyPlayer::setupControllerBindings(int playerNumber)
 	}
 }
 
-bool MyPlayer::LoadXml(PropertyBag &xml)
+void MyPlayer::load(const PropertyBag &xml)
 {
-	if(!Player::LoadXml(xml))
-		return false;
+	Player::load(xml);
 
-	spellList.push_back(new SpellFireBall	(&getZone(), m_ID, _T("data/spells/fireball.xml")));	// Fireball
-	spellList.push_back(new SpellFireBall	(&getZone(), m_ID, _T("data/spells/arctic-wind.xml")));	// Arctic Wind
-	spellList.push_back(new SpellIncinerate	(&getZone(), m_ID, _T("data/spells/incinerate.xml")));	// Incinerate
-	spellList.push_back(new SpellFireBall	(&getZone(), m_ID, _T("data/spells/chill.xml")));		// Chill
-	spellList.push_back(new SpellHeal		(&getZone(), m_ID, _T("data/spells/heal.xml")));		// Heal
-	spellList.push_back(new SpellFireBall	(&getZone(), m_ID, _T("data/spells/ice-blast.xml")));	// Ice Blast
-
-	return true;
+	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/fireball.xml")));    // Fireball
+	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/arctic-wind.xml"))); // Arctic Wind
+	spellList.push_back(new SpellIncinerate (&getZone(), m_ID, _T("data/spells/incinerate.xml")));  // Incinerate
+	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/chill.xml")));       // Chill
+	spellList.push_back(new SpellHeal       (&getZone(), m_ID, _T("data/spells/heal.xml")));        // Heal
+	spellList.push_back(new SpellFireBall   (&getZone(), m_ID, _T("data/spells/ice-blast.xml")));   // Ice Blast
 }
 
 void MyPlayer::update(float deltaTime)

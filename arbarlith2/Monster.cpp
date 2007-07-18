@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright Â© 2006-2007 Game Creation Society
+Copyright © 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -95,10 +95,9 @@ bool Monster::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 	return Creature::saveTidy(xml, dataFile);
 }
 
-bool Monster::LoadXml(PropertyBag &xml)
+void Monster::load(const PropertyBag &xml)
 {
-	if(!Creature::LoadXml(xml))
-		return false;
+	Creature::load(xml);
 
 	xml.getSym(preferredSpell);
 
@@ -118,8 +117,6 @@ bool Monster::LoadXml(PropertyBag &xml)
 	{
 		spell->available = true;
 	}
-
-	return true;
 }
 
 const _tstring Monster::getSpellCastAnim(void) const

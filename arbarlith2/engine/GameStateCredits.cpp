@@ -38,8 +38,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "LinearInterpolator.h"
 #include "GameStateCredits.h"
 
-namespace Engine { 
-	
+namespace Engine {
+
 GameStateCredits::GameStateCredits(Application &app)
 : GameState(app),
   dimness(0.4f),
@@ -52,7 +52,7 @@ GameStateCredits::GameStateCredits(Application &app)
 	{
 		FAIL(_T("credits.txt failed to load"));
 	}
-	
+
 	const size_t size = file.getSize();
 
 	text.resize(size);
@@ -80,16 +80,16 @@ void GameStateCredits::update(float deltaTime)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	if(World::GetSingletonPtr())
+	if(application.isWorldLoaded())
 	{
 		application.getWorld().draw();
 		dim.draw();
 	}
-	
+
 	y += scrollSpeed * (deltaTime/1000.0f); // scroll a bit
 
 	effect_Begin(effect_GUI);
-	
+
 		glPushMatrix();
 		glTranslatef(200.0f, y, 0.1f);
 		g_Application.fontLarge.write(text, white, FONT_SIZE_HUGE);

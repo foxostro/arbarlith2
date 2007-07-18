@@ -53,11 +53,10 @@ public:
 	virtual void clear(void);
 
 	/**
-	Loads listener from XML
-	@param xml XML source
-	@return true if the XML loaded successfully
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(Engine::PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 protected:
 	/** Called in the event of the Trigger activating */

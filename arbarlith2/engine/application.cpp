@@ -354,9 +354,9 @@ void Application::startOpenGL()
 
 
 	bool fullscreen	= false; // whether to set fullscreen
-	int	 width		= 800;	 // dimensions of window
-	int	 height		= 600;	 // dimensions of window
-	int  depth		= 32;	 // bits per pixel
+	int width       = 800;   // dimensions of window
+	int height      = 600;   // dimensions of window
+	int depth       = 32;    // bits per pixel
 
 
 
@@ -364,9 +364,13 @@ void Application::startOpenGL()
 	// Load the setup file
 	const _tstring setupFileName = pathAppend(getAppDataDirectory(), defaultSetupFileName);
 
-	if(!xml.Load(setupFileName))
+	if(File::isFileOnDisk(setupFileName))
 	{
-		xml.Load(defaultSetupFileName);
+		xml.loadFromFile(setupFileName);
+	}
+	else
+	{
+		xml.loadFromFile(defaultSetupFileName);
 	}
 
 
@@ -447,9 +451,13 @@ void Application::loadXmlConfigFiles(void)
 	// Load the setup file
 	_tstring setupFileName = pathAppend(getAppDataDirectory(), defaultSetupFileName);
 
-	if(!BaseBag.Load(setupFileName))
+	if(File::isFileOnDisk(setupFileName))
 	{
-		BaseBag.Load(defaultSetupFileName);
+		BaseBag.loadFromFile(setupFileName);
+	}
+	else
+	{
+		BaseBag.loadFromFile(defaultSetupFileName);
 	}
 
 	BaseBag.getSym(mouseSensitivity);
@@ -497,7 +505,7 @@ void Application::enterWorld(int worldNum)
 
 	delete world;
 	world = new World;
-	world->LoadXml(worldFileName);
+	world->loadFromFile(worldFileName);
 
 	changeGameState(GAME_STATE_RUN);
 }

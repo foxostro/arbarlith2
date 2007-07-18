@@ -36,14 +36,12 @@ void Switch::clear(void)
 	Trigger::clear();
 }
 
-bool Switch::LoadXml(PropertyBag &xml)
+void Switch::load(const PropertyBag &xml)
 {
-	Trigger::LoadXml(xml);
+	Trigger::load(xml);
 
 	xml.getSym(actionLabel);
 	xml.getSym(time);
-
-	return true;
 }
 
 bool Switch::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const

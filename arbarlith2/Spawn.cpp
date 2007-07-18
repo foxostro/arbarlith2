@@ -56,57 +56,54 @@ void Spawn::clear(void)
 	maxMonsters = 3;
 	minMonsters = 1;
 	separationDistance = 2;
-	monsterDatafile.clear();
+	monsterDataFile = _T("nill");
 }
 
 void Spawn::onTrigger(void)
 {
-	if(!triggeredOnce)
+	if(triggeredOnce) return;
+
+	int numMonsters = (minMonsters==maxMonsters) ? minMonsters : IRAND_RANGE(minMonsters, maxMonsters);
+
+	ActorSet &s = getZone().getObjects();
+
+	if(numMonsters==1)
 	{
-		int numMonsters = minMonsters==maxMonsters ? minMonsters : IRAND_RANGE(minMonsters, maxMonsters);
-
-		ActorSet &s = getZone().getObjects();
-
-		if(numMonsters==1)
-		{
-			s.spawn(monsterDatafile, getPos());
-		}
-		else
-		{
-			float radius = (separationDistance*numMonsters) / (2*(float)M_PI);
-
-			for(int i=0; i<numMonsters; ++i)
-			{
-				float angle = 2.0f*i*(float)M_PI/numMonsters;
-
-				vec3 spawnPoint = vec3(cosf(angle), 0, sinf(angle))*radius + getPos();
-				spawnPoint.y = 0.0f; // flatten
-				s.spawn(monsterDatafile, spawnPoint);
-			}
-		}
-
-		triggeredOnce = true;
+		s.spawn(monsterDataFile, getPos());
 	}
+	else
+	{
+		float radius = (separationDistance*numMonsters) / (2*(float)M_PI);
+
+		for(int i=0; i<numMonsters; ++i)
+		{
+			float angle = 2.0f*i*(float)M_PI/numMonsters;
+
+			vec3 spawnPoint = vec3(cosf(angle), 0, sinf(angle))*radius + getPos();
+			spawnPoint.y = 0.0f; // flatten
+			s.spawn(monsterDataFile, spawnPoint);
+		}
+	}
+
+	triggeredOnce = true;
 }
 
-bool Spawn::LoadXml(PropertyBag &xml)
+void Spawn::load(const PropertyBag &xml)
 {
-	Listener::LoadXml(xml);
+	Listener::load(xml);
 
-	xml.getSym(monsterDatafile);
+	xml.getSym(monsterDataFile);
 	xml.getSym(minMonsters);
 	xml.getSym(maxMonsters);
 	xml.getSym(separationDistance);
-
-	return true;
 }
 
 bool Spawn::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("monsterDatafile"),		monsterDatafile);
-	saveTag(xml, editorData, _T("minMonsters"),		minMonsters);
-	saveTag(xml, editorData, _T("maxMonsters"),		maxMonsters);
-	saveTag(xml, editorData, _T("separationDistance"),	separationDistance);
+	saveTag(xml, editorData, _T("monsterDatafile"),     monsterDataFile);
+	saveTag(xml, editorData, _T("minMonsters"),         minMonsters);
+	saveTag(xml, editorData, _T("maxMonsters"),         maxMonsters);
+	saveTag(xml, editorData, _T("separationDistance"),  separationDistance);
 
 	return Listener::saveTidy(xml, editorData);
 }

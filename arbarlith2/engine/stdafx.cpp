@@ -118,6 +118,18 @@ _tstring toLowerCase(const _tstring &in)
 	return str;
 }
 
+_tstring replace(const _tstring &source, const _tstring &find, const _tstring &replace)
+{
+	_tstring output = source;
+
+	for(size_t j = 0; (j=source.find(find, j)) != _tstring::npos; ++j)
+	{
+		output.replace(j, find.length(), replace);
+	}
+
+	return output;
+}
+
 /**
 Projects a vector into screen coordinates
 @param winx X-Coord on the window

@@ -143,17 +143,7 @@ double StateMachine::GetTimeInState( void )
 	return( m_Owner->getZone().getClockTicks() - m_timeOnEnter );
 }
 
-bool StateMachine::SaveXml(PropertyBag &Bag)
-{
-	Bag.Add(_T("currentState"), m_currentState);
-	Bag.Add(_T("nextState"),    m_nextState);
-	Bag.Add(_T("stateChange"),  m_stateChange);
-	Bag.Add(_T("timeOnEnter"),  m_timeOnEnter);
-
-	return true;
-}
-
-bool StateMachine::LoadXml(PropertyBag &Bag)
+void StateMachine::load(const PropertyBag &Bag)
 {
 	Bag.get(_T("currentState"), m_currentState);
 	Bag.get(_T("nextState"),    m_nextState);
@@ -162,9 +152,7 @@ bool StateMachine::LoadXml(PropertyBag &Bag)
 
 	m_Owner = 0;
 	m_ccMessagesToGameObject = INVALID_ID;
-
-	return true;
 }
 
 
-}; // namespace
+} // namespace Engine

@@ -44,4 +44,4 @@ ActorFactory& getActorFactory(void)
 	return(*factory);
 }
 
-}; // namespace
+} // namespace Engine

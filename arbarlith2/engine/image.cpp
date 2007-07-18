@@ -69,7 +69,7 @@ bool Image::load(const _tstring &_fileName)
 	// anything to do?
 	if(fileName.empty())
 	{
-		ERR(_T("Cannot load image when filename is empty!"));
+		FAIL(_T("Cannot load image when filename is empty!"));
 		return false;
 	}
 
@@ -85,8 +85,6 @@ bool Image::load(const _tstring &_fileName)
 
 	if(!ilLoadImage(s))
 	{
-		FAIL(_tstring(_T("Failed to load image: \"")) + fileName);
-
 		ILenum err;
 		while((err=ilGetError()) != IL_NO_ERROR)
 		{
@@ -94,6 +92,8 @@ bool Image::load(const _tstring &_fileName)
 		}
 
 		delete[] s;
+
+		FAIL(_tstring(_T("Failed to load image: ")) + fileName);
 
 		return false;
 	}

@@ -416,20 +416,11 @@ void EditorToolBar::update(float deltaTime)
 		// Save / Load the game
 		if(shouldSave)
 		{
-			_tstring fileName = world->getName() + _T(".xml");
-
-			world->SaveXml(_tstring(_T("data/zones/")) + fileName);
+			world->save();
 		}
 		else if(shouldLoad)
 		{
-			_tstring fileName = world->getName() + _T(".xml");
-
-			world->LoadXml(_tstring(_T("data/zones/")) + fileName);
-
-			// Reload the players
-			PropertyBag newGame;
-			newGame.Load(_T("data/zones/World1.xml"));
-			world->reloadPlayers(newGame);
+			world->loadFromFile();
 		}
 		else if(shouldNew)
 		{
@@ -475,7 +466,7 @@ void EditorToolBar::createNewMap(void)
 
 	// Add a player object
 	PropertyBag newGame;
-	newGame.Load(_T("data/zone/World1.xml"));
+	newGame.loadFromFile(_T("data/zone/World1.xml"));
 	world->reloadPlayers(newGame);
 }
 
@@ -691,7 +682,7 @@ void EditorToolBar::onLeftMouseDown()
 			// Gets the objects for the object palette
 			editorDataFile = _tstring(_T("data/objects/")) + nextObject;
 
-			ThisObjBag.Load(editorDataFile);
+			ThisObjBag.loadFromFile(editorDataFile);
 			ThisObjBag.get(_T("type"), rtti);
 
 			// Create the object inside the game world
@@ -699,7 +690,7 @@ void EditorToolBar::onLeftMouseDown()
 			if(id != INVALID_ID)
 			{
 				Actor &object = objects.get(id);
-				object.LoadXml(ThisObjBag);
+				object.load(ThisObjBag);
 				object.editorDataFile = editorDataFile;
 
 				// Do not affect object y with the move command

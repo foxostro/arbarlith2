@@ -76,18 +76,10 @@ public:
 	virtual void destroy(void);
 
 	/**
-	Loads data from XML
-	@param Bag The XML source
-	@return true When successful, false otherwise
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(PropertyBag &Bag);
-
-	/**
-	Loads data from XML
-	@param fileName The filename from which to load data
-	@return true When successful, false otherwise
-	*/
-	virtual bool LoadXml(_tstring fileName);
+	virtual void load(const PropertyBag &data);
 
 	/**
 	Updates the creature

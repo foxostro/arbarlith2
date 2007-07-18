@@ -54,11 +54,10 @@ public:
 	void clear(void);
 
 	/**
-	Loads Player from XML
-	@param xml XML source
-	@return true if the XML loaded successfully
+	Loads the object state
+	@param data data source
 	*/
-	virtual bool LoadXml(Engine::PropertyBag &xml);
+	virtual void load(const PropertyBag &data);
 
 protected:
 	/** Called in the event of the Trigger activating */
@@ -74,7 +73,7 @@ protected:
 
 private:
 	/** Data file of the monster to spawn */
-	_tstring monsterDatafile;
+	_tstring monsterDataFile;
 
 	/** Maximum number to spawn on regular difficulty */
 	int maxMonsters;

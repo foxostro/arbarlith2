@@ -55,13 +55,11 @@ void PowerupSpell::onPickup(MyPlayer &player)
 	player.setCanCast(spellIdx, true);
 }
 
-bool PowerupSpell::LoadXml(PropertyBag &xml)
+void PowerupSpell::load(const PropertyBag &xml)
 {
-	Powerup::LoadXml(xml);
+	Powerup::load(xml);
 
 	xml.getSym(spellIdx);
-
-	return true;
 }
 
 bool PowerupSpell::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
