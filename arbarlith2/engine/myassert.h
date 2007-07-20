@@ -28,8 +28,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-//#ifndef _ASSERT_H_
-//#define _ASSERT_H_
+#ifndef _MY_ASSERT_H_
+#define _MY_ASSERT_H_
 
 
 namespace Engine {
@@ -39,24 +39,21 @@ Tests an assertion
 @param line The line of the assertion
 @param pszfileName The file name of the file in which the assertion occurred
 @param message A message describing the assertion
+@return true If the user decided to enter the debugger
 */
-void assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message);
+bool assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message);
 
 } // namespace Engine
-
-
-
-// Enable the assertion macro in release mode too
-#ifndef _ENABLE_ASSERTS_
-#define _ENABLE_ASSERTS_ 0
-#endif
 
 // The ASSERT macro
 #ifndef ASSERT
 
-#if(_ENABLE_ASSERTS_ || _DEBUG)
+#ifdef _DEBUG
 #	ifdef _WIN32
-#		define ASSERT(exp, msg) if((bool)(exp) == false)  {  ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg));  }
+#		define ASSERT(expr, msg) \
+    			do { if (  !(expr) && \
+			     ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))  ) \
+        		     DebugBreak(); } while (0)
 #	else
 #		include <assert.h>
 #		define ASSERT(exp, msg) assert(exp);
@@ -67,16 +64,9 @@ void assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message
 
 #endif
 
-
-
-// Causes an assertion failure (even in Release mode)
 #ifndef FAIL
-#define FAIL(msg) \
-{                                                                                       \
-	::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );  \
-	Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg));                  \
-}
+#define FAIL(msg) ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg));
 #endif
 
 
-//#endif
+#endif

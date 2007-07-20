@@ -29,10 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #ifdef _WIN32
-
 #define STRICT
 #include <windows.h>
-#include "resource.h" // Resource Header
+#endif
 
 #include "stdafx.h"
 #include "logstring.h"
@@ -40,112 +39,49 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-enum ASSERT_RESPONSE
+bool assertionFailed(int lineNumber, const TCHAR *pszFileName, const _tstring &message)
 {
-ASSERT_ABORT,
-ASSERT_DEBUG,
-ASSERT_IGNORE,
-ASSERT_IGNORE_ALL
-};
+	const _tstring fullMessage = message +
+				     _T("\nFile: ") + pszFileName +
+				     _T("\nLine: ") + itoa(lineNumber);
 
-ASSERT_RESPONSE g_AssertResponse;
+	::Engine::getMessageLogger().log(_T("Assertion"), fullMessage);
 
-_tstring g_strAssertLine;
-_tstring g_strAssertFile;
-_tstring g_strAssertMsg;
+	bool result = false;
 
-/**
-assertion -> ignore?
-We will use this to determine if the assertion is to be ignored when encountered
-*/
-map<_tstring, bool> AllAssertions;
+#ifndef _WIN32
+	abort();
+#else
+	char *pszMessage = toAnsiCharArray(message);
+	char *pszFullMessage = toAnsiCharArray(fullMessage);
 
-LRESULT CALLBACK AssertProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM)
-{
-	switch(message)
+#ifdef _MSC_VER
+	result = (1 == _CrtDbgReport(_CRT_ASSERT, pszFileName, lineNumber, NULL, pszMessage));
+#else
+	switch(MessageBox(NULL,
+	                  pszFullMessage,
+	                  IsDebuggerPresent() ? "Assert - Debugger Attached"
+	                                      : "Assert",
+	                  MB_ABORTRETRYIGNORE |
+	                  MB_ICONERROR |
+	                  MB_SETFOREGROUND |
+	                  MB_TOPMOST))
 	{
-	case WM_INITDIALOG:
-		SetDlgItemText(hwnd, IDC_FILE_LABEL,    g_strAssertFile.c_str());
-		SetDlgItemText(hwnd, IDC_LINE_LABEL,    g_strAssertLine.c_str());
-		SetDlgItemText(hwnd, IDC_MESSAGE_LABEL, g_strAssertMsg.c_str());
-		//SetDlgItemText(hwnd, IDC_MSG_LABEL,     g_strAssertMsg.c_str());
-		return TRUE;
-
-	case WM_COMMAND:
-		switch(LOWORD(wParam))
-		{
-		case IDABORT:
-			g_AssertResponse = ASSERT_ABORT;
-			EndDialog(hwnd, TRUE);
-			return TRUE;
-
-		case IDDEBUG:
-			g_AssertResponse = ASSERT_DEBUG;
-			EndDialog(hwnd, TRUE);
-			return TRUE;
-
-		case IDIGNORE:
-			g_AssertResponse = ASSERT_IGNORE;
-			EndDialog(hwnd, TRUE);
-			return TRUE;
-
-		case IDIGNOREALL:
-			g_AssertResponse = ASSERT_IGNORE_ALL;
-			EndDialog(hwnd, TRUE);
-		};
-
-	case WM_SYSCOMMAND:
-		if(wParam == SC_CLOSE)
-		{
-			// assume the user wants to continue
-			g_AssertResponse = ASSERT_IGNORE;
-
-			EndDialog(hwnd, TRUE);
-			return TRUE;
-		}
+	case IDABORT:  abort();        break;
+	case IDRETRY:  result = true;  break;
+	case IDIGNORE:
+	default:       result = false; break;
 	};
+#endif
 
-    return FALSE;
-}
+	delete [] pszMessage;
+	pszMessage=0;
 
-ASSERT_RESPONSE CreateAssertBox(int iLine, _tstring strFile, _tstring strMsg)
-{
-	g_strAssertLine = itoa(iLine);
-	g_strAssertFile = strFile;
-	g_strAssertMsg  = strMsg;
+	delete [] pszFullMessage;
+	pszFullMessage=0;
+#endif
 
-	ERR(_T("Assertion in File: \"") + g_strAssertFile + _T("\"\n") +
-	    _T("Line #") + g_strAssertLine + _T("\n") +
-	    _T("Message: \"") + g_strAssertMsg + _T("\""));
-
-	DialogBox(GetModuleHandle(NULL), (LPCTSTR)IDD_ASSERT_DLG, NULL, (DLGPROC)AssertProc);
-
-	return g_AssertResponse;
-}
-
-void assertionFailed(int iLine, const TCHAR *pszfileName, const _tstring &strMsg)
-{
-	map<_tstring, bool>::iterator iter;
-
-	const _tstring &key = _tstring(pszfileName) + _T(" -> ") + itoa(iLine);
-
-	// Has IGNORE ALL been requested previously?
-	if((iter=AllAssertions.find(key))==AllAssertions.end() || (iter->second)==false)
-	{
-		// OK, so bring up a Dialog Box
-		switch(CreateAssertBox(iLine, pszfileName, strMsg))
-		{
-		case ASSERT_IGNORE_ALL:
-			if(AllAssertions.find(key) == AllAssertions.end())
-				AllAssertions.insert(make_pair(key,true));
-			break;
-		case ASSERT_ABORT:  abort();      break;
-		case ASSERT_DEBUG:  DebugBreak(); break;
-		case ASSERT_IGNORE:               break;
-		};
-	}
+	return result;
 }
 
 } // namespace Engine
-
-#endif
