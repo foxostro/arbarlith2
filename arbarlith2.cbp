@@ -338,12 +338,6 @@
 			<Option target="default"/>
 			<Option target="debug"/>
 		</Unit>
-		<Unit filename="arbarlith2\engine\AssertDlg.rc">
-			<Option compilerVar="WINDRES"/>
-			<Option objectName="arbarlith2\engine\AssertDlg.res"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
 		<Unit filename="arbarlith2\engine\BackdropTexture.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
@@ -1681,13 +1675,6 @@
 			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\random.h">
-			<Option compilerVar=""/>
-			<Option compile="0"/>
-			<Option link="0"/>
-			<Option target="default"/>
-			<Option target="debug"/>
-		</Unit>
-		<Unit filename="arbarlith2\engine\resource.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
