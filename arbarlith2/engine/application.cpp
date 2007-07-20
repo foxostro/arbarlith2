@@ -481,8 +481,8 @@ void Application::loadXmlConfigFiles(void)
 
 Task* Application::addTask(Task *task)
 {
-	ASSERT(task!=0, _T("cannot add a null pointer for a task. (OK to continue)"));
-	if(task) tasks.push_back(task);
+	ASSERT(task!=0, _T("task was NULL"));
+	tasks.push_back(task);
 	return task;
 }
 
