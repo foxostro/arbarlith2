@@ -649,22 +649,44 @@ void PropertyBag::clear(void)
 void PropertyBag::copy(const PropertyBag &copyMe)
 {
 	clear();
-	/*
-	TODO: This has GOT to be much slower than it has to be
-	*/
-	//merge(copyMe, false);
+
+#if 0
 	loadMergeFromString(copyMe.save(), false);
+#else
+	for(PropertyMap::const_iterator iter = copyMe.data.begin();
+	    iter != copyMe.data.end();
+	    ++iter)
+	{
+		// alias the iterator's pair
+		const _tstring &tagName = iter->first;
+		const PropertyBagItem *tagItem = iter->second;
+
+		const PropertyBagString *pStr = dynamic_cast<const PropertyBagString*>(tagItem);
+
+		if(pStr) // if the item is a PropertyBagString
+		{
+			add(tagName, pStr->getData(), false);
+		}
+		else
+		{
+			const PropertyBag *pBag = dynamic_cast<const PropertyBag*>(tagItem);
+
+			if(pBag) // if the item is a PropertyBag
+			{
+				add(tagName, *pBag);
+			}
+		}
+	} // loop
+#endif
 
 	ASSERT(copyMe == (*this), _T("Failed to copy bag"));
 }
 
 void PropertyBag::merge(const PropertyBag &newstuff, bool overwrite)
 {
-	for (
-		PropertyMap::const_iterator newiter = newstuff.data.begin();
-		newiter != newstuff.data.end();
-		++newiter
-	    )
+	for(PropertyMap::const_iterator newiter = newstuff.data.begin();
+	    newiter != newstuff.data.end();
+	    ++newiter)
 	{
 		// alias the iterator's pair
 		const _tstring &tagName = newiter->first;
