@@ -67,10 +67,22 @@ bool assertionFailed(int lineNumber, const TCHAR *pszFileName, const _tstring &m
 	                  MB_SETFOREGROUND |
 	                  MB_TOPMOST))
 	{
-	case IDABORT:  abort();        break;
-	case IDRETRY:  result = true;  break;
 	case IDIGNORE:
-	default:       result = false; break;
+		result = false; // allow execution to continue
+		break;
+
+	case IDRETRY:
+		result = true; // signals that we should call DebugBreak
+		break;
+
+	case IDABORT:
+		abort();
+		break;
+
+	default:
+		ERR(_T("Unexpected input from MessageBox, aborting..."));
+		abort();
+		break;
 	};
 #endif
 
