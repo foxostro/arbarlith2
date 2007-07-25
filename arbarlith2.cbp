@@ -9,7 +9,7 @@
 		<Option compiler="0"/>
 		<Build>
 			<Target title="default">
-				<Option output=".\arbarlith2\bin\arbarlith2_mingw.exe"/>
+				<Option output=".\arbarlith2\bin\arbarlith2_gcc.exe"/>
 				<Option working_dir=".\arbarlith2\bin\"/>
 				<Option object_output=".objs"/>
 				<Option deps_output=".deps"/>
@@ -23,19 +23,6 @@
 				<Linker>
 					<Add option="-s"/>
 				</Linker>
-			</Target>
-			<Target title="debug">
-				<Option output=".\arbarlith2\bin\arbarlith2_D_mingw.exe"/>
-				<Option working_dir=".\arbarlith2\bin\"/>
-				<Option object_output=".objs"/>
-				<Option deps_output=".deps"/>
-				<Option type="0"/>
-				<Option compiler="0"/>
-				<Option projectResourceIncludeDirsRelation="0"/>
-				<Compiler>
-					<Add option="-g"/>
-					<Add option="-D_DEBUG"/>
-				</Compiler>
 			</Target>
 		</Build>
 		<Compiler>
@@ -58,1769 +45,1478 @@
 		<Unit filename="arbarlith2\Boss.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Boss.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Bullet.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Bullet.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\DetectorProximityMonster.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\DetectorProximityMonster.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Explosion.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Explosion.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\GateOpener.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\GateOpener.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Monster.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Monster.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\MyPlayer.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\MyPlayer.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Powerup.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Powerup.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\PowerupHeal.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\PowerupHeal.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\PowerupSpell.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\PowerupSpell.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Spawn.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Spawn.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Spell.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Spell.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellCasterFSM.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellCasterFSM.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellFireBall.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellFireBall.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellHeal.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellHeal.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellIncinerate.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\SpellIncinerate.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Teleporter.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\Teleporter.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\TileGate.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\TileGate.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\3dmath.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\3dmath.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\3dsLoader.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\3dsLoader.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ActorFactory.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ActorFactory.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ActorSet.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ActorSet.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\AnimationController.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\AnimationController.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Application.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\BackdropTexture.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\BackdropTexture.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Blur.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Blur.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\BlurEffect.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\BlurEffect.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\BoundingBox.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\BoundingBox.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\COLOR.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\COLOR.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\CallbackInterpolator.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\CallbackTask.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Command.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Controller.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Controller.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\CycleTextureSelectorState.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\CycleTextureSelectorState.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DebugDisplayToggleKeyDetector.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DebugDisplayToggleKeyDetector.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DebugLabel.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DebugLabel.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Detector.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Detector.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DetectorProximity.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DetectorProximity.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DetectorProximityPlayer.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\DetectorProximityPlayer.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Dimmer.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Dimmer.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EditWidget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EditWidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EditorKeyDetector.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EditorKeyDetector.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EditorToolBar.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EditorToolBar.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EffectManager.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EffectManager.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\EffectSig.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_GUI_FFP.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_GUI_FFP.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Gouraud_FFP.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Gouraud_FFP.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Particle_FFP.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Particle_FFP.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Project_Shadows.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Project_Shadows.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Receive_Shadows.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Receive_Shadows.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Red_FFP.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Red_FFP.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_TextureReplace_FFP.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_TextureReplace_FFP.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Z_Only.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Effect_Z_Only.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\FPSDisplayToggleKeyDetector.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\FPSDisplayToggleKeyDetector.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Factory.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\FileSelectionList.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\FileSelectionList.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameState.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateCredits.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateCredits.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateEditor.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateEditor.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateMenu.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateMenu.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateRun.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateRun.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateSpellMenu.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\GameStateSpellMenu.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ItemWidget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ItemWidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Key.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Key.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Light.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Light.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\LightManager.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\LightManager.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\LinearInterpolator.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListElementLabel.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListElementTweaker.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListElementWidget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListElementWidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListPaneWidget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListPaneWidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Listener.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Listener.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListenerPrompt.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ListenerPrompt.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Map.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Map.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Md3Loader.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Md3Loader.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Menu.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Menu.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuGameOver.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuGameOver.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuKeyDetector.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuKeyDetector.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuOptions.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuOptions.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuWorldLeadOut.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuWorldLeadOut.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuWorldSelection.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MenuWorldSelection.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Message.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MessageRouter.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MessageRouter.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ModelLoader.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ModelLoader.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MonsterFSM.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MonsterFSM.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MusicEngine.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\MusicEngine.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\PerformanceLabel.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\PerformanceLabel.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\PeriodicCallbackTask.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\PropertyBag.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\PropertyBag.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\QuadTreeNode.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\QuadTreeNode.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SDLwindow.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SDLwindow.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ScreenShotTask.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ScreenShotTask.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SelectionList.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SelectionList.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Shadow.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Shadow.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ShadowManager.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ShadowManager.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SoundSystem.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SoundSystem.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SpellMenuKeyDetector.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SpellMenuKeyDetector.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SplashScreen.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\SplashScreen.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\StateMachine.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\StateMachine.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\StateMachineFactory.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\StateMachineFactory.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\StringSelectionList.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Switch.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Switch.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TextureHandle.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TextureHandle.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TextureManager.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TextureManager.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Tile.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Tile.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ToggleWidget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ToggleWidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ToggleWidgetText.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ToggleWidgetText.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ToolBarForEditorTools.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\ToolBarForEditorTools.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Trigger.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\Trigger.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TriggerParticles.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TriggerParticles.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TriggerPrompt.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TriggerPrompt.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\TweakerWidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\VisualPriority.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\VisualPriority.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\WaitScreen.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\WaitScreen.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\animation.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\animation.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\application.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\camera.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\camera.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\creature.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\creature.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\file.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\file.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\fog.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\fog.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\frustum.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\frustum.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\gl.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\horizbar.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\horizbar.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\il.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\image.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\image.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\item.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\item.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\keyframe.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\keyframe.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\labelwidget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\labelwidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\lamp.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\lamp.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\logstring.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\logstring.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\macros.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\mat4.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\mat4.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\material.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\material.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\mesh.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\mesh.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\misc.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\myassert.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\myassert.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\object.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\object.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\opengl.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\opengl.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\particle.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\particle.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\player.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\player.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\primitivedatatypes.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\primitivedatatypes.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\profile.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\profile.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\random.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\searchfile.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\searchfile.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\singleton.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\stdafx.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\stdafx.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\task.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\text.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\text.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\timer.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\timer.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\tstring.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\tstring.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\vec4.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\widget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\widget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\widgetmanager.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\widgetmanager.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\windowwidget.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\windowwidget.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\world.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\engine\world.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\stdafx.h">
 			<Option compilerVar=""/>
 			<Option compile="0"/>
 			<Option link="0"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 		<Unit filename="arbarlith2\win32.cpp">
 			<Option compilerVar="CPP"/>
 			<Option target="default"/>
-			<Option target="debug"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>
