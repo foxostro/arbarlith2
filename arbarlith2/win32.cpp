@@ -38,18 +38,23 @@ int WINAPI WinMain(HINSTANCE ,  // hInstance
 	// In dual core systems, restrict to one processor
 	SetThreadAffinityMask(NULL, 1);
 
+	// Seed the random number generator
+	srand((unsigned int)GetTickCount());
+
+	// Work within the directory where the executable is located
 	setWorkingDirectory(getApplicationDirectory());
 
-	srand((unsigned int)GetTickCount()); // Seed the random number generator
+	// Allocate space for the Application object
+	g_pApplication = new Engine::Application();
 
-	// Are we running in safe mode?
-	if(GetSystemMetrics(SM_CLEANBOOT)!=0)
-	{
-		MessageBox(0, _T("You are running this application in Safe mode!"), _T("Warning!"), MB_OK);
-	}
+	// Loads game resources
+	g_pApplication->start();
 
-	// Run the game
-	Engine::Application app;
+	// Runs the game for a while
+	g_pApplication->run();
+
+	// Free memory
+	delete g_pApplication;
 
 	return 0;
 }

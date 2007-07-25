@@ -5,7 +5,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 Modified to use SDL windowing and get rid of ControlData February 2006 by Tom Cauchois
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright Â© 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ While the main or WinMain functions (depending on the OS we are compiling for)
 are used to enter the application from the Operating System kernel, the only
 purpose they serve is to immediately instantiate an Application type object.
 */
-class Application : public Singleton<Application>
+class Application
 {
 public:
 	/** Default Constructor */
@@ -316,12 +316,15 @@ private:
 
 } // namespace Engine
 
+extern Engine::Application* g_pApplication;
+
 // Proxies
-#define g_Application	(::Engine::Application::GetSingleton())
-#define g_SoundSystem	(::Engine::Application::GetSingleton().getSoundSystem())
-#define g_TextureMgr	(::Engine::Application::GetSingleton().getTextureManager())
-#define g_Camera	(::Engine::Application::GetSingleton().getCamera())
+#define g_Application   (*g_pApplication)
+#define g_SoundSystem	(g_pApplication->getSoundSystem())
+#define g_TextureMgr	(g_pApplication->getTextureManager())
+#define g_Camera	(g_pApplication->getCamera())
 #define g_Window	(::Engine::SDLWindow::GetSingleton())
 #define g_Input		(::Engine::SDLWindow::GetSingleton().input)
+
 
 #endif

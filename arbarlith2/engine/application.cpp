@@ -68,12 +68,12 @@ Include the DevIL headers
 
 namespace Engine {
 
+Application* g_pApplication = 0; // TODO: remove the global Application object
+
 Application::Application(void)
 : defaultSetupFileName(_T("setup.xml"))
 {
 	clear();
-	start();
-	run();
 }
 
 Application::~Application(void)
