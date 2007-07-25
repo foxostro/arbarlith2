@@ -52,12 +52,8 @@ bool assertionFailed(int lineNumber, const TCHAR *pszFileName, const _tstring &m
 #ifndef _WIN32
 	abort();
 #else
-	char *pszMessage = toAnsiCharArray(message);
 	char *pszFullMessage = toAnsiCharArray(fullMessage);
 
-#ifdef _MSC_VER
-	result = (1 == _CrtDbgReport(_CRT_ASSERT, pszFileName, lineNumber, NULL, pszMessage));
-#else
 	switch(MessageBox(NULL,
 	                  pszFullMessage,
 	                  IsDebuggerPresent() ? "Assert - Debugger Attached"
@@ -84,10 +80,6 @@ bool assertionFailed(int lineNumber, const TCHAR *pszFileName, const _tstring &m
 		abort();
 		break;
 	};
-#endif
-
-	delete [] pszMessage;
-	pszMessage=0;
 
 	delete [] pszFullMessage;
 	pszFullMessage=0;
