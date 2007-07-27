@@ -50,10 +50,14 @@ bool assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message
 
 #ifdef _DEBUG
 #	ifdef _WIN32
+/*
 #		define ASSERT(expr, msg) \
     			do { if (  !(expr) && \
 			     ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))  ) \
         		     DebugBreak(); } while (0)
+*/
+#		define ASSERT(expr, msg) \
+		{ if(!(expr) && ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
 #	else
 #		include <assert.h>
 #		define ASSERT(exp, msg) assert(exp);
