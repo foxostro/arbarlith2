@@ -314,17 +314,17 @@ private:
 	World *world;
 };
 
-} // namespace Engine
-
 extern Engine::Application* g_pApplication;
 
+} // namespace Engine
+
 // Proxies
-#define g_Application   (*g_pApplication)
-#define g_SoundSystem	(g_pApplication->getSoundSystem())
-#define g_TextureMgr	(g_pApplication->getTextureManager())
-#define g_Camera	(g_pApplication->getCamera())
-#define g_Window	(::Engine::SDLWindow::GetSingleton())
-#define g_Input		(::Engine::SDLWindow::GetSingleton().input)
+#define g_Application   (*Engine::g_pApplication)
+#define g_SoundSystem	(Engine::g_pApplication->getSoundSystem())
+#define g_TextureMgr	(Engine::g_pApplication->getTextureManager())
+#define g_Camera	(Engine::g_pApplication->getCamera())
+#define g_Window	(Engine::SDLWindow::GetSingleton())
+#define g_Input		(Engine::SDLWindow::GetSingleton().input)
 
 
 #endif
