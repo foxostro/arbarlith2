@@ -56,8 +56,7 @@ bool assertionFailed(int lineNumber, const TCHAR *pszFileName, const _tstring &m
 
 	switch(MessageBox(NULL,
 	                  pszFullMessage,
-	                  IsDebuggerPresent() ? "Assert - Debugger Attached"
-	                                      : "Assert",
+	                  "Assert",
 	                  MB_ABORTRETRYIGNORE |
 	                  MB_ICONERROR |
 	                  MB_SETFOREGROUND |
