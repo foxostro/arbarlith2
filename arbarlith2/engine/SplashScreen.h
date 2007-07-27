@@ -31,13 +31,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _SPLASHSCREEN_H_
 #define _SPLASHSCREEN_H_
 
-#include "Singleton.h"
 #include "BackdropTexture.h"
 
 namespace Engine { 
 
 /** Logo Splash Screen */
-class SplashScreen : public Singleton<SplashScreen>
+class SplashScreen
 {
 public:
 	/** Constructor */
@@ -69,9 +68,6 @@ private:
 	void doSplashFade(void);
 };
 
-}; // namespace
-
-// Proxy
-#define g_SplashScreen (Engine::SplashScreen::GetSingleton())
+} // namespace Engine
 
 #endif
