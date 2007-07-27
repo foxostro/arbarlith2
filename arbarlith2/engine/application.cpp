@@ -109,11 +109,13 @@ void Application::start(void)
 	// Load the key bindings
 	new Controller();
 
-	// Initialize the splash screen
-	TRACE(_T("Loading splash screen..."));
-	new SplashScreen();
-	g_SplashScreen.doSplash(5000);
-	TRACE(_T("...Completed loading splash screen"));
+	// Do the splash screen
+	{
+		TRACE(_T("Doing splash screen..."));
+		SplashScreen splashScreen;
+		splashScreen.doSplash(5000);
+		TRACE(_T("...Finished with splash screen"));
+	}
 
 	// Initialize the wait screen
 	new WaitScreen();
@@ -121,13 +123,13 @@ void Application::start(void)
 	TRACE(_T("Wait screen started."));
 
 	// Create the frame timer
-	fme = new NeHe::Frame;
+	TRACE(_T("Creating the frame timer..."));
+	fme = new NeHe::Frame();
+	TRACE(_T("Created the frame timer."));
 
 	// Create the sound manager
 	addTask(soundSystem = new SoundSystem);
-	g_WaitScreen.Render();
 	TRACE(_T("Sound system initialized"));
-
 
 	// Prepare handlers for various key press events
 	addTask(new ScreenShotTask);
@@ -206,7 +208,7 @@ void Application::run(void)
 
 		// update the frame timer
 		fme->Update();
-		float frameLength = fme->GetLength()>500.0f ? 500.0f : fme->GetLength();
+		float frameLength = (float)min(fme->getLength(), 70);
 
 		// Update the current game state
 		state->update(frameLength);

@@ -33,54 +33,40 @@ E-Mail: mailto:andrewfox@cmu.edu
 
 namespace NeHe {
 
-class Timer
-{
-	/** whether the performance timer is available */
-	bool performance;
-
-	/** timer resolution */
-	float resolution;
-
-	/** multimedia timer start */
-	unsigned long mm_start;
-
-	/** performance timer start */
-	unsigned long perf_start;
-
-public:
-	Timer(void);
-
-	/** get time in milliseconds */
-	float GetTime(void);
-};
-
+/** Tracks time between frames and frame FPS stats */
 class Frame
 {
-	Timer	*time;		// a timer object
-	float	lasttime;	// last time called
-	int		fps;		// frames per second
-	float	length;		// length of frame
+	/** Tick count of the last frame we were updated */
+	unsigned int lasttime;
 
-	double  avgFps;     // Average FPS
-	double  numFrames;
+	/** Most recent measurement of frames per second */
+	unsigned int fps;
+
+	/** Length of the last frame */
+	unsigned int length;
 
 public:
-	Frame();
+	/** Defalt Constructor */
+	Frame(void);
 
-	// Update frame counter *call once a frame*
-	void Update();
+	/** Update frame counter. Call once per frame! */
+	void Update(void);
 
-	// Get frames per second
-	int GetFPS() const { return fps; };
+	/** Get frames per second */
+	inline unsigned int getFPS(void) const
+	{
+		return fps;
+	}
 
-	// Get average frames per second
-	int GetAvgFPS() const { return (int)avgFps; };
+	/** get the time of the last frame */
+	inline unsigned int getLength(void) const
+	{
+		return length;
+	}
 
-	// get the time of the last frame
-	float GetLength() const { return length; };
-
-	// Get the timer object
-	Timer* GetTimer() { return time; };
+private:
+	/** Counts milliseconds since the app started */
+	static unsigned int getTicks(void);
 };
 
 } // namespace NeHe

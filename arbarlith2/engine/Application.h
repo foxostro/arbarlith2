@@ -130,10 +130,10 @@ public:
 	Gets the frame rate (FPS)
 	@return FPS
 	*/
-	int getFrameRate(void) const
+	unsigned int getFrameRate(void) const
 	{
 		ASSERT(fme!=0, _T("fme was NULL"));
-		return fme->GetFPS();
+		return fme->getFPS();
 	}
 
 	/**

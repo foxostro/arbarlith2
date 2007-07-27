@@ -42,7 +42,7 @@ PerformanceLabel::PerformanceLabel(const vec2 &pos, Application &app)
 
 void PerformanceLabel::update(float)
 {
-	setLabel(_tstring(_T("FPS: ")) + itoa(application.getFrameRate()));
+	setLabel(_tstring(_T("FPS: ")) + itoa((int)application.getFrameRate()));
 }
 
 } // namespace Engine
