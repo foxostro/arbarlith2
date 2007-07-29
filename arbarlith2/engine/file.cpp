@@ -29,17 +29,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "profile.h"
-
+#include <fstream>
 #include <sys/types.h>
-#include <sys/stat.h> // System calls for file info
+#include <sys/stat.h>
 
 #ifdef _WIN32
 
 #include <shlobj.h> // SHGetFolderPath
-#include <shlwapi.h> // PathAppend
-#include <direct.h> // _tchdir and _tgetcwd
+#include <direct.h>
+
 #define stat _stat
+#define mkdir _mkdir
+#define chdir _chdir
+#define getcwd _getcwd
 
 #ifdef _UNICODE
 #define _tstrcpy_s wcscpy_s
@@ -61,6 +63,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define R_OK _S_IWRITE
 #endif
 
+#include "file.h"
+
 namespace Engine {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,29 +75,17 @@ _tstring toLowerCase(const _tstring &in); // stdafx.cpp
 
 void createDirectory(const _tstring &path)
 {
-#ifdef _WIN32
-	_tmkdir(path.c_str());
-#else
 	mkdir(toAnsiString(path).c_str());
-#endif
 }
 
 bool setWorkingDirectory(const _tstring &path)
 {
-#ifdef _WIN32
-	return _tchdir(path.c_str()) != 0;
-#else
 	return chdir(toAnsiString(path).c_str()) != 0;
-#endif
 }
 
 _tstring getWorkingDirectory(void)
 {
-#ifdef _WIN32
-	TCHAR *pszWorkingDirectory = _tgetcwd(0,0);
-#else
 	char *pszWorkingDirectory = getcwd(0,0);
-#endif
 
 	_tstring workingDirectory = toTString(pszWorkingDirectory);
 
@@ -112,7 +104,7 @@ _tstring getAppDataDirectory(void)
 	result = SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE, NULL, 0, homeDir));
 #else
 	result = true;
-	strcpy(homeDir, "~/");
+	strcpy(homeDir, "~/"); // should be OK for Linux, right?
 #endif
 
 	if(result)
@@ -153,8 +145,8 @@ _tstring getApplicationDirectory(void)
 
 	return _T(".\\");
 #else
-#pragma error("Need LINUX port of function: getApplicationDirectory")
-return _T("./");
+	FAIL(_T("Need LINUX port of function: getApplicationDirectory"));
+	return _T("./");
 #endif
 }
 
@@ -198,24 +190,17 @@ void File::destroy(void)
 
 bool File::openFile(const _tstring &fileName, bool binary)
 {
-	PROFILE
-
 	if(fileName.empty())
 	{
 		FAIL(_T("Empty filename"));
 		return false;
 	}
 
-
-	this->fileName = fileName;
-
-
 	// Does the file exist?
 	if(!isFileOnDisk(fileName))
 	{
 		return false;
 	}
-
 
 	// Check for read permissions
 	if(!hasAccess(fileName, ACCESS_MODE_READ))
@@ -224,51 +209,66 @@ bool File::openFile(const _tstring &fileName, bool binary)
 		return false;
 	}
 
-
 	// Open the file
-	FILE *fp = 0;
+	ifstream file(toAnsiString(fileName).c_str(), (binary) ? (ios::in|ios::binary) : (ios::in));
 
-	if(binary)
+	if(!file)
 	{
-		fp = _tfopen(fileName.c_str(), _T("rb"));
-	}
-	else
-	{
-		fp = _tfopen(fileName.c_str(), _T("r"));
-	}
-
-	if(fp==0 || ferror(fp)!=0 || feof(fp))
-	{
-		FAIL(_tstring(_T("Failed to load file: ")) + fileName);
+		FAIL(_T("Failed to open file: ") + fileName);
 		return false;
 	}
 
-#ifdef _DEBUG
-	TRACE(_tstring(_T("Loading file: ")) + fileName);
-#endif
-
-	// Get the length of the file
-	size_t size = getFileLength(fp);
-
-	if(size>0)
+	if(binary)
 	{
-		reserve(size);
-		fread(data, 1, size, fp);
+		DEBUG_TRACE(_tstring(_T("Loading binary file: ")) + fileName);
+
+		const streamsize size = getBytesOnDisk(fileName);
+
+		if(size>0)
+		{
+			reserve(size);
+			file.read((char*)data, size);
+
+			if(file.gcount() != size)
+			{
+				FAIL(_T("Failed to load binary file: ") + fileName);
+				return false;
+			}
+		}
+	}
+	else
+	{
+		DEBUG_TRACE(_tstring(_T("Loading text file: ")) + fileName);
+
+		string line;
+
+		if(file)
+		{
+			while(getline(file, line))
+			{
+				write(line + _T("\n"));
+			}
+		}
+
+		seek(0, FILE_SEEK_BEGIN);
 	}
 
-	fclose(fp);
+	this->fileName = fileName;
+
 	return true;
 }
 
-size_t File::getFileLength(FILE *fp)
+streamsize File::getBytesOnDisk(const _tstring &fileName)
 {
-	long size=0;
+	struct stat info;
 
-	fseek(fp, 0, SEEK_END);
-	size = ftell(fp)+1;
-	fseek(fp, 0, SEEK_SET);
+	if(stat(toAnsiString(fileName).c_str(), &info) == 0)
+	{
+		return static_cast<streamsize>(info.st_size);
+	}
 
-	return (size_t)size;
+	FAIL(_T("Failed to obtain file info! The file probably doesn't exist"));
+	return 0;
 }
 
 bool File::isFileOnDisk(const _tstring &fileName)
@@ -294,7 +294,7 @@ bool File::hasAccess(const _tstring &fileName, File::ACCESS_MODE mode)
 		};
 	}
 
-	// Failed to obtain file info... The file probably doesn't exist
+	// Failed to obtain file info! The file probably doesn't exist
 	return false;
 }
 
@@ -303,45 +303,30 @@ bool File::saveFile(const _tstring &fileName, bool binary)
 	bool fileExists = isFileOnDisk(fileName);
 	bool writableFile = hasAccess(fileName, ACCESS_MODE_WRITE);
 
-	if(fileExists)
+	if(fileExists && !writableFile)
 	{
-		if(!writableFile)
-		{
-			FAIL(_tstring(_T("Failed to obtain write permissions for file: ")) + fileName);
-			return false;
-		}
-	}/*
-	else
+		FAIL(_tstring(_T("Failed to obtain write permissions for file: ")) + fileName);
+		return false;
+	}
+	
+	// Open the file
+	ofstream file(toAnsiString(fileName).c_str(), (binary) ? (ios::out|ios::binary) : (ios::out));
+
+	if(!file)
 	{
-		const _tstring pathName = File::getPath(fileName);
-		bool writableDirectory = hasAccess(pathName, ACCESS_MODE_WRITE);
+		FAIL(_T("Failed to open file: ") + fileName);
+		return false;
+	}
 
-		if(!writableDirectory)
-		{
-			ASSERT(false, _tstring(_T("Failed to obtain permissions to create file: ")) + fileName);
-			ERR(_tstring(_T("Failed to obtain permissions to create file: ")) + fileName);
-			return false;
-		}
-	}*/
+	DEBUG_TRACE(_tstring(_T("Saving file: ")) + fileName);
 
-	FILE *fp = _tfopen(fileName.c_str(), binary?_T("wb"):_T("w"));
-
-	if(fp==0 || ferror(fp)!=0)
+	if(!file.write((char*)data, (streamsize)getSize()))
 	{
-		fclose(fp);
 		FAIL(_T("Failed to save file: ") + fileName);
 		return false;
 	}
-	else
-	{
-		#ifdef _DEBUG
-			TRACE(_tstring(_T("Saving file: ")) + fileName);
-		#endif
 
-		fwrite(data, 1, getSize(), fp);
-		fclose(fp);
-		return true;
-	}
+	return true;
 }
 
 unsigned char File::getChar(void)
@@ -460,16 +445,14 @@ size_t File::write(unsigned char * buffer, size_t count)
 	return count;
 }
 
-size_t File::write(const _tstring &s)
+size_t File::write(const wstring &s)
 {
-	const string &ansi = toAnsiString(s);
-	const char * ansiptr = ansi.c_str();
+	return write(toAnsiString(s));
+}
 
-	size_t ansiptr_len = strlen(ansiptr);
-
-	ASSERT(ansiptr_len==ansi.size(), _T("Failed to convert string from Unicode to ANSI"));
-
-	return write((unsigned char*)ansiptr, ansiptr_len);
+size_t File::write(const string &s)
+{
+	return write((unsigned char*)s.c_str(), s.size());
 }
 
 void File::reserve(size_t size)
@@ -480,6 +463,7 @@ void File::reserve(size_t size)
 	{
 		// Allocate a buffer
 		data = new unsigned char[size];
+		memset(data, 0, sizeof(unsigned char) * size);
 
 		// Record the size of the new buffer
 		this->size = size;
@@ -491,6 +475,7 @@ void File::reserve(size_t size)
 
 		// Allocate a larger buffer
 		data = new unsigned char[size];
+		memset(data, 0, sizeof(unsigned char) * size);
 
 		// Replace contents with the existing data
 		memcpy(data, temp, this->size);
@@ -544,9 +529,11 @@ _tstring File::getExtension(void) const
 
 _tstring File::fixFilename(const _tstring &fileName)
 {
-	_tstring t = fileName;
-	for_each(t.begin(), t.end(), if_(_T('/')==_1)[_1=_T('\\')]);
-	return t;
+#ifdef _WIN32
+	return replace(fileName, _T("/"), _T("\\"));
+#else
+	return replace(fileName, _T("\\"), _T("/"));
+#endif
 }
 
 size_t File::findExtensionDelimeter(const _tstring &fileName)
@@ -557,18 +544,18 @@ size_t File::findExtensionDelimeter(const _tstring &fileName)
 
 		if(c == _T('.'))
 		{
-			// Found the delimeter, return its index
+			// Found the delimiter, return its index
 			return fileName.length() - i - 1;
 		}
 
 		if(c == _T('\\') || c == _T('/'))
 		{
-			// Found that there was no delimeter, return the index of the end of the string
+			// Found that there was no delimiter, return the index of the end of the string
 			return fileName.length();
 		}
 	}
 
-	// Found that there was no delimeter, return the index of the end of the string
+	// Found that there was no delimiter, return the index of the end of the string
 	return fileName.length();
 }
 

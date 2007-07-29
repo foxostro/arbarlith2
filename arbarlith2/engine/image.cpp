@@ -28,17 +28,16 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "stdafx.h" // Master Header
+#include "stdafx.h"
+#include "file.h"
+#include "profile.h"
+#include "image.h"
 
 /*
 Include the DevIL headers
 */
 #include <IL/il.h>
 #include <IL/ilu.h>
-
-#include "profile.h"
-#include "image.h"
-
 
 namespace Engine {
 

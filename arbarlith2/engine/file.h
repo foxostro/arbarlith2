@@ -81,18 +81,18 @@ private:
 	/** The raw data bytes of the file */
 	unsigned char * data;
 
-	/** The size of the file sucha that the last accessible offset into the file is this->size-1 */
+	/** The size of the file such as that the last accessible offset into the file is this->size-1 */
 	size_t size;
 
 	/** The read/write cursor's position in the file */
 	size_t cursor;
 
 	/**
-	Gets the length of an open file
-	@param fp File descriptor
-	@return Size of the file
+	Gets the length of a file as a number of bytes on disk
+	@param fileName file to examine
+	@return Size of the file in bytes
 	*/
-	static size_t getFileLength(FILE *fp);
+	static streamsize getBytesOnDisk(const _tstring &fileName);
 
 protected:
 	/** Location of the file */
@@ -284,7 +284,14 @@ public:
 	@param s The string to write
 	@return The number of bytes actually written
 	*/
-	size_t write(const _tstring &s);
+	size_t write(const string &s);
+
+	/**
+	Writes a string to file
+	@param s The string to write
+	@return The number of bytes actually written
+	*/
+	size_t write(const wstring &s);
 
 	/**
 	Writes data from the buffer and copies it into the file from the current cursor position
@@ -385,7 +392,7 @@ public:
 	/**
 	Determines whether the specified file has the specified access permissions
 	@param fileName Name of the file to check access permissions on
-	@param mode Acces permissiobs to check
+	@param mode Access permissions to check
 	@return true if the specified mode is allowable
 	*/
 	static bool hasAccess(const _tstring &fileName, File::ACCESS_MODE mode);

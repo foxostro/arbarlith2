@@ -252,10 +252,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\engine\AssertDlg.rc"
-				>
-			</File>
-			<File
 				RelativePath=".\engine\BackdropTexture.cpp"
 				>
 			</File>
@@ -1364,10 +1360,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\bin\game.ico"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

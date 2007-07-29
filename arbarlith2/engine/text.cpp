@@ -30,17 +30,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h" // Master Header
 #include "gl.h"
-
+#include "file.h"
 #include "opengl.h"
 #include "text.h"
 #include "image.h"
 #include "mat4.h"
-using namespace std;
-
 
 namespace Engine {
-
-
 
 TextWriter::TextWriter(void)
 {

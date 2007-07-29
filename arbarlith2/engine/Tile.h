@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "BoundingBox.h"
 #include "Material.h"
+#include "file.h"
 
 namespace Engine {
 

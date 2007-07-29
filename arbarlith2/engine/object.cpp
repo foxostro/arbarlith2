@@ -697,10 +697,10 @@ bool Actor::ChangeAnimation(size_t nIdx, float Speed)
 #ifdef _DEBUG
 void Actor::OnMessage(Message_s Msg)
 {
-	ASSERT(m_ID == Msg.m_Recipient, _T("Actor::OnMessage  ->  Message was mailed to the wrong object."));
+	ASSERT(m_ID == Msg.m_Recipient, _T("Message was mailed to the wrong object."));
 }
 #else
-void Actor::OnMessage(Message_s){}
+void Actor::OnMessage(Message_s){} // leaves no unused parameters
 #endif
 
 bool Actor::wasCollision(OBJECT_ID id)

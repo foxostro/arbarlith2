@@ -36,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "searchfile.h"
 #include "Map.h"
 #include "profile.h"
+#include "file.h"
 
 namespace Engine {
 

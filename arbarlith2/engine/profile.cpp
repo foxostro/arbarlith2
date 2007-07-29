@@ -18,6 +18,10 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef _WIN32
+#define strcpy strcpy_s // avoid deprecation warnings and keep portable syntax
+#endif
+
 namespace Engine {
 namespace Profiler {
 

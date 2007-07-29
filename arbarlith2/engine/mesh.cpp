@@ -38,6 +38,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect.h"
 #include "EffectManager.h"
 
+#ifdef _WIN32
+#define strcpy strcpy_s // avoid deprecation warnings and keep portable syntax
+#endif
+
 
 namespace Engine {
 

@@ -7,14 +7,14 @@ All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the Game Creation Society nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
+* Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+* Neither the name of the Game Creation Society nor the
+names of its contributors may be used to endorse or promote products
+derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE Game Creation Society ``AS IS'' AND ANY
 EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -34,18 +34,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #if defined(_MSC_VER)
-#define _CRT_SECURE_NO_DEPRECATE
 #pragma warning( disable: 4512 ) // cannot generate assignment operator
 #endif
 
-// Disable _invalid_parameter_noinfo in RELEASE builds.  Potentially introduces instability!
-/*
-#ifndef _DEBUG
-#	ifndef _SECURE_SCL
-#		define _SECURE_SCL 0
-#	endif
-#endif
-*/
 
 #define _PLAYER_ONE_HAS_NO_JOYSTICK_ 1	// Set to 1 in order to force player 1 to the keyboard, player 2 to joystick 1, etc
 
@@ -108,7 +99,6 @@ using namespace boost::lambda;
 #include "macros.h"			// useful macros
 #include "singleton.h"			// singleton pattern
 #include "random.h"			// Various Random number routines
-#include "file.h"			// Virtual file system
 #include "Controller.h"			// Key bindings handler
 #include "Application.h"		// The application class runs the game
 #include "opengl.h"			// Interface to the rendering library

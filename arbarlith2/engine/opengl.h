@@ -91,7 +91,7 @@ extern bool g_bUseDepthTexture;
 /** Indicates support for shadows */
 extern bool supportsShadow;
 
-/** Indicates support for aniostropic texture filter */
+/** Indicates support for anisotropic texture filter */
 extern bool supportsAniostropy;
 
 

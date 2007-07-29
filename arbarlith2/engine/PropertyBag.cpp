@@ -9,6 +9,7 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 */
 
 #include "stdafx.h"
+#include "file.h"
 #include "profile.h"
 #include "PropertyBag.h"
 

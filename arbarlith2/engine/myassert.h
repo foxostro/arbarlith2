@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _MY_ASSERT_H_
 #define _MY_ASSERT_H_
 
-
 namespace Engine {
 
 /**
@@ -69,8 +68,7 @@ bool assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message
 #endif
 
 #ifndef FAIL
-#define FAIL(msg) ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg));
+#define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
 #endif
-
 
 #endif

@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _LOGSTRING_H_
 #define _LOGSTRING_H_
 
+#include <fstream>
 #include "misc.h"
 
 namespace Engine {
@@ -39,11 +40,8 @@ namespace Engine {
 class LogString
 {
 private:
-	/** Indicates that the first message had not been logged yet */
-	bool first;
-
-	/** The last logged message */
-	_tstring lastMessage;
+	/** Output stream for the log */
+	fstream stream;
 
 	/**
 	Add a string to the log file
@@ -61,15 +59,6 @@ public:
 	@param message Log message
 	*/
 	void log(const _tstring &origin, const _tstring &message);
-
-	/**
-	Returns the last logged message
-	@return the last message
-	*/
-	const _tstring &getLastMessage(void) const
-	{
-		return lastMessage;
-	}
 };
 
 /**
@@ -80,8 +69,16 @@ LogString& getMessageLogger(void);
 
 } // namespace Engine
 
+
 // The TRACE macro will dump a _tstring to the log file in verbose mode
 #define TRACE(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }
+
+// TRACE-like macro that only shows up in DEBUG mode
+#ifdef _DEBUG
+#define DEBUG_TRACE(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }
+#else 
+#define DEBUG_TRACE(msg) ;
+#endif
 
 // The ERR macro will dump a _tstring to the log file in verbose mode
 #define ERR(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }

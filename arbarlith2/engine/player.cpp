@@ -340,8 +340,7 @@ void Player::OnChangePlayerNumber(int playerNumber)
 	// Do nothing
 }
 #else
-void Player::OnChangePlayerNumber(int)
-{}
+void Player::OnChangePlayerNumber(int) {}  // leaves no unused parameters
 #endif
 
 void Player::pickupItem(Item *item)

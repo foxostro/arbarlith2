@@ -30,57 +30,43 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "file.h"
-#include "windows.h"
 #include "LogString.h"
+
+#ifdef _WIN32
+#include "windows.h"
+#endif
 
 namespace Engine {
 
 LogString& getMessageLogger(void)
 {
 	static LogString *logger = new LogString; // HACK: this memory is never free'd
-	ASSERT(logger!=0, _T("logger was null"));
 	return(*logger);
 }
 
 LogString::LogString(void)
 {
-	first = true;
-	lastMessage = _T("no previous messages");
+	const string logFileName = toAnsiString(pathAppend(getAppDataDirectory(), _T("log.txt")));
+
+	stream.open(logFileName.c_str(), ios::out);
+
+	// Create a log file header
+	stream << "=============================================\n"
+	       << "=                                           =\n"
+#ifdef _DEBUG
+	       << "=               Debug Build                 =\n"
+#else
+	       << "=              Release Build                =\n"
+#endif
+	       << "=                                           =\n"
+	       << "=============================================\n\n";
+	stream.flush();
 }
 
 void LogString::addString(const _tstring &s)
 {
-	_tstring logFileName = pathAppend(getAppDataDirectory(), _T("log.txt"));
-
-	// Store the message
-	lastMessage = s;
-
-	FILE *fp = 0;
-
-	if(first)
-	{
-		first = false;
-		fp = _tfopen(logFileName.c_str(), _T("w")); // destroy any previous file
-
-		// Create a log file header
-		_ftprintf(fp, _T("\n============================================="));
-		_ftprintf(fp, _T("\n=                                            "));
-#ifdef _DEBUG
-		_ftprintf(fp, _T("\n=               Debug Build                  "));
-#else
-		_ftprintf(fp, _T("\n=              Release Build                 "));
-#endif
-		_ftprintf(fp, _T("\n=                                            "));
-		_ftprintf(fp, _T("\n=============================================\n"));
-	}
-	else
-	{
-		fp = _tfopen(logFileName.c_str(), _T("a"));
-	}
-
-	// Write to the log file
-	_ftprintf(fp, _T("%s"), s.c_str());
-	fclose(fp);
+	stream << s;
+	stream.flush(); // flush message to disk
 
 #ifdef _WIN32
 	OutputDebugString(s.c_str());
@@ -92,4 +78,4 @@ void LogString::log(const _tstring &origin, const _tstring &message)
 	addString(origin + _T("  ->  ") + message + _T("\n\n"));
 }
 
-}; // namespace
+} // namespace Engine
