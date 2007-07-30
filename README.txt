@@ -11,7 +11,3 @@ To compile Arbarlith 2 from source, you will need the development libraries
 and headers for DevIL (and DevILU and DevILUT), glew, SDL, and boost.  The
 CodeBlocks project assumes these files can be found in the compiler and linker
 search paths, so make sure to update them accordingly.
-
-DevIL needed to be rebuilt from source to work properly with MinGW. So for
-your convenience, I will eventually post a tarball of the libraries I was
-linking against.
