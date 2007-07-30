@@ -36,25 +36,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/stat.h> // System calls for file info
 
 #ifdef _WIN32
+#
 #	include <shlobj.h>  // SHGetFolderPath
 #	include <shlwapi.h> // PathAppend
 #	include <direct.h>  // _tchdir and _tgetcwd
+#
 #	define stat _stat
-#	ifdef _UNICODE
-#		define _tstrcpy_s wcscpy_s
-#	else
-#		define _tstrcpy_s strcpy_s
-#	endif
+#
+#   define PATH_SEPARATOR ( _T('\\') )
+#
+#   ifndef W_OK
+#       define W_OK _S_IREAD
+#   endif
+#
+#   ifndef R_OK
+#       define R_OK _S_IWRITE
+#   endif
+#
 #else
-#	define _tstrcpy_s strcpy
-#endif
-
-#ifndef W_OK
-#define W_OK _S_IREAD
-#endif
-
-#ifndef R_OK
-#define R_OK _S_IWRITE
+#
+#   define PATH_SEPARATOR ( _T('/') )
+#
 #endif
 
 namespace Engine {
@@ -67,6 +69,8 @@ _tstring toLowerCase(const _tstring &in); // stdafx.cpp
 
 void createDirectory(const _tstring &path)
 {
+    TRACE(path);
+
 #ifdef _WIN32
 	_tmkdir(path.c_str());
 #else
@@ -76,14 +80,24 @@ void createDirectory(const _tstring &path)
 
 bool setWorkingDirectory(const _tstring &path)
 {
-	TRACE(_T("Changing working directory: ") + path);
+    TRACE(path);
 
+#ifdef _WIN32
+	return _tchdir(path.c_str()) != 0;
+#else
 	return chdir(toAnsiString(path).c_str()) != 0;
+#endif
 }
 
 _tstring getWorkingDirectory(void)
 {
-	char *pszWorkingDirectory = getcwd(0,0);
+	char *pszWorkingDirectory = 0;
+	
+#ifdef _WIN32
+	pszWorkingDirectory = _getcwd(0,0);
+#else
+	pszWorkingDirectory = getcwd(0,0);
+#endif
 
 	_tstring workingDirectory = toTString(pszWorkingDirectory);
 
@@ -94,22 +108,19 @@ _tstring getWorkingDirectory(void)
 
 _tstring getAppDataDirectory(void)
 {
+	_tstring finalPath = _T("./");
+
 #ifdef _WIN32
-	TCHAR homeDir[PATH_MAX] = {0};
+	TCHAR homeDir[MAX_PATH] = {0};
 
-	bool result = false;
 
-	result = SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE, NULL, 0, homeDir));
-
-	if(result)
+	if (SUCCEEDED(SHGetFolderPath(NULL,
+	                              CSIDL_APPDATA | CSIDL_FLAG_CREATE,
+	                              NULL,
+	                              0,
+	                              homeDir)))
 	{
-		_tstring finalPath = pathAppend(homeDir, _T("arbarlith2"));
-		createDirectory(finalPath); // Ensure that the directory exists
-		return finalPath;
-	}
-	else
-	{
-		return _tstring(_T("./"));
+		finalPath = pathAppend(homeDir, _T("arbarlith2"));
 	}
 
 #else
@@ -118,9 +129,14 @@ _tstring getAppDataDirectory(void)
 	TODO: Fix this so it isn't hard-coded for my setup!
 	*/
 
-	return _T("/home/arfox/arbarlith2/");
+	finalPath = _T("/home/arfox/arbarlith2/");
 
 #endif
+	
+	// Ensure that the directory exists
+	createDirectory(finalPath);
+
+	return finalPath;
 }
 
 _tstring getApplicationDirectory(void)
@@ -167,7 +183,7 @@ _tstring pathAppend(const _tstring &path, const _tstring &fileName)
 
 	if(lastChar != _T('/') && lastChar != _T('\\'))
 	{
-		return File::fixFilename(path + _T("/") + fileName);
+		return File::fixFilename(path + PATH_SEPARATOR + fileName);
 	}
 	else
 	{
@@ -221,7 +237,7 @@ bool File::openFile(const _tstring &_fileName, bool binary)
 
 	if(binary)
 	{
-		DEBUG_TRACE(_tstring(_T("Loading binary file: ")) + fileName);
+		TRACE(_tstring(_T("Loading binary file: ")) + fileName);
 
 		const streamsize size = getBytesOnDisk(fileName);
 
@@ -254,7 +270,7 @@ bool File::openFile(const _tstring &_fileName, bool binary)
 
 	this->fileName = fileName;
 
-	DEBUG_TRACE(_T("Loaded text file: ") + fileName);
+	TRACE(_T("Loaded text file: ") + fileName);
 	return true;
 }
 
@@ -290,7 +306,7 @@ bool File::saveFile(const _tstring &fileName, bool binary)
 		return false;
 	}
 
-	DEBUG_TRACE(_tstring(_T("Saving file: ")) + fileName);
+	TRACE(_T("Saving file: ") + fileName);
 
 	if(!file.write((char*)data, (streamsize)getSize()))
 	{
@@ -318,7 +334,7 @@ unsigned char File::peekChar(void)
 
 unsigned char File::peekChar(size_t pos)
 {
-	ASSERT(pos < getSize(), _T("Attempted to access character out of the bounds of the file"));
+	ASSERT(pos < getSize(), _T("Cannot peek out of bounds"));
 
 	if(pos < getSize())
 	{
@@ -467,7 +483,7 @@ _tstring File::getPath(const _tstring &fileName)
 
 	ASSERT(!fileName.empty(), _T("File name is blank"));
 
-	for(i=in.size()-1; i>0 && in.at(i)!=_T('\\'); --i);
+	for(i=in.size()-1; i>0 && in.at(i)!=PATH_SEPARATOR; --i);
 
 	_tstring out = in.substr(0, i+1);
 
@@ -479,19 +495,24 @@ _tstring File::getPath(void) const
 	return getPath(fileName);
 }
 
+_tstring File::getFilenameNoPath(const _tstring &fileName)
+{
+    _tstring in = fixFilename(fileName);
+    _tstring out;
+
+    ASSERT(!fileName.empty(), _T("File name is blank"));
+
+    for(size_t i=in.size()-1; i>0 && in.at(i)!=PATH_SEPARATOR; --i)
+    {
+        out = in.at(i) + out;
+    }
+
+    return out;
+}
+
 _tstring File::getFilenameNoPath(void) const
 {
-	_tstring in = fixFilename(fileName);
-	_tstring out;
-
-	ASSERT(!fileName.empty(), _T("File name is blank"));
-
-	for(size_t i=in.size()-1; i>0 && in.at(i)!=_T('\\'); --i)
-	{
-		out = in.at(i) + out;
-	}
-
-	return out;
+	return getFilenameNoPath(fileName);
 }
 
 _tstring File::getExtension(void) const

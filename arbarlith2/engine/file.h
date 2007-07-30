@@ -324,7 +324,14 @@ public:
 	Gets the full file path and name
 	@return file name and path
 	*/
-	_tstring getFilenameNoPath(void) const;
+    _tstring getFilenameNoPath(void) const;
+
+    /**
+    Gets the full file path and name
+    @param fileName File name
+    @return file name and path
+    */
+    static _tstring getFilenameNoPath(const _tstring &fileName);
 
 	/**
 	Get the directory the file was located in
