@@ -565,10 +565,17 @@ bool PropertyBag::get(const _tstring& key, PropertyBag &dest, size_t instance) c
 
 _tstring PropertyBag::getString(const string &key, size_t instance) const
 {
+    ASSERT(getNumInstances(key) > instance,
+           _T("Not enough instances of key: ") + key +
+           _T(" (wanted instance #") + itoa((int)instance) + 
+           _T(" of only ") + itoa((int)getNumInstances(key)) + _T(")"));
+
 	_tstring x = _T("nill");
 	if(!get(key, x, instance))
 	{
-		FAIL( _T("Failed to get string from PropertyBag: ") + key + _T(" (instance #)") + itoa((int)instance) );
+        FAIL(_T("Failed to get string from PropertyBag: ") + key +
+             _T(" (wanted instance #") + itoa((int)instance) + 
+             _T(" of ") + itoa((int)getNumInstances(key)) + _T(")"));
 	}
 	return x;
 }
