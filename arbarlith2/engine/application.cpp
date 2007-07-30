@@ -89,9 +89,12 @@ void Application::loadFonts(void)
 
 void Application::start(void)
 {
-	PROFILE
+	PROFILE;
+        
+    TRACE(_T("Starting application..."));
 
-	TRACE(_T("Starting application..."));
+    // Work within the directory where the executable is located
+    setWorkingDirectory(getApplicationDirectory());
 
 	// Parse the setup files
 	loadXmlConfigFiles();
