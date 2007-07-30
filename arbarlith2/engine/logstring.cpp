@@ -30,85 +30,83 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "file.h"
-#include "logstring.h"
+
+#include <iostream>
+#include <ctime>
 
 #ifdef _WIN32
-#
-#	ifndef STRICT
-#		define STRICT
-#	endif
-#
-#	include <windows.h>
-#
-#else
-#
-#	include <iostream>
-#
+#include <windows.h>
 #endif
 
 namespace Engine {
 
-static void logStdOut(const _tstring &s)
+void PrintStringToLog(const string &s)
 {
-#ifdef _WIN32
-	OutputDebugString(s.c_str());
-#else
-	cout << toAnsiString(s);
-	cout.flush();
-#endif
-}
+	static bool firstTime = true;
+	static fstream stream;
 
-static void logStdErr(const _tstring &s)
-{
-#ifdef _WIN32
-	OutputDebugString(s.c_str());
-#else
-	cerr << toAnsiString(s);
-	cerr.flush();
-#endif
-}
-
-LogString& getMessageLogger(void)
-{
-	static LogString *logger = new LogString; // HACK: this memory is never free'd
-	return(*logger);
-}
-
-LogString::LogString(void)
-{
-	const string logFileName = toAnsiString(pathAppend(getAppDataDirectory(), _T("log.txt")));
-
-	stream.open(logFileName.c_str(), ios::out);
-
-	if(!stream)
+	if(firstTime)
 	{
-		logStdErr(_T("Failed to create log file: ") + logFileName + _T("\n\n"));
+		firstTime = false;
+
+        const _tstring appDir = getAppDataDirectory();
+
+		const _tstring logFileName = pathAppend(appDir, _T("log.txt"));
+
+		stream.open(toAnsiString(logFileName).c_str(), ios::out);
+
+		if(!stream)
+		{
+			cerr << "Failed to create log file: " << logFileName << endl;
+		}
+		else
+		{
+            cout << "Redirecting std::clog to file: " << logFileName << endl;
+			clog.rdbuf(stream.rdbuf()); // redirect clog to file
+		}
+
+		// Create a header for the log file
+		clog << "=============================================" << endl
+             << "=                                           =" << endl
+#ifdef _DEBUG
+             << "=               Debug Build                 =" << endl
+#else
+             << "=              Release Build                =" << endl
+#endif
+             << "=                                           =" << endl
+             << "=============================================" << endl << endl;
 	}
 
-	// Create a log file header
-	stream << "=============================================\n"
-	       << "=                                           =\n"
-#ifdef _DEBUG
-	       << "=               Debug Build                 =\n"
-#else
-	       << "=              Release Build                =\n"
+#ifdef _WIN32
+	// Print message to debugger message window
+	OutputDebugString(_tstring(s + _T("\n\n")).c_str());
 #endif
-	       << "=                                           =\n"
-	       << "=============================================\n\n";
-	stream.flush();
+
+	clog << s << endl << endl;	
+	cout << s << endl << endl;
 }
 
-void LogString::addString(const _tstring &s)
+void Log(const string &message,
+         const string &function,
+         const string &file,
+         const int line)
 {
-	stream << s;
-	stream.flush(); // flush message to disk
+	// Format the time stamp.
+	time_t curTime = std::time(NULL);
+	char timestamp[32];
+	std::strftime(timestamp,
+	              sizeof(timestamp),
+				  "%Y.%m.%dT%H:%M:%S",
+				  localtime(&curTime));
 
-	logStdOut(s);
-}
+	PrintStringToLog
+	(
+		function + "  ->  " + message +
 
-void LogString::log(const _tstring &origin, const _tstring &message)
-{
-	addString(origin + _T("  ->  ") + message + _T("\n\n"));
+        "\n\t" + File::getFilenameNoPath(file) + ":" + itoa(line) + 
+
+		"\n\t" + timestamp + "\n"
+	);
 }
 
 } // namespace Engine

@@ -482,10 +482,10 @@ void _3dsLoader::readMaterialMapFile(Chunk &currentChunk, Material &material) co
 	const _tstring relativeFileNameT = toTString(relativeFileName);
 	const _tstring absoluteFileName = pathAppend(path, relativeFileNameT);
 
-	DEBUG_TRACE(_T("3DS current file: ") + chunkFile);
-	DEBUG_TRACE(_T("3DS current path: ") + path);
-	DEBUG_TRACE(_tstring(_T("3DS material: ")) + relativeFileName);
-	DEBUG_TRACE(_T("Reading 3DS material from: ") + absoluteFileName);
+	TRACE(_T("3DS current file: ") + chunkFile);
+	TRACE(_T("3DS current path: ") + path);
+	TRACE(_tstring(_T("3DS material: ")) + relativeFileName);
+	TRACE(_T("Reading 3DS material from: ") + absoluteFileName);
 
 	material.loadTexture(absoluteFileName, 0);
 

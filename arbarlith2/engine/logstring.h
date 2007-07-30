@@ -36,52 +36,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-/** Message Logger */
-class LogString
-{
-private:
-	/** Output stream for the log */
-	fstream stream;
-
-	/**
-	Add a string to the log file
-	@param message Log string
-	*/
-	void addString(const _tstring &s);
-
-public:
-	/** Constructor */
-	LogString(void);
-
-	/**
-	Add a message to the log
-	@param origin Originating message
-	@param message Log message
-	*/
-	void log(const _tstring &origin, const _tstring &message);
-};
+/**
+Prints a string directly to the log stream.
+Also prints it to stdout and (if possible) the debugger output window.
+@param s String to log
+*/
+void PrintStringToLog(const string &s);
 
 /**
-Gets the global message logger
-@return message logger
+Prints a message to the log stream with a string to identify the message origin.
+@param message Message string
+@param function Message origin.  Usually you pass __FUNCTION__ as the value
+@param file File of message origin.  Usually you pass __FILE__ as the value
+@param line Line of message origin.  Usually you pass __LINE__ as the value
 */
-LogString& getMessageLogger(void);
+void Log(const string &message,
+         const string &function,
+         const string &file,
+         const int line);
 
 } // namespace Engine
 
-
-// The TRACE macro will dump a _tstring to the log file in verbose mode
-#define TRACE(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }
-
-// TRACE-like macro that only shows up in DEBUG mode
-#ifdef _DEBUG
-#define DEBUG_TRACE(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }
-#else 
-#define DEBUG_TRACE(msg) ;
-#endif
-
-// The ERR macro will dump a _tstring to the log file in verbose mode
-#define ERR(msg) {     ::Engine::getMessageLogger().log( _tstring(_T(__FUNCTION__)), _tstring(msg) );     }
-
+#define TRACE(msg) Engine::Log(msg, __FUNCTION__, __FILE__, __LINE__);
+#define ERR(msg)   Engine::Log(msg, __FUNCTION__, __FILE__, __LINE__);
 
 #endif

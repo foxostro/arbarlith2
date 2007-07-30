@@ -39,13 +39,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-bool assertionFailed(int lineNumber, const TCHAR *pszFileName, const _tstring &message)
+bool assertionFailed(int lineNumber,
+                     const TCHAR *pszFileName,
+                     const _tstring &message)
 {
 	const _tstring fullMessage = message +
 				     _T("\nFile: ") + pszFileName +
 				     _T("\nLine: ") + itoa(lineNumber);
 
-	::Engine::getMessageLogger().log(_T("Assertion"), fullMessage);
+	Log(message,
+		"Assertion",
+		pszFileName,
+		lineNumber);
 
 	bool result = false;
 
