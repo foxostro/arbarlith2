@@ -49,17 +49,9 @@ bool assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message
 
 #ifdef _DEBUG
 #	ifdef _WIN32
-/*
-#		define ASSERT(expr, msg) \
-    			do { if (  !(expr) && \
-			     ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))  ) \
-        		     DebugBreak(); } while (0)
-*/
-#		define ASSERT(expr, msg) \
-		{ if(!(expr) && ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
+#		define ASSERT(expr, msg) { if(!(expr) && ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
 #	else
-#		include <assert.h>
-#		define ASSERT(exp, msg) assert(exp);
+#		define ASSERT(expr, msg) { if(!(expr) && ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) asm("int 3"); }
 #	endif
 #else
 #	define ASSERT(exp, str)   ;
@@ -71,7 +63,7 @@ bool assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message
 #	ifdef _WIN32
 #		define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
 #	else
-#		define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) abort(); }
+#		define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) asm("int 3"); }
 #	endif
 #endif
 
