@@ -20,34 +20,26 @@ Keyboard controls:
 
 Credits
 -------
-Andrew Fox			Project Leader, Programmer, Level Design
-						(and a few 3D models, textures, animations, misc., etc.)
-Michael Collins		Programmer
-Tom Cauchois		Programmer (SDL code)
-Eric Foote			Level Design
-John Nesky			Artist (3D Models, textures, animation)
-Michael Hanley		Artist (3D Models, textures, animation)
-Ning Sung Lee		Artist (GUI artwork)
-Justin Lokey		Artist (3D Models)
-Chris DeLeon		Sound Effects
-Rachel Berkowitz	Musician
-Chelsea Hostetter	Writer
+Andrew Fox          Project Leader, Programmer, Level Design
+                    (and a few 3D models, textures, animations, misc., etc.)
+Michael Collins     Programmer
+Tom Cauchois        Programmer (SDL code)
+Eric Foote          Level Design
+John Nesky          Artist (3D Models, textures, animation)
+Michael Hanley      Artist (3D Models, textures, animation)
+Ning Sung Lee       Artist (GUI artwork)
+Justin Lokey        Artist (3D Models)
+Chris DeLeon        Sound Effects
+Rachel Berkowitz    Musician
+Chelsea Hostetter   Writer
 
 
 
 Special Thanks
 --------------
-Jeff Molofee and Gregory Austwick
-NeHe SDK
-http://nehe.gamedev.net
-
 Mason McCuskey
 XML Property Bags
 _Game Programming Tricks of the Trade_
-
-Ben "Digiben" Humphrey
-Various math utilities
-http://www.gametutorials.com
 
 Paul Baker <paul@paulsprojects.net>
 Various math utilities
@@ -63,7 +55,8 @@ http://www.davegh.com/
 
 You
 Thank you for downloading!
-Please visit our website http://www.gamecreation.org and check out our other projects!
+Please visit our website http://www.gamecreation.org and check out
+our other projects!
 
 
 
