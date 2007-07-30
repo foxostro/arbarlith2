@@ -29,12 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "Object.h"
-#include "World.h"
+#include "object.h"
+#include "world.h"
 #include "MessageRouter.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 

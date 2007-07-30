@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "BackdropTexture.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Logo Splash Screen */
 class SplashScreen
@@ -49,7 +49,7 @@ public:
 	Do the splash screen
 	@param splashTime Time to display the splash screen
 	*/
-	void doSplash(DWORD splashTime);
+	void doSplash(unsigned int splashTime);
 
 private:
 	/** The splash screen back drop */
@@ -62,7 +62,7 @@ private:
 	void draw(float intensity);
 
 	/** Does the constant brightness portion of the */
-	void doSplashConstant(DWORD splashTime);
+	void doSplashConstant(unsigned int splashTime);
 
 	/** Does the fading brightness portion of the */
 	void doSplashFade(void);

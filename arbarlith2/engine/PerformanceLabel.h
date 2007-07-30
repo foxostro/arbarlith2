@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PERFORMANCE_LABEL_H
 
 #include "Application.h"
-#include "LabelWidget.h"
+#include "labelwidget.h"
 
 namespace Engine {
 
@@ -47,7 +47,7 @@ public:
 	/**
 	Constructor
 	@param pos Position of the widget
-	@param app The application is our source for all Debug info 
+	@param app The application is our source for all Debug info
 	*/
 	PerformanceLabel(const vec2 &pos, Application &app);
 

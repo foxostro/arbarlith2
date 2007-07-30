@@ -13,7 +13,7 @@ E-Mail: mailto:mdc@andrew.cmu.edu
 Refactored by Andrew Fox in Apr 2007
 Added support for multiple key bindings per action and actions defined at run time
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -42,10 +42,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _CONTROLLER_H_
 #define _CONTROLLER_H_
 
-#include "Singleton.h"
 #include <SDL/SDL.h>
-
 #include <map>
+
+#include "singleton.h"
 
 namespace Engine {
 

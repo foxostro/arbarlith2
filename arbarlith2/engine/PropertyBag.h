@@ -13,7 +13,7 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 
 #include <map>
 
-#include "PrimitiveDataTypes.h"
+#include "primitivedatatypes.h"
 
 namespace Engine {
 

@@ -30,12 +30,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "application.h"
+#include "Application.h"
 #include "world.h"
 #include "SDLwindow.h"
-#include "WindowWidget.h"
+#include "windowwidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 WindowWidget::WindowWidget(float x, float y, const _tstring &imageFile)
 {
@@ -93,17 +93,17 @@ WindowWidget::~WindowWidget(void)
 }
 
 void WindowWidget::draw(void) const
-{		
+{
 	glColor4fv(white);
 	glEnable(GL_TEXTURE_2D);
 	getMaterial().bind();
 
 	if(stretchToFit)
 	{
-		glBegin(GL_QUADS);		
+		glBegin(GL_QUADS);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f(getWidth(),  getHeight(),  0.0f);
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(0.0f,        getHeight(),  0.0f);
-			glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f,        0.0f,         0.0f); 
+			glTexCoord2f(0.0f, 0.0f); glVertex3f(0.0f,        0.0f,         0.0f);
 			glTexCoord2f(1.0f, 0.0f); glVertex3f(getWidth(),  0.0f,         0.0f);
 		glEnd();
 	}
@@ -112,10 +112,10 @@ void WindowWidget::draw(void) const
 		float cropX = getWidth() / unstretchedDim.x;
 		float cropY = getHeight() / unstretchedDim.y;
 
-		glBegin(GL_QUADS);		
+		glBegin(GL_QUADS);
 			glTexCoord2f(cropX, cropY); glVertex3f(getWidth(),  getHeight(),  0.0f);
 			glTexCoord2f(0.0f,  cropY); glVertex3f(0.0f,        getHeight(),  0.0f);
-			glTexCoord2f(0.0f,   0.0f); glVertex3f(0.0f,        0.0f,         0.0f); 
+			glTexCoord2f(0.0f,   0.0f); glVertex3f(0.0f,        0.0f,         0.0f);
 			glTexCoord2f(cropX,  0.0f); glVertex3f(getWidth(),  0.0f,         0.0f);
 		glEnd();
 	}

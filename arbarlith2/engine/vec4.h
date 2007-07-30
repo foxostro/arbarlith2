@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright � 2005-2007 Game Creation Society
+Copyright © 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -117,9 +117,7 @@ class vec4 : public XmlDataType
 public:
 	float x, y, z, w;
 
-	/**
-	Default constructor sets all coordinates to zero
-	*/
+	/**	Default constructor. Sets all coordinates to zero */
 	vec4(void)
 	: XmlDataType()
 	{
@@ -211,7 +209,7 @@ public:
 
 	/**
 	Calculates the unit-length vector.
-	v = v1 ・|v1|
+	v = v1 / |v1|
 
 	@return The unit-length vector.
 	*/

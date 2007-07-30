@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef EFFECT_PROJECT_SHADOWS_H
 #define EFFECT_PROJECT_SHADOWS_H
 
-#include "Singleton.h"
+#include "singleton.h"
 #include "Effect.h"
 
 namespace Engine {

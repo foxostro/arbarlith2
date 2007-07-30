@@ -32,8 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListPaneWidget.h"
 #include "ToggleWidgetText.h"
 #include "ListElementTweaker.h"
-#include "World.h"
-#include "Player.h"
+#include "world.h"
+#include "player.h"
 #include "Trigger.h"
 
 

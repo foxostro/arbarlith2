@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2005-2007 Game Creation Society
+Copyright Â© 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _EDITOR_TOOL_BAR_H_
 #define _EDITOR_TOOL_BAR_H_
 
-#include "Widget.h"
+#include "widget.h"
 #include "ActorSet.h"
 
 #include "FileSelectionList.h"

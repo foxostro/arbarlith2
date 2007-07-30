@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,9 +31,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef SPELL_MENU_KEY_DETECTOR_H
 #define SPELL_MENU_KEY_DETECTOR_H
 
-#include "Task.h"
+#include "task.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Listens for and handles key events to enter the spell selection menu */
 class SpellMenuKeyDetector : public Task

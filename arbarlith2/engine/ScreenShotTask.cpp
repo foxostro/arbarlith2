@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ Include the DevIL headers
 #include <IL/ilut.h>
 
 #include "ScreenShotTask.h"
-#include "SearchFile.h"
+#include "searchfile.h"
 
 namespace Engine {
 
@@ -73,7 +73,7 @@ void ScreenShotTask::takeScreenShot(void)
 	ilBindImage(handle);
 	ilutGLScreen();
 
-	_tmkdir(_T("sshots/"));
+	createDirectory(_T("sshots/"));
 
 	char *pszScreenShotFileName = toAnsiCharArray(getScreenShotFileName());
 	ilSaveImage(pszScreenShotFileName);

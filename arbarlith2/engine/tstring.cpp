@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 wstring toUnicodeString(const string &str)
 {
+#ifdef _WIN32
+
 	const char *ansistr = str.c_str();
 
 	int lenA = lstrlenA(ansistr);
@@ -55,6 +57,25 @@ wstring toUnicodeString(const string &str)
 	}
 
 	return wstring();
+
+#else
+
+	/*
+	Slower than the Windows version (???), but at least easier to read!
+	*/
+
+	wstring r;
+
+	r.reserve(str.size());
+
+	for(size_t i=0; i<str.size(); ++i)
+	{
+		r += (wchar_t)str[i];
+	}
+
+	return r;
+
+#endif
 }
 
 wstring toUnicodeString(const wstring &unicodestr)

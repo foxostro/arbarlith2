@@ -5,7 +5,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 */
 
 #include "stdafx.h"
-#include "PrimitiveDataTypes.h"
+#include "primitivedatatypes.h"
 
 namespace Engine {
 

@@ -380,23 +380,6 @@ public:
 	*/
 	static _tstring getExtension(const _tstring &fileName);
 
-	/** Defines tokens for checking file access permissions */
-	enum ACCESS_MODE
-	{
-		ACCESS_MODE_EXISTENCE,
-		ACCESS_MODE_READ,
-		ACCESS_MODE_WRITE,
-		ACCESS_MODE_RW
-	};
-
-	/**
-	Determines whether the specified file has the specified access permissions
-	@param fileName Name of the file to check access permissions on
-	@param mode Access permissions to check
-	@return true if the specified mode is allowable
-	*/
-	static bool hasAccess(const _tstring &fileName, File::ACCESS_MODE mode);
-
 	/**
 	Determine if a file exists on disk
 	@param fileName Name of the file to check access permissions on

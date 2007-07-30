@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,10 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _GAME_STATE_SPELL_MENU_H_
 #define _GAME_STATE_SPELL_MENU_H_
 
-#include "Singleton.h"
+#include "singleton.h"
 #include "Dimmer.h"
 #include "GameState.h"
-#include "Material.h"
+#include "material.h"
 
 #include "../MyPlayer.h"
 #include "../Spell.h"

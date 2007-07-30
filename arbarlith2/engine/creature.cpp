@@ -30,14 +30,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h" // Master Header
 #include "CallbackTask.h"
 #include "gl.h"
-#include "WidgetManager.h"
+#include "widgetmanager.h"
 #include "ListPaneWidget.h"
 #include "ListElementTweaker.h"
-#include "World.h"
-#include "Player.h"
+#include "world.h"
+#include "player.h"
 #include "StateMachineFactory.h"
 #include "StateMachine.h"
-#include "Creature.h"
+#include "creature.h"
 
 namespace Engine {
 

@@ -29,9 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "engine/World.h"
-#include "engine/Creature.h"
-#include "engine/Player.h"
+#include "engine/world.h"
+#include "engine/creature.h"
+#include "engine/player.h"
 #include "engine/random.h"
 #include "Spell.h"
 #include "Monster.h"

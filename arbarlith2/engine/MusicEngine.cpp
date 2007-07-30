@@ -30,9 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "random.h"
-#include "application.h"
+#include "Application.h"
 #include "SoundSystem.h"
-#include "musicengine.h"
+#include "MusicEngine.h"
 
 namespace Engine {
 

@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "world.h"
-#include "listelementwidget.h"
-#include "listpanewidget.h"
+#include "ListElementWidget.h"
+#include "ListPaneWidget.h"
 
 namespace Engine {
 

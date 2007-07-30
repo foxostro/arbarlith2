@@ -29,9 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
+
+#include <SDL/SDL.h> // we want to borrow SDL's types (e.g. Uint32)
+
 #include "profile.h"
-#include "File.h"
-#include "Mesh.h"
+#include "file.h"
+#include "mesh.h"
 #include "Md3Loader.h"
 
 namespace Engine {
@@ -64,10 +67,10 @@ const float MD3_XYZ_SCALE = 1.0f / 64.0f;
 typedef char U8;
 
 /** Signed 16-bit integer */
-typedef signed __int16 S16;
+typedef Sint16 S16; // aliases an SDL type
 
 /** Signed 32-bit integer */
-typedef signed __int32 S32;
+typedef Sint32 S32; // aliases an SDL type
 
 /** IEEE-754 floating point value */
 typedef float F32;

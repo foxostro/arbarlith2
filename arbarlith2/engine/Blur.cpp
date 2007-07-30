@@ -32,12 +32,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "gl.h"
 #include "SDLwindow.h"
 #include "EffectManager.h"
-#include "World.h"
+#include "world.h"
 #include "Blur.h"
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -94,7 +94,7 @@ void Blur::create(int width, int height)
 
 void Blur::destroy(void)
 {
-	release();	
+	release();
 	clear();
 }
 
@@ -103,16 +103,16 @@ void Blur::capture(void)
 	if(update)
 	{
 		update = false;
-		
+
 		// Render the scene in the correct resolution
 		glViewport(0, 0, BLUR_TEXTURE_WIDTH, BLUR_TEXTURE_HEIGHT);
 		zone->draw();
-		
+
 		// Read the frame buffer into a texture
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, scene);
 		glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, BLUR_TEXTURE_WIDTH, BLUR_TEXTURE_HEIGHT);
-		
+
 		// Reset the scene
 		glViewport(0, 0, SDLWindow::GetSingleton().GetWidth(), SDLWindow::GetSingleton().GetHeight());
 	}
@@ -131,7 +131,7 @@ void Blur::draw(void)
 
 		glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		
+
 		// Save the projection matrix
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
@@ -151,13 +151,13 @@ void Blur::draw(void)
 		// Render a textured quad over the screen
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, scene);
-		glBegin(GL_QUADS);	
+		glBegin(GL_QUADS);
 			glTexCoord2f(1.0f, 0.0f); glVertex3f(1024.0f,   0.0f, 0.0f);
 			glTexCoord2f(1.0f, 1.0f); glVertex3f(1024.0f, 768.0f, 0.0f);
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(   0.0f, 768.0f, 0.0f);
 			glTexCoord2f(0.0f, 0.0f); glVertex3f(   0.0f,   0.0f, 0.0f);
 		glEnd();
-		
+
 		// Restore the model view matrix
 		glPopMatrix();
 
@@ -167,11 +167,11 @@ void Blur::draw(void)
 
 		// Use modelview mode
 		glMatrixMode(GL_MODELVIEW);
-		
+
 		// Restore settings
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glColor4f(1, 1, 1, 1);
-		glPopAttrib();	
+		glPopAttrib();
 	}
 	else
 	{

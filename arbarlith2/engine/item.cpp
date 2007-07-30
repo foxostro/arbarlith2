@@ -29,9 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "Player.h"
-#include "World.h"
-#include "Item.h"
+#include "player.h"
+#include "world.h"
+#include "item.h"
 
 
 

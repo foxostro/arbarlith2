@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ActorSet.h"
 #include "ActorFactory.h"
-#include "messagerouter.h"
+#include "MessageRouter.h"
 #include "particle.h"
 #include "LightManager.h"
 #include "ShadowManager.h"
@@ -58,7 +58,7 @@ class Player;
 Game world.
 Class contains the data structures (and algorithms that operate on them) for the
 entire game world and game state.  Each "level" or "world" in the game play
-sense is stored in a separate World object.  Though, the Application class 
+sense is stored in a separate World object.  Though, the Application class
 usually only cares to update and render one world at a time.
 */
 class World

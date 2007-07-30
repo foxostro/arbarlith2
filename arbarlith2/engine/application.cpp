@@ -5,7 +5,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 Modified to use SDL windowing and get rid of ControlData February 2006 by Tom Cauchois
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Application.h"
 #include "WaitScreen.h"
 #include "SplashScreen.h"
-#include "World.h"
+#include "world.h"
 #include "Md3Loader.h"
 
 #include "ScreenShotTask.h"
@@ -107,7 +107,14 @@ void Application::start(void)
 	loadFonts();
 
 	// Load the key bindings
+	TRACE(_T("Loading controller bindings..."));
 	new Controller();
+	TRACE(_T("...Loaded controller bindings"));
+
+	// Seed the random number generator
+	TRACE(_T("Seeding the random number generator..."));
+	srand(SDL_GetTicks());
+	TRACE(_T("...Seeded the random number generator"));
 
 	// Do the splash screen
 	{
@@ -125,7 +132,7 @@ void Application::start(void)
 	// Create the frame timer
 	TRACE(_T("Creating the frame timer..."));
 	fme = new NeHe::Frame();
-	TRACE(_T("Created the frame timer."));
+	TRACE(_T("...Created the frame timer"));
 
 	// Create the sound manager
 	addTask(soundSystem = new SoundSystem);
@@ -208,7 +215,7 @@ void Application::run(void)
 
 		// update the frame timer
 		fme->Update();
-		float frameLength = (float)min(fme->getLength(), 70);
+		float frameLength = (float)min(fme->getLength(), (unsigned int)70);
 
 		// Update the current game state
 		state->update(frameLength);
@@ -320,20 +327,24 @@ void Application::startDevIL()
 {
 	TRACE(_T("Initializing DevIL..."));
 
+	TRACE(_T("Linked against IL with IL_VERSION of ") + itoa(IL_VERSION));
+	TRACE(_T("Linked against ILU with ILU_VERSION of ") + itoa(ILU_VERSION));
+	TRACE(_T("Linked against ILUT with ILUT_VERSION of ") + itoa(ILUT_VERSION));
+
 	// First, check the DevIL image library's version
 	if(ilGetInteger(IL_VERSION_NUM) < IL_VERSION)
 	{
-		FAIL(_T("IL_VERSION_NUM version is different than expected!"));
+		FAIL(_T("IL_VERSION_NUM is different than expected!"));
 	}
 
 	if(ilGetInteger(ILU_VERSION_NUM) < ILU_VERSION)
 	{
-		FAIL(_T("IL_VERSION_NUM version is different than expected!"));
+		FAIL(_T("ILU_VERSION_NUM is different than expected!"));
 	}
 
 	if(ilGetInteger(ILUT_VERSION_NUM) < ILUT_VERSION)
 	{
-		FAIL(_T("IL_VERSION_NUM version is different than expected!"));
+		FAIL(_T("ILUT_VERSION_NUM is different than expected!"));
 	}
 
 	/*

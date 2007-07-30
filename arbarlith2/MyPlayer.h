@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,8 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _ARB2_PLAYER_H_
 #define _ARB2_PLAYER_H_
 
-#include "engine/World.h"
-#include "engine/Player.h"
+#include "engine/world.h"
+#include "engine/player.h"
 #include "Spell.h"
 
 using namespace Engine;

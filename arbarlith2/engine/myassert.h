@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -68,7 +68,11 @@ bool assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message
 #endif
 
 #ifndef FAIL
-#define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
+#	ifdef _WIN32
+#		define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
+#	else
+#		define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) abort(); }
+#	endif
 #endif
 
 #endif

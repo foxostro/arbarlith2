@@ -30,10 +30,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "engine/gl.h"
-#include "engine/Player.h"
+#include "engine/player.h"
 #include "SpellHeal.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 void SpellHeal::clear()
 {
@@ -58,7 +58,7 @@ void SpellHeal::castSpell(void)
 	ASSERT(zone!=0, _T("zone is null"));
 
 	ActorSet &zoneObjects = zone->getObjects();
-	
+
 	ASSERT(zoneObjects.isMember(ownerID), _T("owner is not present in the active zone"));
 
 	Actor &owner = zoneObjects.get(ownerID);

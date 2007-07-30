@@ -31,13 +31,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _CLIENT_STDAFX_H_
 #define _CLIENT_STDAFX_H_
 
+#ifdef _WIN32
+
 #if defined(_MSC_VER)
 #define _CRT_SECURE_NO_DEPRECATE
 #pragma warning( disable: 4512 ) // cannot generate assignment operator
 #endif
 
 #include <windows.h>
+#include <direct.h>
 #include <tchar.h>
+
+#else
+
+#include <unistd.h>
+#define TCHAR char
+#define _tmkdir mkdir
+#define _T(s) s
+
+#endif
+
 
 #include <queue>
 #include <vector>
@@ -51,9 +64,9 @@ using namespace std;
 #include "engine/ListElementTweaker.h"
 #include "engine/Controller.h"
 #include "engine/WaitScreen.h"
-#include "engine/Creature.h"
-#include "engine/Player.h"
-#include "engine/World.h"
+#include "engine/creature.h"
+#include "engine/player.h"
+#include "engine/world.h"
 #include "engine/Application.h"
 #include "engine/misc.h"
 

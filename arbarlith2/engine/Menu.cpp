@@ -37,9 +37,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Menu.h"
 #include "GameStateMenu.h"
 #include "LightManager.h"
-#include "World.h"
+#include "world.h"
 
-namespace Engine { 
+namespace Engine {
 
 Menu::Menu(void)
 {
@@ -76,7 +76,7 @@ void Menu::create(const _tstring &imageFileName)
 	font = &g_Application.fontLarge;
 
 	menuBackdrop.create(_T(""), imageFileName, _T(""), _T(""));
-	
+
 	// Populate the menu elements
 	populateElements();
 }
@@ -120,13 +120,13 @@ void Menu::draw(void)
 	glDisable(GL_BLEND);
 	glDisable(GL_ALPHA_TEST);
 	glColor4fv(white);
-	glBegin(GL_QUADS);	
+	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(1024.0f,   0.0f, 0.0f);
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(1024.0f, 768.0f, 0.0f);
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(   0.0f, 768.0f, 0.0f);
 		glTexCoord2f(0.0f, 0.0f); glVertex3f(   0.0f,   0.0f, 0.0f);
 	glEnd();
-	
+
 	for(size_t i=0; i<elements.size(); ++i)
 	{
 		Element &item = elements[i];
@@ -140,8 +140,8 @@ void Menu::draw(void)
 			glTranslatef(item.getPosition().x, item.getPosition().y, 0.1f);
 			font->write(label, color, FONT_SIZE_HUGE);
 		glPopMatrix();
-	}	
-	
+	}
+
 	// Restore the model view matrix
 	glPopMatrix();
 
@@ -178,23 +178,23 @@ void Menu::activateElement(int selectedIndex)
 		g_SoundSystem.play(_T("data/sound/activate.wav"));
 		GameStateMenu::GetSingleton().enterGameMenuWorldSelection();
 		break;
-	
+
 	case 1:
 		g_SoundSystem.play(_T("data/sound/activate.wav"));
 		g_Application.changeGameState(GAME_STATE_RUN);
 		break;
-	
+
 	case 2:
 		// Go to the options screen
 		g_SoundSystem.play(_T("data/sound/activate.wav"));
 		GameStateMenu::GetSingleton().enterGameMenuOptions();
 		break;
-	
+
 	case 3:
 		g_SoundSystem.play(_T("data/sound/activate.wav"));
 		g_Application.changeGameState(GAME_STATE_CREDITS);
 		break;
-	
+
 	case 4:
 		g_SoundSystem.play(_T("data/sound/activate.wav"));
 		g_WaitScreen.Render();
@@ -237,7 +237,7 @@ void Menu::update(void)
 
 			selectedIndex--;
 			selectedIndex = selectedIndex < 0 ? (signed int)elements.size()-1 : selectedIndex;
-			
+
 			g_SoundSystem.play(_T("data/sound/down.wav"));
 		}
 	}
@@ -245,7 +245,7 @@ void Menu::update(void)
 	{
 		debounceUp = false;
 	}
-	
+
 	if(g_Keys.isKeyDown(KEY_MENU_RIGHT) || g_Keys.isKeyDown(KEY_MENU_DOWN))
 	{
 		if(!debounceDown)

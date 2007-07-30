@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <deque>
 using std::deque;
 
-#include "Object.h"
+#include "object.h"
 #include "Command.h"
 
 namespace Engine {

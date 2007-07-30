@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "application.h"
-#include "LabelWidget.h"
+#include "Application.h"
+#include "labelwidget.h"
 
 namespace Engine {
 

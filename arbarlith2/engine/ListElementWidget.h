@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _LISTELEMENTWIDGET_H_
 #define _LISTELEMENTWIDGET_H_
 
-#include "WindowWidget.h"
+#include "windowwidget.h"
 
 namespace Engine {
 

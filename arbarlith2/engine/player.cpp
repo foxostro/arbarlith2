@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,11 +31,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h" // Master Header
 #include "gl.h"
 
-#include "Player.h"
-#include "World.h"
+#include "player.h"
+#include "world.h"
 #include "Light.h"
 #include "ListElementTweaker.h"
-#include "Item.h"
+#include "item.h"
 #include "MenuGameOver.h"
 #include "WaitScreen.h"
 #include "CallbackInterpolator.h"
@@ -340,7 +340,8 @@ void Player::OnChangePlayerNumber(int playerNumber)
 	// Do nothing
 }
 #else
-void Player::OnChangePlayerNumber(int) {}  // leaves no unused parameters
+void Player::OnChangePlayerNumber(int)
+{}
 #endif
 
 void Player::pickupItem(Item *item)

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ using std::map;
 
 #include "Effect.h"
 #include "EffectSig.h"
-#include "Singleton.h"
+#include "singleton.h"
 
 
 namespace Engine {

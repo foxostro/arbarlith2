@@ -19,10 +19,10 @@ E-Mail: mailto:andrewfox@cmu.edu
 
 #include "stdafx.h"  // Master Header
 #include "gl.h"
-#include "Frustum.h" // Frustum - This file implements the class
+#include "frustum.h" // Frustum - This file implements the class
 
 
-namespace Engine { 
+namespace Engine {
 
 void clipPlane(const Frustum *frustum, GLenum clipPlane, FrustumSide side)
 {
@@ -35,7 +35,7 @@ void clipPlane(const Frustum *frustum, GLenum clipPlane, FrustumSide side)
 	plane[2] = planeEq.z;
 	plane[3] = planeEq.w;
 	glClipPlane(clipPlane, plane);
-	
+
 	glEnable(clipPlane);
 }
 
@@ -51,7 +51,7 @@ vec3 planeIntersection3(const vec4 &plane1, const vec4 &plane2, const vec4 &plan
 
 	// P = (  (N2xN3)    * -d1 +   (N3xN1)    * -d2 +   (N1xN2)    * -d3)  /     N1.(N2xN3)
 	return (N2.cross(N3) * -d1 + N3.cross(N1) * -d2 + N1.cross(N2) * -d3) * (1/N1.dot(N2.cross(N3)));
-}							
+}
 
 // Like above, instead of saying a number for the ABC and D of the plane, we
 // want to be more descriptive.
@@ -74,8 +74,8 @@ void NormalizePlane(float frustum[6][4], int side)
 	// Here we calculate the magnitude of the normal to the plane (point A B C)
 	// Remember that (A, B, C) is that same thing as the normal's (X, Y, Z).
 	// To calculate magnitude you use the equation:  magnitude = sqrt( x^2 + y^2 + z^2)
-	float magnitude = (float)sqrt( frustum[side][A] * frustum[side][A] + 
-								   frustum[side][B] * frustum[side][B] + 
+	float magnitude = (float)sqrt( frustum[side][A] * frustum[side][A] +
+								   frustum[side][B] * frustum[side][B] +
 								   frustum[side][C] * frustum[side][C] );
 
 	// Then we divide the plane's values by it's magnitude.
@@ -83,7 +83,7 @@ void NormalizePlane(float frustum[6][4], int side)
 	frustum[side][A] /= magnitude;
 	frustum[side][B] /= magnitude;
 	frustum[side][C] /= magnitude;
-	frustum[side][D] /= magnitude; 
+	frustum[side][D] /= magnitude;
 }
 
 
@@ -119,7 +119,7 @@ void Frustum::CalculateFrustum(const mat4 &modl, const mat4 &proj)
 	clip[13] = modl[12] * proj[ 1] + modl[13] * proj[ 5] + modl[14] * proj[ 9] + modl[15] * proj[13];
 	clip[14] = modl[12] * proj[ 2] + modl[13] * proj[ 6] + modl[14] * proj[10] + modl[15] * proj[14];
 	clip[15] = modl[12] * proj[ 3] + modl[13] * proj[ 7] + modl[14] * proj[11] + modl[15] * proj[15];
-	
+
 	// Now we actually want to get the sides of the frustum.  To do this we take
 	// the clipping planes we received above and extract the sides from them.
 
@@ -182,7 +182,7 @@ void Frustum::CalculateFrustum(const mat4 &modl, const mat4 &proj)
 }
 
 void Frustum::CalculateFrustum()
-{    
+{
 	mat4 proj;
 	mat4 modl;
 
@@ -229,14 +229,14 @@ bool Frustum::PointInFrustum( float x, float y, float z ) const
 
 bool Frustum::SphereInFrustum( float x, float y, float z, float diameter ) const
 {
-	for(int i = 0; i < 6; i++)	
+	for(int i = 0; i < 6; i++)
 	{
 		if( m_Frustum[i][A] * x + m_Frustum[i][B] * y + m_Frustum[i][C] * z + m_Frustum[i][D] <= -diameter )
 		{
 			return false;
 		}
 	}
-	
+
 	// The sphere was inside of the frustum!
 	return true;
 }
@@ -314,11 +314,11 @@ Frustum& Frustum::operator=(const Frustum &o)
 
 /////////////////////////////////////////////////////////////////////////////////
 //
-// * QUICK NOTES * 
+// * QUICK NOTES *
 //
 // This code was taken directly from the frustum tutorial located at www.GameTutorials.com.
 // Most of the large block of comments were taken out.  If you want to learn more about
-// this frustum code, visit our site.  Though we don't use the PointInFrustum() or 
+// this frustum code, visit our site.  Though we don't use the PointInFrustum() or
 // SphereInFrustum() code I decided to leave it in, just so you don't have to paste
 // it in from the frustum tutorial if you include this file in your application/game.
 //

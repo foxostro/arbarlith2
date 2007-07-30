@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -65,6 +65,9 @@ protected:
 	virtual AnimationController* loadFromFile(const _tstring &fileName) const = 0;
 
 public:
+	/** Destructor */
+	virtual ~ModelLoader(void) {}
+
 	/**
 	Loads a model from file or the cache
 	@param fileName The file name of the model

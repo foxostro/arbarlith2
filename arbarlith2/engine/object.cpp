@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,13 +37,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Tile.h"
 #include "Map.h"
-#include "World.h"
-#include "Object.h"
-#include "Creature.h"
-#include "Player.h"
+#include "world.h"
+#include "object.h"
+#include "creature.h"
+#include "player.h"
 
-#include "Object.h"
-#include "Frustum.h"
+#include "object.h"
+#include "frustum.h"
 
 #include "ListElementTweaker.h"
 #include "ToggleWidget.h"
@@ -697,10 +697,10 @@ bool Actor::ChangeAnimation(size_t nIdx, float Speed)
 #ifdef _DEBUG
 void Actor::OnMessage(Message_s Msg)
 {
-	ASSERT(m_ID == Msg.m_Recipient, _T("Message was mailed to the wrong object."));
+	ASSERT(m_ID == Msg.m_Recipient, _T("Actor::OnMessage  ->  Message was mailed to the wrong object."));
 }
 #else
-void Actor::OnMessage(Message_s){} // leaves no unused parameters
+void Actor::OnMessage(Message_s){}
 #endif
 
 bool Actor::wasCollision(OBJECT_ID id)
@@ -872,7 +872,7 @@ void Actor::loadFromFile(const _tstring &fileName)
 
 #include "Trigger.h"
 #include "../Bullet.h" // TODO: HACK that we even need this!
-#include "Player.h" // TODO: HACK that we even need this!
+#include "player.h" // TODO: HACK that we even need this!
 
 namespace Engine{
 bool Actor::isCollision(const Actor &a) const

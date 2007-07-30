@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,8 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef WINDOW_WIDGET_H
 #define WINDOW_WIDGET_H
 
-#include "Widget.h"
-#include "Material.h"
+#include "widget.h"
+#include "material.h"
 
 namespace Engine {
 

@@ -1,5 +1,5 @@
 /*
-Original Author: Andrew Fox
+Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
 Copyright © 2007 Game Creation Society
@@ -28,38 +28,30 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _DebugDisplayToggleKeyDetector_H_
-#define _DebugDisplayToggleKeyDetector_H_
+#ifndef _WIN32
 
-#include "task.h"
-#include "Application.h"
+#include "stdafx.h"
 
-namespace Engine {
-
-/** Listens for and handles key events to toggle the display of debug data */
-class DebugDisplayToggleKeyDetector : public Task
+int main(void)
 {
-private:
-	Application &application;
+	TRACE(_T("Copyright © 2007 Game Creation Society\nAll rights reserved."));
 
-public:
-	/** Constructor */
-	DebugDisplayToggleKeyDetector(Application &app);
+	// Work within the directory where the executable is located
+	setWorkingDirectory(getApplicationDirectory());
 
-	/**
-	Polls for screen shot events
-	@param deltaTime The milliseconds since the last update
-	*/
-	void update(float deltaTime);
+	// Allocate space for the Application object
+	g_pApplication = new Engine::Application();
 
-private:
-	/** Toggles the display of the debug data */
-	void toggleDisplay(void);
+	// Loads game resources
+	g_pApplication->start();
 
-	/** Keeps the toggle key from bouncing */
-	bool debounce;
-};
+	// Runs the game for a while
+	g_pApplication->run();
 
-} // namespace Engine
+	// Free memory
+	delete g_pApplication;
+
+	return EXIT_SUCCESS;
+}
 
 #endif

@@ -3,18 +3,18 @@ Modified in 2005-2007 by Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 */
 
-/* Copyright © Steve Rabin, 2001.
+/* Copyright Â© Steve Rabin, 2001.
  * All rights reserved worldwide.
  *
  * This software is provided "as is" without express or implied
  * warranties. You may freely copy and compile this source into
  * applications you distribute provided that the copyright text
  * below is included in the resulting source code, for example:
- * "Portions Copyright © Steve Rabin, 2001"
+ * "Portions Copyright Â© Steve Rabin, 2001"
  */
 
 #include "stdafx.h"
-#include "World.h"
+#include "world.h"
 #include "StateMachine.h"
 
 

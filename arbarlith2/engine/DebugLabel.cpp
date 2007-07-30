@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -30,10 +30,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "MessageRouter.h"
-#include "World.h"
+#include "world.h"
 #include "DebugLabel.h"
 
-namespace Engine { 
+namespace Engine {
 
 DebugLabel::DebugLabel(const vec2 &pos, Application &app)
 : LabelWidget(_T("DebugLabel has not gathered stats yet"), pos, white, FONT_SIZE_HUGE, app.fontLarge),

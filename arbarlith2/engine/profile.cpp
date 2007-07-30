@@ -1,4 +1,4 @@
-/* Copyright (C) Steve Rabin, 2000. 
+/* Copyright (C) Steve Rabin, 2000.
  * All rights reserved worldwide.
  *
  * This software is provided "as is" without express or implied
@@ -6,21 +6,29 @@
  * applications you distribute provided that the copyright text
  * below is included in the resulting source code, for example:
  * "Portions Copyright (C) Steve Rabin, 2000"
- * 
+ *
  * Modified by Andrew Fox in 2007
  */
 
 
 #include "stdafx.h"
-#include "misc.h"
-#include "LabelWidget.h"
-#include "profile.h"
-#include <string.h>
-#include <stdio.h>
+
+#include <cstring>
+#include <cstdio>
 
 #ifdef _WIN32
-#define strcpy strcpy_s // avoid deprecation warnings and keep portable syntax
+#
+#	define strcpy strcpy_s // avoid deprecation warns and keep portable syntax
+#
+#else
+#
+#	include <sys/timeb.h>
+#
 #endif
+
+#include "misc.h"
+#include "labelwidget.h"
+#include "profile.h"
 
 namespace Engine {
 namespace Profiler {
@@ -152,7 +160,7 @@ void ProfileBegin( char* name )
          ASSERT( g_samples[i].iOpenProfiles == 1, _T("max 1 open at once") );
          return;
        }
-       i++;	
+       i++;
    }
 
    if( i >= NUM_PROFILE_SAMPLES ) {
@@ -215,7 +223,7 @@ void ProfileEnd( const char* name )
          g_samples[i].fAccumulator += fEndTime - g_samples[i].fStartTime;
          return;
       }
-      i++;	
+      i++;
    }
 }
 
@@ -232,14 +240,14 @@ void ProfileDumpOutputToBuffer( void )
    output += _T(" Ave  :  Min  :  Max  :   #   : Profile Name\n");
    output += _T("--------------------------------------------\n");
 
-   while( i < NUM_PROFILE_SAMPLES && g_samples[i].bValid == true ) {		
+   while( i < NUM_PROFILE_SAMPLES && g_samples[i].bValid == true ) {
       unsigned int indent = 0;
       float sampleTime, percentTime, aveTime, minTime, maxTime;
       _tstring indentedName;
       _tstring ave, min, max, num;
-			
+
       if( g_samples[i].iOpenProfiles < 0 ) {
-         FAIL(_T("ProfileEnd() called without a ProfileBegin()"));	
+         FAIL(_T("ProfileEnd() called without a ProfileBegin()"));
       }
       else if( g_samples[i].iOpenProfiles > 0 ) {
          FAIL(_T("ProfileBegin() called without a ProfileEnd()"));
@@ -363,7 +371,7 @@ void GetProfileFromHistory( char* name, float* ave, float* min, float* max )
          return;
 	  }
       i++;
-   }	
+   }
    *ave = *min = *max = 0.0f;
 }
 

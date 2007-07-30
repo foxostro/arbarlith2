@@ -32,8 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _TILE_H_
 
 #include "BoundingBox.h"
-#include "Material.h"
-#include "file.h"
+#include "material.h"
 
 namespace Engine {
 

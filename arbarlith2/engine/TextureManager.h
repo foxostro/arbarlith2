@@ -30,7 +30,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 #ifndef _TEXTURE_MANAGER_H_
 #define _TEXTURE_MANAGER_H_
 
-#include "Image.h"
+#include "image.h"
 #include "TextureHandle.h"
 
 namespace Engine {

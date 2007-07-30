@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _TOGGLE_TEXT_WIDGET_H_
 
 #include "tstring.h"
-#include "LabelWidget.h"
+#include "labelwidget.h"
 #include "ListElementWidget.h"
 
 namespace Engine {

@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "tstring.h"
 #include "COLOR.h"
-#include "Widget.h"
+#include "widget.h"
 #include "text.h"
 
 namespace Engine {

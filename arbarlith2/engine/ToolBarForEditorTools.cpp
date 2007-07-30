@@ -29,12 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "toolbarforeditortools.h"
+#include "ToolBarForEditorTools.h"
 #include "ListElementWidget.h"
 #include "ToggleWidget.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -76,10 +76,10 @@ ToolBarForEditorTools::ToolBarForEditorTools(float x, float y)
 	ListElementWidget *selectTool = new ToggleWidget(new bool(true), _T("data/sprites/list/editor/select_on.png"),	_T("data/sprites/list/editor/select_on_over.png"),	_T("data/sprites/list/editor/select_off.png"),	_T("data/sprites/list/editor/select_off_over.png"));
 	selectTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_SELECT_TOOL);
 	addSelectableElement(selectTool);
-	
+
 	selected = selectTool;
 	currentTool = ToolBarForEditorTools::EDITOR_SELECT_TOOL;
-	m_bVisible = false;	
+	m_bVisible = false;
 }
 
 ToolBarForEditorTools::~ToolBarForEditorTools(void)

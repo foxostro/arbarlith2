@@ -4,8 +4,8 @@ E-Mail: mailto:andrewfox@cmu.edu
 */
 
 #include "stdafx.h"
-#include "World.h"
-#include "Player.h"
+#include "world.h"
+#include "player.h"
 #include "CallbackTask.h"
 #include "GameStateRun.h"
 #include "Switch.h"

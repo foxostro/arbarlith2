@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "engine/ActorSet.h"
-#include "engine/World.h"
-#include "engine/Random.h"
+#include "engine/world.h"
+#include "engine/random.h"
 #include "engine/WaitScreen.h"
 #include "engine/ListElementTweaker.h"
 #include "Spawn.h"

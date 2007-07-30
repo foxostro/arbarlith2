@@ -30,13 +30,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
-#include "OpenGL.h"
-#include "SDLWindow.h"
+#include "opengl.h"
+#include "SDLwindow.h"
 #include "WaitScreen.h"
 #include "frustum.h"
 #include "ActorFactory.h"
 #include "profile.h"
-#include "Player.h"
+#include "player.h"
 #include "ActorSet.h"
 
 

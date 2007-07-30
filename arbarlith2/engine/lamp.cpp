@@ -32,9 +32,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "ListElementTweaker.h"
 #include "ToggleWidgetText.h"
 #include "Light.h"
-#include "World.h"
-#include "Player.h"
-#include "Lamp.h"
+#include "world.h"
+#include "player.h"
+#include "lamp.h"
 
 namespace Engine {
 

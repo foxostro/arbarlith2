@@ -4,9 +4,9 @@
 	<looping>TRUE</looping>
 	<fps>0.75</fps>
 
-	<keyframe>data/spider/tsidle1.3DS</keyframe>	
-	<keyframe>data/spider/tsidle2.3DS</keyframe>
-	<keyframe>data/spider/tsidle1.3DS</keyframe>
+	<keyframe>data/spider/tsidle1.3ds</keyframe>	
+	<keyframe>data/spider/tsidle2.3ds</keyframe>
+	<keyframe>data/spider/tsidle1.3ds</keyframe>
 </animation>
 
 <animation>

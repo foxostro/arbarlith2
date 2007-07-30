@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,11 +32,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "gl.h"
 #include "WaitScreen.h"
 #include "Application.h"
-#include "World.h"
+#include "world.h"
 #include "GameStateMenu.h"
 #include "MenuWorldSelection.h"
 
-namespace Engine { 
+namespace Engine {
 
 MenuWorldSelection::MenuWorldSelection(void)
 {

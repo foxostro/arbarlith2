@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -30,13 +30,43 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "file.h"
-#include "LogString.h"
+#include "logstring.h"
 
 #ifdef _WIN32
-#include "windows.h"
+#
+#	ifndef STRICT
+#		define STRICT
+#	endif
+#
+#	include <windows.h>
+#
+#else
+#
+#	include <iostream>
+#
 #endif
 
 namespace Engine {
+
+static void logStdOut(const _tstring &s)
+{
+#ifdef _WIN32
+	OutputDebugString(s.c_str());
+#else
+	cout << toAnsiString(s);
+	cout.flush();
+#endif
+}
+
+static void logStdErr(const _tstring &s)
+{
+#ifdef _WIN32
+	OutputDebugString(s.c_str());
+#else
+	cerr << toAnsiString(s);
+	cerr.flush();
+#endif
+}
 
 LogString& getMessageLogger(void)
 {
@@ -49,6 +79,11 @@ LogString::LogString(void)
 	const string logFileName = toAnsiString(pathAppend(getAppDataDirectory(), _T("log.txt")));
 
 	stream.open(logFileName.c_str(), ios::out);
+
+	if(!stream)
+	{
+		logStdErr(_T("Failed to create log file: ") + logFileName + _T("\n\n"));
+	}
 
 	// Create a log file header
 	stream << "=============================================\n"
@@ -68,9 +103,7 @@ void LogString::addString(const _tstring &s)
 	stream << s;
 	stream.flush(); // flush message to disk
 
-#ifdef _WIN32
-	OutputDebugString(s.c_str());
-#endif
+	logStdOut(s);
 }
 
 void LogString::log(const _tstring &origin, const _tstring &message)

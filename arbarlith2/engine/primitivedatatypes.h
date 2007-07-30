@@ -15,9 +15,11 @@ namespace Engine
 	class XmlDataType
 	{
 	public:
-        	/** Default construtor */
-        	XmlDataType(void)
-        	{}
+		/** Destructor */
+		virtual ~XmlDataType(void) {}
+
+		/** Default constructor */
+		XmlDataType(void) {}
 
 		/**
 		Gets the string representation of the object

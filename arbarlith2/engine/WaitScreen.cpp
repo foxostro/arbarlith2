@@ -8,7 +8,7 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 #include "stdafx.h"
 #include "gl.h"
 #include "SDLwindow.h"
-#include "Image.h"
+#include "image.h"
 #include "TextureHandle.h"
 #include "WaitScreen.h"
 
@@ -31,7 +31,7 @@ WaitScreen::~WaitScreen(void)
 void WaitScreen::Render(void)
 {
 	CHECK_GL_ERROR();
-	
+
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -43,7 +43,7 @@ void WaitScreen::Render(void)
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	CHECK_GL_ERROR();
-	
+
 	// Set up the model view matrix
 	glLoadIdentity();
 	glTranslatef(0.0f, 0.0f, -1.0f);
@@ -54,7 +54,7 @@ void WaitScreen::Render(void)
 	// Render a textured quad over the screen
 	glDisable(GL_ALPHA_TEST);
 	glEnable(GL_TEXTURE_2D);
-	glBegin(GL_QUADS);	
+	glBegin(GL_QUADS);
 		glTexCoord2f(1.0f, 0.0f); glVertex3f(1024.0f,   0.0f, 0.0f);
 		glTexCoord2f(1.0f, 1.0f); glVertex3f(1024.0f, 768.0f, 0.0f);
 		glTexCoord2f(0.0f, 1.0f); glVertex3f(   0.0f, 768.0f, 0.0f);
@@ -78,7 +78,7 @@ void WaitScreen::Render(void)
 
 	// check for sizing
 	if(g_Input.ResizePending())
-	{		
+	{
 		int width = g_Input.ResizeWidth(),
 			height = g_Input.ResizeHeight(); // screen dimensions
 

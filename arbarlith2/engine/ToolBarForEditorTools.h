@@ -31,11 +31,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _ToolBarForEditorTools_H_
 #define _ToolBarForEditorTools_H_
 
-#include "selectionlist.h"
+#include "SelectionList.h"
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 class ToolBarForEditorTools : public SelectionList
@@ -69,7 +69,7 @@ public:
 
 	/** destructor */
 	virtual ~ToolBarForEditorTools(void);
-	
+
 	/**
 	Gets the currently selected tool
 	@return The currently selected tool

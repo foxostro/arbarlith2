@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2005-2007 Game Creation Society
+Copyright Â© 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vec4.h"
 #include "mat4.h"
 #include "PropertyBag.h"
-#include "Frustum.h"
+#include "frustum.h"
 
 namespace Engine {
 

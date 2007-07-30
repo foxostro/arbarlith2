@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -473,13 +473,19 @@ void _3dsLoader::readMaterialMapFile(Chunk &currentChunk, Material &material) co
 {
 	ASSERT(currentChunk.getID()==MATMAPFILE, _T("Expected chunk ID MATMAPFILE"));
 
-	size_t size = currentChunk.getSize() - currentChunk.tell();
+	const size_t size = currentChunk.getSize() - currentChunk.tell();
 	char *relativeFileName = new char[size];
 	currentChunk.read(relativeFileName, size);
 
-	_tstring path = currentChunk.getPath();
-	_tstring relativeFileNameT = toTString(relativeFileName);
-	_tstring absoluteFileName = path + relativeFileNameT;
+	const _tstring chunkFile = currentChunk.getFilename();
+	const _tstring path = File::getPath(chunkFile);
+	const _tstring relativeFileNameT = toTString(relativeFileName);
+	const _tstring absoluteFileName = pathAppend(path, relativeFileNameT);
+
+	DEBUG_TRACE(_T("3DS current file: ") + chunkFile);
+	DEBUG_TRACE(_T("3DS current path: ") + path);
+	DEBUG_TRACE(_tstring(_T("3DS material: ")) + relativeFileName);
+	DEBUG_TRACE(_T("Reading 3DS material from: ") + absoluteFileName);
 
 	material.loadTexture(absoluteFileName, 0);
 

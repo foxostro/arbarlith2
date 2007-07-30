@@ -151,7 +151,7 @@ void Map::create(const PropertyBag &xml)
 	height = xml.getInt(_T("height"));
 
 	// Get the name of the binary map file
-	_tstring tileDataFileName = xml.getString(_T("tileDataFileName"));
+	const _tstring tileDataFileName = xml.getString(_T("tileDataFileName"));
 	TRACE(_T("Loading tile data: ") + tileDataFileName);
 
 	// Allocate tile data
@@ -287,4 +287,4 @@ void Map::fillBlock(int startX, int startZ, int endX, int endZ, TILE_TYPE tileTy
 	reaquire();
 }
 
-}; // namespace
+} // namespace Engine

@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright � 2003-2007 Game Creation Society
+Copyright © 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -28,6 +28,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#ifdef _WIN32
+
 #include "stdafx.h"
 
 int WINAPI WinMain(HINSTANCE ,  // hInstance
@@ -35,11 +37,11 @@ int WINAPI WinMain(HINSTANCE ,  // hInstance
                    LPSTR     ,  // lpCmdLine
                    int       )  // nCmdShow
 {
+
+	TRACE(_T("Copyright © 2007 Game Creation Society\nAll rights reserved."));
+
 	// In dual core systems, restrict to one processor
 	SetThreadAffinityMask(NULL, 1);
-
-	// Seed the random number generator
-	srand((unsigned int)GetTickCount());
 
 	// Work within the directory where the executable is located
 	setWorkingDirectory(getApplicationDirectory());
@@ -58,3 +60,5 @@ int WINAPI WinMain(HINSTANCE ,  // hInstance
 
 	return 0;
 }
+
+#endif

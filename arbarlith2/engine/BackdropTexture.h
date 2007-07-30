@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _BACKDROP_TEXTURE_H_
 #define _BACKDROP_TEXTURE_H_
 
-#include "Material.h"
+#include "material.h"
 
 
 namespace Engine {

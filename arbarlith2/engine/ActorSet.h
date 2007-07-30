@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,7 @@ using std::queue;
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/lambda.hpp>
 
-#include "Object.h"
+#include "object.h"
 #include "ActorFactory.h"
 
 namespace Engine {

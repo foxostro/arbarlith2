@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,30 +29,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
+#include "profile.h"
+
 #include <fstream>
 #include <sys/types.h>
-#include <sys/stat.h>
+#include <sys/stat.h> // System calls for file info
 
 #ifdef _WIN32
-
-#include <shlobj.h> // SHGetFolderPath
-#include <direct.h>
-
-#define stat _stat
-#define mkdir _mkdir
-#define chdir _chdir
-#define getcwd _getcwd
-
-#ifdef _UNICODE
-#define _tstrcpy_s wcscpy_s
+#	include <shlobj.h>  // SHGetFolderPath
+#	include <shlwapi.h> // PathAppend
+#	include <direct.h>  // _tchdir and _tgetcwd
+#	define stat _stat
+#	ifdef _UNICODE
+#		define _tstrcpy_s wcscpy_s
+#	else
+#		define _tstrcpy_s strcpy_s
+#	endif
 #else
-#define _tstrcpy_s strcpy_s
-#endif
-
-#else
-
-#define strcpy _tstrcpy_s
-
+#	define _tstrcpy_s strcpy
 #endif
 
 #ifndef W_OK
@@ -62,8 +56,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef R_OK
 #define R_OK _S_IWRITE
 #endif
-
-#include "file.h"
 
 namespace Engine {
 
@@ -75,11 +67,17 @@ _tstring toLowerCase(const _tstring &in); // stdafx.cpp
 
 void createDirectory(const _tstring &path)
 {
-	mkdir(toAnsiString(path).c_str());
+#ifdef _WIN32
+	_tmkdir(path.c_str());
+#else
+	mkdir(toAnsiString(path).c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+#endif
 }
 
 bool setWorkingDirectory(const _tstring &path)
 {
+	TRACE(_T("Changing working directory: ") + path);
+
 	return chdir(toAnsiString(path).c_str()) != 0;
 }
 
@@ -96,16 +94,12 @@ _tstring getWorkingDirectory(void)
 
 _tstring getAppDataDirectory(void)
 {
-	TCHAR homeDir[MAX_PATH] = {0};
+#ifdef _WIN32
+	TCHAR homeDir[PATH_MAX] = {0};
 
 	bool result = false;
 
-#ifdef _WIN32
 	result = SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA|CSIDL_FLAG_CREATE, NULL, 0, homeDir));
-#else
-	result = true;
-	strcpy(homeDir, "~/"); // should be OK for Linux, right?
-#endif
 
 	if(result)
 	{
@@ -117,11 +111,22 @@ _tstring getAppDataDirectory(void)
 	{
 		return _tstring(_T("./"));
 	}
+
+#else
+
+	/*
+	TODO: Fix this so it isn't hard-coded for my setup!
+	*/
+
+	return _T("/home/arfox/arbarlith2/");
+
+#endif
 }
 
 _tstring getApplicationDirectory(void)
 {
 #ifdef _WIN32
+
 	TCHAR pathBuffer[_MAX_PATH];
 
 	if(GetModuleFileName(GetModuleHandle(NULL), pathBuffer, _MAX_PATH-1) != 0)
@@ -144,9 +149,15 @@ _tstring getApplicationDirectory(void)
 	}
 
 	return _T(".\\");
+
 #else
-	FAIL(_T("Need LINUX port of function: getApplicationDirectory"));
-	return _T("./");
+
+	/*
+	TODO: Fix this so it isn't hard-coded for my setup!
+	*/
+
+	return _T("~/arbarlith2/trunk/arbarlith2/bin/");
+
 #endif
 }
 
@@ -188,28 +199,18 @@ void File::destroy(void)
 	clear();
 }
 
-bool File::openFile(const _tstring &fileName, bool binary)
+bool File::openFile(const _tstring &_fileName, bool binary)
 {
-	if(fileName.empty())
-	{
-		FAIL(_T("Empty filename"));
-		return false;
-	}
+	const _tstring fileName = fixFilename(_fileName);
 
 	// Does the file exist?
 	if(!isFileOnDisk(fileName))
 	{
-		return false;
+		ERR(_T("File does not exist: ") + fileName);
+
+		// continue and try to open the file anyway...
 	}
 
-	// Check for read permissions
-	if(!hasAccess(fileName, ACCESS_MODE_READ))
-	{
-		FAIL(_T("Failed to obtain read permissions for file: ") + fileName);
-		return false;
-	}
-
-	// Open the file
 	ifstream file(toAnsiString(fileName).c_str(), (binary) ? (ios::in|ios::binary) : (ios::in));
 
 	if(!file)
@@ -238,8 +239,6 @@ bool File::openFile(const _tstring &fileName, bool binary)
 	}
 	else
 	{
-		DEBUG_TRACE(_tstring(_T("Loading text file: ")) + fileName);
-
 		string line;
 
 		if(file)
@@ -255,6 +254,7 @@ bool File::openFile(const _tstring &fileName, bool binary)
 
 	this->fileName = fileName;
 
+	DEBUG_TRACE(_T("Loaded text file: ") + fileName);
 	return true;
 }
 
@@ -273,44 +273,16 @@ streamsize File::getBytesOnDisk(const _tstring &fileName)
 
 bool File::isFileOnDisk(const _tstring &fileName)
 {
-	return hasAccess(fileName, ACCESS_MODE_EXISTENCE);
-}
-
-bool File::hasAccess(const _tstring &fileName, File::ACCESS_MODE mode)
-{
 	struct stat info;
 
-	const string ansiFileName = toAnsiString(fileName);
-	const char *pszFileName = ansiFileName.c_str();
-
-	if(stat(pszFileName, &info) == 0)
-	{
-		switch(mode)
-		{
-		case ACCESS_MODE_EXISTENCE: return true; // we have determined, by retrieving file stats, that the file exists
-		case ACCESS_MODE_READ:      return 0 != (info.st_mode & R_OK);
-		case ACCESS_MODE_WRITE:     return 0 != (info.st_mode & W_OK);
-		case ACCESS_MODE_RW:        return 0 != (info.st_mode & (R_OK | W_OK));
-		};
-	}
-
-	// Failed to obtain file info! The file probably doesn't exist
-	return false;
+	// if we can stat the file, then it does exist
+	return (stat(toAnsiString(fileName).c_str(), &info) == 0);
 }
 
 bool File::saveFile(const _tstring &fileName, bool binary)
 {
-	bool fileExists = isFileOnDisk(fileName);
-	bool writableFile = hasAccess(fileName, ACCESS_MODE_WRITE);
-
-	if(fileExists && !writableFile)
-	{
-		FAIL(_tstring(_T("Failed to obtain write permissions for file: ")) + fileName);
-		return false;
-	}
-	
-	// Open the file
-	ofstream file(toAnsiString(fileName).c_str(), (binary) ? (ios::out|ios::binary) : (ios::out));
+	ofstream file(toAnsiString(fileName).c_str(),
+	              (binary) ? (ios::out|ios::binary) : (ios::out));
 
 	if(!file)
 	{

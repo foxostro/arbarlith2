@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 #include "gl.h"
+#include <SDL/SDL.h> // SDL_GetTicks
+
 #include "SDLwindow.h"
-#include "Image.h"
+#include "image.h"
 #include "TextureHandle.h"
 #include "SplashScreen.h"
 
@@ -105,20 +107,20 @@ void SplashScreen::draw(float intensity)
 	CHECK_GL_ERROR();
 }
 
-void SplashScreen::doSplash(DWORD splashTime)
+void SplashScreen::doSplash(unsigned int splashTime)
 {
 	doSplashConstant(splashTime-1000);
 	doSplashFade();
 }
 
-void SplashScreen::doSplashConstant(DWORD splashTime)
+void SplashScreen::doSplashConstant(unsigned int splashTime)
 {
-	DWORD startTime = GetTickCount();
-	DWORD time=0;
+	unsigned int startTime = (unsigned int)SDL_GetTicks();
+	unsigned int time=0;
 
 	do
 	{
-		time = GetTickCount();
+		time = (unsigned int)SDL_GetTicks();
 
 		draw(1.0f);
 
@@ -127,14 +129,14 @@ void SplashScreen::doSplashConstant(DWORD splashTime)
 
 void SplashScreen::doSplashFade(void)
 {
-	DWORD startTime = GetTickCount();
-	DWORD time=0;
+	unsigned int startTime = (unsigned int)SDL_GetTicks();
+	unsigned int time=0;
 
 	do
 	{
-		time = GetTickCount();
+		time = (unsigned int)SDL_GetTicks();
 
-		const DWORD x = time-startTime;
+		const unsigned int x = time-startTime;
 		draw((float)pow(M_E, -SQR(0.002146 * x)));
 
 	}while(time-startTime < 1000);

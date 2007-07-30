@@ -29,12 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
-#include "SearchFile.h"
-#include "fileselectionlist.h"
+#include "searchfile.h"
+#include "FileSelectionList.h"
 #include "ListElementLabel.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 

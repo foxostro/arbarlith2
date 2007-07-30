@@ -2,10 +2,11 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Modified to use SDL windowing and get rid of ControlData February 2006 by Tom Cauchois
+Modified to use SDL windowing and get rid of ControlData
+February 2006 by Tom Cauchois
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -37,11 +38,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "misc.h"
 #include "myassert.h"
 #include "text.h"
-#include "OpenGL.h"
+#include "opengl.h"
 #include "widgetmanager.h"
 #include "SoundSystem.h"
 #include "TextureManager.h"
-#include "Camera.h"
+#include "camera.h"
 
 namespace Engine {
 

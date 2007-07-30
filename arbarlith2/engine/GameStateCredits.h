@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,17 +31,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _GAME_STATE_CREDITS_H_
 #define _GAME_STATE_CREDITS_H_
 
-#include "Singleton.h"
+#include "singleton.h"
 #include "Dimmer.h"
 #include "GameState.h"
-#include "Material.h"
+#include "material.h"
 
 namespace Engine {
 
 /** State of the game where the credits are displayed */
 class GameStateCredits : public GameState, public Singleton<GameStateCredits>
 {
-public:	
+public:
 	/**
 	Constructor
 	@param app Game engine kernel. The application framework that is running the game.
