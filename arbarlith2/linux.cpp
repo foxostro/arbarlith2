@@ -34,22 +34,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 int main(void)
 {
-	TRACE(_T("Copyright © 2007 Game Creation Society\nAll rights reserved."));
+    // Allocate space for the Application object
+    g_pApplication = new Engine::Application();
 
-	// Work within the directory where the executable is located
-	setWorkingDirectory(getApplicationDirectory());
+    // Loads game resources
+    g_pApplication->start();
 
-	// Allocate space for the Application object
-	g_pApplication = new Engine::Application();
+    // Runs the game for a while
+    g_pApplication->run();
 
-	// Loads game resources
-	g_pApplication->start();
-
-	// Runs the game for a while
-	g_pApplication->run();
-
-	// Free memory
-	delete g_pApplication;
+    // Free memory
+    delete g_pApplication;
 
 	return EXIT_SUCCESS;
 }

@@ -37,26 +37,17 @@ int WINAPI WinMain(HINSTANCE ,  // hInstance
                    LPSTR     ,  // lpCmdLine
                    int       )  // nCmdShow
 {
+    // Allocate space for the Application object
+    g_pApplication = new Engine::Application();
 
-	TRACE(_T("Copyright © 2007 Game Creation Society\nAll rights reserved."));
+    // Loads game resources
+    g_pApplication->start();
 
-	// In dual core systems, restrict to one processor
-	SetThreadAffinityMask(NULL, 1);
+    // Runs the game for a while
+    g_pApplication->run();
 
-	// Work within the directory where the executable is located
-	setWorkingDirectory(getApplicationDirectory());
-
-	// Allocate space for the Application object
-	g_pApplication = new Engine::Application();
-
-	// Loads game resources
-	g_pApplication->start();
-
-	// Runs the game for a while
-	g_pApplication->run();
-
-	// Free memory
-	delete g_pApplication;
+    // Free memory
+    delete g_pApplication;
 
 	return 0;
 }
