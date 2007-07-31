@@ -904,10 +904,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\engine\primitivedatatypes.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\engine\primitivedatatypes.h"
 				>
 			</File>

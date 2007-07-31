@@ -74,7 +74,7 @@ AnimationSequence::AnimationSequence(const AnimationSequence &animation)
 
 AnimationSequence::~AnimationSequence(void)
 {
-	for_each(meshes.begin(), meshes.end(), delete_arg());
+	for(size_t i=0; i<meshes.size(); ++i) delete meshes[i];
 	meshes.clear();
 }
 

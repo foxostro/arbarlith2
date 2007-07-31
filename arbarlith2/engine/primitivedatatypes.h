@@ -7,42 +7,43 @@ E-Mail: mailto:andrewfox@cmu.edu
 #ifndef PRIMITIVEDATATYPES_H__INCLUDED
 #define PRIMITIVEDATATYPES_H__INCLUDED
 
-#include "misc.h"
+#include "tstring.h"
 
-namespace Engine
+namespace Engine {
+
+/** Object may be represented by a string and retrieved from a string representation */
+class XmlDataType
 {
-	/** Object may be represented by a string and retrieved from a string representation */
-	class XmlDataType
-	{
-	public:
-		/** Destructor */
-		virtual ~XmlDataType(void) {}
+public:
+    /** Destructor */
+    virtual ~XmlDataType(void) {}
 
-		/** Default constructor */
-		XmlDataType(void) {}
+    /** Default constructor */
+    XmlDataType(void) {}
 
-		/**
-		Gets the string representation of the object
-		@return string representation
-		*/
-		virtual _tstring ToString(void) const = 0;
+    /**
+    Gets the string representation of the object
+    @return string representation
+    */
+    virtual _tstring ToString(void) const = 0;
 
-		/**
-		Retrieve from a string representation
-		@param str string representation
-		@return true if successful, false if otherwise.  Ususally, this means that the given string representation was invalid
-		*/
-		virtual bool FromString(_tstring str) = 0;
+    /**
+    Retrieve from a string representation
+    @param str string representation
+    @return true if successful, false if otherwise.  Usually, this means
+    that the given string representation was invalid
+    */
+    virtual bool FromString(_tstring str) = 0;
 
-		/**
-		Cast to a string
-		@return string representation
-		*/
-		operator _tstring ()
-		{
-			return ToString();
-		}
-	};
+    /**
+    Cast to a string
+    @return string representation
+    */
+    operator _tstring ()
+    {
+        return ToString();
+    }
+};
 
 } // namespace Engine
 

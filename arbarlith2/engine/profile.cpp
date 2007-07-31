@@ -17,16 +17,11 @@
 #include <cstdio>
 
 #ifdef _WIN32
-#
-#	define strcpy strcpy_s // avoid deprecation warns and keep portable syntax
-#
+#define strcpy strcpy_s // avoid deprecation warns and keep portable syntax
 #else
-#
-#	include <sys/timeb.h>
-#
+#include <sys/timeb.h>
 #endif
 
-#include "misc.h"
 #include "labelwidget.h"
 #include "profile.h"
 

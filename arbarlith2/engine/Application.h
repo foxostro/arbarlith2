@@ -35,7 +35,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef APP_H
 #define APP_H
 
-#include "misc.h"
 #include "myassert.h"
 #include "text.h"
 #include "opengl.h"

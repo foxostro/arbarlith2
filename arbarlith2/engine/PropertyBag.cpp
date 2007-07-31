@@ -13,20 +13,11 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 #include "profile.h"
 #include "PropertyBag.h"
 
-// stdafx.cpp
-namespace Engine
-{
-int stoi(const _tstring &s);
-float stof(const _tstring &s);
-}
-
 namespace Engine {
 
-PropertyBagItem::~PropertyBagItem(void)
-{}
+PropertyBagItem::~PropertyBagItem(void) {}
 
-PropertyBagItem::PropertyBagItem(void)
-{}
+PropertyBagItem::PropertyBagItem(void) {}
 
 bool PropertyBagItem::operator!=( const PropertyBagItem &r )
 {

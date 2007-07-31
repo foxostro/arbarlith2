@@ -123,3 +123,129 @@ char* toAnsiCharArray(const wstring &unicodestr)
 
 	return ansistr;
 }
+
+namespace Engine {
+
+int stoi(const _tstring &s)
+{
+    int ret = 0;
+    _tstringstream stream;
+
+    stream << s;
+    stream >> ret;
+
+    return ret;
+}
+
+float stof(const _tstring &s)
+{
+    float ret = 0.0f;
+    _tstringstream stream;
+
+    stream << s;
+    stream >> ret;
+
+    return ret;
+}
+
+_tstring itoa(int i)
+{
+    _tstring ret;
+    _tstringstream stream;
+
+    stream << i;
+    stream >> ret;
+
+    return ret;
+}
+
+_tstring ftoa(float f, int dec)
+{
+    _tstring ret;
+    _tstringstream stream;
+
+    stream.precision(dec);
+    stream << f;
+    stream >> ret;
+
+    return ret;
+}
+
+_tstring fitToFieldSize(const _tstring &in, size_t fieldSize, JUSTIFY justify)
+{
+    if(in.size() > fieldSize)
+    {
+        return in.substr(0, fieldSize);
+    }
+    else if(in.size() == fieldSize)
+    {
+        return in;
+    }
+    else
+    {
+        size_t charsRemaining = fieldSize-in.size();
+        size_t leftCharsRemaining = (size_t)floor((fieldSize-in.size()) / 2.0);
+        size_t rightCharsRemaining = (size_t)ceil((fieldSize-in.size()) / 2.0);
+
+        _tstring pad;			for(size_t i=0; i<charsRemaining; ++i) pad += _T(" ");
+        _tstring padLeftHalf;	for(size_t i=0; i<leftCharsRemaining; ++i) padLeftHalf += _T(" ");
+        _tstring padRightHalf;	for(size_t i=0; i<rightCharsRemaining; ++i) padRightHalf += _T(" ");
+
+        switch(justify)
+        {
+        case JUSTIFY_CENTER:	return padLeftHalf + in + padRightHalf;
+        case JUSTIFY_RIGHT:		return pad + in;
+        case JUSTIFY_LEFT:
+        default:				return in + pad;
+        };
+    }
+}
+
+_tstring toLowerCase(const _tstring &in)
+{
+    _tstring str(in);
+
+    for(_tstring::iterator iter = str.begin(); iter != str.end(); ++iter)
+        (*iter) = (TCHAR)tolower(*iter);
+
+    return str;
+}
+
+_tstring replace(const _tstring &source,
+                 const _tstring &find,
+                 const _tstring &replace)
+{
+    _tstring output = source;
+
+    for(size_t j = 0; (j=source.find(find, j)) != _tstring::npos; ++j)
+    {
+        output.replace(j, find.length(), replace);
+    }
+
+    return output;
+}
+
+void tokenize(const _tstring& str,
+              vector<_tstring>& tokens,
+              const _tstring& delimiters)
+{
+    // Skip delimiters at beginning.
+    _tstring::size_type lastPos = str.find_first_not_of(delimiters, 0);
+
+    // Find first "non-delimiter".
+    _tstring::size_type pos     = str.find_first_of(delimiters, lastPos);
+
+    while (_tstring::npos != pos || _tstring::npos != lastPos)
+    {
+        // Found a token, add it to the vector.
+        tokens.push_back(str.substr(lastPos, pos - lastPos));
+
+        // Skip delimiters.  Note the "not_of"
+        lastPos = str.find_first_not_of(delimiters, pos);
+
+        // Find next "non-delimiter"
+        pos = str.find_first_of(delimiters, lastPos);
+    }
+}
+
+} // namespace Engine

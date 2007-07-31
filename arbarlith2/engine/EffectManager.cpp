@@ -259,7 +259,7 @@ bool EffectManager::isSupported(const _tstring &str)
 	bool supported = true;
 
 	// Tokenize the _tstring
-	Tokenize(str, extensions);
+	tokenize(str, extensions);
 
 	// Test each extension
 	for(vector<_tstring>::iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
@@ -270,4 +270,4 @@ bool EffectManager::isSupported(const _tstring &str)
 	return supported;
 }
 
-}; // namespace
+} // namespace Engine

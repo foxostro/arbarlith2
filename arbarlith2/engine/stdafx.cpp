@@ -35,108 +35,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-int stoi(const _tstring &s)
-{
-      int ret = 0;
-      _tstringstream stream;
-
-      stream << s;
-      stream >> ret;
-
-      return ret;
-}
-
-float stof(const _tstring &s)
-{
-      float ret = 0.0f;
-      _tstringstream stream;
-
-      stream << s;
-      stream >> ret;
-
-      return ret;
-}
-
-_tstring itoa(int i)
-{
-	_tstring ret;
-	_tstringstream stream;
-
-	stream << i;
-	stream >> ret;
-
-	return ret;
-}
-
-_tstring ftoa(float f, int dec)
-{
-	_tstring ret;
-	_tstringstream stream;
-
-	stream.precision(dec);
-	stream << f;
-	stream >> ret;
-
-	return ret;
-}
-
-_tstring fitToFieldSize(const _tstring &in, size_t fieldSize, JUSTIFY justify)
-{
-	if(in.size() > fieldSize)
-	{
-		return in.substr(0, fieldSize);
-	}
-	else if(in.size() == fieldSize)
-	{
-		return in;
-	}
-	else
-	{
-		size_t charsRemaining = fieldSize-in.size();
-		size_t leftCharsRemaining = (size_t)floor((fieldSize-in.size()) / 2.0);
-		size_t rightCharsRemaining = (size_t)ceil((fieldSize-in.size()) / 2.0);
-
-		_tstring pad;			for(size_t i=0; i<charsRemaining; ++i) pad += _T(" ");
-		_tstring padLeftHalf;	for(size_t i=0; i<leftCharsRemaining; ++i) padLeftHalf += _T(" ");
-		_tstring padRightHalf;	for(size_t i=0; i<rightCharsRemaining; ++i) padRightHalf += _T(" ");
-
-		switch(justify)
-		{
-			case JUSTIFY_CENTER:	return padLeftHalf + in + padRightHalf;
-			case JUSTIFY_RIGHT:		return pad + in;
-			case JUSTIFY_LEFT:
-			default:				return in + pad;
-		};
-	}
-}
-
-_tstring toLowerCase(const _tstring &in)
-{
-	_tstring str(in);
-	for(_tstring::iterator iter = str.begin(); iter != str.end(); ++iter)
-		(*iter) = (TCHAR)tolower(*iter);
-	return str;
-}
-
-_tstring replace(const _tstring &source, const _tstring &find, const _tstring &replace)
-{
-	_tstring output = source;
-
-	for(size_t j = 0; (j=source.find(find, j)) != _tstring::npos; ++j)
-	{
-		output.replace(j, find.length(), replace);
-	}
-
-	return output;
-}
-
-/**
-Projects a vector into screen coordinates
-@param winx X-Coord on the window
-@param winy Y-Coord on the window
-@param winz The depth of the ray into the screen
-@return World-coordinates of the unprojected vector
-*/
 vec3 Project(const vec3 &p)
 {
 	double modelMat[16], projMat[16];
@@ -174,49 +72,6 @@ vec3 Project(const vec3 &p)
 	return vec3((float)winx, (float)winy, (float)winz);
 }
 
-/**
-Projects a ray onto the screen from the mouse cursor's position
-@param winx X-Coord on the window
-@param winy Y-Coord on the window
-@param winz The depth of the ray into the screen
-@return World-coordinates of the unprojected vector
-*/
-vec3 UnProject(int winx, int winy, float winz)
-{
-
-	GLdouble x=0.0, y=0.0, z=0.0;
-
-	GLint MouseX = winx;
-	GLint MouseY = winy;
-
-	GLdouble modelMatrix[16];
-	GLdouble projMatrix[16];
-	GLint viewport[4];
-
-	// Get the modelview matrix
-	glGetDoublev(GL_MODELVIEW_MATRIX, modelMatrix);
-
-	// Get the projection matrix
-	glGetDoublev(GL_PROJECTION_MATRIX, projMatrix);
-
-	// Fill out the viewport matrix
-	glGetIntegerv(GL_VIEWPORT, viewport);
-
-	// Get the window coordinates of the mouse cursor
-	GLdouble wx = GLdouble(MouseX);
-	GLdouble wy = GLdouble( viewport[3] - MouseY - 1 );
-
-	// Perform the unproject
-	gluUnProject(wx, wy, winz, modelMatrix, projMatrix, viewport, &x, &y, &z);
-
-	return vec3( float(x), float(y), float(z) );
-}
-
-/**
-Projects a ray onto the screen from the mouse cursor's position
-@param winz The depth of the ray into the screen
-@return World-coordinates of the unprojected vector
-*/
 vec3 UnProject(float winz)
 {
 	GLdouble x=0.0, y=0.0, z=0.0;
@@ -247,5 +102,5 @@ vec3 UnProject(float winz)
 	return vec3( float(x), float(y), float(z) );
 }
 
-}; // namespace
+} // namespace Engine
 

@@ -31,93 +31,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef MISC_H
 #define MISC_H
 
-#include <cmath>
-#include <float.h>
-
-#include <vector>
-using std::vector;
-
-#include "tstring.h"
+#include "vec4.h"
 
 namespace Engine {
 
-#ifndef M_PI
-#define M_PI ((double)3.14159265)
-#endif
-
-#ifndef M_E
-#define M_E ((double)2.71828183)
-#endif
-
-/** Functor that deletes the 2nd part of the pair */
-struct delete_second {
-	template <class U> struct sig { typedef void type; };
-	template <class FIRST, class SECOND>
-	void operator()(pair<FIRST,SECOND> &a) const
-	{
-		delete a.second;
-	}
-};
-
-/** Functor that deletes the argument */
-struct delete_arg {
-	template <class U> struct sig { typedef void type; };
-	template <class ARG>
-	void operator()(ARG &a) const
-	{
-		delete a;
-	}
-};
+/**
+Projects a vector into screen coordinates
+@param winx X-Coord on the window
+@param winy Y-Coord on the window
+@param winz The depth of the ray into the screen
+@return World-coordinates of the unprojected vector
+*/
+vec3 Project(const vec3 &p);
 
 /**
-Converts a value from a string to a float
-@param s The _tstring representation of the number
-@return Some numerical value
+Projects a ray onto the screen from the mouse cursor's position
+@param winz The depth of the ray into the screen
+@return World-coordinates of the unprojected vector
 */
-float stof(const _tstring &s);
+vec3 UnProject(float winz);
 
-/**
-Represents some value as a _tstring
-@param i Some value
-@return The _tstring representation of the number
-*/
-_tstring itoa(int i);
-
-/**
-Represents some value as a _tstring
-@param f Some value
-@param dec Places after the decimal place
-@return The _tstring representation of the number
-*/
-_tstring ftoa(float f, int dec=4);
-
-/** Specifes how field should be justified as they are padded in the fitToFieldSize method */
-enum JUSTIFY
-{
-	JUSTIFY_LEFT,
-	JUSTIFY_RIGHT,
-	JUSTIFY_CENTER
-};
-
-/**
-Pads a string and justifies it if it is less than the field size.
-If it i larger than the field size, then the string is cropped at the field length
-@param fieldSize number of character in the field
-*/
-_tstring fitToFieldSize(const _tstring &in, size_t fieldSize, JUSTIFY justify);
-
-/**
-Makes a string all lowercase
-@param in The input string
-@return The lower case string
-*/
-_tstring toLowerCase(const _tstring &in);
-
-void Tokenize(const _tstring& str, vector<_tstring>& tokens, const _tstring& delimiters = _T(" \t\n"));
-
-_tstring replace(const _tstring &source, const _tstring &find, const _tstring &replace);
-
-} // namespace
-
+} // namespace Engine
 
 #endif

@@ -31,7 +31,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _VEC4_H_
 #define _VEC4_H_
 
-#include "misc.h"
+#include <cmath>
+#include <float.h>
+
 #include "primitivedatatypes.h"
 
 namespace Engine {
@@ -592,7 +594,7 @@ public:
 
 		str = toLowerCase(str); // establishes case-insensitivity
 
-		Tokenize(str, tokens, _T("(,)"));
+		tokenize(str, tokens, _T("(,)"));
 		if(tokens[0] == _T("&vec"))
         {
 			x = stof(tokens[1]);

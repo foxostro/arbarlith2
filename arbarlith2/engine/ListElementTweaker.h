@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _LISTELEMENTTWEAKER_H_
 #define _LISTELEMENTTWEAKER_H_
 
-#include "misc.h"
 #include "TweakerWidget.h"
 #include "ListElementWidget.h"
 #include "primitivedatatypes.h"

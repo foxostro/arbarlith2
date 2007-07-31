@@ -88,7 +88,7 @@ void Listener::setupSignals(const _tstring &expression)
 
 	vector<_tstring> tokens;
 	_tstring delimeters = _T(":;, \t\n");
-	Tokenize(expression, tokens, delimeters);
+	tokenize(expression, tokens, delimeters);
 
 
 	for(vector<_tstring>::const_iterator iter = tokens.begin(); iter != tokens.end(); ++iter)

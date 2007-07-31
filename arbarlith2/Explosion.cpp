@@ -34,6 +34,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "engine/world.h"
 #include "Explosion.h"
 
+#ifndef M_E
+#define M_E ((double)2.71828183)
+#endif
+
 namespace Arbarlith2 {
 
 /**

@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _LOGSTRING_H_
 
 #include <fstream>
-#include "misc.h"
 
 namespace Engine {
 

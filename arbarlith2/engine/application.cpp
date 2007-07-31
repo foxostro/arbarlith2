@@ -2,7 +2,8 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Modified to use SDL windowing and get rid of ControlData February 2006 by Tom Cauchois
+Modified to use SDL windowing and get rid of ControlData February 2006
+by Tom Cauchois
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
 Copyright © 2003-2007 Game Creation Society
@@ -58,10 +59,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "profile.h"
 #include "PeriodicCallbackTask.h"
 
-
-/*
-Include the DevIL headers
-*/
+/* Include the DevIL headers */
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
@@ -169,7 +167,8 @@ void Application::start(void)
 	// Start the profiler system
 #ifdef ENABLE_PROFILER
 	Profiler::ProfileInit();
-	addTask(makePeriodicCallbackTask(500.0f, &Profiler::ProfileDumpOutputToBuffer));
+	addTask(makePeriodicCallbackTask(500.0f,
+                                     &Profiler::ProfileDumpOutputToBuffer));
 	TRACE(_T("Started the game profiler task"));
 	g_WaitScreen.Render();
 #endif
@@ -224,14 +223,15 @@ void Application::run(void)
 		state->update(frameLength);
 
 		// update all tasks
-		for(std::list<Task*>::const_iterator i=tasks.begin(); i!=tasks.end(); ++i)
+		for(std::list<Task*>::const_iterator i=tasks.begin();
+            i!=tasks.end(); ++i)
 		{
-			ASSERT(0!=*i, _T("*i was null"));
 			updateTask(*i, frameLength);
 		}
 
 		// Take out the garbage
-		tasks = pruneDeadTasks(tasks); // TODO: this really only needs to be run periodically?
+        // TODO: this really only needs to be run periodically?
+		tasks = pruneDeadTasks(tasks);
 
 		// pump
 		glFlush();
@@ -269,32 +269,23 @@ void Application::stop(void)
 	TRACE(_T("Shutting down application..."));
 	g_WaitScreen.Render();
 
+    for(list<Task*>::iterator iter = tasks.begin(); iter != tasks.end(); ++iter)
+        delete(*iter);
+    tasks.clear();
+    TRACE(_T("Deleted tasks"));
 
-	// Delete all tasks
-	for_each(tasks.begin(), tasks.end(), bind(delete_arg(), _1));
-	tasks.clear();
-	g_WaitScreen.Render();
+    g_GUI.Destroy();
+    TRACE(_T("Destroyed the GUI"));
 
+    OpenGL::Destroy();
+    TRACE(_T("Destroyed the OpenGL context"));
 
-	// Destroy the GUI
-	g_GUI.Destroy();
+    Controller::Destroy();
+    TRACE(_T("Destroyed the key binding manager"));
 
+    WaitScreen::Destroy();
+    TRACE(_T("Destroyed the Wait screen"));
 
-	// Destroy the OpenGL window
-	OpenGL::Destroy();
-	g_WaitScreen.Render();
-
-
-	// Delete the key binding manager
-	Controller::Destroy();
-	g_WaitScreen.Render();
-
-
-	// Delete the waitscreen
-	WaitScreen::Destroy();
-
-
-	// Finish it up
 	clear();
 
 	TRACE(_T("...shutdown completed"));
@@ -367,18 +358,13 @@ void Application::startOpenGL()
 {
 	PropertyBag xml, window;
 
-
-
 	bool fullscreen	= false; // whether to set fullscreen
 	int width       = 800;   // dimensions of window
 	int height      = 600;   // dimensions of window
 	int depth       = 32;    // bits per pixel
 
-
-
-
-	// Load the setup file
-	const _tstring setupFileName = pathAppend(getAppDataDirectory(), defaultSetupFileName);
+	const _tstring setupFileName = pathAppend(getAppDataDirectory(),
+                                              defaultSetupFileName);
 
 	if(File::isFileOnDisk(setupFileName))
 	{
@@ -389,9 +375,6 @@ void Application::startOpenGL()
 		xml.loadFromFile(defaultSetupFileName);
 	}
 
-
-
-	// Get window properties
 	if(xml.getSym(window))
 	{
 		window.getSym(width);
@@ -400,10 +383,7 @@ void Application::startOpenGL()
 		window.getSym(fullscreen);
 	}
 
-
-
-
-	// Create an instance of OpenGL
+	// Create an OpenGL context
 	new SDLWindow(*this);
 	g_Window.Create(_T("Game Creation Society"),
 					width,
@@ -414,18 +394,14 @@ void Application::startOpenGL()
 	new OpenGL(width, height);
 	TRACE(_T("Created OpenGL context and window"));
 
-
-
 	if(fullscreen)
 	{
-		// Hide the mouse cursor
 		SDL_ShowCursor(0);
 	}
 }
 
 void Application::saveXmlConfigFiles(void)
 {
-	// Load the engine setup file
 	PropertyBag BaseBag, FogBag, PerfBag, window;
 
 	// Save the mouse sensitivity value
@@ -451,21 +427,18 @@ void Application::saveXmlConfigFiles(void)
 	BaseBag.addSym(window);
 
 	// We'll save settings to the home directory
-	_tstring setupFileName = pathAppend(getAppDataDirectory(), defaultSetupFileName);
-	BaseBag.saveToFile(setupFileName);
+    BaseBag.saveToFile(pathAppend(getAppDataDirectory(),
+                                  defaultSetupFileName));
 
 	TRACE(_T("Config files saved"));
 }
 
 void Application::loadXmlConfigFiles(void)
 {
-	// Load the engine setup file
 	PropertyBag BaseBag, FogBag, PerfBag;
 
-
-
-	// Load the setup file
-	_tstring setupFileName = pathAppend(getAppDataDirectory(), defaultSetupFileName);
+	_tstring setupFileName = pathAppend(getAppDataDirectory(),
+                                        defaultSetupFileName);
 
 	if(File::isFileOnDisk(setupFileName))
 	{
@@ -504,9 +477,13 @@ Task* Application::addTask(Task *task)
 
 void Application::enterWorld(int worldNum)
 {
-	ASSERT(worldNum>=0 && worldNum<3, _T("Parameter \'worldNum\' is invalid: ") + itoa(worldNum));
-	ASSERT(worldNum<=unlockedWorld,   _T("Parameter \'worldNum\' specifies a world that is currently locked: #") + itoa(worldNum)
-		                        + _T(" while only worlds #0 through #") + itoa(unlockedWorld) + _T("are unlocked."));
+	ASSERT(worldNum>=0 && worldNum<3,
+    _T("Parameter \'worldNum\' is invalid: ") + itoa(worldNum));
+
+	ASSERT(worldNum<=unlockedWorld,
+    _T("Parameter \'worldNum\' specifies a world that is currently locked: #")
+    + itoa(worldNum) + _T(" while only worlds #0 through #")
+    + itoa(unlockedWorld) + _T("are unlocked."));
 
 	const _tstring worlds[] =
 	{
@@ -548,42 +525,43 @@ Camera& Application::getCamera(void)
 
 void Application::release(void)
 {
-	TRACE(_T("Releasing game state resources"));
+	TRACE(_T("Releasing game state resources..."));
 	g_WaitScreen.Render();
 
-	for(map<GAME_STATE,GameState*>::iterator i = states.begin(); i != states.end(); ++i)
+	for(map<GAME_STATE,GameState*>::iterator i = states.begin();
+        i != states.end(); ++i)
+    {
 		(i->second)->release();
+    }
 
-	TRACE(_T("Releasing game world resources"));
-	g_WaitScreen.Render();
+	TRACE(_T("...Releasing game world resources..."));
 
-	if(world!=0)
-		world->release();
-
+	if(world!=0) world->release();
 	fontLarge.release();
 	fontSmall.release();
+    g_TextureMgr.release();
 
-	g_TextureMgr.release();
+    TRACE(_T("...completely released"));
 }
 
 void Application::reaquire(void)
 {
 	g_TextureMgr.reaquire();
-
 	fontLarge.reaquire();
 	fontSmall.reaquire();
 
 	TRACE(_T("Reaquiring game world resources"));
 	g_WaitScreen.Render();
 
-	if(world!=0)
-		world->reaquire();
+	if(world!=0) world->reaquire();
 
 	TRACE(_T("Reaquiring game state resources"));
-	g_WaitScreen.Render();
 
-	for(map<GAME_STATE,GameState*>::iterator i = states.begin(); i != states.end(); ++i)
-		(i->second)->reaquire();
+    for(map<GAME_STATE,GameState*>::iterator i = states.begin();
+        i != states.end(); ++i)
+    {
+        (i->second)->reaquire();
+    }
 }
 
 void Application::changeGameState(GAME_STATE newState)
@@ -596,4 +574,4 @@ void Application::changeGameState(GAME_STATE newState)
 	}
 }
 
-}; // namespace
+} // namespace Engine

@@ -68,8 +68,15 @@ using namespace std;
 #include "engine/player.h"
 #include "engine/world.h"
 #include "engine/Application.h"
-#include "engine/misc.h"
 
 using namespace Engine;
+
+#ifndef M_PI
+#define M_PI ((double)3.14159265)
+#endif
+
+#ifndef M_E
+#define M_E ((double)2.71828183)
+#endif
 
 #endif

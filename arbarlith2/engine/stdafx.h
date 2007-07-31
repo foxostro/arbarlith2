@@ -31,24 +31,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _ENGINE_STDAFX_H_
 #define _ENGINE_STDAFX_H_
 
-
-
 #if defined(_MSC_VER)
 #define _CRT_SECURE_NO_DEPRECATE
 #pragma warning( disable: 4512 ) // cannot generate assignment operator
 #endif
 
-// Disable _invalid_parameter_noinfo in RELEASE builds.  Potentially introduces instability!
-/*
-#ifndef _DEBUG
-#	ifndef _SECURE_SCL
-#		define _SECURE_SCL 0
-#	endif
-#endif
-*/
-
 #define _PLAYER_ONE_HAS_NO_JOYSTICK_ 1	// Set to 1 in order to force player 1 to the keyboard, player 2 to joystick 1, etc
-
 
 #ifdef _WIN32
 #include <windows.h>
@@ -59,8 +47,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TCHAR char
 #define _T(s) s
 #endif
-
-
 
 /* STL */
 #include <list>
@@ -76,8 +62,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 using namespace std;
 
-
-
 /* Standard C Library */
 #include <cctype>
 #include <cmath>
@@ -86,8 +70,6 @@ using namespace std;
 #include <cstdarg>
 #include <cstring>
 #include <float.h>
-
-
 
 /* Boost Library */
 #include <boost/lambda/lambda.hpp>
@@ -98,10 +80,7 @@ using namespace std;
 using namespace boost;
 using namespace boost::lambda;
 
-
-
-
-#include "tstring.h"       // useful macros
+#include "tstring.h"       // functions to operate on strings
 #include "logstring.h"     // Message logger
 #include "myassert.h"      // Custom assertion routine
 #include "macros.h"        // useful macros
@@ -112,5 +91,13 @@ using namespace boost::lambda;
 #include "Application.h"   // The application class runs the game
 #include "opengl.h"        // Interface to the rendering library
 #include "Effect.h"
+
+#ifndef M_PI
+#define M_PI ((double)3.14159265)
+#endif
+
+#ifndef M_E
+#define M_E ((double)2.71828183)
+#endif
 
 #endif
