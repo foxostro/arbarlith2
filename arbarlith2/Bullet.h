@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -70,7 +70,7 @@ public:
 	@param causesFreeze indicates that the bullet will cause the target to freeze for a time
 	@param knockbackMagnitude Knockback acceleration to apply to the target
 	*/
-	virtual void shoot(OBJECT_ID owner, const vec3 &velocity, int damageValue, const _tstring &particleDef, const _tstring &explosionParticleFile, const _tstring &explosionSoundEffectFile, bool causesFreeze, float knockbackMagnitude);
+	virtual void shoot(OBJECT_ID owner, const vec3 &velocity, int damageValue, const string &particleDef, const string &explosionParticleFile, const string &explosionSoundEffectFile, bool causesFreeze, float knockbackMagnitude);
 
 	/** kills the bullet */
 	virtual void kill(void);
@@ -122,10 +122,10 @@ private:
 	size_t particleHandle;
 
 	/** Particle effects to use for the explosion */
-	_tstring explosionParticleFile;
+	string explosionParticleFile;
 
 	/** sound effects to use for the explosion */
-	_tstring explosionSoundEffectFile;
+	string explosionSoundEffectFile;
 
 	/** Knockback acceleration to apply to the target */
 	float knockbackMagnitude;

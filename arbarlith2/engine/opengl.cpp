@@ -9,7 +9,7 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 	Copyright 2002 Jeff Molofee, Gregory Austwick and Others
 
 	Title:
-		OpenGL Control class	
+		OpenGL Control class
 
 	Version History:
 		v1.00		Original class	(Daniel Vivas 03/08/02)
@@ -19,15 +19,15 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 	Licence:
 
 	This SDK/library is free software, written primarily for
-	teaching purposes. You can redistribute and modify it to 
-	your heart's content. However, any use of this library is 
-	at the user's own risk. There is no warranty. The authors 
-	will not be held responsible for ANYTHING that happens as 
-	a result of the use of this software. All financial/emotional/health 
-	problems or anything else that happens after using this 
-	software is therefore the user's own responsibility. 
-	Nevertheless, if the user finds it useful, an email or a 
-	mention in any credits would be appreciated, but is not 
+	teaching purposes. You can redistribute and modify it to
+	your heart's content. However, any use of this library is
+	at the user's own risk. There is no warranty. The authors
+	will not be held responsible for ANYTHING that happens as
+	a result of the use of this software. All financial/emotional/health
+	problems or anything else that happens after using this
+	software is therefore the user's own responsibility.
+	Nevertheless, if the user finds it useful, an email or a
+	mention in any credits would be appreciated, but is not
 	necessary.
 */
 // Modified by Andrew Fox in 2003-2006
@@ -38,7 +38,7 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 #include "COLOR.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -63,7 +63,7 @@ bool supportsShadow = false;
 bool supportsAniostropy = false;
 
 // All Setup For OpenGL Goes Here
-OpenGL :: OpenGL() 
+OpenGL :: OpenGL()
 {
    stencil = 0; // stencil buffer bits
    m_NearClip = 0.1f;
@@ -86,7 +86,7 @@ OpenGL :: ~OpenGL()
 {
 }
 
-bool OpenGL :: InitGL() 
+bool OpenGL :: InitGL()
 {
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -101,7 +101,7 @@ bool OpenGL :: InitGL()
 
 	// Polygon color should be mixed with texture color
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	
+
 	// Set pixel packing to be "tight," that is, with a 1 byte row alignment
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glPixelStorei(GL_PACK_ALIGNMENT, 1);
@@ -110,7 +110,7 @@ bool OpenGL :: InitGL()
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
-	
+
 	// Set up a default colored material
 	glEnable(GL_COLOR_MATERIAL);
 	glShadeModel(GL_SMOOTH);
@@ -129,8 +129,8 @@ bool OpenGL :: InitGL()
 // Resize And Initialize The GL Window
 GLvoid OpenGL :: ReSizeGLScene(int width, int height)
 {
-	ASSERT(height!=0, _T("ReSizeGLScene  ->  height equals zero"));
-	ASSERT(width!=0, _T("ReSizeGLScene  ->  width equals zero"));
+	ASSERT(height!=0, "ReSizeGLScene  ->  height equals zero");
+	ASSERT(width!=0, "ReSizeGLScene  ->  width equals zero");
 
 	// Calculate window aspect ratio
 	m_AspectRatio = (GLfloat)width/(GLfloat)height;
@@ -150,8 +150,8 @@ GLvoid OpenGL :: ReSizeGLScene(int width, int height)
 
 void OpenGL::SetClippingPlanes(float Near, float Far)
 {
-	ASSERT(Near>0.0f, _T("OpenGL::SetClippingPlanes  ->  Near plane cannot be negative"));
-	ASSERT(Far>Near,  _T("OpenGL::SetClippingPlanes  ->  Far plane cannot be closer than the near plane"));
+	ASSERT(Near>0.0f, "OpenGL::SetClippingPlanes  ->  Near plane cannot be negative");
+	ASSERT(Far>Near,  "OpenGL::SetClippingPlanes  ->  Far plane cannot be closer than the near plane");
 
 	m_NearClip = Near;
 	m_FarClip  = Far;
@@ -164,7 +164,7 @@ void OpenGL::SetClippingPlanes(float Near, float Far)
 
 bool OpenGL::CheckExtension(const char *str)
 {
-	// get the extension _tstring
+	// get the extension string
 	char *extstr=(char *)glGetString(GL_EXTENSIONS);
 
 	// anything to do?
@@ -180,19 +180,17 @@ bool OpenGL::CheckExtension(const char *str)
 void OpenGL::SetupExtensions(void)
 {
 	// Display information about this system
-	TRACE(_tstring(_T("OpenGL Vendor: "))	+ toTString((const char*)glGetString(GL_VENDOR)));
-	TRACE(_tstring(_T("OpenGL Renderer: "))	+ toTString((const char*)glGetString(GL_RENDERER)));
-	TRACE(_tstring(_T("OpenGL Version: "))	+ toTString((const char*)glGetString(GL_VERSION)));
-	
-	// get the extension _tstring
-	TRACE(toTString((const char *)glGetString(GL_EXTENSIONS)));
+	TRACE(string("OpenGL Vendor: ") + (const char*)glGetString(GL_VENDOR));
+	TRACE(string("OpenGL Renderer: ") + (const char*)glGetString(GL_RENDERER));
+	TRACE(string("OpenGL Version: ") + (const char*)glGetString(GL_VERSION));
+	TRACE((const char*)glGetString(GL_EXTENSIONS));
 
 	// Initialize extensions
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
 		// Problem: glewInit failed, something is seriously wrong.
-		ERR(toTString((const char*)glewGetErrorString(err)));
+		ERR((const char*)glewGetErrorString(err));
 	}
 
 	g_bUseMultitexture = glewIsExtensionSupported("GL_ARB_multitexture")==GL_TRUE;

@@ -33,9 +33,6 @@
 <file>data/sound/wizard/attack.wav</file>
 </attackSounds>
 
-<attnSounds>
-</attnSounds>
-
 <armorMultiplier>1</armorMultiplier>
 <attackCoolDownMultiplier>1</attackCoolDownMultiplier>
 <floating>false</floating>

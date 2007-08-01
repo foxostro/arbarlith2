@@ -73,7 +73,7 @@ void LightManager::create(void)
 
 HLIGHT LightManager::addLight(Light *light)
 {
-	ASSERT(light!=0, _T("light was null"));
+	ASSERT(light!=0, "light was null");
 
 	newHandle++;
 	lights.insert(make_pair(newHandle, light));
@@ -94,7 +94,7 @@ Light& LightManager::getLight(HLIGHT handle)
 {
 	LIGHTS::iterator i = lights.find(handle);
 
-	ASSERT(i!=lights.end(), _T("handle was not found"));
+	ASSERT(i!=lights.end(), "handle was not found");
 
 	return *(i->second);
 }
@@ -103,7 +103,7 @@ const Light& LightManager::getLight(HLIGHT handle) const
 {
 	LIGHTS::const_iterator i = lights.find(handle);
 
-	ASSERT(i!=lights.end(), _T("handle was not found"));
+	ASSERT(i!=lights.end(), "handle was not found");
 
 	return *(i->second);
 }

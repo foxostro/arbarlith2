@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "PropertyBag.h"
 #include "Effect_Z_Only.h"
 
-namespace Engine { 
+namespace Engine {
 
 Effect_Z_Only::Effect_Z_Only(void)
 {
@@ -54,7 +54,7 @@ void Effect_Z_Only::begin(void)
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 
 	glColorMask(0, 0, 0, 0);
-	glDisable(GL_LIGHTING);	
+	glDisable(GL_LIGHTING);
 	Effect::disableAllTextureUnits();
 	glEnableClientState(GL_VERTEX_ARRAY);
 }
@@ -65,9 +65,9 @@ void Effect_Z_Only::end(void)
 	CHECK_GL_ERROR();
 }
 
-_tstring Effect_Z_Only::getRequiredExtensions(void) const
+string Effect_Z_Only::getRequiredExtensions(void) const
 {
-	return _T("");
+	return "";
 }
 
 int Effect_Z_Only::getRequiredTextureUnits(void) const
@@ -104,9 +104,9 @@ bool Effect_Z_Only::requiresTexCoordStream(void) const
 	return false;
 }
 
-_tstring Effect_Z_Only::getName(void) const
+string Effect_Z_Only::getName(void) const
 {
-	return _T("Effect_Z_Only");
+	return "Effect_Z_Only";
 }
 
 int Effect_Z_Only::howGood(effect_sig) const

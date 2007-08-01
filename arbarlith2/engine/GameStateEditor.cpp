@@ -64,14 +64,14 @@ void GameStateEditor::update(float deltaTime)
 
 void GameStateEditor::onEnter(void)
 {
-	TRACE(_T("Entering Editor Mode"));
+	TRACE("Entering Editor Mode");
 	g_WaitScreen.Render();
 
 	if(editorToolBar == 0)
 	{
 		// Create the editor tool bar
 		editorToolBar = new EditorToolBar;
-		ASSERT(editorToolBar!=0, _T("editor toolbar did not load correctly"));
+		ASSERT(editorToolBar!=0, "editor toolbar did not load correctly");
 		editorToolBar->create();
 		g_GUI.addWidget(editorToolBar);
 	}

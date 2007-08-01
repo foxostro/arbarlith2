@@ -69,7 +69,7 @@ public:
 	@param volume Volume level multiplier
 	@return Returns a handle to the sound
 	*/
-	SOUND_HANDLE play(const _tstring &fileName, bool looping=false, float volume=1.0f);
+	SOUND_HANDLE play(const string &fileName, bool looping=false, float volume=1.0f);
 
 	/**
 	Plays a sound file with a 3D position
@@ -78,7 +78,7 @@ public:
 	@param looping true if the sound should loop until we switch Zones
 	@return Returns a handle to the sound
 	*/
-	SOUND_HANDLE play3D(const _tstring &fileName, const vec3 &pos, bool looping=false, float volume=1.0f);
+	SOUND_HANDLE play3D(const string &fileName, const vec3 &pos, bool looping=false, float volume=1.0f);
 
 	/**
 	Stops a specific sound
@@ -94,7 +94,7 @@ public:
 	@param fileName The name of a music file
 	@return Returns a handle to the sound
 	*/
-	SOUND_HANDLE playMusic(const _tstring &fileName);
+	SOUND_HANDLE playMusic(const string &fileName);
 };
 
 } // namespace Engine

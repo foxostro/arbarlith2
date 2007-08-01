@@ -33,6 +33,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
+/** Triggers a breakpoint in a portable way */
+void DebugBreak(void);
+
 /**
 Tests an assertion
 @param line The line of the assertion
@@ -40,31 +43,22 @@ Tests an assertion
 @param message A message describing the assertion
 @return true If the user decided to enter the debugger
 */
-bool assertionFailed(int line, const TCHAR *pszfileName, const _tstring &message);
+bool assertionFailed(int line,
+                     const char *pszfileName,
+                     const std::string &message);
 
 } // namespace Engine
 
-// The ASSERT macro
 #ifndef ASSERT
-
-#ifdef _DEBUG
-#	ifdef _WIN32
-#		define ASSERT(expr, msg) { if(!(expr) && ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
+#	ifdef _DEBUG
+#		define ASSERT(expr, msg) { if(!(expr) && Engine::assertionFailed((int)(__LINE__), __FILE__, (msg))) Engine::DebugBreak(); }
 #	else
-#		define ASSERT(expr, msg) { if(!(expr) && ::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) asm("int 3"); }
+#		define ASSERT(exp, str)   ;
 #	endif
-#else
-#	define ASSERT(exp, str)   ;
-#endif
-
 #endif
 
 #ifndef FAIL
-#	ifdef _WIN32
-#		define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) DebugBreak(); }
-#	else
-#		define FAIL(msg) { if(::Engine::assertionFailed((int)(__LINE__), _T(__FILE__), (msg))) asm("int 3"); }
-#	endif
+#define FAIL(msg) { if(Engine::assertionFailed((int)(__LINE__), __FILE__, (msg))) Engine::DebugBreak(); }
 #endif
 
 #endif

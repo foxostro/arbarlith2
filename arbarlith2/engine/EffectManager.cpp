@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect_Z_Only.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 /** Instantiate the global effect manager singleton */
 EffectManager g_EffectManager;
@@ -84,7 +84,7 @@ void EffectManager::create(void)
 	destroy();
 
 	// Allocate all effects
-	TRACE(_T("Allocating all Effects"));
+	TRACE("Allocating all Effects");
 	LinkTable temp;
 	temp.insert(make_pair(effect_CLASS_Z_ONLY,						new Effect_Z_Only));
 	temp.insert(make_pair(effect_CLASS_PROJECT_SHADOWS,				new Effect_Project_Shadows));
@@ -96,17 +96,17 @@ void EffectManager::create(void)
 	temp.insert(make_pair(effect_CLASS_RED,							new Effect_Red_FFP));
 
 	// Iterate through effects and eliminate effects that are not supported
-	TRACE(_T("Determining supported Effects"));
+	TRACE("Determining supported Effects");
 	for(LinkTable::iterator iter = temp.begin(); iter!=temp.end(); ++iter)
 	{
 		Effect *effect = (iter->second);
-		ASSERT(effect != 0, _T("null Effect"));
+		ASSERT(effect != 0, "null Effect");
 
 		// Do we have enough texture units to use the effect?
 		if(effect->getRequiredTextureUnits() > g_MultitextureUnits)
 		{
 			// Discard the effect and continue
-			TRACE(effect->getName() + _T(": Effect requires too many texture stages, discarding..."));
+			TRACE(effect->getName() + ": Effect requires too many texture stages, discarding...");
 			delete effect;
 			continue;
 		}
@@ -114,7 +114,7 @@ void EffectManager::create(void)
 		else if(!isSupported(effect->getRequiredExtensions()))
 		{
 			// Discard the effect and continue
-			TRACE(effect->getName() + _T(": Effect requires unsupported or disabled extensions, discarding..."));
+			TRACE(effect->getName() + ": Effect requires unsupported or disabled extensions, discarding...");
 			//delete effect;
 			continue;
 		}
@@ -126,7 +126,7 @@ void EffectManager::create(void)
 	}
 
 	// Initialize all effect classes
-	TRACE(_T("Initializing the supported Effects"));
+	TRACE("Initializing the supported Effects");
 	for(LinkTable::iterator iter = rawEffects.begin(); iter!=rawEffects.end(); ++iter)
 	{
 		(iter->second)->create();
@@ -136,7 +136,7 @@ void EffectManager::create(void)
 	for(effect_sig i = 1; i<effect_CLASS_MAX; ++i)
 	{
 		Effect *effect = queryRaw(i);
-		ASSERT(effect!=0, _T("EffectManager::create  ->  Effect was NULL")); 
+		ASSERT(effect!=0, "EffectManager::create  ->  Effect was NULL");
 
 		linkTable.insert(make_pair(i, effect));
 	}
@@ -144,7 +144,7 @@ void EffectManager::create(void)
 // Determine the best fit effects for the templated effect signatures
 
 	// These are the effects we will work with to link together
-	effect_sig effects[] = 
+	effect_sig effects[] =
 	{
 		effect_DEFAULT,
 		effect_TEXTURE_REPLACE,
@@ -156,8 +156,8 @@ void EffectManager::create(void)
 		effect_RED
 	};
 
-	// For each effect signature:	
-	TRACE(_T("Linking Effects to effect signature templates"));
+	// For each effect signature:
+	TRACE("Linking Effects to effect signature templates");
 	for(size_t i=0; i<sizeof(effects); ++i)
 	{
 		priority_queue< pair<int,Effect*>, vector< pair<int,Effect*> >, less< pair<int,Effect*> > > options;
@@ -180,13 +180,13 @@ void EffectManager::create(void)
 	// select no initial Effect
 	currentEffect = 0;
 
-	
-	TRACE(_T("Completed"));
+
+	TRACE("Completed");
 }
 
 void EffectManager::destroy(void)
 {
-	TRACE(_T("Destroying existing Effects"));
+	TRACE("Destroying existing Effects");
 	clear();
 }
 
@@ -199,30 +199,30 @@ bool EffectManager::bind(effect_sig signature)
 	else
 	{
 		// First, make sure there isn't already an active effect
-		ASSERT(currentEffect==0, _T("there is already an active effect!"));
+		ASSERT(currentEffect==0, "there is already an active effect!");
 
 		// What effect best matches the requested signature?
 		Effect *requested = query(signature);
-		ASSERT(requested != 0, _T("Effect was NULL, linker should have taken care of that!"));
+		ASSERT(requested != 0, "Effect was NULL, linker should have taken care of that!");
 
 		currentEffect = requested;
 
 		currentSig = signature;
 	}
-	
+
 	// Indicate that we did change the Effect
 	return true;
 }
 
 Effect& EffectManager::getEffect(void)
 {
-	ASSERT(currentEffect!=0, _T("There is currently no bound effect!"));
+	ASSERT(currentEffect!=0, "There is currently no bound effect!");
 	return(*currentEffect);
 }
 
 Effect* EffectManager::queryRaw(effect_sig signature)
 {
-	ASSERT(!rawEffects.empty(), _T("EffectManager::queryRaw  ->  rawEffects was empty"));
+	ASSERT(!rawEffects.empty(), "EffectManager::queryRaw  ->  rawEffects was empty");
 
 	LinkTable::iterator iter = rawEffects.find(signature);
 
@@ -253,18 +253,18 @@ Effect* EffectManager::query(effect_sig signature)
 	}
 }
 
-bool EffectManager::isSupported(const _tstring &str)
+bool EffectManager::isSupported(const string &str)
 {
-	vector<_tstring> extensions;
+	vector<string> extensions;
 	bool supported = true;
 
-	// Tokenize the _tstring
+	// Tokenize the string
 	tokenize(str, extensions);
 
 	// Test each extension
-	for(vector<_tstring>::iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
+	for(vector<string>::iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
 	{
-		supported &= glewIsSupported(toAnsiString(*iter).c_str())==GL_TRUE;
+		supported &= glewIsSupported((*iter).c_str())==GL_TRUE;
 	}
 
 	return supported;

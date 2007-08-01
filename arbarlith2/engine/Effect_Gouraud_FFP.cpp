@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect_Gouraud_FFP.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -72,9 +72,9 @@ void Effect_Gouraud_FFP::end(void)
 	CHECK_GL_ERROR();
 }
 
-_tstring Effect_Gouraud_FFP::getRequiredExtensions(void) const
+string Effect_Gouraud_FFP::getRequiredExtensions(void) const
 {
-	return _tstring();
+	return string();
 }
 
 int Effect_Gouraud_FFP::getRequiredTextureUnits(void) const
@@ -136,9 +136,9 @@ bool Effect_Gouraud_FFP::requiresTexCoordStream(void) const
 	return true;
 }
 
-_tstring Effect_Gouraud_FFP::getName(void) const
+string Effect_Gouraud_FFP::getName(void) const
 {
-	return _T("Effect_Gouraud_FFP");
+	return "Effect_Gouraud_FFP";
 }
 
 int Effect_Gouraud_FFP::howGood(effect_sig signature) const

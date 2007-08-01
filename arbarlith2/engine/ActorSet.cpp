@@ -68,14 +68,14 @@ void ActorSet::destroy(void)
 	clear();
 }
 
-Actor* ActorSet::createPtr(const _tstring &type, World *zone)
+Actor* ActorSet::createPtr(const string &type, World *zone)
 {
 	OBJECT_ID handle = create(type, zone);
 
 	return getPtr(handle);
 }
 
-OBJECT_ID ActorSet::create(const _tstring &type, World *zone)
+OBJECT_ID ActorSet::create(const string &type, World *zone)
 {
 	ActorFactory &factory = Engine::getActorFactory();
 
@@ -83,7 +83,7 @@ OBJECT_ID ActorSet::create(const _tstring &type, World *zone)
 
 	if(iter==factory.objects.end())
 	{
-		FAIL(_T("cannot create an object of the type: ") + type);
+		FAIL("cannot create an object of the type: " + type);
 		return INVALID_ID;
 	}
 	else
@@ -104,13 +104,13 @@ OBJECT_ID ActorSet::create(const _tstring &type, World *zone)
 
 const Actor& ActorSet::get(OBJECT_ID id) const
 {
-	ASSERT(isMember(id), _T("Not a member"));
+	ASSERT(isMember(id), "Not a member");
 	return(*find(id)->second);
 }
 
 Actor& ActorSet::get(OBJECT_ID id)
 {
-	ASSERT(isMember(id), _T("Not a member"));
+	ASSERT(isMember(id), "Not a member");
 	Actor *actor = find(id)->second;
 	return(*actor);
 }
@@ -170,7 +170,7 @@ void ActorSet::update(float deltaTime, World *world)
 	garbageCollection(); // TODO: MAKE THIS A PERIODIC TASK
 }
 
-vector<Actor*> ActorSet::getByName(const _tstring &name)
+vector<Actor*> ActorSet::getByName(const string &name)
 {
 	vector<Actor*> actors;
 
@@ -211,8 +211,8 @@ void ActorSet::garbageCollection(void)
 
 void ActorSet::drawActor(const Frustum *frustum, Actor *p)
 {
-	ASSERT(frustum!=0, _T("Null parameter! frustum was null"));
-	ASSERT(p!=0, _T("Null parameter! p was null"));
+	ASSERT(frustum!=0, "Null parameter! frustum was null");
+	ASSERT(p!=0, "Null parameter! p was null");
 
 	if(!p->zombie && frustum->SphereInFrustum2(p->getPos(), p->getSphereRadius()*2))
 		p->drawObject();
@@ -220,8 +220,8 @@ void ActorSet::drawActor(const Frustum *frustum, Actor *p)
 
 void ActorSet::drawActorTransparent(const Frustum *frustum, Actor *p)
 {
-	ASSERT(frustum!=0, _T("Null parameter! frustum was null"));
-	ASSERT(p!=0, _T("Null parameter! p was null"));
+	ASSERT(frustum!=0, "Null parameter! frustum was null");
+	ASSERT(p!=0, "Null parameter! p was null");
 
 	if(!p->zombie && frustum->SphereInFrustum2(p->getPos(), p->getSphereRadius()*2))
 		p->drawTransparentObject();
@@ -229,8 +229,8 @@ void ActorSet::drawActorTransparent(const Frustum *frustum, Actor *p)
 
 void ActorSet::drawActorDebugText(const Frustum *frustum, Actor *p)
 {
-	ASSERT(frustum!=0, _T("Null parameter! frustum was null"));
-	ASSERT(p!=0, _T("Null parameter! p was null"));
+	ASSERT(frustum!=0, "Null parameter! frustum was null");
+	ASSERT(p!=0, "Null parameter! p was null");
 
 	if(!p->zombie && frustum->SphereInFrustum2(p->getPos(), p->getSphereRadius()*2))
 		p->drawObjectDebugData();
@@ -238,7 +238,7 @@ void ActorSet::drawActorDebugText(const Frustum *frustum, Actor *p)
 
 void ActorSet::drawActorToDepthBuffer(Actor *p)
 {
-	ASSERT(p!=0, _T("Null parameter! p was null"));
+	ASSERT(p!=0, "Null parameter! p was null");
 
 	if(!p->zombie && p->doesCastShadows())
 		p->drawObjectToDepthBuffer();
@@ -321,7 +321,7 @@ void ActorSet::addAll(ActorSet &s)
 	}
 }
 
-void ActorSet::spawn(const _tstring &dataFile, const vec3 &position)
+void ActorSet::spawn(const string &dataFile, const vec3 &position)
 {
 	RequestedSpawn request;
 
@@ -336,7 +336,7 @@ void ActorSet::doSpawnRequest(const RequestedSpawn &request, World *zone)
 	spawnNow(request.monsterDataFile, request.position, zone);
 }
 
-void ActorSet::spawnNow(const _tstring &dataFile, const vec3 &position, World *zone)
+void ActorSet::spawnNow(const string &dataFile, const vec3 &position, World *zone)
 {
 	PropertyBag xml;
 	xml.loadFromFile(dataFile);
@@ -345,7 +345,7 @@ void ActorSet::spawnNow(const _tstring &dataFile, const vec3 &position, World *z
 
 Actor& ActorSet::spawnNow(const PropertyBag &data, World *zone)
 {
-	OBJECT_ID id = create(data.getString(_T("type")), zone);
+	OBJECT_ID id = create(data.getString("type"), zone);
 	Actor &object = get(id);
 	object.load(data);
 
@@ -359,15 +359,15 @@ void ActorSet::spawnNow(const PropertyBag &xml, const vec3 &position, World *zon
 
 void ActorSet::load(const PropertyBag &xml, World *world)
 {
-	ASSERT(world!=0, _T("world was null"));
+	ASSERT(world!=0, "world was null");
 
-	TRACE(_T("Loading ActorSet..."));
+	TRACE("Loading ActorSet...");
 
-	for(size_t i=0, numObjects=xml.getNumInstances(_T("object")); i<numObjects; ++i)
+	for(size_t i=0, numObjects=xml.getNumInstances("object"); i<numObjects; ++i)
 	{
 		PropertyBag ThisObjBag;
 
-		xml.get(_T("object"), ThisObjBag, i);
+		xml.get("object", ThisObjBag, i);
 
 		spawnNow(ThisObjBag, world);
 	}
@@ -375,7 +375,7 @@ void ActorSet::load(const PropertyBag &xml, World *world)
 	// Player data is saved separately
 	deleteActors<Player>();
 
-	TRACE(_T("...finished (Loading ActorSet)"));
+	TRACE("...finished (Loading ActorSet)");
 }
 
 PropertyBag ActorSet::save(void) const
@@ -389,7 +389,7 @@ PropertyBag ActorSet::save(void) const
 		// Do not save Creatures.  We are saving spawns instead and the player data is separate
 		if(!instanceof(a, Creature))
 		{
-			xml.add(_T("object"), a.save());
+			xml.add("object", a.save());
 		}
 	}
 
@@ -403,14 +403,14 @@ ActorSet::Tuple ActorSet::getDistance(pair<OBJECT_ID, Actor*> a, vec3 p)
 
 void ActorSet::removeObjectNow(OBJECT_ID id)
 {
-	ASSERT(isMember(id), _T("The object is not a member of this set"));
+	ASSERT(isMember(id), "The object is not a member of this set");
 	erase(find(id));
 }
 
 void ActorSet::moveObject(ActorSet &dest, OBJECT_ID id)
 {
-	ASSERT(isMember(id), _T("The object is not a member of this set"));
-	ASSERT(!dest.isMember(id), _T("The object is already a member of the other set"));
+	ASSERT(isMember(id), "The object is not a member of this set");
+	ASSERT(!dest.isMember(id), "The object is already a member of the other set");
 
 	// Add it to the other set
 	dest.insert(  make_pair(id, toActor(*find(id)))  );
@@ -424,7 +424,7 @@ bool ActorSet::isMember(OBJECT_ID id) const
 	return (id!=INVALID_ID) && (find(id)!=end());
 }
 
-bool ActorSet::query(const _tstring &name, OBJECT_ID &out) const
+bool ActorSet::query(const string &name, OBJECT_ID &out) const
 {
 	for(const_iterator iter=begin(); iter != end(); ++iter)
 	{

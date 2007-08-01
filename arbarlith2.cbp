@@ -296,7 +296,6 @@
 		<Unit filename="arbarlith2/engine/particle.h" />
 		<Unit filename="arbarlith2/engine/player.cpp" />
 		<Unit filename="arbarlith2/engine/player.h" />
-		<Unit filename="arbarlith2/engine/primitivedatatypes.cpp" />
 		<Unit filename="arbarlith2/engine/primitivedatatypes.h" />
 		<Unit filename="arbarlith2/engine/profile.cpp" />
 		<Unit filename="arbarlith2/engine/profile.h" />

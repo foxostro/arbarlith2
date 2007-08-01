@@ -58,8 +58,8 @@ void GameStateRun::update(float deltaTime)
 		return;
 	}
 
-	ASSERT(0!=performanceLabel, _T("performanceLabel was null"));
-	ASSERT(0!=debugLabel, _T("debugLabel was null"));
+	ASSERT(0!=performanceLabel, "performanceLabel was null");
+	ASSERT(0!=debugLabel, "debugLabel was null");
 
 	performanceLabel->m_bVisible = application.displayFPS;
 	debugLabel->m_bVisible = application.displayDebugData;

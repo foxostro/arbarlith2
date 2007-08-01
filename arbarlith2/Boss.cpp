@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -48,15 +48,15 @@ void Boss::OnDeath(void)
 {
 	Monster::OnDeath();
 
-	const _tstring &zoneName = toLowerCase(getZone().getName());
+	const string &zoneName = toLowerCase(getZone().getName());
 
 	// Unlock the next world
-	if(zoneName == _T("world2"))
+	if(zoneName == "world2")
 	{
 		g_Application.unlockWorld(3);
 		g_Application.saveXmlConfigFiles();
 	}
-	else if(zoneName == _T("world1"))
+	else if(zoneName == "world1")
 	{
 		g_Application.unlockWorld(2);
 		g_Application.saveXmlConfigFiles();
@@ -71,18 +71,18 @@ void Boss::OnDeath(void)
 
 void Boss::returnToMenu(void)
 {
-	const _tstring &zoneName = toLowerCase(getZone().getName());
+	const string &zoneName = toLowerCase(getZone().getName());
 
 	// Enter the lead-out menu
-	     if(zoneName == _T("world3"))
+	     if(zoneName == "world3")
 		GameStateMenu::GetSingleton().enterGameMenuWorldLeadOut(3);
-	else if(zoneName == _T("world2"))
+	else if(zoneName == "world2")
 		GameStateMenu::GetSingleton().enterGameMenuWorldLeadOut(2);
-	else if(zoneName == _T("world1"))
+	else if(zoneName == "world1")
 		GameStateMenu::GetSingleton().enterGameMenuWorldLeadOut(1);
 	else
 	{
-		FAIL(_T("There shouldn't be a boss present in a world unless that world is named \'world1\' or \'world2\' or \'world3\'"));
+		FAIL("There shouldn't be a boss present in a world unless that world is named \'world1\' or \'world2\' or \'world3\'");
 		GameStateMenu::GetSingleton().enterGameMenuWorldSelection();
 	}
 

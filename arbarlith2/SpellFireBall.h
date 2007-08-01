@@ -45,7 +45,7 @@ public:
 	@param ownerID Spell caster owner
 	@param fileName Loads spell data from the file
 	*/
-	SpellFireBall(World *zone, OBJECT_ID ownerID, const _tstring &fileName)
+	SpellFireBall(World *zone, OBJECT_ID ownerID, const string &fileName)
 	{
 		loadFromFile(fileName, zone, ownerID);
 	}
@@ -73,13 +73,13 @@ private:
 	float bulletSpeed;
 
 	/** Particle effects to use for the bullet */
-	_tstring particleFile;
+	string particleFile;
 
 	/** Particle effects to use for the explosion */
-	_tstring explosionParticleFile;
+	string explosionParticleFile;
 
 	/** Explosion sound effect file */
-	_tstring explosionSoundEffectFile;
+	string explosionSoundEffectFile;
 
 	/** Indicates that the bullet freezes the enemy */
 	bool causesFreeze;

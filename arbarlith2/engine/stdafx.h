@@ -41,11 +41,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifdef _WIN32
 #include <windows.h>
 #include <direct.h>
-#include <tchar.h>
 #else
 #include <unistd.h>
-#define TCHAR char
-#define _T(s) s
 #endif
 
 /* STL */
@@ -91,13 +88,5 @@ using namespace boost::lambda;
 #include "Application.h"   // The application class runs the game
 #include "opengl.h"        // Interface to the rendering library
 #include "Effect.h"
-
-#ifndef M_PI
-#define M_PI ((double)3.14159265)
-#endif
-
-#ifndef M_E
-#define M_E ((double)2.71828183)
-#endif
 
 #endif

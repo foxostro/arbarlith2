@@ -42,7 +42,7 @@ float ListPaneWidget::getTop(void) const
 	{
 		ListElementWidget *element = listElements[listElements.size()-1];
 
-		ASSERT(element!=0, _T("the last element of the list was NULL"));
+		ASSERT(element!=0, "the last element of the list was NULL");
 
 		return element->getRelativeY() + element->getHeight();
 	}

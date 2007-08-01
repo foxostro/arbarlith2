@@ -24,12 +24,12 @@ bool PropertyBagItem::operator!=( const PropertyBagItem &r )
 	return(!((*this) == r));
 }
 
-_tstring PropertyBagString::save(int) const
+string PropertyBagString::save(int) const
 {
 	return(itemData);
 }
 
-_tstring PropertyBagString::makeStringSafe(const _tstring &str)
+string PropertyBagString::makeStringSafe(const string &str)
 {
 	/*
 	replace all &'s with &amp's
@@ -40,16 +40,16 @@ _tstring PropertyBagString::makeStringSafe(const _tstring &str)
 	return replace (
 				replace
 				(
-					replace(str, _T("&"), _T("&amp;")),
-					_T("<"),
-					_T("&lt;")
+					replace(str, "&", "&amp;"),
+					"<",
+					"&lt;"
 				),
-				_T(">"),
-				_T("&gt;")
+				">",
+				"&gt;"
 			);
 }
 
-_tstring PropertyBagString::restoreFromSafeString(const _tstring &str)
+string PropertyBagString::restoreFromSafeString(const string &str)
 {
 	/*
 	replace all &amp's with &'s
@@ -60,12 +60,12 @@ _tstring PropertyBagString::restoreFromSafeString(const _tstring &str)
 	return replace (
 				replace
 				(
-					replace(str, _T("&amp;"), _T("&")),
-					_T("&lt;"),
-					_T("<")
+					replace(str, "&amp;", "&"),
+					"&lt;",
+					"<"
 				),
-				_T("&gt;"),
-				_T(">")
+				"&gt;",
+				">"
 			);
 }
 
@@ -74,18 +74,18 @@ bool PropertyBagString::operator==( const PropertyBagItem &r ) const
 	return(itemData == static_cast<const PropertyBagString &>(r).itemData);
 }
 
-const _tstring& PropertyBagString::getName( void ) const
+const string& PropertyBagString::getName( void ) const
 {
 	return itemName;
 }
 
-const _tstring& PropertyBagString::setName( const _tstring &name )
+const string& PropertyBagString::setName( const string &name )
 {
 	itemName = name;
 	return itemName;
 }
 
-const _tstring& PropertyBagString::setData( const _tstring &data, bool convert )
+const string& PropertyBagString::setData( const string &data, bool convert )
 {
 	if(convert)
 	{
@@ -101,7 +101,7 @@ const _tstring& PropertyBagString::setData( const _tstring &data, bool convert )
 	return itemData;
 }
 
-_tstring PropertyBagString::getData( void ) const
+string PropertyBagString::getData( void ) const
 {
 	if(itemHasBeenConverted)
 	{
@@ -113,12 +113,14 @@ _tstring PropertyBagString::getData( void ) const
 	}
 }
 
-PropertyBagString::PropertyBagString( const _tstring &data, bool convert )
+PropertyBagString::PropertyBagString(const string &data, bool convert)
 {
 	setData(data, convert);
 }
 
-PropertyBagString::PropertyBagString( const _tstring &name, const _tstring &data, bool convert )
+PropertyBagString::PropertyBagString(const string &name,
+                                     const string &data,
+                                     bool convert )
 {
 	setData(data, convert);
 	setName(name);
@@ -138,7 +140,7 @@ PropertyBag::PropertyBag(const PropertyBag &r)
 	copy(r);
 }
 
-PropertyBag::PropertyBag(const _tstring &s)
+PropertyBag::PropertyBag(const string &s)
 {
 	clear();
 	loadMergeFromString(s, true);
@@ -147,44 +149,58 @@ PropertyBag::PropertyBag(const _tstring &s)
 PropertyBag::~PropertyBag(void)
 {}
 
-void PropertyBag::add(const _tstring& key, const _tstring &contents, bool convert)
+void PropertyBag::add(const string& key, const char* contents, bool convert)
+{
+	add(key, string(contents), convert);
+}
+
+void PropertyBag::add(const string& key, const string &contents, bool convert)
 {
 	data.insert(make_pair(key, new PropertyBagString(key, contents, convert)));
 }
 
-void PropertyBag::add(const _tstring& key, int data)
+void PropertyBag::add(const string& key, int data)
 {
 	add(key, itoa(data));
 }
 
-void PropertyBag::add(const _tstring& key, size_t data)
+void PropertyBag::add(const string& key, size_t data)
 {
 	add(key, itoa((int)data));
 }
 
-void PropertyBag::add(const _tstring& key, double data)
+void PropertyBag::add(const string& key, double data)
 {
 	add(key, ftoa((float)data, 4));
 }
 
-void PropertyBag::add(const _tstring& key, bool data)
+void PropertyBag::add(const string& key, bool data)
 {
-	add(key, _tstring((data) ? _T("true") : _T("false")));
+	if(data)
+	{
+		add(key, "true");
+	}
+	else
+	{
+		add(key, "false");
+	}
 }
 
-void PropertyBag::add(const _tstring& key, float data)
+void PropertyBag::add(const string& key, float data)
 {
 	add(key, ftoa(data, 4));
 }
 
-void PropertyBag::add(const _tstring& key, const XmlDataType *pData)
+void PropertyBag::add(const string& key, const XmlDataType *pData)
 {
-	ASSERT(pData!=0, _T("Cannot add a NULL object to the Prop Bag"));
+	ASSERT(pData!=0, "Cannot add a NULL object to the Prop Bag");
 
-	data.insert(  make_pair(key, new PropertyBagString(key, pData->ToString(), false))  );
+	data.insert(make_pair(key, new PropertyBagString(key,
+	                                                 pData->ToString(),
+	                                                 false)));
 }
 
-void PropertyBag::add(const _tstring& key, const PropertyBag &contents)
+void PropertyBag::add(const string& key, const PropertyBag &contents)
 {
 	if(!contents.data.empty())
 	{
@@ -192,7 +208,7 @@ void PropertyBag::add(const _tstring& key, const PropertyBag &contents)
 	}
 }
 
-void PropertyBag::remove(const _tstring &key)
+void PropertyBag::remove(const string &key)
 {
 	while(data.count(key)!=0)
 	{
@@ -201,10 +217,11 @@ void PropertyBag::remove(const _tstring &key)
 		data.erase(i);
 	}
 
-	ASSERT(getNumInstances(key)==0, _T("Failed to remove items sharing key: ") + key);
+	ASSERT(getNumInstances(key)==0,
+	       "Failed to remove items sharing key: " + key);
 }
 
-void PropertyBag::remove(const _tstring &key, int instance)
+void PropertyBag::remove(const string &key, int instance)
 {
 	if(data.empty()) return;
 
@@ -228,73 +245,76 @@ void PropertyBag::remove(const _tstring &key, int instance)
 	}
 }
 
-void PropertyBag::saveToFile(const _tstring &fileName, int indentLevel) const
+void PropertyBag::saveToFile(const string &fileName, int indentLevel) const
 {
 	File file;
 	file.write(save(indentLevel));
 	file.saveFile(fileName, false);
 }
 
-_tstring PropertyBag::save(int indentlevel) const
+string PropertyBag::save(int indentlevel) const
 {
-	_tstring out;
-	_tstring indent(indentlevel, '\t');
+	string out;
+	string indent(indentlevel, '\t');
 
 	// Cycle through all the tags in this bag
 	for (PropertyMap::const_iterator i = data.begin(); i != data.end(); i++)
 	{
-		PropertyBagItem *data = (*i).second; // Tag Value can be retrieved from this object
-		_tstring key = (*i).first;       // Tag Name
-		_tstring line;                   // TagValue is put in here
-		_tstring withname;               // <TagName>TagValue</TagName> is put in here
+		PropertyBagItem *data = (*i).second; // Tag Value can be retrieved
+		string key = (*i).first; // Tag Name
+		string line; // TagValue is put in here
+		string withname; // <TagName>TagValue</TagName> in here
 
 		// Dynamic cast will return NULL if data is not a CPropBag object
 		bool IsBag = dynamic_cast<PropertyBag*>(data) != NULL;
 
-		// Get the tag value as a _tstring.  CPropItem::Save() does this for us.
-		// Note that if the data is a CPropString, then line is simple the _tstring's value
-		// But, if the data is a CPropBag, then this function recurses to make line = bag
-		// (If the conversion exists, have the data be indented like a property bag should be)
-		line = data->save( IsBag ? indentlevel+1 : indentlevel);
+		/*
+		Get the tag value as a string.  CPropItem::Save() does this for us.
+		Note that if the data is a CPropString, then line is simple the
+		string's value. However, if the data is a CPropBag, then this function
+		recurses to make line = bag (If the conversion exists, have the data
+		be indented like a property bag should be)
+		*/
+		line = data->save(IsBag ? indentlevel+1 : indentlevel);
 
 		if(IsBag)
 		{
 			// Put a new line after the opening tag, then indent and put the data
 			withname  = indent;
-			withname += _T("<");
+			withname += "<";
 			withname += key;
-			withname += _T(">\n");
+			withname += ">\n";
 			withname += line;
 			withname += indent;
-			withname += _T("</");
+			withname += "</";
 			withname += key;
-			withname += _T(">\n");
+			withname += ">\n";
 		}
 		else
 		{
 			// Everything on one line
 			withname  = indent;
-			withname += _T("<");
+			withname += "<";
 			withname += key;
-			withname += _T(">");
+			withname += ">";
 			withname += line;
-			withname += _T("</");
+			withname += "</";
 			withname += key;
-			withname += _T(">\n");
+			withname += ">\n";
 		}
 
-		// Add this tag to the total _tstring dump of the property bag
+		// Add this tag to the total string dump of the property bag
 		out += withname;
 	}
 
 	return(out);
 }
 
-void PropertyBag::loadFromFile(const _tstring &filename, bool merge)
+void PropertyBag::loadFromFile(const string &filename, bool merge)
 {
 	if(!File::isFileOnDisk(filename))
 	{
-		FAIL(_T("File not found: ") + filename);
+		FAIL("File not found: " + filename);
 		return;
 	}
 
@@ -302,11 +322,11 @@ void PropertyBag::loadFromFile(const _tstring &filename, bool merge)
 
 	if(!file.loaded())
 	{
-		FAIL(_T("File failed to load: ") + filename);
+		FAIL("File failed to load: " + filename);
 		return;
 	}
 
-	_tstring fileContents;
+	string fileContents;
 
 	fileContents.resize(file.getSize()); // Resize to fit the data
 
@@ -314,7 +334,7 @@ void PropertyBag::loadFromFile(const _tstring &filename, bool merge)
 	{
 		char *buffer = new char[file.getSize()];
 		file.read(buffer, file.getSize());
-		fileContents = toTString(buffer);
+		fileContents = buffer;
 		delete [] buffer;
 	}
 
@@ -326,11 +346,11 @@ void PropertyBag::loadFromFile(const _tstring &filename, bool merge)
 
 	if(!loadMergeFromString(fileContents, true))
 	{
-		FAIL(_T("Failed to merge file contents on load: ") + filename);
+		FAIL("Failed to merge file contents on load: " + filename);
 	}
 }
 
-bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritance)
+bool PropertyBag::loadMergeFromString(const string &data, bool allowInheritance)
 {
 	enum eElanPropBagReadState
 	{
@@ -339,15 +359,15 @@ bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritanc
 		ReadingTagContents
 	} curstate = SearchingForOpenTag;
 
-	_tstring tagname;
-	_tstring tagvalue;
-	_tstring closetag;
+	string tagname;
+	string tagvalue;
+	string closetag;
 
 	unsigned char previous=0;
-	_tstring possibleClosingTag;
+	string possibleClosingTag;
 	bool isPossibleClosingTag=false;
 
-	for(_tstring::const_iterator iter = data.begin(); iter != data.end(); ++iter)
+	for(string::const_iterator iter = data.begin(); iter != data.end(); ++iter)
 	{
 		const unsigned char b = (unsigned char)(*iter);
 
@@ -355,7 +375,7 @@ bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritanc
 		{
 			case SearchingForOpenTag:
 			{
-				if (b == _T('<'))
+				if (b == '<')
 				{
 					// we've found our open tag!
 					curstate = ReadingOpenTag;
@@ -365,11 +385,11 @@ bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritanc
 
 			case ReadingOpenTag:
 			{
-				if (b == _T('>'))
+				if (b == '>')
 				{
 					// end of tag
 					curstate = ReadingTagContents;
-					closetag = _tstring(_T("</")) + tagname + _tstring(_T(">"));
+					closetag = "</" + tagname + ">";
 				}
 				else
 				{
@@ -387,36 +407,36 @@ bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritanc
 				// If we are possibly reading the closing tag now
 				if(isPossibleClosingTag)
 				{
-					// Build the _tstring for what may be the closing tag
+					// Build the string for what may be the closing tag
 					possibleClosingTag += b;
 
 					// Otherwise, search for the real closing tag
-					if(possibleClosingTag == closetag) // if(tagvalue.find(closetag) != _tstring::npos)
+					if(possibleClosingTag == closetag)
 					{
 						// Remove that closing tag from the tag contents
-						tagvalue = replace(tagvalue, closetag, _T(""));
+						tagvalue = replace(tagvalue, closetag, "");
 
 						// Put the completed tag into the bag here
 						insertTag(tagname, tagvalue);
 
 						// Reset the state
 						curstate = SearchingForOpenTag;
-						tagname = _T("");
-						tagvalue = _T("");
+						tagname = "";
+						tagvalue = "";
 					}
 
 					// Has it become impossible that this is the closing tag?
-					if(b == _T('>'))
+					if(b == '>')
 					{
 						isPossibleClosingTag = false;
 					}
 				}
 
 				// Have we begun to encounter what may be the closing tag?
-				if(previous == _T('<') && b == _T('/'))
+				if(previous == '<' && b == '/')
 				{
 					isPossibleClosingTag = true;
-					possibleClosingTag = _T("</");
+					possibleClosingTag = "</";
 				}
 			}
 			break;
@@ -428,14 +448,14 @@ bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritanc
 	// Possibly inherit properties from another file
 	if(allowInheritance)
 	{
-		const _tstring inheritTag = _T("@inherit");
-		_tstring parentFileName = _T("nill");
+		const string inheritTag = "@inherit";
+		string parentFileName = "nill";
 		if(get(inheritTag, parentFileName))
 		{
 			PropertyBag data, prototype;
 			prototype.loadFromFile(parentFileName); // may recurse
 
-			// Merge in the data specific to this creature (or add it to begin with)
+			// Merge or add data specific to this creature
 			data = prototype;
 			data.merge(*this, true);
 
@@ -450,12 +470,12 @@ bool PropertyBag::loadMergeFromString(const _tstring &data, bool allowInheritanc
 	return(true);
 }
 
-void PropertyBag::insertTag(const _tstring &tagName, const _tstring &tagValue)
+void PropertyBag::insertTag(const string &tagName, const string &tagValue)
 {
 	PropertyBagItem *item = 0;
 
 	// a < and > mean it's a bag within a bag
-	if(tagValue.find(_T("<")) != _tstring::npos && tagValue.find(_T(">")) != _tstring::npos)
+	if(tagValue.find("<") != string::npos && tagValue.find(">") != string::npos)
 	{
 		item = new PropertyBag(tagValue);
 	}
@@ -467,7 +487,7 @@ void PropertyBag::insertTag(const _tstring &tagName, const _tstring &tagValue)
 	data.insert(make_pair(tagName, item));
 }
 
-bool PropertyBag::get(const _tstring& key, _tstring &dest, size_t instance) const
+bool PropertyBag::get(const string& key, string &dest, size_t instance) const
 {
 	if(data.find(key) == data.end())
 		return(false);
@@ -481,164 +501,188 @@ bool PropertyBag::get(const _tstring& key, _tstring &dest, size_t instance) cons
 	return(true);
 }
 
-bool PropertyBag::get(const _tstring& key, int &dest, size_t instance) const
+bool PropertyBag::get(const string& key, int &dest, size_t instance) const
 {
-	_tstring str;
+	string str;
 	if (!get(key, str, instance)) return(false);
 	dest = stoi(str);
 	return(true);
 }
 
-bool PropertyBag::get(const _tstring& key, size_t &dest, size_t instance) const
+bool PropertyBag::get(const string& key, size_t &dest, size_t instance) const
 {
-	_tstring str;
+	string str;
 	if (!get(key, str, instance)) return(false);
 	dest = static_cast<size_t>(stoi(str));
 	return(true);
 }
 
-bool PropertyBag::get(const _tstring& key, double &dest, size_t instance) const
+bool PropertyBag::get(const string& key, double &dest, size_t instance) const
 {
-	_tstring str;
+	string str;
 	if (!get(key, str, instance)) return(false);
 	dest = stof(str);
 	return(true);
 }
 
-bool PropertyBag::get(const _tstring& key, float &dest, size_t instance) const
+bool PropertyBag::get(const string& key, float &dest, size_t instance) const
 {
-	_tstring str;
+	string str;
 	if (!get(key, str, instance)) return(false);
 	dest = stof(str);
 	return(true);
 }
 
-bool PropertyBag::get(const _tstring& key, bool &dest, size_t instance) const
+bool PropertyBag::get(const string& key, bool &dest, size_t instance) const
 {
-	_tstring str;
+	string str;
 
 	if (!get(key, str, instance)) return(false);
 
 	str = toLowerCase(str);
 
-	dest = (str == _T("true"));
+	dest = (str == "true");
 
 	return(true);
 }
 
-bool PropertyBag::get(const _tstring& key, XmlDataType *dest, size_t instance) const
+bool PropertyBag::get(const string& key,
+					  XmlDataType *dest,
+					  size_t instance) const
 {
-	ASSERT(dest!=0, _T("Cannot save to a NULL object"));
+	ASSERT(dest!=0, "Cannot save to a NULL object");
 
-	_tstring str;
+	string str;
 	if (!get(key, str, instance)) return(false);
 	dest->FromString(str.c_str());
 	return(true);
 }
 
-bool PropertyBag::get(const _tstring& key, PropertyBag &dest, size_t instance) const
+bool PropertyBag::get(const string& key,
+					  PropertyBag &dest,
+					  size_t instance) const
 {
 	if(data.find(key)==data.end())
 		return false;
 
 	PropertyMap::const_iterator iter;
 
+	// check that the desired instance exists
+	ASSERT(instance<getNumInstances(key),
+		   "parameter \'instance\' is incorrect: " + itoa((int)instance));
+
 	// go to the desired instance
-	ASSERT(instance<getNumInstances(key), _T("parameter \'instance\' is incorrect: ") + itoa((int)instance));
 	iter = data.lower_bound(key);
 	for(size_t q=0; q < instance; q++) iter++;
 
-	ASSERT(dynamic_cast<PropertyBag*>(iter->second)!=0, _T("iter->second cannot be cast to a PropertyBag object"));
-	dest = dynamic_cast<PropertyBag&>(*iter->second);
+	ASSERT(dynamic_cast<PropertyBag*>(iter->second)!=0,
+	       "iter->second cannot be cast to a PropertyBag object: " \
+	       "key = \"" + key + "\"");
 
-	return true;
+	// I would rather have invalid behavior than a crash
+	if(dynamic_cast<PropertyBag*>(iter->second)!=0)
+	{
+		dest = dynamic_cast<PropertyBag&>(*iter->second);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
-_tstring PropertyBag::getString(const string &key, size_t instance) const
+string PropertyBag::getString(const string &key, size_t instance) const
 {
     ASSERT(getNumInstances(key) > instance,
-           _T("Not enough instances of key: ") + key +
-           _T(" (wanted instance #") + itoa((int)instance) + 
-           _T(" of only ") + itoa((int)getNumInstances(key)) + _T(")"));
+           "Not enough instances of key: " + key +
+           " (wanted instance #" + itoa((int)instance) +
+           " of only " + itoa((int)getNumInstances(key)) + ")");
 
-	_tstring x = _T("nill");
+	string x = "nill";
 	if(!get(key, x, instance))
 	{
-        FAIL(_T("Failed to get string from PropertyBag: ") + key +
-             _T(" (wanted instance #") + itoa((int)instance) + 
-             _T(" of ") + itoa((int)getNumInstances(key)) + _T(")"));
+        FAIL("Failed to get string from PropertyBag: " + key +
+             " (wanted instance #" + itoa((int)instance) +
+             " of " + itoa((int)getNumInstances(key)) + ")");
 	}
 	return x;
 }
 
-int PropertyBag::getInt(const _tstring &key, size_t instance) const
+int PropertyBag::getInt(const string &key, size_t instance) const
 {
 	int x = 0xdeadbeaf;
 	if(!get(key, x, instance))
 	{
-		FAIL( _T("Failed to get int from PropertyBag: ") + key + _T(" (instance #)") + itoa((int)instance) );
+		FAIL("Failed to get int from PropertyBag: " + key +
+		     " (instance #)" + itoa((int)instance));
 	}
 	return x;
 }
 
-size_t PropertyBag::getSizeT(const _tstring &key, size_t instance) const
+size_t PropertyBag::getSizeT(const string &key, size_t instance) const
 {
 	size_t x = 0xdeadbeaf;
 	if(!get(key, x, instance))
 	{
-		FAIL( _T("Failed to get size_t from PropertyBag: ") + key + _T(" (instance #)") + itoa((int)instance) );
+		FAIL("Failed to get size_t from PropertyBag: " + key +
+		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-double PropertyBag::getDouble(const _tstring &key, size_t instance) const
+double PropertyBag::getDouble(const string &key, size_t instance) const
 {
 	double x = 0.0;
 	if(!get(key, x, instance))
 	{
-		FAIL( _T("Failed to get double from PropertyBag: ") + key + _T(" (instance #)") + itoa((int)instance) );
+		FAIL("Failed to get size_t from PropertyBag: " + key +
+		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-float PropertyBag::getFloat(const _tstring &key, size_t instance) const
+float PropertyBag::getFloat(const string &key, size_t instance) const
 {
 	float x = 0.0f;
 	if(!get(key, x, instance))
 	{
-		FAIL( _T("Failed to get float from PropertyBag: ") + key + _T(" (instance #)") + itoa((int)instance) );
+		FAIL("Failed to get size_t from PropertyBag: " + key +
+		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-bool PropertyBag::getBool(const _tstring &key, size_t instance) const
+bool PropertyBag::getBool(const string &key, size_t instance) const
 {
 	bool x = false;
 	if(!get(key, x, instance))
 	{
-		FAIL( _T("Failed to get bool from PropertyBag: ") + key + _T(" (instance #)") + itoa((int)instance) );
+		FAIL("Failed to get size_t from PropertyBag: " + key +
+		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-PropertyBag PropertyBag::getBag(const _tstring &key, size_t instance) const
+PropertyBag PropertyBag::getBag(const string &key, size_t instance) const
 {
 	PropertyBag x;
 	if(!get(key, x, instance))
 	{
-		FAIL( _T("Failed to get PropertyBag from PropertyBag: ") + key + _T(" (instance #)") + itoa((int)instance) );
+		FAIL("Failed to get size_t from PropertyBag: " + key +
+		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-size_t PropertyBag::getNumInstances(const _tstring &key) const
+size_t PropertyBag::getNumInstances(const string &key) const
 {
 	return data.count(key);
 }
 
 void PropertyBag::clear(void)
 {
-	for(PropertyMap::iterator propIter = data.begin(); propIter != data.end(); ++propIter)
+	for(PropertyMap::iterator propIter = data.begin();
+		propIter != data.end(); ++propIter)
 	{
 		delete(propIter->second);
 	}
@@ -649,18 +693,16 @@ void PropertyBag::copy(const PropertyBag &copyMe)
 {
 	clear();
 
-#if 0
-	loadMergeFromString(copyMe.save(), false);
-#else
 	for(PropertyMap::const_iterator iter = copyMe.data.begin();
 	    iter != copyMe.data.end();
 	    ++iter)
 	{
 		// alias the iterator's pair
-		const _tstring &tagName = iter->first;
+		const string &tagName = iter->first;
 		const PropertyBagItem *tagItem = iter->second;
 
-		const PropertyBagString *pStr = dynamic_cast<const PropertyBagString*>(tagItem);
+		const PropertyBagString *pStr =
+				dynamic_cast<const PropertyBagString*>(tagItem);
 
 		if(pStr) // if the item is a PropertyBagString
 		{
@@ -676,9 +718,8 @@ void PropertyBag::copy(const PropertyBag &copyMe)
 			}
 		}
 	} // loop
-#endif
 
-	ASSERT(copyMe == (*this), _T("Failed to copy bag"));
+	ASSERT(copyMe == (*this), "Failed to copy bag");
 }
 
 void PropertyBag::merge(const PropertyBag &newstuff, bool overwrite)
@@ -688,12 +729,13 @@ void PropertyBag::merge(const PropertyBag &newstuff, bool overwrite)
 	    ++newiter)
 	{
 		// alias the iterator's pair
-		const _tstring &tagName = newiter->first;
+		const string &tagName = newiter->first;
 		const PropertyBagItem *tagItem = newiter->second;
 
 		const bool tagAlreadyExists = data.find(tagName)!=data.end();
 
-		const PropertyBagString *pStr = dynamic_cast<const PropertyBagString*>(tagItem);
+		const PropertyBagString *pStr =
+				dynamic_cast<const PropertyBagString*>(tagItem);
 		const PropertyBag *pBag = dynamic_cast<const PropertyBag*>(tagItem);
 
 		if(pStr) // if the item is a PropertyBagString
@@ -719,7 +761,7 @@ void PropertyBag::merge(const PropertyBag &newstuff, bool overwrite)
 			else
 			{
 				PropertyBagItem *originalItem = data.find(tagName)->second;
-				ASSERT(originalItem != 0, _T("originalItem was null!"));
+				ASSERT(originalItem != 0, "originalItem was null!");
 
 				/*
 				The tag we are trying to add is a PropertyBag,
@@ -735,7 +777,8 @@ void PropertyBag::merge(const PropertyBag &newstuff, bool overwrite)
 				}
 				else
 				{
-					(dynamic_cast<PropertyBag&>(*originalItem)).merge(*pBag, overwrite);
+					(dynamic_cast<PropertyBag&>(*originalItem)).merge(*pBag,
+																	overwrite);
 				}
 			}
 		}

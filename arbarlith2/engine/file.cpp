@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #	define stat _stat
 #
-#   define PATH_SEPARATOR ( _T('\\') )
+#   define PATH_SEPARATOR ( '\\' )
 #
 #   ifndef W_OK
 #       define W_OK _S_IREAD
@@ -55,7 +55,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #else
 #
-#   define PATH_SEPARATOR ( _T('/') )
+#   define PATH_SEPARATOR ( '/' )
 #
 #endif
 
@@ -65,53 +65,53 @@ namespace Engine {
 //                                   Functions                                //
 ////////////////////////////////////////////////////////////////////////////////
 
-_tstring toLowerCase(const _tstring &in); // stdafx.cpp
+string toLowerCase(const string &in); // stdafx.cpp
 
-void createDirectory(const _tstring &path)
+void createDirectory(const string &path)
 {
     TRACE(path);
 
 #ifdef _WIN32
 	_tmkdir(path.c_str());
 #else
-	mkdir(toAnsiString(path).c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+	mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 #endif
 }
 
-bool setWorkingDirectory(const _tstring &path)
+bool setWorkingDirectory(const string &path)
 {
     TRACE(path);
 
 #ifdef _WIN32
 	return _tchdir(path.c_str()) != 0;
 #else
-	return chdir(toAnsiString(path).c_str()) != 0;
+	return chdir(path.c_str()) != 0;
 #endif
 }
 
-_tstring getWorkingDirectory(void)
+string getWorkingDirectory(void)
 {
 	char *pszWorkingDirectory = 0;
-	
+
 #ifdef _WIN32
 	pszWorkingDirectory = _getcwd(0,0);
 #else
 	pszWorkingDirectory = getcwd(0,0);
 #endif
 
-	_tstring workingDirectory = toTString(pszWorkingDirectory);
+	string workingDirectory = pszWorkingDirectory;
 
 	free(pszWorkingDirectory);
 
 	return workingDirectory;
 }
 
-_tstring getAppDataDirectory(void)
+string getAppDataDirectory(void)
 {
-	_tstring finalPath = _T("./");
+	string finalPath = "./";
 
 #ifdef _WIN32
-	TCHAR homeDir[MAX_PATH] = {0};
+	char homeDir[MAX_PATH] = {0};
 
 
 	if (SUCCEEDED(SHGetFolderPath(NULL,
@@ -120,7 +120,7 @@ _tstring getAppDataDirectory(void)
 	                              0,
 	                              homeDir)))
 	{
-		finalPath = pathAppend(homeDir, _T("arbarlith2"));
+		finalPath = pathAppend(homeDir, "arbarlith2");
 	}
 
 #else
@@ -129,21 +129,21 @@ _tstring getAppDataDirectory(void)
 	TODO: Fix this so it isn't hard-coded for my setup!
 	*/
 
-	finalPath = _T("/home/arfox/arbarlith2/");
+	finalPath = "/home/arfox/arbarlith2/";
 
 #endif
-	
+
 	// Ensure that the directory exists
 	createDirectory(finalPath);
 
 	return finalPath;
 }
 
-_tstring getApplicationDirectory(void)
+string getApplicationDirectory(void)
 {
 #ifdef _WIN32
 
-	TCHAR pathBuffer[_MAX_PATH];
+	char pathBuffer[_MAX_PATH];
 
 	if(GetModuleFileName(GetModuleHandle(NULL), pathBuffer, _MAX_PATH-1) != 0)
 	{
@@ -151,7 +151,7 @@ _tstring getApplicationDirectory(void)
 		size_t i;
 		for(i = _tcslen(pathBuffer) - 1; i > 0; --i)
 		{
-			if(pathBuffer[i]==_T('\\'))
+			if(pathBuffer[i]=="'\\'")
 			{
 				pathBuffer[i]=0;
 				break;
@@ -164,7 +164,7 @@ _tstring getApplicationDirectory(void)
 		}
 	}
 
-	return _T(".\\");
+	return ".\\";
 
 #else
 
@@ -172,16 +172,16 @@ _tstring getApplicationDirectory(void)
 	TODO: Fix this so it isn't hard-coded for my setup!
 	*/
 
-	return _T("~/arbarlith2/trunk/arbarlith2/bin/");
+	return "~/arbarlith2/trunk/arbarlith2/bin/";
 
 #endif
 }
 
-_tstring pathAppend(const _tstring &path, const _tstring &fileName)
+string pathAppend(const string &path, const string &fileName)
 {
-	const TCHAR lastChar = path.at(path.length()-1);
+	const char lastChar = path.at(path.length()-1);
 
-	if(lastChar != _T('/') && lastChar != _T('\\'))
+	if(lastChar != '/' && lastChar != '\\')
 	{
 		return File::fixFilename(path + PATH_SEPARATOR + fileName);
 	}
@@ -215,29 +215,29 @@ void File::destroy(void)
 	clear();
 }
 
-bool File::openFile(const _tstring &_fileName, bool binary)
+bool File::openFile(const string &_fileName, bool binary)
 {
-	const _tstring fileName = fixFilename(_fileName);
+	const string fileName = fixFilename(_fileName);
 
 	// Does the file exist?
 	if(!isFileOnDisk(fileName))
 	{
-		ERR(_T("File does not exist: ") + fileName);
+		ERR("File does not exist: " + fileName);
 
 		// continue and try to open the file anyway...
 	}
 
-	ifstream file(toAnsiString(fileName).c_str(), (binary) ? (ios::in|ios::binary) : (ios::in));
+	ifstream file(fileName.c_str(), (binary) ? (ios::in|ios::binary) : (ios::in));
 
 	if(!file)
 	{
-		FAIL(_T("Failed to open file: ") + fileName);
+		FAIL("Failed to open file: " + fileName);
 		return false;
 	}
 
 	if(binary)
 	{
-		TRACE(_tstring(_T("Loading binary file: ")) + fileName);
+		TRACE(string("Loading binary file: ") + fileName);
 
 		const streamsize size = getBytesOnDisk(fileName);
 
@@ -248,7 +248,7 @@ bool File::openFile(const _tstring &_fileName, bool binary)
 
 			if(file.gcount() != size)
 			{
-				FAIL(_T("Failed to load binary file: ") + fileName);
+				FAIL("Failed to load binary file: " + fileName);
 				return false;
 			}
 		}
@@ -261,7 +261,7 @@ bool File::openFile(const _tstring &_fileName, bool binary)
 		{
 			while(getline(file, line))
 			{
-				write(line + _T("\n"));
+				write(line + "\n");
 			}
 		}
 
@@ -270,47 +270,47 @@ bool File::openFile(const _tstring &_fileName, bool binary)
 
 	this->fileName = fileName;
 
-	TRACE(_T("Loaded text file: ") + fileName);
+	TRACE("Loaded text file: " + fileName);
 	return true;
 }
 
-streamsize File::getBytesOnDisk(const _tstring &fileName)
+streamsize File::getBytesOnDisk(const string &fileName)
 {
 	struct stat info;
 
-	if(stat(toAnsiString(fileName).c_str(), &info) == 0)
+	if(stat(fileName.c_str(), &info) == 0)
 	{
 		return static_cast<streamsize>(info.st_size);
 	}
 
-	FAIL(_T("Failed to obtain file info! The file probably doesn't exist"));
+	FAIL("Failed to obtain file info! The file probably doesn't exist");
 	return 0;
 }
 
-bool File::isFileOnDisk(const _tstring &fileName)
+bool File::isFileOnDisk(const string &fileName)
 {
 	struct stat info;
 
 	// if we can stat the file, then it does exist
-	return (stat(toAnsiString(fileName).c_str(), &info) == 0);
+	return (stat(fileName.c_str(), &info) == 0);
 }
 
-bool File::saveFile(const _tstring &fileName, bool binary)
+bool File::saveFile(const string &fileName, bool binary)
 {
-	ofstream file(toAnsiString(fileName).c_str(),
+	ofstream file(fileName.c_str(),
 	              (binary) ? (ios::out|ios::binary) : (ios::out));
 
 	if(!file)
 	{
-		FAIL(_T("Failed to open file: ") + fileName);
+		FAIL("Failed to open file: " + fileName);
 		return false;
 	}
 
-	TRACE(_T("Saving file: ") + fileName);
+	TRACE("Saving file: " + fileName);
 
 	if(!file.write((char*)data, (streamsize)getSize()))
 	{
-		FAIL(_T("Failed to save file: ") + fileName);
+		FAIL("Failed to save file: " + fileName);
 		return false;
 	}
 
@@ -319,7 +319,7 @@ bool File::saveFile(const _tstring &fileName, bool binary)
 
 unsigned char File::getChar(void)
 {
-	ASSERT(cursor+1 < getSize(), _T("read would go past the end of the file"));
+	ASSERT(cursor+1 < getSize(), "read would go past the end of the file");
 
 	unsigned char c = peekChar();
 	cursor++;
@@ -334,7 +334,7 @@ unsigned char File::peekChar(void)
 
 unsigned char File::peekChar(size_t pos)
 {
-	ASSERT(pos < getSize(), _T("Cannot peek out of bounds"));
+	ASSERT(pos < getSize(), "Cannot peek out of bounds");
 
 	if(pos < getSize())
 	{
@@ -342,7 +342,7 @@ unsigned char File::peekChar(size_t pos)
 	}
 	else
 	{
-		ERR(_T("Attempted to access character out of the bounds of the file"));
+		ERR("Attempted to access character out of the bounds of the file");
 		return 0;
 	}
 }
@@ -368,18 +368,18 @@ size_t File::seek(size_t offset, FILE_SEEK origin)
 		}
 		else
 		{
-			ASSERT(offset < getSize(), _T("seek would go past the end of the file"));
+			ASSERT(offset < getSize(), "seek would go past the end of the file");
 			cursor = offset;
 		}
 		break;
 
 	case FILE_SEEK_CURRENT:
-		ASSERT(cursor+offset < getSize(), _T("seek would go past the end of the file"));
+		ASSERT(cursor+offset < getSize(), "seek would go past the end of the file");
 		cursor += offset;
 		break;
 
 	case FILE_SEEK_END:
-		ASSERT(getSize()-offset-1 < getSize(), _T("seek would go past the end of the file"));
+		ASSERT(getSize()-offset-1 < getSize(), "seek would go past the end of the file");
 		cursor = getSize()-offset-1;
 		break;
 	};
@@ -389,7 +389,7 @@ size_t File::seek(size_t offset, FILE_SEEK origin)
 
 size_t File::read(File &file, size_t count)
 {
-	ASSERT(cursor+count <= getSize(), _T("read would go past the end of the file"));
+	ASSERT(cursor+count <= getSize(), "read would go past the end of the file");
 
 	if(count>0)
 	{
@@ -405,7 +405,7 @@ size_t File::read(File &file, size_t count)
 
 size_t File::read(unsigned char * buffer, size_t count)
 {
-	ASSERT(cursor+count <= getSize(), _T("read would go past the end of the file"));
+	ASSERT(cursor+count <= getSize(), "read would go past the end of the file");
 
 	if(count>0)
 	{
@@ -435,7 +435,7 @@ size_t File::write(unsigned char * buffer, size_t count)
 
 size_t File::write(const wstring &s)
 {
-	return write(toAnsiString(s));
+	return write(s);
 }
 
 size_t File::write(const string &s)
@@ -445,7 +445,7 @@ size_t File::write(const string &s)
 
 void File::reserve(size_t size)
 {
-	ASSERT(size>0, _T("Size was invalid"));
+	ASSERT(size>0, "Size was invalid");
 
 	if(getSize() == 0 || data == 0)
 	{
@@ -476,31 +476,31 @@ void File::reserve(size_t size)
 	}
 }
 
-_tstring File::getPath(const _tstring &fileName)
+string File::getPath(const string &fileName)
 {
 	size_t i;
-	_tstring in = fixFilename(fileName);
+	string in = fixFilename(fileName);
 
-	ASSERT(!fileName.empty(), _T("File name is blank"));
+	ASSERT(!fileName.empty(), "File name is blank");
 
 	for(i=in.size()-1; i>0 && in.at(i)!=PATH_SEPARATOR; --i);
 
-	_tstring out = in.substr(0, i+1);
+	string out = in.substr(0, i+1);
 
 	return out;
 }
 
-_tstring File::getPath(void) const
+string File::getPath(void) const
 {
 	return getPath(fileName);
 }
 
-_tstring File::getFilenameNoPath(const _tstring &fileName)
+string File::getFilenameNoPath(const string &fileName)
 {
-    _tstring in = fixFilename(fileName);
-    _tstring out;
+    string in = fixFilename(fileName);
+    string out;
 
-    ASSERT(!fileName.empty(), _T("File name is blank"));
+    ASSERT(!fileName.empty(), "File name is blank");
 
     for(size_t i=in.size()-1; i>0 && in.at(i)!=PATH_SEPARATOR; --i)
     {
@@ -510,38 +510,38 @@ _tstring File::getFilenameNoPath(const _tstring &fileName)
     return out;
 }
 
-_tstring File::getFilenameNoPath(void) const
+string File::getFilenameNoPath(void) const
 {
 	return getFilenameNoPath(fileName);
 }
 
-_tstring File::getExtension(void) const
+string File::getExtension(void) const
 {
 	return getExtension(fileName);
 }
 
-_tstring File::fixFilename(const _tstring &fileName)
+string File::fixFilename(const string &fileName)
 {
 #ifdef _WIN32
-	return replace(fileName, _T("/"), _T("\\"));
+	return replace(fileName, "/", "\\");
 #else
-	return replace(fileName, _T("\\"), _T("/"));
+	return replace(fileName, "\\", "/");
 #endif
 }
 
-size_t File::findExtensionDelimeter(const _tstring &fileName)
+size_t File::findExtensionDelimeter(const string &fileName)
 {
 	for(size_t i=0; i<fileName.length(); ++i)
 	{
-		TCHAR c = fileName[fileName.length() - i - 1];
+		char c = fileName[fileName.length() - i - 1];
 
-		if(c == _T('.'))
+		if(c == '.')
 		{
 			// Found the delimiter, return its index
 			return fileName.length() - i - 1;
 		}
 
-		if(c == _T('\\') || c == _T('/'))
+		if(c == '\\' || c == '/')
 		{
 			// Found that there was no delimiter, return the index of the end of the string
 			return fileName.length();
@@ -552,12 +552,12 @@ size_t File::findExtensionDelimeter(const _tstring &fileName)
 	return fileName.length();
 }
 
-_tstring File::stripExtension(const _tstring &fileName)
+string File::stripExtension(const string &fileName)
 {
 	return fileName.substr(0, findExtensionDelimeter(fileName));
 }
 
-_tstring File::getExtension(const _tstring &fileName)
+string File::getExtension(const string &fileName)
 {
 	return fileName.substr(findExtensionDelimeter(fileName), fileName.length());
 }

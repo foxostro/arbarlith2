@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -48,13 +48,13 @@ public:
 	@param x The X-Coordinate of the list widget
 	@param y The Y-Coordinate of the list widget
 	*/
-	FileSelectionList(const _tstring &pattern, float x, float y);
+	FileSelectionList(const string &pattern, float x, float y);
 
 	/**
 	Gets the file name from the currently selected element
 	@return the filename
 	*/
-	_tstring getFilename(void);
+	string getFilename(void);
 
 protected:
 	/**

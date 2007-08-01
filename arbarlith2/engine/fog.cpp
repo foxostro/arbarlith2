@@ -52,12 +52,12 @@ PropertyBag Fog::save(void) const
 	PropertyBag xml;
 
 	// Load the data
-	xml.add(_T("near"),    fnear);
-	xml.add(_T("far"),     ffar);
-	xml.add(_T("red"),     red);
-	xml.add(_T("green"),   green);
-	xml.add(_T("blue"),    blue);
-	xml.add(_T("enabled"), shouldBeUsed);
+	xml.add("near",    fnear);
+	xml.add("far",     ffar);
+	xml.add("red",     red);
+	xml.add("green",   green);
+	xml.add("blue",    blue);
+	xml.add("enabled", shouldBeUsed);
 
 	return xml;
 }
@@ -65,12 +65,12 @@ PropertyBag Fog::save(void) const
 bool Fog::load(const PropertyBag &xml)
 {
 	// Load the fog settings
-	xml.get(_T("enabled"), shouldBeUsed);
-	xml.get(_T("near"),    fnear);
-	xml.get(_T("far"),     ffar);
-	xml.get(_T("red"),     red);
-	xml.get(_T("green"),   green);
-	xml.get(_T("blue"),    blue);
+	xml.get("enabled", shouldBeUsed);
+	xml.get("near",    fnear);
+	xml.get("far",     ffar);
+	xml.get("red",     red);
+	xml.get("green",   green);
+	xml.get("blue",    blue);
 
 	OpenGL::GetSingleton().SetClippingPlanes(0.01f, ffar);
 

@@ -36,28 +36,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-PropertyBag MusicEngine::saveMusicTag(const vector<_tstring> &music) const
+PropertyBag MusicEngine::saveMusicTag(const vector<string> &music) const
 {
 	PropertyBag bag;
 
 	for(size_t i=0; i<music.size(); ++i)
 	{
-		bag.add(_T("clip"), music[i]);
+		bag.add("clip", music[i]);
 	}
 
 	return bag;
 }
 
-void MusicEngine::loadMusicTag(const PropertyBag &bag, vector<_tstring> &music) const
+void MusicEngine::loadMusicTag(const PropertyBag &bag, vector<string> &music) const
 {
 	music.clear();
 
-	const size_t n = bag.getNumInstances(_T("clip"));
+	const size_t n = bag.getNumInstances("clip");
 	for(size_t i=0; i<n; ++i)
 	{
-		_tstring file;
+		string file;
 
-		if(bag.get(_T("clip"), file, i))
+		if(bag.get("clip", file, i))
 		{
 			music.push_back(file);
 		}
@@ -67,7 +67,7 @@ void MusicEngine::loadMusicTag(const PropertyBag &bag, vector<_tstring> &music) 
 PropertyBag MusicEngine::save(void) const
 {
 	PropertyBag bag;
-	bag.add(_T("clips"), saveMusicTag(clips));
+	bag.add("clips", saveMusicTag(clips));
 	return bag;
 }
 
@@ -75,7 +75,7 @@ void MusicEngine::load(const PropertyBag &bag)
 {
 	PropertyBag clipsBag;
 
-	if(bag.get(_T("clips"), clipsBag))
+	if(bag.get("clips", clipsBag))
 	{
 		loadMusicTag(clipsBag, clips);
 	}
@@ -93,10 +93,10 @@ void MusicEngine::update(void)
 		if(max>min)
 			IRAND_RANGE(min, max);
 
-		_tstring clip = clips[idx];
+		string clip = clips[idx];
 
 		// Play that clip
-		TRACE(_tstring(_T("Playing music clip: ")) + clip);
+		TRACE(string("Playing music clip: ") + clip);
 		g_SoundSystem.stopAll();
 		g_SoundSystem.playMusic(clip);
 	}

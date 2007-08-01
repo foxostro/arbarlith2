@@ -88,7 +88,7 @@ void Tile::save(File &file)
 	file.write(&floorMaterialMatID, sizeof(MAP_MATERIAL_ID));
 }
 
-void Tile::create(int x, int z, TILE_TYPE type, TILE_PROPERTIES propertiesBitmap, float tileHeight, const _tstring &floorFileName, const _tstring &wallFileName, Map &owner)
+void Tile::create(int x, int z, TILE_TYPE type, TILE_PROPERTIES propertiesBitmap, float tileHeight, const string &floorFileName, const string &wallFileName, Map &owner)
 {
 	this->propertiesBitmap = propertiesBitmap;
 	this->type = type;

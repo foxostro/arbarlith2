@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -62,9 +62,9 @@ void Monster::destroy(void)
 	Creature::destroy();
 }
 
-const _tstring Monster::getAttackAnim(void) const
+const string Monster::getAttackAnim(void) const
 {
-	return _T("highhit");
+	return "highhit";
 }
 
 void Monster::update(float deltaTime)
@@ -79,18 +79,18 @@ void Monster::update(float deltaTime)
 
 bool Monster::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, _T("preferredSpell"), preferredSpell);
+	saveTag(xml, dataFile, "preferredSpell", preferredSpell);
 
 	StateMachine *fsm = GetStateMachine();
 
-	_tstring type = _T("none");
+	string type = "none";
 
 	if(fsm != 0)
 	{
 		type = fsm->getTypeString();
 	}
 
-	saveTag(xml, dataFile, _T("fsm"), type);
+	saveTag(xml, dataFile, "fsm", type);
 
 	return Creature::saveTidy(xml, dataFile);
 }
@@ -103,12 +103,12 @@ void Monster::load(const PropertyBag &xml)
 
 	switch(preferredSpell)
 	{
-	case 0: spell = new SpellFireBall	(&getZone(), m_ID, _T("data/spells/fireball.xml"));		break; // Fireball
-	case 1: spell = new SpellFireBall	(&getZone(), m_ID, _T("data/spells/arctic-wind.xml"));	break; // Arctic Wind
-	case 2: spell = new SpellIncinerate	(&getZone(), m_ID, _T("data/spells/incinerate.xml"));		break; // Incinerate
-	case 3: spell = new SpellFireBall	(&getZone(), m_ID, _T("data/spells/chill.xml"));		break; // Chill
-	case 4: spell = new SpellHeal		(&getZone(), m_ID, _T("data/spells/heal.xml"));			break; // Heal
-	case 5: spell = new SpellFireBall	(&getZone(), m_ID, _T("data/spells/ice-blast.xml"));		break; // Ice Blast
+	case 0: spell = new SpellFireBall	(&getZone(), m_ID, "data/spells/fireball.xml");		break; // Fireball
+	case 1: spell = new SpellFireBall	(&getZone(), m_ID, "data/spells/arctic-wind.xml");	break; // Arctic Wind
+	case 2: spell = new SpellIncinerate	(&getZone(), m_ID, "data/spells/incinerate.xml");		break; // Incinerate
+	case 3: spell = new SpellFireBall	(&getZone(), m_ID, "data/spells/chill.xml");		break; // Chill
+	case 4: spell = new SpellHeal		(&getZone(), m_ID, "data/spells/heal.xml");			break; // Heal
+	case 5: spell = new SpellFireBall	(&getZone(), m_ID, "data/spells/ice-blast.xml");		break; // Ice Blast
 	case 6: spell = 0; break; // Reserved for "Resurrect" Spell
 	default: spell = 0; break;
 	};
@@ -119,9 +119,9 @@ void Monster::load(const PropertyBag &xml)
 	}
 }
 
-const _tstring Monster::getSpellCastAnim(void) const
+const string Monster::getSpellCastAnim(void) const
 {
-	return _tstring(_T("cast"));
+	return string("cast");
 }
 
 void Monster::onSlidOnWall(void)

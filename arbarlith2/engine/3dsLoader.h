@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ private:
 	Loads a model from file
 	@param fileName The file name of the model
 	*/
-	virtual AnimationController* loadFromFile(const _tstring &fileName) const;
+	virtual AnimationController* loadFromFile(const string &fileName) const;
 
 	/** Attach material data to the model */
 	class Wrapper
@@ -61,20 +61,20 @@ private:
 
 		Material& getMostRecentMaterial(void)
 		{
-			ASSERT(!materials.empty(), _T("no materials to get"));
+			ASSERT(!materials.empty(), "no materials to get");
 			return materials[materials.size()-1];
 		}
 
-		Material& getMaterial(const _tstring &materialName)
+		Material& getMaterial(const string &materialName)
 		{
-			ASSERT(!materials.empty(), _T("no materials to get"));
+			ASSERT(!materials.empty(), "no materials to get");
 			for(size_t i=0; i<materials.size(); ++i)
 			{
 				if(materialName == materials[i].getName())
 					return materials[i];
 			}
 
-			FAIL(_T("failed to retrieve material: ") + materialName);
+			FAIL("failed to retrieve material: " + materialName);
 
 			return materials[0]; // return anything at all
 		}
@@ -130,7 +130,7 @@ private:
 	@param fileName File name of the 3DS model
 	@return Model
 	*/
-	Engine::Model loadKeyFrame(const _tstring &fileName) const;
+	Engine::Model loadKeyFrame(const string &fileName) const;
 
 	/**
 	Reads the next large chunk
@@ -264,7 +264,7 @@ private:
 	@param model The model to alter
 	@param skinFileName The filename of the skin
 	*/
-	void forceSkin(Engine::Model &model, const _tstring &skinFileName) const;
+	void forceSkin(Engine::Model &model, const string &skinFileName) const;
 };
 
 } // namespace Engine

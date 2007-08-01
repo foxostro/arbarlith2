@@ -37,7 +37,7 @@ namespace Engine {
 
 LabelWidget::LabelWidget
 			(
-				const _tstring &label,
+				const string &label,
 				const vec2 &pos
 			)
 : fontSize(FONT_SIZE_NORMAL),
@@ -52,7 +52,7 @@ LabelWidget::LabelWidget
 
 LabelWidget::LabelWidget
 			(
-				const _tstring &label,
+				const string &label,
 				const vec2 &pos,
 				const COLOR &color,
 				FONT_SIZE FontSize,
@@ -68,9 +68,9 @@ LabelWidget::LabelWidget
 	setRelativePos(pos);
 }
 
-void LabelWidget::setLabel(const _tstring& labelTxt)
+void LabelWidget::setLabel(const string& labelTxt)
 {
-	ASSERT(font != 0, _T("font was null!  Call setFont method first!"));
+	ASSERT(font != 0, "font was null!  Call setFont method first!");
 
 	labelText = labelTxt;
 
@@ -96,7 +96,7 @@ void LabelWidget::setFontSize(FONT_SIZE fontSize)
 
 void LabelWidget::draw(void) const
 {
-	ASSERT(font != 0, _T("font is null!  call setFont method first!"));
+	ASSERT(font != 0, "font is null!  call setFont method first!");
 
 	if(isVisible())
 	{

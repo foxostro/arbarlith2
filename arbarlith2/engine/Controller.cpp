@@ -13,7 +13,7 @@ E-Mail: mailto:mdc@andrew.cmu.edu
 Refactored by Andrew Fox in Apr 2007
 Added support for multiple key bindings per action and actions defined at run time
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -100,7 +100,7 @@ Controller::Controller(void)
 	buildActionNames();
 
 	// Load key bindings from the user's application data directory
-	_tstring userKeysFile = pathAppend(getAppDataDirectory(), _T("keys.xml"));
+	string userKeysFile = pathAppend(getAppDataDirectory(), "keys.xml");
 
 	bool exists = File::isFileOnDisk(userKeysFile);
 
@@ -130,94 +130,94 @@ void Controller::setupControllers(void)
 
 		if(joystick[i])
 		{
-			TRACE(_T("Joystick ") + toTString(SDL_JoystickName(i)) + _T(" Successfully opened."));
+			TRACE(string("Joystick ") + SDL_JoystickName(i) + " Successfully opened.");
 		}
 	}
 }
 
 void Controller::buildKeymap(void)
 {
-	keymap[_T("Backspace")] = SDLK_BACKSPACE;
-	keymap[_T("Tab")] = SDLK_TAB;
-	keymap[_T("Clear")] = SDLK_CLEAR;
-	keymap[_T("Return")] = SDLK_RETURN;
-	keymap[_T("L_Shift")] = SDLK_LSHIFT;
-	keymap[_T("R_Shift")] = SDLK_RSHIFT;
-	keymap[_T("L_Control")] = SDLK_LCTRL;
-	keymap[_T("R_Control")] = SDLK_RCTRL;
-	keymap[_T("Pause")] = SDLK_BREAK;
-	keymap[_T("Escape")] = SDLK_ESCAPE;
-	keymap[_T("Space")] = SDLK_SPACE;
-	keymap[_T("Page_Up")] = SDLK_PAGEUP;
-	keymap[_T("Page_Down")] = SDLK_PAGEDOWN;
-	keymap[_T("End")] = SDLK_END;
-	keymap[_T("Home")] = SDLK_HOME;
-	keymap[_T("Left")] = SDLK_LEFT;
-	keymap[_T("Up")] = SDLK_UP;
-	keymap[_T("Right")] = SDLK_RIGHT;
-	keymap[_T("Down")] = SDLK_DOWN;
-	keymap[_T("Insert")] = SDLK_INSERT;
-	keymap[_T("Delete")] = SDLK_DELETE;
-	keymap[_T("Numpad_0")] = SDLK_KP0;
-	keymap[_T("Numpad_1")] = SDLK_KP1;
-	keymap[_T("Numpad_2")] = SDLK_KP2;
-	keymap[_T("Numpad_3")] = SDLK_KP3;
-	keymap[_T("Numpad_4")] = SDLK_KP4;
-	keymap[_T("Numpad_5")] = SDLK_KP5;
-	keymap[_T("Numpad_6")] = SDLK_KP6;
-	keymap[_T("Numpad_7")] = SDLK_KP7;
-	keymap[_T("Numpad_8")] = SDLK_KP8;
-	keymap[_T("Numpad_9")] = SDLK_KP9;
-	keymap[_T("Numpad_Multiply")] = SDLK_KP_MULTIPLY;
-	keymap[_T("Numpad_Add")] = SDLK_KP_PLUS;
-	keymap[_T("Numpad_Subtract")] = SDLK_KP_MINUS;
-	keymap[_T("Numpad_Dot")] = SDLK_KP_PERIOD;
-	keymap[_T("Numpad_Divide")] = SDLK_KP_DIVIDE;
-	keymap[_T("Numpad_Enter")] = SDLK_KP_ENTER;
-	keymap[_T("F1")] = SDLK_F1;
-	keymap[_T("F2")] = SDLK_F2;
-	keymap[_T("F3")] = SDLK_F3;
-	keymap[_T("F4")] = SDLK_F4;
-	keymap[_T("F5")] = SDLK_F5;
-	keymap[_T("F6")] = SDLK_F6;
-	keymap[_T("F7")] = SDLK_F7;
-	keymap[_T("F8")] = SDLK_F8;
-	keymap[_T("F9")] = SDLK_F9;
-	keymap[_T("F10")] = SDLK_F10;
-	keymap[_T("F11")] = SDLK_F11;
-	keymap[_T("F12")] = SDLK_F12;
-	keymap[_T("F13")] = SDLK_F13;
-	keymap[_T("F14")] = SDLK_F14;
-	keymap[_T("F15")] = SDLK_F15;
+	keymap["Backspace"] = SDLK_BACKSPACE;
+	keymap["Tab"] = SDLK_TAB;
+	keymap["Clear"] = SDLK_CLEAR;
+	keymap["Return"] = SDLK_RETURN;
+	keymap["L_Shift"] = SDLK_LSHIFT;
+	keymap["R_Shift"] = SDLK_RSHIFT;
+	keymap["L_Control"] = SDLK_LCTRL;
+	keymap["R_Control"] = SDLK_RCTRL;
+	keymap["Pause"] = SDLK_BREAK;
+	keymap["Escape"] = SDLK_ESCAPE;
+	keymap["Space"] = SDLK_SPACE;
+	keymap["Page_Up"] = SDLK_PAGEUP;
+	keymap["Page_Down"] = SDLK_PAGEDOWN;
+	keymap["End"] = SDLK_END;
+	keymap["Home"] = SDLK_HOME;
+	keymap["Left"] = SDLK_LEFT;
+	keymap["Up"] = SDLK_UP;
+	keymap["Right"] = SDLK_RIGHT;
+	keymap["Down"] = SDLK_DOWN;
+	keymap["Insert"] = SDLK_INSERT;
+	keymap["Delete"] = SDLK_DELETE;
+	keymap["Numpad_0"] = SDLK_KP0;
+	keymap["Numpad_1"] = SDLK_KP1;
+	keymap["Numpad_2"] = SDLK_KP2;
+	keymap["Numpad_3"] = SDLK_KP3;
+	keymap["Numpad_4"] = SDLK_KP4;
+	keymap["Numpad_5"] = SDLK_KP5;
+	keymap["Numpad_6"] = SDLK_KP6;
+	keymap["Numpad_7"] = SDLK_KP7;
+	keymap["Numpad_8"] = SDLK_KP8;
+	keymap["Numpad_9"] = SDLK_KP9;
+	keymap["Numpad_Multiply"] = SDLK_KP_MULTIPLY;
+	keymap["Numpad_Add"] = SDLK_KP_PLUS;
+	keymap["Numpad_Subtract"] = SDLK_KP_MINUS;
+	keymap["Numpad_Dot"] = SDLK_KP_PERIOD;
+	keymap["Numpad_Divide"] = SDLK_KP_DIVIDE;
+	keymap["Numpad_Enter"] = SDLK_KP_ENTER;
+	keymap["F1"] = SDLK_F1;
+	keymap["F2"] = SDLK_F2;
+	keymap["F3"] = SDLK_F3;
+	keymap["F4"] = SDLK_F4;
+	keymap["F5"] = SDLK_F5;
+	keymap["F6"] = SDLK_F6;
+	keymap["F7"] = SDLK_F7;
+	keymap["F8"] = SDLK_F8;
+	keymap["F9"] = SDLK_F9;
+	keymap["F10"] = SDLK_F10;
+	keymap["F11"] = SDLK_F11;
+	keymap["F12"] = SDLK_F12;
+	keymap["F13"] = SDLK_F13;
+	keymap["F14"] = SDLK_F14;
+	keymap["F15"] = SDLK_F15;
 
-	for(TCHAR c = _T('a'); c <= _T('z'); ++c) //alphabetic keys
+	for(char c = 'a'; c <= 'z'; ++c) //alphabetic keys
 	{
 		SDLKey key = (SDLKey)(   (int)SDLK_a + (c-'a')   );
 
-		TCHAR name[] = {c, 0};
+		char name[] = {c, 0};
 
 		keymap[name] = key;
 	}
 
-	for(TCHAR c = _T('0'); c <= _T('9'); ++c) //numeric keys
+	for(char c = '0'; c <= '9'; ++c) //numeric keys
 	{
-		SDLKey key = (SDLKey)(   (int)SDLK_0 + (c-_T('0'))   );
+		SDLKey key = (SDLKey)(   (int)SDLK_0 + (c-'0')   );
 
-		TCHAR name[] = {c, 0};
+		char name[] = {c, 0};
 
 		keymap[name] = key;
 	}
 
-	keymap[_T("Comma")] = SDLK_COMMA;
-	keymap[_T("Period")] = SDLK_PERIOD;
-	keymap[_T("Slash")] = SDLK_SLASH;
-	keymap[_T("Semicolon")] = SDLK_SEMICOLON;
-	keymap[_T("Quote")] = SDLK_QUOTE;
-	keymap[_T("L_Bracket")] = SDLK_LEFTBRACKET;
-	keymap[_T("R_Bracket")] = SDLK_RIGHTBRACKET;
-	keymap[_T("Backslash")] = SDLK_BACKSLASH;
-	keymap[_T("Underscore")] = SDLK_UNDERSCORE;
-	keymap[_T("Equals")] = SDLK_EQUALS;
+	keymap["Comma"] = SDLK_COMMA;
+	keymap["Period"] = SDLK_PERIOD;
+	keymap["Slash"] = SDLK_SLASH;
+	keymap["Semicolon"] = SDLK_SEMICOLON;
+	keymap["Quote"] = SDLK_QUOTE;
+	keymap["L_Bracket"] = SDLK_LEFTBRACKET;
+	keymap["R_Bracket"] = SDLK_RIGHTBRACKET;
+	keymap["Backslash"] = SDLK_BACKSLASH;
+	keymap["Underscore"] = SDLK_UNDERSCORE;
+	keymap["Equals"] = SDLK_EQUALS;
 }
 
 void Controller::buildJoymap(void)
@@ -226,164 +226,164 @@ void Controller::buildJoymap(void)
 	{
 		if(joystick[i])
 		{
-			const _tstring num = itoa(i+1);
+			const string num = itoa(i+1);
 
-			joymap[_T("JOY") + num + _T("_BUTT_0")] = new JoyDir(joystick[i], JOY_BUTTON, 0, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_1")] = new JoyDir(joystick[i], JOY_BUTTON, 1, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_2")] = new JoyDir(joystick[i], JOY_BUTTON, 2, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_3")] = new JoyDir(joystick[i], JOY_BUTTON, 3, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_4")] = new JoyDir(joystick[i], JOY_BUTTON, 4, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_5")] = new JoyDir(joystick[i], JOY_BUTTON, 5, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_6")] = new JoyDir(joystick[i], JOY_BUTTON, 6, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_7")] = new JoyDir(joystick[i], JOY_BUTTON, 7, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_8")] = new JoyDir(joystick[i], JOY_BUTTON, 8, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_9")] = new JoyDir(joystick[i], JOY_BUTTON, 9, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_10")] = new JoyDir(joystick[i], JOY_BUTTON, 10, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_11")] = new JoyDir(joystick[i], JOY_BUTTON, 11, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_12")] = new JoyDir(joystick[i], JOY_BUTTON, 12, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_13")] = new JoyDir(joystick[i], JOY_BUTTON, 13, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_14")] = new JoyDir(joystick[i], JOY_BUTTON, 14, 1);
-			joymap[_T("JOY") + num + _T("_BUTT_15")] = new JoyDir(joystick[i], JOY_BUTTON, 15, 1);
+			joymap["JOY" + num + "_BUTT_0"] = new JoyDir(joystick[i], JOY_BUTTON, 0, 1);
+			joymap["JOY" + num + "_BUTT_1"] = new JoyDir(joystick[i], JOY_BUTTON, 1, 1);
+			joymap["JOY" + num + "_BUTT_2"] = new JoyDir(joystick[i], JOY_BUTTON, 2, 1);
+			joymap["JOY" + num + "_BUTT_3"] = new JoyDir(joystick[i], JOY_BUTTON, 3, 1);
+			joymap["JOY" + num + "_BUTT_4"] = new JoyDir(joystick[i], JOY_BUTTON, 4, 1);
+			joymap["JOY" + num + "_BUTT_5"] = new JoyDir(joystick[i], JOY_BUTTON, 5, 1);
+			joymap["JOY" + num + "_BUTT_6"] = new JoyDir(joystick[i], JOY_BUTTON, 6, 1);
+			joymap["JOY" + num + "_BUTT_7"] = new JoyDir(joystick[i], JOY_BUTTON, 7, 1);
+			joymap["JOY" + num + "_BUTT_8"] = new JoyDir(joystick[i], JOY_BUTTON, 8, 1);
+			joymap["JOY" + num + "_BUTT_9"] = new JoyDir(joystick[i], JOY_BUTTON, 9, 1);
+			joymap["JOY" + num + "_BUTT_10"] = new JoyDir(joystick[i], JOY_BUTTON, 10, 1);
+			joymap["JOY" + num + "_BUTT_11"] = new JoyDir(joystick[i], JOY_BUTTON, 11, 1);
+			joymap["JOY" + num + "_BUTT_12"] = new JoyDir(joystick[i], JOY_BUTTON, 12, 1);
+			joymap["JOY" + num + "_BUTT_13"] = new JoyDir(joystick[i], JOY_BUTTON, 13, 1);
+			joymap["JOY" + num + "_BUTT_14"] = new JoyDir(joystick[i], JOY_BUTTON, 14, 1);
+			joymap["JOY" + num + "_BUTT_15"] = new JoyDir(joystick[i], JOY_BUTTON, 15, 1);
 
-			joymap[_T("JOY") + num + _T("_AXIS_X-")] = new JoyDir(joystick[i], JOY_AXIS, 0, -1*threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_X+")] = new JoyDir(joystick[i], JOY_AXIS, 0, threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_Y-")] = new JoyDir(joystick[i], JOY_AXIS, 1, -1*threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_Y+")] = new JoyDir(joystick[i], JOY_AXIS, 1, threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_U-")] = new JoyDir(joystick[i], JOY_AXIS, 2, -1*threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_U+")] = new JoyDir(joystick[i], JOY_AXIS, 2, threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_V-")] = new JoyDir(joystick[i], JOY_AXIS, 3, -1*threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_V+")] = new JoyDir(joystick[i], JOY_AXIS, 3, threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_W-")] = new JoyDir(joystick[i], JOY_AXIS, 4, -1*threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_W+")] = new JoyDir(joystick[i], JOY_AXIS, 4, threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_Z-")] = new JoyDir(joystick[i], JOY_AXIS, 5, -1*threshold);
-			joymap[_T("JOY") + num + _T("_AXIS_Z+")] = new JoyDir(joystick[i], JOY_AXIS, 5, threshold);
+			joymap["JOY" + num + "_AXIS_X-"] = new JoyDir(joystick[i], JOY_AXIS, 0, -1*threshold);
+			joymap["JOY" + num + "_AXIS_X+"] = new JoyDir(joystick[i], JOY_AXIS, 0, threshold);
+			joymap["JOY" + num + "_AXIS_Y-"] = new JoyDir(joystick[i], JOY_AXIS, 1, -1*threshold);
+			joymap["JOY" + num + "_AXIS_Y+"] = new JoyDir(joystick[i], JOY_AXIS, 1, threshold);
+			joymap["JOY" + num + "_AXIS_U-"] = new JoyDir(joystick[i], JOY_AXIS, 2, -1*threshold);
+			joymap["JOY" + num + "_AXIS_U+"] = new JoyDir(joystick[i], JOY_AXIS, 2, threshold);
+			joymap["JOY" + num + "_AXIS_V-"] = new JoyDir(joystick[i], JOY_AXIS, 3, -1*threshold);
+			joymap["JOY" + num + "_AXIS_V+"] = new JoyDir(joystick[i], JOY_AXIS, 3, threshold);
+			joymap["JOY" + num + "_AXIS_W-"] = new JoyDir(joystick[i], JOY_AXIS, 4, -1*threshold);
+			joymap["JOY" + num + "_AXIS_W+"] = new JoyDir(joystick[i], JOY_AXIS, 4, threshold);
+			joymap["JOY" + num + "_AXIS_Z-"] = new JoyDir(joystick[i], JOY_AXIS, 5, -1*threshold);
+			joymap["JOY" + num + "_AXIS_Z+"] = new JoyDir(joystick[i], JOY_AXIS, 5, threshold);
 
-			joymap[_T("JOY") + num + _T("_HAT_DOWN")]	= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_DOWN);
-			joymap[_T("JOY") + num + _T("_HAT_LEFT")]	= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_LEFT);
-			joymap[_T("JOY") + num + _T("_HAT_UP")]		= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_UP);
-			joymap[_T("JOY") + num + _T("_HAT_RIGHT")]	= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_RIGHT);
+			joymap["JOY" + num + "_HAT_DOWN"]	= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_DOWN);
+			joymap["JOY" + num + "_HAT_LEFT"]	= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_LEFT);
+			joymap["JOY" + num + "_HAT_UP"]		= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_UP);
+			joymap["JOY" + num + "_HAT_RIGHT"]	= new JoyDir(joystick[i], JOY_HAT, 0, SDL_HAT_RIGHT);
 		}
 	}
 }
 
 void Controller::buildActionNames(void)
 {
-	KEY_MENU_UP		= createAction(_T("Menu-Up"));
-	KEY_MENU_DOWN		= createAction(_T("Menu-Down"));
-	KEY_MENU_LEFT		= createAction(_T("Menu-Left"));
-	KEY_MENU_RIGHT		= createAction(_T("Menu-Right"));
-	KEY_MENU		= createAction(_T("Menu"));
-	KEY_ENTER		= createAction(_T("Enter"));
-	KEY_EDITOR_WALK_FWD	= createAction(_T("Editor-Walk-Fwd"));
-	KEY_EDITOR_WALK_REV	= createAction(_T("Editor-Walk-Rev"));
-	KEY_EDITOR_WALK_LEFT	= createAction(_T("Editor-Walk-Left"));
-	KEY_EDITOR_WALK_RIGHT	= createAction(_T("Editor-Walk-Right"));
-	KEY_EDITOR_ROTATE_UP	= createAction(_T("Editor-Rotate-Up"));
-	KEY_EDITOR_ROTATE_DOWN	= createAction(_T("Editor-Rotate-Down"));
-	KEY_EDITOR_ROTATE_LEFT	= createAction(_T("Editor-Rotate-Left"));
-	KEY_EDITOR_ROTATE_RIGHT	= createAction(_T("Editor-Rotate-Right"));
-	KEY_SCREENSHOT		= createAction(_T("Screenshot"));
-	KEY_ENTER_EDITOR	= createAction(_T("Editor"));
-	KEY_TEST		= createAction(_T("Test"));
-	KEY_TOGGLE_DEBUG_DATA	= createAction(_T("Toggle-Debug-Data"));
-	KEY_TOGGLE_FPS		= createAction(_T("Toggle-FPS"));
+	KEY_MENU_UP		= createAction("Menu-Up");
+	KEY_MENU_DOWN		= createAction("Menu-Down");
+	KEY_MENU_LEFT		= createAction("Menu-Left");
+	KEY_MENU_RIGHT		= createAction("Menu-Right");
+	KEY_MENU		= createAction("Menu");
+	KEY_ENTER		= createAction("Enter");
+	KEY_EDITOR_WALK_FWD	= createAction("Editor-Walk-Fwd");
+	KEY_EDITOR_WALK_REV	= createAction("Editor-Walk-Rev");
+	KEY_EDITOR_WALK_LEFT	= createAction("Editor-Walk-Left");
+	KEY_EDITOR_WALK_RIGHT	= createAction("Editor-Walk-Right");
+	KEY_EDITOR_ROTATE_UP	= createAction("Editor-Rotate-Up");
+	KEY_EDITOR_ROTATE_DOWN	= createAction("Editor-Rotate-Down");
+	KEY_EDITOR_ROTATE_LEFT	= createAction("Editor-Rotate-Left");
+	KEY_EDITOR_ROTATE_RIGHT	= createAction("Editor-Rotate-Right");
+	KEY_SCREENSHOT		= createAction("Screenshot");
+	KEY_ENTER_EDITOR	= createAction("Editor");
+	KEY_TEST		= createAction("Test");
+	KEY_TOGGLE_DEBUG_DATA	= createAction("Toggle-Debug-Data");
+	KEY_TOGGLE_FPS		= createAction("Toggle-FPS");
 }
 
 void Controller::setDefaults(void)
 {
 	// Keyboard
-	addBinding(KEY_MENU_UP,			_T("Up"));
-	addBinding(KEY_MENU_DOWN,		_T("Down"));
-	addBinding(KEY_MENU_LEFT,		_T("Left"));
-	addBinding(KEY_MENU_RIGHT,		_T("Right"));
-	addBinding(KEY_MENU,			_T("Escape"));
-	addBinding(KEY_ENTER,			_T("Return"));
-	addBinding(KEY_EDITOR_WALK_FWD,	_T("w"));
-	addBinding(KEY_EDITOR_WALK_REV,	_T("s"));
-	addBinding(KEY_EDITOR_WALK_LEFT,	_T("a"));
-	addBinding(KEY_EDITOR_WALK_RIGHT,	_T("d"));
-	addBinding(KEY_EDITOR_ROTATE_UP,	_T("Up"));
-	addBinding(KEY_EDITOR_ROTATE_DOWN,	_T("Down"));
-	addBinding(KEY_EDITOR_ROTATE_LEFT,	_T("Left"));
-	addBinding(KEY_EDITOR_ROTATE_RIGHT,	_T("Right"));
-	addBinding(KEY_SCREENSHOT,		_T("F11"));
-	addBinding(KEY_ENTER_EDITOR,		_T("F1"));
-	addBinding(KEY_TEST,			_T("Tab"));
-	addBinding(KEY_TOGGLE_DEBUG_DATA,	_T("F2"));
-	addBinding(KEY_TOGGLE_FPS,		_T("F3"));
+	addBinding(KEY_MENU_UP,			    "Up");
+	addBinding(KEY_MENU_DOWN,		    "Down");
+	addBinding(KEY_MENU_LEFT,		    "Left");
+	addBinding(KEY_MENU_RIGHT,		    "Right");
+	addBinding(KEY_MENU,			    "Escape");
+	addBinding(KEY_ENTER,			    "Return");
+	addBinding(KEY_EDITOR_WALK_FWD,     "w");
+	addBinding(KEY_EDITOR_WALK_REV,	    "s");
+	addBinding(KEY_EDITOR_WALK_LEFT,	"a");
+	addBinding(KEY_EDITOR_WALK_RIGHT,	"d");
+	addBinding(KEY_EDITOR_ROTATE_UP,	"Up");
+	addBinding(KEY_EDITOR_ROTATE_DOWN,	"Down");
+	addBinding(KEY_EDITOR_ROTATE_LEFT,	"Left");
+	addBinding(KEY_EDITOR_ROTATE_RIGHT,	"Right");
+	addBinding(KEY_SCREENSHOT,		    "F11");
+	addBinding(KEY_ENTER_EDITOR,		"F1");
+	addBinding(KEY_TEST,			    "Tab");
+	addBinding(KEY_TOGGLE_DEBUG_DATA,	"F2");
+	addBinding(KEY_TOGGLE_FPS,		    "F3");
 
 	// Joystick
-	addBinding(KEY_MENU_UP,			_T("JOY1_AXIS_Y-"));
-	addBinding(KEY_MENU_UP,			_T("JOY2_AXIS_Y-"));
-	addBinding(KEY_MENU_UP,			_T("JOY3_AXIS_Y-"));
-	addBinding(KEY_MENU_UP,			_T("JOY4_AXIS_Y-"));
-	addBinding(KEY_MENU_DOWN,		_T("JOY1_AXIS_Y+"));
-	addBinding(KEY_MENU_DOWN,		_T("JOY2_AXIS_Y+"));
-	addBinding(KEY_MENU_DOWN,		_T("JOY3_AXIS_Y+"));
-	addBinding(KEY_MENU_DOWN,		_T("JOY4_AXIS_Y+"));
-	addBinding(KEY_MENU_LEFT,		_T("JOY1_AXIS_X-"));
-	addBinding(KEY_MENU_LEFT,		_T("JOY2_AXIS_X-"));
-	addBinding(KEY_MENU_LEFT,		_T("JOY3_AXIS_X-"));
-	addBinding(KEY_MENU_LEFT,		_T("JOY4_AXIS_X-"));
-	addBinding(KEY_MENU_RIGHT,		_T("JOY1_AXIS_X+"));
-	addBinding(KEY_MENU_RIGHT,		_T("JOY2_AXIS_X+"));
-	addBinding(KEY_MENU_RIGHT,		_T("JOY3_AXIS_X+"));
-	addBinding(KEY_MENU_RIGHT,		_T("JOY4_AXIS_X+"));
-	addBinding(KEY_MENU,			_T("JOY1_BUTT_7"));
-	addBinding(KEY_MENU,			_T("JOY2_BUTT_7"));
-	addBinding(KEY_MENU,			_T("JOY3_BUTT_7"));
-	addBinding(KEY_MENU,			_T("JOY4_BUTT_7"));
-	addBinding(KEY_ENTER,			_T("JOY1_BUTT_0"));
-	addBinding(KEY_ENTER,			_T("JOY1_BUTT_1"));
-	addBinding(KEY_ENTER,			_T("JOY1_BUTT_2"));
-	addBinding(KEY_ENTER,			_T("JOY1_BUTT_3"));
-	addBinding(KEY_ENTER,			_T("JOY1_BUTT_4"));
-	addBinding(KEY_ENTER,			_T("JOY1_BUTT_5"));
-	addBinding(KEY_ENTER,			_T("JOY1_BUTT_6"));
-	addBinding(KEY_ENTER,			_T("JOY2_BUTT_0"));
-	addBinding(KEY_ENTER,			_T("JOY2_BUTT_1"));
-	addBinding(KEY_ENTER,			_T("JOY2_BUTT_2"));
-	addBinding(KEY_ENTER,			_T("JOY2_BUTT_3"));
-	addBinding(KEY_ENTER,			_T("JOY2_BUTT_4"));
-	addBinding(KEY_ENTER,			_T("JOY2_BUTT_5"));
-	addBinding(KEY_ENTER,			_T("JOY2_BUTT_6"));
-	addBinding(KEY_ENTER,			_T("JOY3_BUTT_0"));
-	addBinding(KEY_ENTER,			_T("JOY3_BUTT_1"));
-	addBinding(KEY_ENTER,			_T("JOY3_BUTT_2"));
-	addBinding(KEY_ENTER,			_T("JOY3_BUTT_3"));
-	addBinding(KEY_ENTER,			_T("JOY3_BUTT_4"));
-	addBinding(KEY_ENTER,			_T("JOY3_BUTT_5"));
-	addBinding(KEY_ENTER,			_T("JOY3_BUTT_6"));
-	addBinding(KEY_ENTER,			_T("JOY4_BUTT_0"));
-	addBinding(KEY_ENTER,			_T("JOY4_BUTT_1"));
-	addBinding(KEY_ENTER,			_T("JOY4_BUTT_2"));
-	addBinding(KEY_ENTER,			_T("JOY4_BUTT_3"));
-	addBinding(KEY_ENTER,			_T("JOY4_BUTT_4"));
-	addBinding(KEY_ENTER,			_T("JOY4_BUTT_5"));
-	addBinding(KEY_ENTER,			_T("JOY4_BUTT_6"));
-	addBinding(KEY_EDITOR_WALK_FWD,	_T("JOY1_AXIS_Y-"));
-	addBinding(KEY_EDITOR_WALK_REV,	_T("JOY1_AXIS_Y+"));
-	addBinding(KEY_EDITOR_WALK_LEFT,	_T("JOY1_AXIS_X-"));
-	addBinding(KEY_EDITOR_WALK_RIGHT,	_T("JOY1_AXIS_X+"));
-	addBinding(KEY_EDITOR_ROTATE_UP,	_T("JOY1_AXIS_U+"));
-	addBinding(KEY_EDITOR_ROTATE_DOWN,	_T("JOY1_AXIS_U-"));
-	addBinding(KEY_EDITOR_ROTATE_LEFT,	_T("JOY1_AXIS_V-"));
-	addBinding(KEY_EDITOR_ROTATE_RIGHT,	_T("JOY1_AXIS_V+"));
-//	addBinding(KEY_SCREENSHOT,		_T("Up"));
-//	addBinding(KEY_ENTER_EDITOR,		_T("Up"));
-//	addBinding(KEY_TEST,			_T("Up"));
+	addBinding(KEY_MENU_UP,			"JOY1_AXIS_Y-");
+	addBinding(KEY_MENU_UP,			"JOY2_AXIS_Y-");
+	addBinding(KEY_MENU_UP,			"JOY3_AXIS_Y-");
+	addBinding(KEY_MENU_UP,			"JOY4_AXIS_Y-");
+	addBinding(KEY_MENU_DOWN,		"JOY1_AXIS_Y+");
+	addBinding(KEY_MENU_DOWN,		"JOY2_AXIS_Y+");
+	addBinding(KEY_MENU_DOWN,		"JOY3_AXIS_Y+");
+	addBinding(KEY_MENU_DOWN,		"JOY4_AXIS_Y+");
+	addBinding(KEY_MENU_LEFT,		"JOY1_AXIS_X-");
+	addBinding(KEY_MENU_LEFT,		"JOY2_AXIS_X-");
+	addBinding(KEY_MENU_LEFT,		"JOY3_AXIS_X-");
+	addBinding(KEY_MENU_LEFT,		"JOY4_AXIS_X-");
+	addBinding(KEY_MENU_RIGHT,		"JOY1_AXIS_X+");
+	addBinding(KEY_MENU_RIGHT,		"JOY2_AXIS_X+");
+	addBinding(KEY_MENU_RIGHT,		"JOY3_AXIS_X+");
+	addBinding(KEY_MENU_RIGHT,		"JOY4_AXIS_X+");
+	addBinding(KEY_MENU,			"JOY1_BUTT_7");
+	addBinding(KEY_MENU,			"JOY2_BUTT_7");
+	addBinding(KEY_MENU,			"JOY3_BUTT_7");
+	addBinding(KEY_MENU,			"JOY4_BUTT_7");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_0");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_1");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_2");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_3");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_4");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_5");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_6");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_0");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_1");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_2");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_3");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_4");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_5");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_6");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_0");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_1");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_2");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_3");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_4");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_5");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_6");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_0");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_1");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_2");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_3");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_4");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_5");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_6");
+	addBinding(KEY_EDITOR_WALK_FWD,	"JOY1_AXIS_Y-");
+	addBinding(KEY_EDITOR_WALK_REV,	"JOY1_AXIS_Y+");
+	addBinding(KEY_EDITOR_WALK_LEFT,	"JOY1_AXIS_X-");
+	addBinding(KEY_EDITOR_WALK_RIGHT,	"JOY1_AXIS_X+");
+	addBinding(KEY_EDITOR_ROTATE_UP,	"JOY1_AXIS_U+");
+	addBinding(KEY_EDITOR_ROTATE_DOWN,	"JOY1_AXIS_U-");
+	addBinding(KEY_EDITOR_ROTATE_LEFT,	"JOY1_AXIS_V-");
+	addBinding(KEY_EDITOR_ROTATE_RIGHT,	"JOY1_AXIS_V+");
+//	addBinding(KEY_SCREENSHOT,		"Up");
+//	addBinding(KEY_ENTER_EDITOR,		"Up");
+//	addBinding(KEY_TEST,			"Up");
 }
 
 bool Controller::isKeyDown(ACTION_CODE actionCode)
 {
 	if(bindings.find(actionCode) != bindings.end())
 	{
-		multimap<ACTION_CODE, _tstring>::const_iterator i = bindings.lower_bound(actionCode);
-		multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(actionCode);
+		multimap<ACTION_CODE, string>::const_iterator i = bindings.lower_bound(actionCode);
+		multimap<ACTION_CODE, string>::const_iterator stop = bindings.upper_bound(actionCode);
 
 		while(i!=stop)
 		{
-			const _tstring &keyName = i->second;
+			const string &keyName = i->second;
 
 			if(keymap[keyName]) // is it bound to the keyboard?
 			{
@@ -416,7 +416,7 @@ bool Controller::isAnyKeyDown(void)
 		}
 	}
 
-	for(map<_tstring, JoyDir*>::const_iterator i = joymap.begin(); i != joymap.end(); ++i)
+	for(map<string, JoyDir*>::const_iterator i = joymap.begin(); i != joymap.end(); ++i)
 	{
 		if(hasJoyEventOccured(i->second))
 		{
@@ -444,7 +444,7 @@ bool Controller::getKey(size_t &key, bool &shift)
 
 bool Controller::hasJoyEventOccured(JoyDir* subfunct)
 {
-	ASSERT(subfunct!=0, _T("subfunct was null"));
+	ASSERT(subfunct!=0, "subfunct was null");
 
 	switch(subfunct->Type)
 	{
@@ -468,14 +468,14 @@ bool Controller::hasJoyEventOccured(JoyDir* subfunct)
 	}
 }
 
-vector<_tstring> Controller::getKeyName(ACTION_CODE actionCode)
+vector<string> Controller::getKeyName(ACTION_CODE actionCode)
 {
-	vector<_tstring> keysBound;
+	vector<string> keysBound;
 
 	if(bindings.find(actionCode) != bindings.end())
 	{
-		multimap<ACTION_CODE, _tstring>::const_iterator i = bindings.lower_bound(actionCode);
-		multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(actionCode);
+		multimap<ACTION_CODE, string>::const_iterator i = bindings.lower_bound(actionCode);
+		multimap<ACTION_CODE, string>::const_iterator stop = bindings.upper_bound(actionCode);
 
 		while(i!=stop)
 		{
@@ -485,28 +485,28 @@ vector<_tstring> Controller::getKeyName(ACTION_CODE actionCode)
 	}
 	else
 	{
-		keysBound.push_back(_T("[NO KEY BOUND]"));
+		keysBound.push_back("[NO KEY BOUND]");
 	}
 
 	return keysBound;
 }
 
-bool Controller::load(const _tstring &fileName)
+bool Controller::load(const string &fileName)
 {
 	PropertyBag Bag;
 	Bag.loadFromFile(fileName);
 
 	setDefaults();
 
-	for(size_t j=0, numActions=Bag.getNumInstances(_T("action")); j<numActions; ++j)
+	for(size_t j=0, numActions=Bag.getNumInstances("action"); j<numActions; ++j)
 	{
-		PropertyBag actionBag = Bag.getBag(_T("action"), j);
-		_tstring actionName = actionBag.getString(_T("name"));
+		PropertyBag actionBag = Bag.getBag("action", j);
+		string actionName = actionBag.getString("name");
 
 		ACTION_CODE actionCode = createAction(actionName);
 
 		// Load one or more keys for this action
-		for(size_t i=0, numBindings=Bag.getNumInstances(_T("binding")); i<numBindings; ++i)
+		for(size_t i=0, numBindings=Bag.getNumInstances("binding"); i<numBindings; ++i)
 		{
 			bindings.insert(  make_pair(actionCode, Bag.getString(actionName, i))  );
 		}
@@ -515,32 +515,32 @@ bool Controller::load(const _tstring &fileName)
 	return true;
 }
 
-bool Controller::save(const _tstring &filename)
+bool Controller::save(const string &filename)
 {
 	PropertyBag Bag;
 
-	for(map<ACTION_CODE, _tstring>::const_iterator iter = actionNames.begin(); iter != actionNames.end(); ++iter)
+	for(map<ACTION_CODE, string>::const_iterator iter = actionNames.begin(); iter != actionNames.end(); ++iter)
 	{
 		const ACTION_CODE &actionCode = iter->first;
-		const _tstring &actionName = iter->second;
+		const string &actionName = iter->second;
 
 		PropertyBag actionBag;
-		actionBag.add(_T("name"), actionName);
+		actionBag.add("name", actionName);
 
 		if(bindings.find(actionCode) != bindings.end())
 		{
-			multimap<ACTION_CODE, _tstring>::const_iterator i = bindings.lower_bound(actionCode);
-			multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(actionCode);
+			multimap<ACTION_CODE, string>::const_iterator i = bindings.lower_bound(actionCode);
+			multimap<ACTION_CODE, string>::const_iterator stop = bindings.upper_bound(actionCode);
 
 			// Save the (possibly) multiple bindings for this action
 			while(i!=stop)
 			{
-				actionBag.add(_T("binding"), i->second);
+				actionBag.add("binding", i->second);
 				++i;
 			}
 		}
 
-		Bag.add(_T("action"), actionBag);
+		Bag.add("action", actionBag);
 	}
 
 	Bag.saveToFile(filename);
@@ -552,8 +552,8 @@ void Controller::deleteAction(ACTION_CODE action)
 	// Erase all bindings for this action
 	if(bindings.find(action) != bindings.end())
 	{
-		multimap<ACTION_CODE, _tstring>::iterator i = bindings.lower_bound(action);
-		multimap<ACTION_CODE, _tstring>::iterator stop = bindings.upper_bound(action);
+		multimap<ACTION_CODE, string>::iterator i = bindings.lower_bound(action);
+		multimap<ACTION_CODE, string>::iterator stop = bindings.upper_bound(action);
 
 		while(i!=stop)
 		{
@@ -561,7 +561,7 @@ void Controller::deleteAction(ACTION_CODE action)
 			Is there a more elegant way to do this?
 			*/
 
-			multimap<ACTION_CODE, _tstring>::iterator nextIter = i;
+			multimap<ACTION_CODE, string>::iterator nextIter = i;
 			nextIter++;
 
 			bindings.erase(i);
@@ -571,16 +571,16 @@ void Controller::deleteAction(ACTION_CODE action)
 	}
 
 	// Erase the action
-	map<ACTION_CODE, _tstring>::iterator i = actionNames.find(action);
+	map<ACTION_CODE, string>::iterator i = actionNames.find(action);
 	if(i != actionNames.end())
 	{
 		actionNames.erase(i);
 	}
 }
 
-ACTION_CODE Controller::createAction(const _tstring &name)
+ACTION_CODE Controller::createAction(const string &name)
 {
-	for(map<ACTION_CODE, _tstring>::const_iterator iter = actionNames.begin(); iter != actionNames.end(); ++iter)
+	for(map<ACTION_CODE, string>::const_iterator iter = actionNames.begin(); iter != actionNames.end(); ++iter)
 	{
 		if(toLowerCase(name) == toLowerCase(iter->second))
 		{
@@ -594,13 +594,13 @@ ACTION_CODE Controller::createAction(const _tstring &name)
 	return code;
 }
 
-void Controller::addBinding(ACTION_CODE action, const _tstring &binding)
+void Controller::addBinding(ACTION_CODE action, const string &binding)
 {
 	// Do not allow duplicate bindings
 	if(bindings.find(action) != bindings.end())
 	{
-		multimap<ACTION_CODE, _tstring>::const_iterator i = bindings.lower_bound(action);
-		multimap<ACTION_CODE, _tstring>::const_iterator stop = bindings.upper_bound(action);
+		multimap<ACTION_CODE, string>::const_iterator i = bindings.lower_bound(action);
+		multimap<ACTION_CODE, string>::const_iterator stop = bindings.upper_bound(action);
 
 		while(i!=stop)
 		{

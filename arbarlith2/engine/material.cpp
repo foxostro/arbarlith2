@@ -50,7 +50,7 @@ Material::Material(const Material &mat)
 	copy(mat);
 }
 
-Material::Material(const _tstring &materialFileName)
+Material::Material(const string &materialFileName)
 {
 	clear();
 	loadTexture(materialFileName, 0);
@@ -89,7 +89,7 @@ void Material::clear(void)
 
 	shininess=16.0f;
 
-	myName = _T("not-set");
+	myName = "not-set";
 
 	effect=0;
 
@@ -103,7 +103,7 @@ void Material::destroy(void)
 	clear();
 }
 
-void Material::loadTexture(const _tstring &fileName, unsigned int textureUnit)
+void Material::loadTexture(const string &fileName, unsigned int textureUnit)
 {
 	Image image(fileName);
 	loadTexture(image, textureUnit);
@@ -117,8 +117,8 @@ void Material::loadTexture(Image &image, unsigned int textureUnit)
 
 void Material::setTexture(TextureHandle *handle, unsigned int textureUnit)
 {
-	ASSERT(textureUnit < sizeof(textures), _T("Material::setTexture  ->  Invalid array index in textureUnit"));
-	ASSERT(handle!=0, _T("handle was null"));
+	ASSERT(textureUnit < sizeof(textures), "Material::setTexture  ->  Invalid array index in textureUnit");
+	ASSERT(handle!=0, "handle was null");
 
 	textures[textureUnit] = handle;
 }

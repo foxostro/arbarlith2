@@ -54,7 +54,7 @@ void MessageRouter::setZone(World *theZone)
 
 bool MessageRouter::Send(Message_s &Msg)
 {
-	ASSERT(zone != 0, _T("zone was null"));
+	ASSERT(zone != 0, "zone was null");
 
 	// Set the time stamp member
 	Msg.m_bSent = false;
@@ -96,8 +96,8 @@ bool MessageRouter::Send(Message_s &Msg)
 
 void MessageRouter::MailIt(Message_s Msg)
 {
-	ASSERT(zone != 0, _T("zone was null"));
-	ASSERT(zone->getObjects().isMember(Msg.m_Recipient), _T("Recipient does not exist"));
+	ASSERT(zone != 0, "zone was null");
+	ASSERT(zone->getObjects().isMember(Msg.m_Recipient), "Recipient does not exist");
 
 	if(zone->getObjects().isMember(Msg.m_Recipient))
 	{
@@ -108,7 +108,7 @@ void MessageRouter::MailIt(Message_s Msg)
 
 void MessageRouter::update(float deltaTime)
 {
-	ASSERT(zone != 0, _T("zone was null"));
+	ASSERT(zone != 0, "zone was null");
 
 	double Time = zone->getClockTicks();
 

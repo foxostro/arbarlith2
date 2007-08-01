@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-SearchFile::SearchFile(_tstring strPattern)
+SearchFile::SearchFile(string strPattern)
 {
 	// Search for all files matching the pattern
 	struct _tfinddata_t file;
@@ -60,10 +60,10 @@ SearchFile::SearchFile(_tstring strPattern)
 
 namespace Engine {
 
-SearchFile::SearchFile(_tstring strPattern)
+SearchFile::SearchFile(string strPattern)
 {
 	// TODO: SearchFile constructor is a stub!
-	FAIL(_T("TODO: SearchFile constructor is a stub!"));
+	FAIL("TODO: SearchFile constructor is a stub!");
 }
 
 } // namespace Engine

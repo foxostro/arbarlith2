@@ -1,4 +1,4 @@
-/* Copyright (C) Steve Rabin, 2000. 
+/* Copyright (C) Steve Rabin, 2000.
  * All rights reserved worldwide.
  *
  * This software is provided "as is" without express or implied
@@ -6,7 +6,7 @@
  * applications you distribute provided that the copyright text
  * below is included in the resulting source code, for example:
  * "Portions Copyright (C) Steve Rabin, 2000"
- * 
+ *
  * Modified by Andrew Fox in 2007
  */
 
@@ -24,7 +24,7 @@ void ProfileInit( void );
 void ProfileBegin( char* name );
 void ProfileEnd( const char* name );
 void ProfileDumpOutputToBuffer( void );
-const _tstring& ProfileGetBuffer( void );
+const string& ProfileGetBuffer( void );
 void StoreProfileInHistory( char* name, float percent );
 void GetProfileFromHistory( char* name, float* ave, float* min, float* max );
 

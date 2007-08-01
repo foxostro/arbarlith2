@@ -85,7 +85,7 @@ void Player::deleteControllerActions(int)
 
 void Player::setupController(void)
 {
-	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
+	ASSERT(playerNumber >= 0 && playerNumber < 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
 	setupControllerActions(playerNumber);
 	setupControllerBindings(playerNumber);
@@ -93,50 +93,50 @@ void Player::setupController(void)
 
 void Player::setupControllerActions(int playerNumber)
 {
-	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
+	ASSERT(playerNumber >= 0 && playerNumber < 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
-	_tstring num = Engine::itoa(playerNumber+1);
+	string num = Engine::itoa(playerNumber+1);
 
-	KEY_PLAYER_WALK_FWD	= g_Keys.createAction(_T("Player") + num + _T("-Walk-Fwd"));
-	KEY_PLAYER_WALK_REV	= g_Keys.createAction(_T("Player") + num + _T("-Walk-Rev"));
-	KEY_PLAYER_WALK_LEFT	= g_Keys.createAction(_T("Player") + num + _T("-Walk-Left"));
-	KEY_PLAYER_WALK_RIGHT	= g_Keys.createAction(_T("Player") + num + _T("-Walk-Right"));
-	KEY_PLAYER_USE		= g_Keys.createAction(_T("Player") + num + _T("-Use"));
+	KEY_PLAYER_WALK_FWD = g_Keys.createAction("Player" + num + "-Walk-Fwd");
+	KEY_PLAYER_WALK_REV = g_Keys.createAction("Player" + num + "-Walk-Rev");
+	KEY_PLAYER_WALK_LEFT = g_Keys.createAction("Player" + num + "-Walk-Left");
+	KEY_PLAYER_WALK_RIGHT = g_Keys.createAction("Player" + num + "-Walk-Right");
+	KEY_PLAYER_USE = g_Keys.createAction("Player" + num + "-Use");
 }
 
 void Player::setupControllerBindings(int playerNumber)
 {
-	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
+	ASSERT(playerNumber >= 0 && playerNumber < 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
 #if _PLAYER_ONE_HAS_NO_JOYSTICK_
 	if(playerNumber>0) // player 2 is on joystick 1, and so forth
 	{
-		_tstring num = Engine::itoa(playerNumber);
-		g_Keys.addBinding(KEY_PLAYER_WALK_FWD,	_T("JOY") + num + _T("_AXIS_Y-"));
-		g_Keys.addBinding(KEY_PLAYER_WALK_REV,	_T("JOY") + num + _T("_AXIS_Y+"));
-		g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,	_T("JOY") + num + _T("_AXIS_X-"));
-		g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT,	_T("JOY") + num + _T("_AXIS_X+"));
-		g_Keys.addBinding(KEY_PLAYER_USE,		_T("JOY") + num + _T("_BUTT_2"));
+		string num = Engine::itoa(playerNumber);
+		g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "JOY" + num + "_AXIS_Y-");
+		g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
+		g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
+		g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
+		g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
 	}
 #else
-	_tstring num = Engine::itoa(playerNumber+1);
-	g_Keys.addBinding(KEY_PLAYER_WALK_FWD,	_T("JOY") + num + _T("_AXIS_Y-"));
-	g_Keys.addBinding(KEY_PLAYER_WALK_REV,	_T("JOY") + num + _T("_AXIS_Y+"));
-	g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,	_T("JOY") + num + _T("_AXIS_X-"));
-	g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT,	_T("JOY") + num + _T("_AXIS_X+"));
-	g_Keys.addBinding(KEY_PLAYER_USE,		_T("JOY") + num + _T("_BUTT_2"));
+	string num = Engine::itoa(playerNumber+1);
+	g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "JOY" + num + "_AXIS_Y-");
+	g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
+	g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
+	g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
+	g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
 #endif
 
 	if(playerNumber==0) // add keyboard support for player #1
 	{
-		g_Keys.addBinding(KEY_PLAYER_WALK_FWD,	_T("Up"));
-		g_Keys.addBinding(KEY_PLAYER_WALK_REV,	_T("Down"));
-		g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,	_T("Left"));
-		g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT,	_T("Right"));
-		g_Keys.addBinding(KEY_PLAYER_USE,		_T("Space"));
+		g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "Up");
+		g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "Down");
+		g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "Left");
+		g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "Right");
+		g_Keys.addBinding(KEY_PLAYER_USE,        "Space");
 	}
 
-	const _tstring &userKeysFile = pathAppend(getAppDataDirectory(), _T("keys.xml"));
+	const string &userKeysFile = pathAppend(getAppDataDirectory(), "keys.xml");
 	g_Keys.save(userKeysFile);
 }
 
@@ -181,7 +181,7 @@ void Player::load(const PropertyBag &xml)
 
 	// Load the inventory
 	PropertyBag invBag;
-	if(xml.get(_T("inventory"), invBag))
+	if(xml.get("inventory", invBag))
 	{
 		inventory.load(invBag, &getZone());
 	}
@@ -199,7 +199,7 @@ void Player::load(const PropertyBag &xml)
 
 bool Player::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	xml.add(_T("inventory"), inventory.save()); // Save the inventory, the default value doesn't matter
+	xml.add("inventory", inventory.save()); // Save the inventory, the default value doesn't matter
 	return Creature::saveTidy(xml, dataFile);
 }
 
@@ -322,7 +322,7 @@ void Player::clear(void)
 
 void Player::setPlayerNumber(int playerNumber)
 {
-	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
+	ASSERT(playerNumber >= 0 && playerNumber < 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
 	deleteController();
 
@@ -336,7 +336,7 @@ void Player::setPlayerNumber(int playerNumber)
 #ifdef _DEBUG
 void Player::OnChangePlayerNumber(int playerNumber)
 {
-	ASSERT(playerNumber >= 0 && playerNumber <= 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
+	ASSERT(playerNumber >= 0 && playerNumber <= 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 	// Do nothing
 }
 #else
@@ -346,7 +346,7 @@ void Player::OnChangePlayerNumber(int)
 
 void Player::pickupItem(Item *item)
 {
-	ASSERT(item!=0, _T("item was null"));
+	ASSERT(item!=0, "item was null");
 
 	// Add it to the inventory
 	inventory.insert(make_pair(item->m_ID, item));
@@ -360,7 +360,7 @@ bool Player::isInventoryItem(OBJECT_ID id) const
 	return inventory.isMember(id);
 }
 
-bool Player::inventoryQuery(const _tstring &name, OBJECT_ID &out) const
+bool Player::inventoryQuery(const string &name, OBJECT_ID &out) const
 {
 	return inventory.query(name, out);
 }
@@ -416,88 +416,88 @@ void Player::selectSpecificItem(OBJECT_ID id)
 			selectedItem = id;
 
 			// Play an item select noise
-			g_SoundSystem.play(_T("data/sound/click.wav"));
+			g_SoundSystem.play("data/sound/click.wav");
 		}
 	}
 }
 
-const _tstring Player::getAttackAnim(void) const
+const string Player::getAttackAnim(void) const
 {
-	return _tstring(_T("attack")) + getItemName();
+	return string("attack") + getItemName();
 }
 
-const _tstring Player::getIdleAnim(void) const
+const string Player::getIdleAnim(void) const
 {
-	return _tstring(_T("idle")) + getItemName();
+	return string("idle") + getItemName();
 }
 
-const _tstring Player::getRunFwdAnim(void) const
+const string Player::getRunFwdAnim(void) const
 {
-	return _tstring(_T("run")) + getItemName();
+	return string("run") + getItemName();
 }
 
-const _tstring Player::getRunRevAnim(void) const
+const string Player::getRunRevAnim(void) const
 {
-	return _tstring(_T("runback")) + getItemName();;
+	return string("runback") + getItemName();;
 }
 
-const _tstring Player::getRunLeftAnim(void) const
+const string Player::getRunLeftAnim(void) const
 {
-	return _tstring(_T("runleft")) + getItemName();
+	return string("runleft") + getItemName();
 }
 
-const _tstring Player::getRunRightAnim(void) const
+const string Player::getRunRightAnim(void) const
 {
-	return _tstring(_T("runright")) + getItemName();
+	return string("runright") + getItemName();
 }
 
-const _tstring Player::getRunLeftFwdAnim(void) const
+const string Player::getRunLeftFwdAnim(void) const
 {
-	return _tstring(_T("runleftforward")) + getItemName();
+	return string("runleftforward") + getItemName();
 }
 
-const _tstring Player::getRunRightFwdAnim(void) const
+const string Player::getRunRightFwdAnim(void) const
 {
-	return _tstring(_T("runrightforward")) + getItemName();
+	return string("runrightforward") + getItemName();
 }
 
-const _tstring Player::getRunLeftRevAnim(void) const
+const string Player::getRunLeftRevAnim(void) const
 {
-	return _tstring(_T("runleftback")) + getItemName();
+	return string("runleftback") + getItemName();
 }
 
-const _tstring Player::getRunRightRevAnim(void) const
+const string Player::getRunRightRevAnim(void) const
 {
-	return _tstring(_T("runrightback")) + getItemName();
+	return string("runrightback") + getItemName();
 }
 
-_tstring Player::getItemName(void) const
+string Player::getItemName(void) const
 {
 	if(!inventory.empty() && selectedItem != INVALID_ID && inventory.isMember(selectedItem))
 	{
 		const Actor &item = inventory.get(selectedItem);
 
-		return _tstring(_T("_")) + item.getName();
+		return string("_") + item.getName();
 	}
 
-	return _tstring();
+	return string();
 }
 
-const _tstring Player::getPainAnim(void) const
+const string Player::getPainAnim(void) const
 {
-	return _tstring(_T("flinch")) + getItemName();
+	return string("flinch") + getItemName();
 }
 
-const _tstring Player::getDyingAnim(void) const
+const string Player::getDyingAnim(void) const
 {
-	return _tstring(_T("dying")) + getItemName();
+	return string("dying") + getItemName();
 }
 
-const _tstring Player::getWalkAnim(float speed) const
+const string Player::getWalkAnim(float speed) const
 {
 	if(speed >= topSpeed*0.9)
 	{
-		return _T("run");
+		return "run";
 	}
 	else if(speed < minWalkingVelocity)
 	{
@@ -505,7 +505,7 @@ const _tstring Player::getWalkAnim(float speed) const
 	}
 	else
 	{
-		return _T("walk");
+		return "walk";
 	}
 }
 
@@ -522,8 +522,8 @@ list<Actor*> Player::getCollisions(const ActorSet &s) const
 
 void Player::walkTowards(const vec3 &target, float speed)
 {
-	ASSERT(speed >= -1.0f, _T("Speed is too negative: ") + ftoa(speed));
-	ASSERT(speed <= +1.0f, _T("Speed is too positive: ") + ftoa(speed));
+	ASSERT(speed >= -1.0f, "Speed is too negative: " + ftoa(speed));
+	ASSERT(speed <= +1.0f, "Speed is too positive: " + ftoa(speed));
 
 	if(canMove())
 	{

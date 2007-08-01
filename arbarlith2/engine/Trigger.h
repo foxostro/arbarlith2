@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -103,13 +103,13 @@ protected:
 	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Gets the sound effect file to play when the Trigger activates */
-	_tstring getTriggerSfx(void) const;
+	string getTriggerSfx(void) const;
 
 	/**
 	Sounds to play when the Portal is entered.
 	One is chosen at random
 	*/
-	vector<_tstring> sounds;
+	vector<string> sounds;
 
 	/** Radius of the trigger */
 	float triggerRadius;

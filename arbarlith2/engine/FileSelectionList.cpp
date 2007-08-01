@@ -38,19 +38,19 @@ namespace Engine {
 
 
 
-FileSelectionList::FileSelectionList(const _tstring &pattern, float x, float y)
+FileSelectionList::FileSelectionList(const string &pattern, float x, float y)
 :SelectionList(x, y)
 {
 	SearchFile files(pattern);
-	for(vector<_tstring>::const_iterator iter=files.m_Files.begin(); iter!=files.m_Files.end(); ++iter)
+	for(vector<string>::const_iterator iter=files.m_Files.begin(); iter!=files.m_Files.end(); ++iter)
 	{
-		_tstring fileName =(*iter);
+		string fileName =(*iter);
 
 		ListElementLabel *fileWidget = new ListElementLabel(fileName,
-															_T("data/sprites/list/listwidget_depressed.png"),
-															_T("data/sprites/list/listwidget_depressed_over.png"),
-															_T("data/sprites/list/listwidget.png"),
-															_T("data/sprites/list/listwidget_hover.png"));
+															"data/sprites/list/listwidget_depressed.png",
+															"data/sprites/list/listwidget_depressed_over.png",
+															"data/sprites/list/listwidget.png",
+															"data/sprites/list/listwidget_hover.png");
 
 		selected = fileWidget; // the last widget added will ende up being the selected widget
 
@@ -58,7 +58,7 @@ FileSelectionList::FileSelectionList(const _tstring &pattern, float x, float y)
 	}
 }
 
-_tstring FileSelectionList::getFilename(void)
+string FileSelectionList::getFilename(void)
 {
 	ListElementWidget *selected = getSelected();
 
@@ -70,7 +70,7 @@ _tstring FileSelectionList::getFilename(void)
 	}
 	else
 	{
-		return _tstring();
+		return string();
 	}
 }
 

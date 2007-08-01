@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "PropertyBag.h"
 #include "Effect_Project_Shadows.h"
 
-namespace Engine { 
+namespace Engine {
 
 Effect_Project_Shadows::Effect_Project_Shadows(void)
 {
@@ -61,11 +61,11 @@ void Effect_Project_Shadows::begin(void)
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_FRONT);
-	
+
 	// Use a depth offset to correct Z-aliasing
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	glPolygonOffset(3, 3);
-	
+
 	// Disable textures we don't need
 	Effect::disableAllTextureUnits();
 }
@@ -76,9 +76,9 @@ void Effect_Project_Shadows::end(void)
 	CHECK_GL_ERROR();
 }
 
-_tstring Effect_Project_Shadows::getRequiredExtensions(void) const
+string Effect_Project_Shadows::getRequiredExtensions(void) const
 {
-	return _tstring();
+	return string();
 }
 
 int Effect_Project_Shadows::getRequiredTextureUnits(void) const
@@ -115,9 +115,9 @@ bool Effect_Project_Shadows::requiresTexCoordStream(void) const
 	return false;
 }
 
-_tstring Effect_Project_Shadows::getName(void) const
+string Effect_Project_Shadows::getName(void) const
 {
-	return _T("Effect_Project_Shadows");
+	return "Effect_Project_Shadows";
 }
 
 int Effect_Project_Shadows::howGood(effect_sig) const

@@ -103,9 +103,9 @@ void Detector::load(const PropertyBag &xml)
 
 bool Detector::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("signalSuccess"), signalSuccess);
-	saveTag(xml, editorData, _T("signalFail"), signalFail);
-	saveTag(xml, editorData, _T("onlyTripOnce"), onlyTripOnce);
+	saveTag(xml, editorData, "signalSuccess", signalSuccess);
+	saveTag(xml, editorData, "signalFail", signalFail);
+	saveTag(xml, editorData, "onlyTripOnce", onlyTripOnce);
 
 	return Trigger::saveTidy(xml, editorData);
 }
@@ -114,9 +114,9 @@ void Detector::createToolBar(ListPaneWidget *pane)
 {
 	Trigger::createToolBar(pane);
 
-	pane->addElement(new ToggleWidgetText(		_T("Only trip once"),		&onlyTripOnce));
-	pane->addElement(new ListElementTweaker<int>(	_T("Signal on Success"),	&signalSuccess));
-	pane->addElement(new ListElementTweaker<int>(	_T("Signal on Failure"),	&signalFail));
+	pane->addElement(new ToggleWidgetText(		"Only trip once",		&onlyTripOnce));
+	pane->addElement(new ListElementTweaker<int>(	"Signal on Success",	&signalSuccess));
+	pane->addElement(new ListElementTweaker<int>(	"Signal on Failure",	&signalFail));
 }
 
 }; // namespace

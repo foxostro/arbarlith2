@@ -49,10 +49,10 @@ PropertyBag Camera::toXml(void) const
 {
 	PropertyBag xml;
 
-	xml.add(_T("z"), orientation.getAxisZ());
-	xml.add(_T("y"), orientation.getAxisY());
-	xml.add(_T("x"), orientation.getAxisX());
-	xml.add(_T("pos"), position);
+	xml.add("z", orientation.getAxisZ());
+	xml.add("y", orientation.getAxisY());
+	xml.add("x", orientation.getAxisX());
+	xml.add("pos", position);
 
 	return xml;
 }
@@ -63,10 +63,10 @@ void Camera::fromXml(PropertyBag &xml)
 
 	vec4 x, y, z;
 
-	xml.get(_T("z"),	x);
-	xml.get(_T("y"),	y);
-	xml.get(_T("x"),	z);
-	xml.get(_T("pos"),	position);
+	xml.get("z",	x);
+	xml.get("y",	y);
+	xml.get("x",	z);
+	xml.get("pos",	position);
 
 	orientation.set(position, x, y, z);
 

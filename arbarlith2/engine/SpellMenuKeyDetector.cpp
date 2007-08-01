@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,20 +31,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "SpellMenuKeyDetector.h"
 
-namespace Engine { 
+namespace Engine {
 
 SpellMenuKeyDetector::SpellMenuKeyDetector(void)
 :menuToggleKey(INVALID_ACTION_CODE),
 debounce(false)
 {
-	menuToggleKey = g_Keys.createAction(_T("Spell-Menu"));
+	menuToggleKey = g_Keys.createAction("Spell-Menu");
 
 	for(int i=0; i<3; ++i)
 	{
-		g_Keys.addBinding(menuToggleKey, _T("JOY") + Engine::itoa(i+1) + _T("_BUTT_5"));
+		g_Keys.addBinding(menuToggleKey, "JOY" + Engine::itoa(i+1) + "_BUTT_5");
 	}
-	
-	g_Keys.addBinding(menuToggleKey, _T("L_Control"));
+
+	g_Keys.addBinding(menuToggleKey, "L_Control");
 }
 
 void SpellMenuKeyDetector::update(float)
@@ -76,4 +76,4 @@ void SpellMenuKeyDetector::toggleMenu(void)
 	}
 }
 
-}; //namespace
+} //namespace Engine

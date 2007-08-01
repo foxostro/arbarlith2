@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2005-2007 Game Creation Society
+Copyright Â© 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -81,7 +81,7 @@ private:
 	};
 
 	/** the font setup file */
-	_tstring fileName;
+	string fileName;
 
 	/** Characters in the font */
 	Character characters[256];
@@ -105,7 +105,7 @@ private:
 	@param color The color of the text
 	@param size The size of the text
 	*/
-	void drawChar(const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, TCHAR z, const COLOR &color) const;
+	void drawChar(const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, char z, const COLOR &color) const;
 
 	/**
 	Prints a single character to the screen and advances the cursor
@@ -115,7 +115,7 @@ private:
 	@param size The size of the text
 	@param useBillboard Should use a billboard when displaying
 	*/
-	void putChar(vec3 *offset, TCHAR character, const COLOR *color, FONT_SIZE size, bool useBillboard) const;
+	void putChar(vec3 *offset, char character, const COLOR *color, FONT_SIZE size, bool useBillboard) const;
 
 	/**
 	Gets character information
@@ -156,7 +156,7 @@ public:
 	Setup the font
 	@param fileName XML source for the font data
 	*/
-	void setup(const _tstring &fileName);
+	void setup(const string &fileName);
 
 	/**
 	Setup the font
@@ -171,13 +171,13 @@ public:
 	void release(void);
 
 	/**
-	Prints out a _tstring
+	Prints out a string
 	@param text The text to print
 	@param color The coor of the text
 	@param size The size of the text
 	@param useBillboard Should use a billboard when displaying
 	*/
-	void write(const _tstring &text, const COLOR &color, FONT_SIZE size, bool useBillboard=false) const;
+	void write(const string &text, const COLOR &color, FONT_SIZE size, bool useBillboard=false) const;
 
 	/**
 	Gets the dimensions of the given string
@@ -185,7 +185,7 @@ public:
 	@param size	The size of the text
 	@return (width, height) of the text
 	*/
-	vec2 getDimensions(const _tstring &text, FONT_SIZE size) const;
+	vec2 getDimensions(const string &text, FONT_SIZE size) const;
 
 	/**
 	Gets the height of a line of text in the given size

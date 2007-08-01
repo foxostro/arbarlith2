@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2004-2007 Game Creation Society
+Copyright Â© 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -41,9 +41,9 @@ const OBJECT_ID INVALID_ID = -1;
 
 // Generates static RTTI accessor methods for a class
 #define GEN_RTTI(TYPE, NAME)                                                              \
-static _tstring getTypeString(void)                                                       \
+static string getTypeString(void)                                                       \
 {                                                                                         \
-	return _tstring(_T( NAME ));                                                      \
+	return string( NAME );                                                      \
 }                                                                                         \
 static OBJECT_TYPE getType(void)                                                          \
 {                                                                                         \
@@ -78,7 +78,7 @@ public:
 
 private:
 
-	typedef map < _tstring, OBJECT_TYPE > mapStringToType;
+	typedef map < string, OBJECT_TYPE > mapStringToType;
 	typedef map < OBJECT_TYPE, AllocatorFn > mapTypeToAlloc;
 
 	/** Tracks the incrementing UID for the next object to be created */
@@ -126,7 +126,7 @@ public:
 	@param typeName Name of the type (type_info::name is implementation dependent)
 	*/
 	template<class T>
-	void registerType(const _tstring &typeName)
+	void registerType(const string &typeName)
 	{
 		const type_info& typeInfo = typeid(T);
 		const OBJECT_TYPE typeID = (OBJECT_TYPE)(&typeInfo); // address of this is constant
@@ -138,7 +138,7 @@ public:
 			AllocatorFn fn = &::Engine::allocatorFn<TYPE, T>;
 			toAllocator.insert(  make_pair(typeID, fn)  );
 
-			TRACE(_T("Registered type \"") + typeName + _T("\""));
+			TRACE("Registered type \"" + typeName + "\"");
 		}
 	}
 
@@ -147,7 +147,7 @@ public:
 	@param type The type of the object
 	@return a pointer to the object
 	*/
-	TYPE* createPtr(const _tstring &type)
+	TYPE* createPtr(const string &type)
 	{
 		mapStringToType::iterator iter = toTypeID.find(type);
 
@@ -165,7 +165,7 @@ public:
 	@param type The type of the object
 	@return The unique identifier to the new object
 	*/
-	OBJECT_ID create(const _tstring &type)
+	OBJECT_ID create(const string &type)
 	{
 		mapStringToType::iterator iter = toTypeID.find(type);
 
@@ -183,7 +183,7 @@ public:
 		uniqueID++;
 
 		TYPE *o = (toAllocator.find(type)->second)(handle);
-		ASSERT(o!=0, _T("Allocator failed"));
+		ASSERT(o!=0, "Allocator failed");
 
 		objects.insert(make_pair(handle, o));
 
@@ -193,13 +193,13 @@ public:
 		mapTypeToAlloc::iterator i;
 
 		iter = toAllocator.find(type);
-		ASSERT(iter!=toAllocator.end(), _T("The specified type was not found"));
+		ASSERT(iter!=toAllocator.end(), "The specified type was not found");
 
 		OBJECT_ID handle = uniqueID;
 		uniqueID++;
 
 		TYPE *o = (iter->second)(handle);
-		ASSERT(o!=0, _T("Allocator failed"));
+		ASSERT(o!=0, "Allocator failed");
 
 		objects.insert(make_pair(handle, o));
 

@@ -107,16 +107,16 @@ class Controller : public Singleton<Controller>
 {
 private:
 	/** action code -> action name */
-	map<ACTION_CODE, _tstring> actionNames;
+	map<ACTION_CODE, string> actionNames;
 
 	/** action code -> set of key names */
-	multimap<ACTION_CODE, _tstring> bindings;
+	multimap<ACTION_CODE, string> bindings;
 
 	/** key name -> keyboard key */
-	map<_tstring, SDLKey> keymap;
+	map<string, SDLKey> keymap;
 
 	/** key name -> joystick/gamepad action */
-	map<_tstring, JoyDir*> joymap;
+	map<string, JoyDir*> joymap;
 
 	/** Supports up to four joystick/gamepads */
 	SDL_Joystick* joystick[4];
@@ -185,21 +185,21 @@ public:
 	@param actionCode the given action
 	@return list of the keys bound to the action
 	*/
-	vector<_tstring> getKeyName(ACTION_CODE actionCode);
+	vector<string> getKeyName(ACTION_CODE actionCode);
 
 	/**
 	Loads key bindings from file
 	@param filename The file to load key binding from
 	@return true if successful
 	*/
-	bool load(const _tstring &filename);
+	bool load(const string &filename);
 
 	/**
 	Saves key bindings to file
 	@param filename The file to save key binding to
 	@return true if successful
 	*/
-	bool save(const _tstring &filename);
+	bool save(const string &filename);
 
 	/** Set up the default key bindings */
 	void setDefaults(void);
@@ -215,14 +215,14 @@ public:
 	@param name the name of the action
 	@return the action code of the new action or of the one with that name that already existed
 	*/
-	ACTION_CODE createAction(const _tstring &name);
+	ACTION_CODE createAction(const string &name);
 
 	/**
 	Adds a binding to an action
 	@param action the action to modify
 	@param binding the name of the binding
 	*/
-	void addBinding(ACTION_CODE action, const _tstring &binding);
+	void addBinding(ACTION_CODE action, const string &binding);
 };
 
 

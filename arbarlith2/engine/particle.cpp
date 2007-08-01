@@ -96,9 +96,9 @@ initialRadialVelocity(body.initialRadialVelocity)
 
 void ParticleBody::load(PropertyBag &Bag)
 {
-	Bag.get(_T("position"),              &initialPosition);
-	Bag.get(_T("acceleration"),          &constantAcceleration);
-	Bag.get(_T("initialRadialVelocity"),  initialRadialVelocity);
+	Bag.get("position",              &initialPosition);
+	Bag.get("acceleration",          &constantAcceleration);
+	Bag.get("initialRadialVelocity",  initialRadialVelocity);
 
 	position = initialPosition; // the Body starts, of course, at the initial position
 
@@ -152,15 +152,15 @@ void ParticleGraph::load(const PropertyBag &xml)
 	min = vec2(0,0);
 	max = vec2(0,0);
 
-	const size_t numberOfPoints = xml.getNumInstances(_T("point"));
+	const size_t numberOfPoints = xml.getNumInstances("point");
 	for(size_t i=0; i<numberOfPoints; ++i)
 	{
 		PropertyBag PointBag;
 		Point2 pt;
 
-		xml.get(_T("point"), PointBag, i);
-		PointBag.get(_T("x"), pt.x);
-		PointBag.get(_T("y"), pt.y);
+		xml.get("point", PointBag, i);
+		PointBag.get("x", pt.x);
+		PointBag.get("y", pt.y);
 
 		points.push_back(pt);
 
@@ -173,7 +173,7 @@ void ParticleGraph::load(const PropertyBag &xml)
 
 float ParticleGraph::getValue(float t) const
 {
-	ASSERT(t >= 0.0f && t <= 1.0f, _T("Parameter \'t\' is invalid: ") + ftoa(t));
+	ASSERT(t >= 0.0f && t <= 1.0f, "Parameter \'t\' is invalid: " + ftoa(t));
 
 	size_t numberOfPoints = points.size();
 
@@ -259,19 +259,19 @@ void ParticleElement::load(PropertyBag &Bag, ParticleSystem &system)
 
 	lifeSpan = 1000.0f; // Reset defaults
 
-	Bag.get(_T("name"), typeName);
+	Bag.get("name", typeName);
 
 	// Load material data
-	_tstring strMatName;
-	Bag.get(_T("material"), strMatName);
+	string strMatName;
+	Bag.get("material", strMatName);
 	materialHandle = owner->getMaterialHandle(strMatName); // Have the system give us the material's handle
 
 	// Load graph data
-	Bag.get(_T("size"),     SizeGraph);
-	Bag.get(_T("alpha"),    AlphaGraph);
-	Bag.get(_T("red"),      RedGraph);
-	Bag.get(_T("green"),    GreenGraph);
-	Bag.get(_T("blue"),     BlueGraph);
+	Bag.get("size",     SizeGraph);
+	Bag.get("alpha",    AlphaGraph);
+	Bag.get("red",      RedGraph);
+	Bag.get("green",    GreenGraph);
+	Bag.get("blue",     BlueGraph);
 
 	graphSize   .  load(SizeGraph);
 	graphAlpha  .  load(AlphaGraph);
@@ -295,7 +295,7 @@ void ParticleElement::draw(const mat4 &matrix) const
 
 	// Set up the billboard material
 	{
-		ASSERT(owner!=0, _T("owner was null"));
+		ASSERT(owner!=0, "owner was null");
 
 		const Material &material = owner->getMaterial(materialHandle);
 		material.bind();
@@ -345,7 +345,7 @@ void ParticleElement::update(float deltaTime)
 {
 	if(isDead()) return;
 
-	ASSERT(lifeSpan!=0.0f, _T("m_LifeSpan==0.0, and causes division by zero."));
+	ASSERT(lifeSpan!=0.0f, "m_LifeSpan==0.0, and causes division by zero.");
 
 	const float percent = age / lifeSpan;
 
@@ -369,37 +369,37 @@ ParticleEmitter::ParticleEmitter(PropertyBag &Bag, ParticleSystem &Owner)
   looping(false),
   numberOfLifeCycles(0)
 {
-	ASSERT(owner!=0, _T("owner was null"));
+	ASSERT(owner!=0, "owner was null");
 
 	// Get the particle template
-	_tstring templateName;
-	Bag.get(_T("template"), templateName);
+	string templateName;
+	Bag.get("template", templateName);
 	particleTemplate = owner->getTemplate(templateName);
 
 	PropertyBag Rate;
-	Bag.get(_T("rate"), Rate);
+	Bag.get("rate", Rate);
 	graphEmissionRate.load(Rate);
 
 	PropertyBag Speed;
-	Bag.get(_T("speed"), Speed);
+	Bag.get("speed", Speed);
 	graphSpeed.load(Speed);
 	graphSpeedImmediate = graphSpeed.getValue(0.0f);
 
 	PropertyBag SizeMul;
-	Bag.get(_T("sizemul"), SizeMul);
+	Bag.get("sizemul", SizeMul);
 	graphSizeMultiplier.load(SizeMul);
 	graphSizeMultiplierImmediate = graphSizeMultiplier.getValue(0.0f);
 
 	PropertyBag LifeBag;
-	Bag.get(_T("lifespan"), LifeBag);
+	Bag.get("lifespan", LifeBag);
 	graphLifeSpan.load(LifeBag);
 	graphLifeSpanImmediate = graphLifeSpan.getValue(0.0f);
-	ASSERT(graphLifeSpanImmediate!=0.0f, _T("m_LifeSpan==0.0, and causes division by zero."));
+	ASSERT(graphLifeSpanImmediate!=0.0f, "m_LifeSpan==0.0, and causes division by zero.");
 
-	Bag.get(_T("falloff"),                   radiusFalloff);
-	Bag.get(_T("length"),                    lifeSpan);
-	Bag.get(_T("looping"),                   looping);
-	Bag.get(_T("cycles"),                    numberOfLifeCycles);
+	Bag.get("falloff",                   radiusFalloff);
+	Bag.get("length",                    lifeSpan);
+	Bag.get("looping",                   looping);
+	Bag.get("cycles",                    numberOfLifeCycles);
 }
 
 ParticleEmitter::ParticleEmitter(const ParticleEmitter &emitter)
@@ -418,12 +418,12 @@ ParticleEmitter::ParticleEmitter(const ParticleEmitter &emitter)
   looping(emitter.looping),
   numberOfLifeCycles(emitter.numberOfLifeCycles)
 {
-	ASSERT(owner!=0, _T("owner was null"));
+	ASSERT(owner!=0, "owner was null");
 }
 
 ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
 {
-	ASSERT(emitter.owner!=0, _T("emitter.owner was null"));
+	ASSERT(emitter.owner!=0, "emitter.owner was null");
 
 	owner                          =   emitter.owner;
 	particleTemplate               =   emitter.particleTemplate;
@@ -445,8 +445,8 @@ ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
 
 void ParticleEmitter::update(float deltaTime)
 {
-	ASSERT(owner!=0, _T("owner was null"));
-	ASSERT(lifeSpan!=0.0f, _T("lifeSpan==0 -> will cause division by zero"));
+	ASSERT(owner!=0, "owner was null");
+	ASSERT(lifeSpan!=0.0f, "lifeSpan==0 -> will cause division by zero");
 
 	age += deltaTime;
 
@@ -469,7 +469,7 @@ void ParticleEmitter::update(float deltaTime)
 	graphSizeMultiplierImmediate = graphSizeMultiplier .   getValue(percent);
 	graphLifeSpanImmediate       = graphLifeSpan       .   getValue(percent);
 
-	ASSERT(graphLifeSpanImmediate!=0.0f, _T("m_LifeSpanImmediate==0.0, and causes division by zero."));
+	ASSERT(graphLifeSpanImmediate!=0.0f, "m_LifeSpanImmediate==0.0, and causes division by zero.");
 
 	size_t numberOfEmittedParticles = (size_t)ceil(graphEmissionRate.getValue(percent));
 	for(size_t i=0; i < numberOfEmittedParticles; ++i)
@@ -519,7 +519,7 @@ ParticleSystem::ParticleSystem(const ParticleSystem &system)
 {
 	// Allocate the m_pElements array
 	elements = new ELEMENT_PTR[maxNumberOfParticles];
-	ASSERT(elements!=0,  _T("ParticleSystem::System  ->  Null Pointer: m_ppElements."));
+	ASSERT(elements!=0,  "ParticleSystem::System  ->  Null Pointer: m_ppElements.");
 	memset(elements, 0, sizeof(ELEMENT_PTR) * maxNumberOfParticles); // Zero the element pointers in the array
 
 	// Copy the particle data
@@ -530,12 +530,12 @@ ParticleSystem::ParticleSystem(const ParticleSystem &system)
 		if(system.elements[i]) // Assumes that system.m_ppElements[i] is a valid pointer
 		{
 			elements[i] = new ParticleElement(*system.elements[i]);
-			ASSERT(elements[i]!=NULL,  _T("ParticleSystem::ParticleSystem  ->  Null Pointer: m_ppElements[i]."));
+			ASSERT(elements[i]!=NULL,  "ParticleSystem::ParticleSystem  ->  Null Pointer: m_ppElements[i].");
 		}
 	}
 }
 
-ParticleSystem::ParticleSystem( const _tstring &fileName )
+ParticleSystem::ParticleSystem( const string &fileName )
 : ParticleBody(),
   maxNumberOfParticles(0),
   emissionBehavior(IGNORE_EMISSION),
@@ -577,21 +577,21 @@ void ParticleSystem::load(PropertyBag &Bag)
 	materials.clear();
 
 	// Get the number of tags to expect
-	const size_t nMaterials = Bag.getNumInstances(_T("material"));
-	const size_t nTemplates = Bag.getNumInstances(_T("template"));
-	const size_t nEmitters = Bag.getNumInstances(_T("emitter"));
+	const size_t nMaterials = Bag.getNumInstances("material");
+	const size_t nTemplates = Bag.getNumInstances("template");
+	const size_t nEmitters = Bag.getNumInstances("emitter");
 
-	ASSERT(nMaterials>0, _T("particle system does not specify any materials"));
-	ASSERT(nTemplates>0, _T("particle system does not specify any templates"));
-	ASSERT(nEmitters>0, _T("particle system does not specify any emitters"));
+	ASSERT(nMaterials>0, "particle system does not specify any materials");
+	ASSERT(nTemplates>0, "particle system does not specify any templates");
+	ASSERT(nEmitters>0, "particle system does not specify any emitters");
 
 	// Get the max number of particles
-	Bag.get(_T("max"), maxNumberOfParticles);
-	ASSERT(maxNumberOfParticles>0, _T("particle system does not give maxNumberOfParticles>0"));
+	Bag.get("max", maxNumberOfParticles);
+	ASSERT(maxNumberOfParticles>0, "particle system does not give maxNumberOfParticles>0");
 
 	// Allocate the m_pElements array
 	elements = new ELEMENT_PTR[maxNumberOfParticles];
-	ASSERT(elements!=0, _T("elements was null"));
+	ASSERT(elements!=0, "elements was null");
 	memset(elements, 0, sizeof(ELEMENT_PTR) * maxNumberOfParticles);
 
 	// Load the materials from XML for particles
@@ -599,13 +599,13 @@ void ParticleSystem::load(PropertyBag &Bag)
 	{
 		PropertyBag MatBag;
 		Material mat;
-		_tstring name, imageFilename;
+		string name, imageFilename;
 
 		// Get material data
-		Bag.get(_T("material"), MatBag, i);
-		MatBag.get(_T("name"), name);
-		MatBag.get(_T("image"), imageFilename);
-		MatBag.get(_T("glow"), mat.glow);
+		Bag.get("material", MatBag, i);
+		MatBag.get("name", name);
+		MatBag.get("image", imageFilename);
+		MatBag.get("glow", mat.glow);
 
 		// Create the material
 		mat.setName(name);
@@ -619,7 +619,7 @@ void ParticleSystem::load(PropertyBag &Bag)
 	for(size_t i=0; i<nTemplates; ++i)
 	{
 		PropertyBag data;
-		Bag.get(_T("template"), data, i);
+		Bag.get("template", data, i);
 		ParticleElement element(data, *this);
 		templatesByName.insert(make_pair(element.getName(), element));
 	}
@@ -628,7 +628,7 @@ void ParticleSystem::load(PropertyBag &Bag)
 	for(size_t i=0; i<nEmitters; ++i)
 	{
 		PropertyBag EmitterBag;
-		Bag.get(_T("emitter"), EmitterBag, i);
+		Bag.get("emitter", EmitterBag, i);
 		ParticleEmitter emitter(EmitterBag, *this);
 		emitters.push_back(emitter);
 	}
@@ -636,14 +636,14 @@ void ParticleSystem::load(PropertyBag &Bag)
 	// Load the base class
 	ParticleBody::load(Bag);
 
-	ASSERT(!materials.empty(),       _T("after loading, there are no particle materials in system"));
-	ASSERT(!templatesByName.empty(), _T("after loading, there are no particle templates in emitter"));
-	ASSERT(!emitters.empty(),        _T("after loading, there are no particle emitters in system"));
+	ASSERT(!materials.empty(),       "after loading, there are no particle materials in system");
+	ASSERT(!templatesByName.empty(), "after loading, there are no particle templates in emitter");
+	ASSERT(!emitters.empty(),        "after loading, there are no particle emitters in system");
 }
 
 void ParticleSystem::draw(void) const
 {
-	ASSERT(elements!=0, _T("Cannot draw particles because none were allocated!"));
+	ASSERT(elements!=0, "Cannot draw particles because none were allocated!");
 
 	float matrix[16] = {0};
 
@@ -667,7 +667,7 @@ void ParticleSystem::update(float dTime)
 	for(size_t i=0; i<emitters.size(); ++i)
 		emitters[i].update(dTime);
 
-	ASSERT(elements!=0, _T("Cannot update particles: no particle storage has even been allocated!"));
+	ASSERT(elements!=0, "Cannot update particles: no particle storage has even been allocated!");
 
 	for(size_t i=0; i<maxNumberOfParticles; ++i)
 	{
@@ -687,7 +687,7 @@ void ParticleSystem::update(float dTime)
 
 void ParticleSystem::spawn(const ParticleElement &element)
 {
-	ASSERT(elements!=0, _T("Cannot spawn particle: no particle storage was allocated!"));
+	ASSERT(elements!=0, "Cannot spawn particle: no particle storage was allocated!");
 
 	for(size_t i=0; i<maxNumberOfParticles; ++i)
 	{
@@ -709,14 +709,14 @@ void ParticleSystem::spawn(const ParticleElement &element)
 	}
 }
 
-const ParticleElement& ParticleSystem::getTemplate(const _tstring &name)
+const ParticleElement& ParticleSystem::getTemplate(const string &name)
 {
-	ASSERT(templatesByName.find(name)!=templatesByName.end(), _T("Particle template could not be found: ") + name);
+	ASSERT(templatesByName.find(name)!=templatesByName.end(), "Particle template could not be found: " + name);
 
 	return(templatesByName.find(name)->second);
 }
 
-size_t ParticleSystem::getMaterialHandle(const _tstring &materialName) const
+size_t ParticleSystem::getMaterialHandle(const string &materialName) const
 {
 	for(size_t i=0; i<materials.size(); ++i)
 	{
@@ -726,13 +726,13 @@ size_t ParticleSystem::getMaterialHandle(const _tstring &materialName) const
 		}
 	}
 
-	FAIL(_T("Particle material could not be found: ") + materialName);
+	FAIL("Particle material could not be found: " + materialName);
 	return 0;
 }
 
 Material& ParticleSystem::getMaterial(size_t materialHandle)
 {
-	ASSERT(materialHandle < materials.size(), _T("Parameter \'materialHandle\' out of bounds!"));
+	ASSERT(materialHandle < materials.size(), "Parameter \'materialHandle\' out of bounds!");
 
 	return materials[materialHandle];
 }

@@ -43,32 +43,32 @@ namespace Engine {
 GameStateMenu::GameStateMenu(Application &app)
 : GameState(app)
 {
-	TRACE(_T("Creating the various pages of the menu..."));
+	TRACE("Creating the various pages of the menu...");
 
 	gameMenu = new Menu;
-	TRACE(_T("Created gameMenu"));
+	TRACE("Created gameMenu");
 
 	gameOverMenu = new MenuGameOver;
-	TRACE(_T("Created gameOverMenu"));
+	TRACE("Created gameOverMenu");
 
 	gameMenuOptions = new MenuOptions;
-	TRACE(_T("Created gameMenuOptions"));
+	TRACE("Created gameMenuOptions");
 
 	gameMenuWorldSelection = new MenuWorldSelection;
-	TRACE(_T("Created gameMenuWorldSelection"));
+	TRACE("Created gameMenuWorldSelection");
 
-	gameMenuWorldLeadOut[0] = new MenuWorldLeadOut(_T("data/sprites/backdrops/world1-leadout.jpg"));
-	TRACE(_T("Created gameMenuWorldLeadOut[0]"));
+	gameMenuWorldLeadOut[0] = new MenuWorldLeadOut("data/sprites/backdrops/world1-leadout.jpg");
+	TRACE("Created gameMenuWorldLeadOut[0]");
 
-	gameMenuWorldLeadOut[1] = new MenuWorldLeadOut(_T("data/sprites/backdrops/world2-leadout.jpg"));
-	TRACE(_T("Created gameMenuWorldLeadOut[1]"));
+	gameMenuWorldLeadOut[1] = new MenuWorldLeadOut("data/sprites/backdrops/world2-leadout.jpg");
+	TRACE("Created gameMenuWorldLeadOut[1]");
 
-	gameMenuWorldLeadOut[2] = new MenuWorldLeadOut(_T("data/sprites/backdrops/world3-leadout.jpg"));
-	TRACE(_T("Created gameMenuWorldLeadOut[2]"));
+	gameMenuWorldLeadOut[2] = new MenuWorldLeadOut("data/sprites/backdrops/world3-leadout.jpg");
+	TRACE("Created gameMenuWorldLeadOut[2]");
 
 	menu = gameMenu; // select the default menu
 
-	TRACE(_T("...finished"));
+	TRACE("...finished");
 }
 
 GameStateMenu::~GameStateMenu(void)
@@ -84,7 +84,7 @@ GameStateMenu::~GameStateMenu(void)
 
 void GameStateMenu::update(float)
 {
-	ASSERT(menu!=0, _T("Menu does not exist"));
+	ASSERT(menu!=0, "Menu does not exist");
 
 	menu->update();
 
@@ -132,21 +132,21 @@ void GameStateMenu::enterGameMenuWorldSelection(void)
 
 void GameStateMenu::enterGameMenuWorldLeadOut(int worldNum)
 {
-	ASSERT(worldNum>=1 && worldNum<=3, _T("Parameter \'worldNum\' is invalid"));
+	ASSERT(worldNum>=1 && worldNum<=3, "Parameter \'worldNum\' is invalid");
 	menu = gameMenuWorldLeadOut[worldNum-1];
 }
 
 void GameStateMenu::repopulateMenu(void)
 {
-	TRACE(_T("Repopulating elements of the menu..."));
+	TRACE("Repopulating elements of the menu...");
 
-	ASSERT(0 != gameMenu,			_T("gameMenu was null"));
-	ASSERT(0 != gameOverMenu,		_T("gameOverMenu was null"));
-	ASSERT(0 != gameMenuOptions,		_T("gameMenuOptions was null"));
-	ASSERT(0 != gameMenuWorldSelection,	_T("gameMenuWorldSelection was null"));
-	ASSERT(0 != gameMenuWorldLeadOut[0],	_T("gameMenuWorldLeadOut[0] was null"));
-	ASSERT(0 != gameMenuWorldLeadOut[1],	_T("gameMenuWorldLeadOut[1] was null"));
-	ASSERT(0 != gameMenuWorldLeadOut[2],	_T("gameMenuWorldLeadOut[2] was null"));
+	ASSERT(0 != gameMenu,			"gameMenu was null");
+	ASSERT(0 != gameOverMenu,		"gameOverMenu was null");
+	ASSERT(0 != gameMenuOptions,		"gameMenuOptions was null");
+	ASSERT(0 != gameMenuWorldSelection,	"gameMenuWorldSelection was null");
+	ASSERT(0 != gameMenuWorldLeadOut[0],	"gameMenuWorldLeadOut[0] was null");
+	ASSERT(0 != gameMenuWorldLeadOut[1],	"gameMenuWorldLeadOut[1] was null");
+	ASSERT(0 != gameMenuWorldLeadOut[2],	"gameMenuWorldLeadOut[2] was null");
 
 	gameMenu->populateElements();
 	gameOverMenu->populateElements();
@@ -156,7 +156,7 @@ void GameStateMenu::repopulateMenu(void)
 	gameMenuWorldLeadOut[1]->populateElements();
 	gameMenuWorldLeadOut[2]->populateElements();
 
-	TRACE(_T("...finished"));
+	TRACE("...finished");
 }
 
 } // namespace Engine

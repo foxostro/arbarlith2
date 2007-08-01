@@ -38,10 +38,10 @@ public:
 	virtual void update(float deltaTime);
 
 	/**
-	Gets the action label _tstring
+	Gets the action label string
 	@return The action label
 	*/
-	const _tstring& getActionLabel(void) const
+	const string& getActionLabel(void) const
 	{
 		return actionLabel;
 	}
@@ -84,7 +84,7 @@ protected:
 	virtual bool saveTidy(PropertyBag &xml, PropertyBag &dataFile) const;
 
 	/** Text that describes the Player's action on the switch "Use", "Activate", "Ring the bell" */
-	_tstring actionLabel;
+	string actionLabel;
 
 	/** Milliseconds until the option to use the switch expires */
 	float fadeTimer;

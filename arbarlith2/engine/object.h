@@ -5,7 +5,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 2006 Richard Halstead
 E-mail: mailto:rhalstea@andrew.cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -95,7 +95,7 @@ public:
 	Loads the object state
 	@param fileName Name of the file to load
 	*/
-	void loadFromFile(const _tstring &fileName);
+	void loadFromFile(const string &fileName);
 
 	/**
 	Gets the distance in the XZ-plane that the actots are from one another
@@ -354,14 +354,14 @@ public:
 	Loads a model for the object
 	@param fileName The file name of a model's XML definition
 	*/
-	virtual void LoadModel(const _tstring &fileName);
+	virtual void LoadModel(const string &fileName);
 
 	/**
 	Requests that the animation be changed to the specified animation at the next available opportunity
 	@param name		The name of the new animation
 	@param speed	The speed multiplier for the animation
 	*/
-	virtual bool ChangeAnimation(const _tstring &name, float speed=1.0f);
+	virtual bool ChangeAnimation(const string &name, float speed=1.0f);
 
 	/**
 	Requests that the animation be changed to the specified animation at the next available opportunity
@@ -374,9 +374,9 @@ public:
 	@param name The name of the current animation
 	@return the handle to the animation
 	*/
-	inline size_t getAnimationHandle(const _tstring &name)
+	inline size_t getAnimationHandle(const string &name)
 	{
-		ASSERT(m_pModel!=0, _T("Actor has no model"));
+		ASSERT(m_pModel!=0, "Actor has no model");
 		return m_pModel->getAnimationHandle(name);
 	}
 
@@ -386,7 +386,7 @@ public:
 	*/
 	inline float getAnimationLength(size_t handle) const
 	{
-		ASSERT(m_pModel!=0, _T("Actor has no model"));
+		ASSERT(m_pModel!=0, "Actor has no model");
 		return m_pModel->getAnimation(handle).getLength();
 	}
 
@@ -394,7 +394,7 @@ public:
 	Get the name of the object
 	@return name
 	*/
-	inline const _tstring &getName(void) const
+	inline const string &getName(void) const
 	{
 		return m_strName;
 	}
@@ -417,7 +417,7 @@ public:
 	*/
 	inline void setZone(World *zone)
 	{
-		ASSERT(zone!=0, _T("myZone was NULL"));
+		ASSERT(zone!=0, "myZone was NULL");
 		myZone = zone;
 	}
 
@@ -427,7 +427,7 @@ public:
 	*/
 	inline World& getZone(void)
 	{
-		ASSERT(myZone!=0, _T("myZone was NULL"));
+		ASSERT(myZone!=0, "myZone was NULL");
 
 		return(*myZone);
 	}
@@ -438,7 +438,7 @@ public:
 	*/
 	inline const World& getZone(void) const
 	{
-		ASSERT(myZone!=0, _T("myZone was NULL"));
+		ASSERT(myZone!=0, "myZone was NULL");
 
 		return(*myZone);
 	}
@@ -533,7 +533,7 @@ protected:
 	@param name The name of the item set
 	@param list The list items to return
 	*/
-	virtual void loadList(const PropertyBag& xml, const _tstring& name, vector<_tstring>& strList);
+	virtual void loadList(const PropertyBag& xml, const string& name, vector<string>& strList);
 
 	/**
 	Saves a list of strings to XML
@@ -541,7 +541,7 @@ protected:
 	@param name The name of the item set
 	@param list The list items to return
 	*/
-	virtual void saveList(PropertyBag& xml, const _tstring& name, const vector<_tstring>& strList) const;
+	virtual void saveList(PropertyBag& xml, const string& name, const vector<string>& strList) const;
 
 	/**
 	Saves a tag, but only if the default data is different
@@ -551,7 +551,7 @@ protected:
 	@param data The data to save
 	*/
 	template<class T>
-	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const _tstring &tagName, T data) const
+	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const string &tagName, T data) const
 	{
 		T defaultValue;
 		bool contains = editorData.get(tagName, defaultValue);
@@ -566,9 +566,9 @@ protected:
 		}
 	}
 
-	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const _tstring &tagName, _tstring data) const
+	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const string &tagName, string data) const
 	{
-		_tstring defaultValue;
+		string defaultValue;
 		bool contains = editorData.get(tagName, defaultValue);
 		if(!contains || (contains && defaultValue!=data))
 		{
@@ -581,7 +581,7 @@ protected:
 		}
 	}
 
-	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const _tstring &tagName, vec4 data) const
+	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const string &tagName, vec4 data) const
 	{
 		vec4 defaultValue;
 		bool contains = editorData.get(tagName, defaultValue);
@@ -618,7 +618,7 @@ public:
 	OBJECT_ID m_ID;
 
 	/** In editor mode, this is the data file that object originates from */
-	_tstring editorDataFile;
+	string editorDataFile;
 
 	/** Determines whether or not the model is displayed outside of editor mode */
 	bool showModel;
@@ -649,7 +649,7 @@ protected:
 	float sphereRadius;
 
 	/** The name of the object */
-	_tstring m_strName;
+	string m_strName;
 
 	/** The mass of the object in kilograms */
 	float m_Mass;
@@ -661,7 +661,7 @@ protected:
 	float m_Scale;
 
 	/** The file name of the model loaded for this actor */
-	_tstring m_strModelFilename;
+	string m_strModelFilename;
 
 	/** The model that has been loaded for this actor. (memory-managed by the model loader's cache) */
 	AnimationController *m_pModel;

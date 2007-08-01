@@ -49,11 +49,11 @@ void PrintStringToLog(const string &s)
 	{
 		firstTime = false;
 
-        const _tstring appDir = getAppDataDirectory();
+        const string appDir = getAppDataDirectory();
 
-		const _tstring logFileName = pathAppend(appDir, _T("log.txt"));
+		const string logFileName = pathAppend(appDir, "log.txt");
 
-		stream.open(toAnsiString(logFileName).c_str(), ios::out);
+		stream.open(logFileName.c_str(), ios::out);
 
 		if(!stream)
 		{
@@ -79,10 +79,10 @@ void PrintStringToLog(const string &s)
 
 #ifdef _WIN32
 	// Print message to debugger message window
-	OutputDebugString(_tstring(s + _T("\n\n")).c_str());
+	OutputDebugString(string(s + "\n\n").c_str());
 #endif
 
-	clog << s << endl << endl;	
+	clog << s << endl << endl;
 	cout << s << endl << endl;
 }
 
@@ -103,7 +103,7 @@ void Log(const string &message,
 	(
 		function + "  ->  " + message +
 
-        "\n\t" + File::getFilenameNoPath(file) + ":" + itoa(line) + 
+        "\n\t" + File::getFilenameNoPath(file) + ":" + itoa(line) +
 
 		"\n\t" + timestamp + "\n"
 	);

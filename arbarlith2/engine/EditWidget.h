@@ -61,7 +61,7 @@ public:
 	@param label The label
 	@param pos Position of the widget
 	*/
-	EditWidget(const _tstring &label,
+	EditWidget(const string &label,
 	           const vec2 &pos);
 
 	/**

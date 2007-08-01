@@ -83,8 +83,8 @@ void GateOpener::load(const PropertyBag &xml)
 
 bool GateOpener::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("gateName"), gateName);
-	saveTag(xml, editorData, _T("open"), open);
+	saveTag(xml, editorData, "gateName", gateName);
+	saveTag(xml, editorData, "open", open);
 	return Listener::saveTidy(xml, editorData);
 }
 
@@ -92,8 +92,8 @@ void GateOpener::createToolBar(ListPaneWidget *pane)
 {
 	Listener::createToolBar(pane);
 
-	pane->addElement(new ListElementTweakerString	(_T("Gate Name"),	&gateName));
-	pane->addElement(new ToggleWidgetText		(_T("Opens Gate"),	&open));
+	pane->addElement(new ListElementTweakerString	("Gate Name",	&gateName));
+	pane->addElement(new ToggleWidgetText		("Opens Gate",	&open));
 }
 
 } // namespace Arbarlith2

@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Explosion.h"
 #include "SpellIncinerate.h"
 
-namespace Arbarlith2 { 
+namespace Arbarlith2 {
 
 void SpellIncinerate::clear(void)
 {
@@ -53,11 +53,11 @@ void SpellIncinerate::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT
 
 void SpellIncinerate::castSpell(void)
 {
-	ASSERT(zone!=0, _T("zone is null"));
+	ASSERT(zone!=0, "zone is null");
 
 	ActorSet &zoneObjects = zone->getObjects();
-	
-	ASSERT(zoneObjects.isMember(ownerID), _T("owner is not present in the active zone"));
+
+	ASSERT(zoneObjects.isMember(ownerID), "owner is not present in the active zone");
 
 	Actor &owner = zoneObjects.get(ownerID);
 
@@ -72,7 +72,13 @@ void SpellIncinerate::castSpell(void)
 		{
 			Creature &creature = dynamic_cast<Creature&>(s.get(id));
 
-			createExplosion(owner.getZone(), creature.getPos(), damageValue, 1.0f, ownerID, _T("data/particle/fireball-explosion.xml"), _T("data/sound/s_explosion.wav"));
+			createExplosion(owner.getZone(),
+			                creature.getPos(),
+			                damageValue,
+			                1.0f,
+			                ownerID,
+			                "data/particle/fireball-explosion.xml",
+			                "data/sound/s_explosion.wav");
 		}
 	}
 }

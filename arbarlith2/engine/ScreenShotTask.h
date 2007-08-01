@@ -53,7 +53,7 @@ private:
 	Gets the filename of the next screen shot
 	@return filename
 	*/
-	static _tstring getScreenShotFileName(void);
+	static string getScreenShotFileName(void);
 
 	/** takes a screen shot */
 	static void takeScreenShot(void);

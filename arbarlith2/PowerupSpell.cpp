@@ -64,7 +64,7 @@ void PowerupSpell::load(const PropertyBag &xml)
 
 bool PowerupSpell::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, _T("spellIdx"), spellIdx);
+	saveTag(xml, dataFile, "spellIdx", spellIdx);
 
 	return Powerup::saveTidy(xml, dataFile);
 }
@@ -74,7 +74,7 @@ void PowerupSpell::createToolBar(ListPaneWidget *pane)
 	Powerup::createToolBar(pane);
 
 	// Add to the tool bar
-	pane->addElement(new ListElementTweaker<int>(_T("Spell #"),	&spellIdx));
+	pane->addElement(new ListElementTweaker<int>("Spell #",	&spellIdx));
 }
 
 }

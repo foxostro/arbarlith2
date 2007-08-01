@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2005-2007 Game Creation Society
+Copyright Â© 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -48,7 +48,7 @@ public:
 		vec2 position;
 
 		/** Label for the menu item */
-		_tstring label;
+		string label;
 
 		/** Indicates that the item is enabled */
 		bool enabled;
@@ -60,7 +60,7 @@ public:
 		@param label Label for the menu item
 		@param enabled Indicates that the element is enabled
 		*/
-		Element(const vec2 &position, const _tstring &label, bool enabled=true)
+		Element(const vec2 &position, const string &label, bool enabled=true)
 		{
 			this->position = position;
 			this->label = label;
@@ -80,7 +80,7 @@ public:
 		Gets the label for the menu item
 		@return The label for the menu item
 		*/
-		const _tstring& getLabel(void) const
+		const string& getLabel(void) const
 		{
 			return label;
 		}
@@ -114,7 +114,7 @@ public:
 	Constructor
 	@param imageFileName Image file name for the backdrop at 800x600 resolution
 	*/
-	Menu(const _tstring &imageFileName);
+	Menu(const string &imageFileName);
 
 	/** Destructor */
 	virtual ~Menu(void);
@@ -129,7 +129,7 @@ public:
 	Allocates all resources
 	@param imageFileNameImage file name for the backdrop
 	*/
-	virtual void create(const _tstring &imageFileName);
+	virtual void create(const string &imageFileName);
 
 	/** Draw the menus */
 	virtual void draw(void);

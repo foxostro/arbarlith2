@@ -56,7 +56,7 @@ void Spawn::clear(void)
 	maxMonsters = 3;
 	minMonsters = 1;
 	separationDistance = 2;
-	monsterDataFile = _T("nill");
+	monsterDataFile = "nill";
 }
 
 void Spawn::onTrigger(void)
@@ -100,10 +100,10 @@ void Spawn::load(const PropertyBag &xml)
 
 bool Spawn::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("monsterDatafile"),     monsterDataFile);
-	saveTag(xml, editorData, _T("minMonsters"),         minMonsters);
-	saveTag(xml, editorData, _T("maxMonsters"),         maxMonsters);
-	saveTag(xml, editorData, _T("separationDistance"),  separationDistance);
+	saveTag(xml, editorData, "monsterDatafile",     monsterDataFile);
+	saveTag(xml, editorData, "minMonsters",         minMonsters);
+	saveTag(xml, editorData, "maxMonsters",         maxMonsters);
+	saveTag(xml, editorData, "separationDistance",  separationDistance);
 
 	return Listener::saveTidy(xml, editorData);
 }

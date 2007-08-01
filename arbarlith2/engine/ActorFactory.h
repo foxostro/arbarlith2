@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2004-2007 Game Creation Society
+Copyright Â© 2004-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -43,13 +43,13 @@ ActorFactory& getActorFactory(void);
 
 template<class T> struct ActorRegistrar
 {
-	ActorRegistrar(const _tstring typeName)
+	ActorRegistrar(const string typeName)
 	{
 		::Engine::getActorFactory().registerType<T>(typeName);
 	}
 };
 
-#define GEN_ACTOR_RTTI_CPP(TYPE, NAME) namespace { ::Engine::ActorRegistrar< TYPE > _registrar(_T(NAME)); }
+#define GEN_ACTOR_RTTI_CPP(TYPE, NAME) namespace { ::Engine::ActorRegistrar< TYPE > _registrar(NAME); }
 
 } // namespace Engine
 

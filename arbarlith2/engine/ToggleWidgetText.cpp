@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,12 +33,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-ToggleWidgetText::ToggleWidgetText(const _tstring& label, bool *value)
+ToggleWidgetText::ToggleWidgetText(const string& label, bool *value)
 : myValue(value),
   myLabel(label),
   statusLbl(0)
 {
-	ASSERT(myValue!=0, _T("value was NULL"));
+	ASSERT(myValue!=0, "value was NULL");
 
 	// Create the status label
 	AddChild(  statusLbl = new LabelWidget(myLabel, vec2(12.0f,1.0f))  );
@@ -57,7 +57,7 @@ ToggleWidgetText::ToggleWidgetText(const _tstring& label, bool *value)
 
 void ToggleWidgetText::onMouseClick(void)
 {
-	ASSERT(myValue!=0, _T("myValue was NULL"));
+	ASSERT(myValue!=0, "myValue was NULL");
 
 	(*myValue) = !getValue();
 
@@ -70,12 +70,12 @@ void ToggleWidgetText::onMouseClick(void)
 
 void ToggleWidgetText::OnTurnsOn(void)
 {
-	statusLbl->setLabel(myLabel + _T(": true"));
+	statusLbl->setLabel(myLabel + ": true");
 }
 
 void ToggleWidgetText::OnTurnsOff(void)
 {
-	statusLbl->setLabel(myLabel + _T(": false"));
+	statusLbl->setLabel(myLabel + ": false");
 }
 
 void ToggleWidgetText::onMouseEnter(void)

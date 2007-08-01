@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@ namespace Engine {
 
 CycleTextureSelectorState::CycleTextureSelectorState(TEXTURE_SELECTOR_STATE *value)
 : myValue(value),
-  myLabel(_T("uninitialized")),
+  myLabel("uninitialized"),
   statusLbl(0)
 {
 	// Create the status label
@@ -44,26 +44,26 @@ CycleTextureSelectorState::CycleTextureSelectorState(TEXTURE_SELECTOR_STATE *val
 	statusLbl->setLabel(getLabel(*myValue));
 }
 
-_tstring CycleTextureSelectorState::getLabel(TEXTURE_SELECTOR_STATE state)
+string CycleTextureSelectorState::getLabel(TEXTURE_SELECTOR_STATE state)
 {
 	switch(state)
 	{
 	case TEXTURE_SELECTOR_HIDE:
-		return _T("Hiding texture selector");
+		return "Hiding texture selector";
 
 	case TEXTURE_SELECTOR_FLOOR:
-		return _T("Selecting the floor texture");
+		return "Selecting the floor texture";
 
 	case TEXTURE_SELECTOR_WALL:
-		return _T("Selecting the wall texture");
+		return "Selecting the wall texture";
 	}
 
-	return _T("INVALID STATE");
+	return "INVALID STATE";
 }
 
 void CycleTextureSelectorState::onMouseClick(void)
 {
-	ASSERT(myValue!=0, _T("myValue was NULL"));
+	ASSERT(myValue!=0, "myValue was NULL");
 
 	switch(getState())
 	{

@@ -53,7 +53,7 @@ public:
 	@param label The label for the watched value
 	@param value The value that will be watched
 	*/
-	ListElementTweaker(const _tstring &label, TYPE *value)
+	ListElementTweaker(const string &label, TYPE *value)
 	{
 		tweaker = new TweakerWidget<TYPE>(label, value, vec2(12.0f,1.0f));
 		tweaker->dumb = true;
@@ -106,7 +106,7 @@ public:
 	@param label The label for the watched value
 	@param value The value that will be watched
 	*/
-	ListElementTweakerString(const _tstring &label, _tstring *value)
+	ListElementTweakerString(const string &label, string *value)
 	{
 		tweaker = new TweakerWidgetString(label, value, vec2(12.0f,1.0f));
 		tweaker->dumb = true;
@@ -158,7 +158,7 @@ public:
 	@param label The label for the watched value
 	@param value The value that will be watched
 	*/
-	ListElementTweakerXML(const _tstring &label, XmlDataType *value)
+	ListElementTweakerXML(const string &label, XmlDataType *value)
 	{
 		tweaker = new TweakerWidgetXML(label, value, vec2(12.0f,1.0f));
 		tweaker->dumb = true;

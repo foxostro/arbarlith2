@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2005-2007 Game Creation Society
+Copyright Â© 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -40,21 +40,21 @@ class MusicEngine
 {
 private:
 	/** The file names for the different music clips */
-	vector<_tstring> clips;
+	vector<string> clips;
 
 	/**
 	Saves a tag containing a collection of music
 	@param music Music clip file names
 	@return Returns the XML source
 	*/
-	PropertyBag saveMusicTag(const vector<_tstring> &music) const;
+	PropertyBag saveMusicTag(const vector<string> &music) const;
 
 	/**
 	Loads a tag containing a collection of music
 	@param bag XML source
 	@param music Returns the music segemts contained within
 	*/
-	void loadMusicTag(const PropertyBag &bag, vector<_tstring> &music) const;
+	void loadMusicTag(const PropertyBag &bag, vector<string> &music) const;
 
 public:
 	/**

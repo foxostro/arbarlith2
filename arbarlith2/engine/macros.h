@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _MACROS_H_
 
 // Evaluates to the squared value
+#ifndef SQR
 #define SQR(x) ((x)*(x))
+#endif
+
+#define STRINGIFY(a) (#a)
+
+#ifndef M_PI
+#define M_PI ((double)3.14159265)
+#endif
+
+#ifndef M_E
+#define M_E ((double)2.71828183)
+#endif
 
 #endif

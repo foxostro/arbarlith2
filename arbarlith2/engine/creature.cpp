@@ -66,12 +66,12 @@ void Creature::resurrect(void)
 	ChangeAnimation(getIdleAnim());
 
 	// Start a resurrection particle effect
-	getZone().SpawnPfx(_T("data/particle/summon.xml"), getPos());
+	getZone().SpawnPfx("data/particle/summon.xml", getPos());
 }
 
 void Creature::OnPlace(void)
 {
-	getZone().SpawnPfx(_T("data/particle/summon.xml"), getPos());
+	getZone().SpawnPfx("data/particle/summon.xml", getPos());
 }
 
 bool Creature::isInProximity(OBJECT_ID actor) const
@@ -108,8 +108,8 @@ void Creature::heal(int healValue)
 	if(healthPoints > maxHealthPoints) healthPoints = maxHealthPoints;
 
 	// Heal FX
-	getZone().SpawnPfx(_T("data/particle/heal.xml"), getPos());
-	g_SoundSystem.play(_T("data/sound/magical-healing.wav"));
+	getZone().SpawnPfx("data/particle/heal.xml", getPos());
+	g_SoundSystem.play("data/sound/magical-healing.wav");
 }
 
 void Creature::damage(int amount, OBJECT_ID attackerID)
@@ -175,7 +175,7 @@ void Creature::clear(void)
 
 	// Reset data for this Creature
 	state = NORMAL;
-	m_strName			= _T("invalid name");
+	m_strName			= "invalid name";
 	timeUntilOrderCancelled		= 0.0f;
 	m_pFSM				= 0;
 	haveMessage			= false;
@@ -298,11 +298,11 @@ void Creature::update(float deltaTime)
 		}
 
 		starAngle = starAngle > 359 ? 0 : starAngle + deltaTime*starSpeed;
-		ChangeAnimation(_T("stun"));
+		ChangeAnimation("stun");
 		break;
 
 	case FROZEN:
-		ChangeAnimation(_T("stun"));
+		ChangeAnimation("stun");
 
 		stateTimer -= deltaTime;
 
@@ -325,7 +325,7 @@ void Creature::update(float deltaTime)
 		break;
 
 	case DEAD:
-		ChangeAnimation(_T("dead"));
+		ChangeAnimation("dead");
 
 		stateTimer -= deltaTime;
 
@@ -367,26 +367,26 @@ bool Creature::InjectCommand(const Command &wp)
 void Creature::createToolBar(ListPaneWidget *pane)
 {
 	Actor::createToolBar(pane);
-	pane->addElement(new ListElementTweaker<float>(_T("Top Speed"), &topSpeed));
+	pane->addElement(new ListElementTweaker<float>("Top Speed", &topSpeed));
 }
 
 bool Creature::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, _T("healthPoints"),				healthPoints);
-	saveTag(xml, dataFile, _T("maxHealthPoints"),			maxHealthPoints);
-	saveTag(xml, dataFile, _T("attackDamage"),				attackDamage);
-	saveTag(xml, dataFile, _T("weaponMultiplier"),			weaponMultiplier);
-	saveTag(xml, dataFile, _T("armorMultiplier"),			armorMultiplier);
-	saveTag(xml, dataFile, _T("attackCoolDown"),			attackCoolDown);
-	saveTag(xml, dataFile, _T("attackCoolDownMultiplier"),	attackCoolDownMultiplier);
-	saveTag(xml, dataFile, _T("spellCoolDownMultiplier"),	spellCoolDownMultiplier);
-	saveTag(xml, dataFile, _T("attackChargeTime"),			attackChargeTime);
-	saveTag(xml, dataFile, _T("damagePercentToStun"),		damagePercentToStun);
+	saveTag(xml, dataFile, "healthPoints",				healthPoints);
+	saveTag(xml, dataFile, "maxHealthPoints",			maxHealthPoints);
+	saveTag(xml, dataFile, "attackDamage",				attackDamage);
+	saveTag(xml, dataFile, "weaponMultiplier",			weaponMultiplier);
+	saveTag(xml, dataFile, "armorMultiplier",			armorMultiplier);
+	saveTag(xml, dataFile, "attackCoolDown",			attackCoolDown);
+	saveTag(xml, dataFile, "attackCoolDownMultiplier",	attackCoolDownMultiplier);
+	saveTag(xml, dataFile, "spellCoolDownMultiplier",	spellCoolDownMultiplier);
+	saveTag(xml, dataFile, "attackChargeTime",			attackChargeTime);
+	saveTag(xml, dataFile, "damagePercentToStun",		damagePercentToStun);
 
-	saveList(xml, _T("dyingSounds"),	dyingSounds);
-	saveList(xml, _T("painSounds"),	painSounds);
-	saveList(xml, _T("attackSounds"),	attackSounds);
-	saveList(xml, _T("attnSounds"),	attnSounds);
+	saveList(xml, "dyingSounds",	dyingSounds);
+	saveList(xml, "painSounds",	painSounds);
+	saveList(xml, "attackSounds",	attackSounds);
+	saveList(xml, "attnSounds",	attnSounds);
 
 	return Actor::saveTidy(xml, dataFile);
 }
@@ -409,26 +409,26 @@ void Creature::load(const PropertyBag &Bag)
 	Bag.getSym(knockBackSpeed);
 
 	// Load sound FX lists
-	loadList(Bag, _T("dyingSounds"),  dyingSounds);
-	loadList(Bag, _T("painSounds"),   painSounds);
-	loadList(Bag, _T("attackSounds"), attackSounds);
-	loadList(Bag, _T("attnSounds"),   attnSounds);
+	loadList(Bag, "dyingSounds",  dyingSounds);
+	loadList(Bag, "painSounds",   painSounds);
+	loadList(Bag, "attackSounds", attackSounds);
+	loadList(Bag, "attnSounds",   attnSounds);
 
 	// Get the name of the High-Level FSM to use
 	{
-		_tstring strFSM = _T("none");
+		string strFSM = "none";
 		delete(m_pFSM);
 
-		Bag.get(_T("fsm"), strFSM);
+		Bag.get("fsm", strFSM);
 		setFSM(strFSM);
 	}
 
-	starMaterial.loadTexture(_T("data/particle/star.png"), 0);
+	starMaterial.loadTexture("data/particle/star.png", 0);
 }
 
-void Creature::setFSM(const _tstring &strFSM)
+void Creature::setFSM(const string &strFSM)
 {
-	if(strFSM == _T("none"))
+	if(strFSM == "none")
 	{
 		SetStateMachine(0);
 	}
@@ -436,7 +436,7 @@ void Creature::setFSM(const _tstring &strFSM)
 	{
 		StateMachine *stateMachine = getStateMachineFactory().createPtr(strFSM);
 
-		ASSERT(stateMachine != 0, _T("Failed to create state machine: ") + strFSM);
+		ASSERT(stateMachine != 0, "Failed to create state machine: " + strFSM);
 
 		if(stateMachine == 0)
 		{
@@ -452,8 +452,8 @@ void Creature::setFSM(const _tstring &strFSM)
 
 void Creature::walkTowards(const vec3 &target, float speed)
 {
-	ASSERT(speed >= -1.0f, _T("Speed is too negative: ") + ftoa(speed));
-	ASSERT(speed <= +1.0f, _T("Speed is too positive: ") + ftoa(speed));
+	ASSERT(speed >= -1.0f, "Speed is too negative: " + ftoa(speed));
+	ASSERT(speed <= +1.0f, "Speed is too positive: " + ftoa(speed));
 
 	if(canMove())
 	{
@@ -501,7 +501,7 @@ void Creature::ProcessCommand(void)
 		switch(wp.getCommand())
 		{
 		case Command::FREEZE:
-			ASSERT(target != 0, _T("target was null"));
+			ASSERT(target != 0, "target was null");
 			lookAt(target->getPos());
 			break;
 
@@ -674,7 +674,7 @@ void Creature::Process_UseTarget(const CommandUse &wp)
 	if(distance < attackDistance)
 	{
 		// TODO: Have the Creature use the object
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 	}
 	else // if not, then let's move to the target
 	{
@@ -720,67 +720,67 @@ void Creature::OnMessage(Message_s Msg)
 	Actor::OnMessage(Msg);
 }
 
-const _tstring Creature::getPainAnim(void) const
+const string Creature::getPainAnim(void) const
 {
-	return _T("flinch");
+	return "flinch";
 }
 
-const _tstring Creature::getDyingAnim(void) const
+const string Creature::getDyingAnim(void) const
 {
-	return _T("dying");
+	return "dying";
 }
 
-const _tstring Creature::getAttackAnim(void) const
+const string Creature::getAttackAnim(void) const
 {
-	return _T("attack");
+	return "attack";
 }
 
-const _tstring Creature::getIdleAnim(void) const
+const string Creature::getIdleAnim(void) const
 {
-	return _T("idle");
+	return "idle";
 }
 
-const _tstring Creature::getRunFwdAnim(void) const
+const string Creature::getRunFwdAnim(void) const
 {
-	return _T("run");
+	return "run";
 }
 
-const _tstring Creature::getRunRevAnim(void) const
+const string Creature::getRunRevAnim(void) const
 {
-	return _T("runback");
+	return "runback";
 }
 
-const _tstring Creature::getRunLeftAnim(void) const
+const string Creature::getRunLeftAnim(void) const
 {
-	return _T("runleft");
+	return "runleft";
 }
 
-const _tstring Creature::getRunRightAnim(void) const
+const string Creature::getRunRightAnim(void) const
 {
-	return _T("runright");
+	return "runright";
 }
 
-const _tstring Creature::getRunLeftFwdAnim(void) const
+const string Creature::getRunLeftFwdAnim(void) const
 {
-	return _T("runleftforward");
+	return "runleftforward";
 }
 
-const _tstring Creature::getRunRightFwdAnim(void) const
+const string Creature::getRunRightFwdAnim(void) const
 {
-	return _T("runrightforward");
+	return "runrightforward";
 }
 
-const _tstring Creature::getRunLeftRevAnim(void) const
+const string Creature::getRunLeftRevAnim(void) const
 {
-	return _T("runleftback");
+	return "runleftback";
 }
 
-const _tstring Creature::getRunRightRevAnim(void) const
+const string Creature::getRunRightRevAnim(void) const
 {
-	return _T("runrightback");
+	return "runrightback";
 }
 
-const _tstring Creature::getWalkAnim(float speed) const
+const string Creature::getWalkAnim(float speed) const
 {
 	if(speed < minWalkingVelocity)
 	{
@@ -788,44 +788,44 @@ const _tstring Creature::getWalkAnim(float speed) const
 	}
 	else
 	{
-		return _T("run");
+		return "run";
 	}
 }
 
-const _tstring Creature::getDyingSfx(void) const
+const string Creature::getDyingSfx(void) const
 {
 	if(dyingSounds.empty())
-		return  _T("data/sound/default.wav"); // default sound
+		return  "data/sound/default.wav"; // default sound
 	else if(dyingSounds.size()==1)
 		return dyingSounds[0];
 	else
 		return dyingSounds[IRAND_RANGE(0, dyingSounds.size()-1)];
 }
 
-const _tstring Creature::getHurtSfx(void) const
+const string Creature::getHurtSfx(void) const
 {
 	if(painSounds.empty())
-		return  _T("data/sound/default.wav"); // default sound
+		return  "data/sound/default.wav"; // default sound
 	else if(painSounds.size()==1)
 		return painSounds[0];
 	else
 		return painSounds[IRAND_RANGE(0, painSounds.size()-1)];
 }
 
-const _tstring Creature::getAttackSfx(void) const
+const string Creature::getAttackSfx(void) const
 {
 	if(attackSounds.empty())
-		return  _T("data/sound/default.wav"); // default sound
+		return  "data/sound/default.wav"; // default sound
 	else if(attackSounds.size()==1)
 		return attackSounds[0];
 	else
 		return attackSounds[IRAND_RANGE(0, attackSounds.size()-1)];
 }
 
-const _tstring Creature::getAttnSfx(void) const
+const string Creature::getAttnSfx(void) const
 {
 	if(attnSounds.empty())
-		return  _T("data/sound/default.wav"); // default sound
+		return  "data/sound/default.wav"; // default sound
 	else if(attnSounds.size()==1)
 		return attnSounds[0];
 	else
@@ -913,43 +913,43 @@ void Creature::drawObjectDebugData(void) const
 {
 	const vec3 base = getPos() + vec3(0, getHeight(), 0);
 
-	_tstring stateString = _T("invalid state");
+	string stateString = "invalid state";
 	{
-		_tstring timeString = _T("(") + ftoa(stateTimer/1000, 1) + _T(") ");
+		string timeString = "(" + ftoa(stateTimer/1000, 1) + ") ";
 
 		switch(state)
 		{
-		case NORMAL:	stateString = timeString + _T("NORMAL");	break;
-		case STUNNED:	stateString = timeString + _T("STUNNED");	break;
-		case FROZEN:	stateString = timeString + _T("FROZEN");	break;
-		case DYING:	stateString = timeString + _T("DYING");		break;
-		case DEAD:	stateString = timeString + _T("DEAD");		break;
-		case GHOST:	stateString = timeString + _T("GHOST");		break;
+		case NORMAL:	stateString = timeString + "NORMAL";	break;
+		case STUNNED:	stateString = timeString + "STUNNED";	break;
+		case FROZEN:	stateString = timeString + "FROZEN";	break;
+		case DYING:	stateString = timeString + "DYING";		break;
+		case DEAD:	stateString = timeString + "DEAD";		break;
+		case GHOST:	stateString = timeString + "GHOST";		break;
 		};
 	}
 
-	_tstring commandString = _T("invalid command");
+	string commandString = "invalid command";
 	if(HasOrders())
 	{
 		// This is the current order
 		const Command &wp = getCurrentOrder();
 
-		_tstring timeString = _T("(") + ftoa(timeUntilOrderCancelled/1000, 1) + _T(" of ") + ftoa(wp.getTimeOut()/1000, 1) + _T(") ");
+		string timeString = "(" + ftoa(timeUntilOrderCancelled/1000, 1) + " of " + ftoa(wp.getTimeOut()/1000, 1) + " ";
 
 		// Handle the command
 		switch(wp.getCommand())
 		{
-		case Command::FREEZE:		commandString = timeString + _T("FREEZE");		break;
-		case Command::MOVE_POS:		commandString = timeString + _T("MOVE TO POS");		break;
-		case Command::MOVE_TARGET:	commandString = timeString + _T("MOVE TO TARGET");	break;
-		case Command::ATTACK:		commandString = timeString + _T("ATTACK");		break;
-		case Command::USE:		commandString = timeString + _T("USE");			break;
-		case Command::FLEE:		commandString = timeString + _T("FLEE");		break;
+		case Command::FREEZE:		commandString = timeString + "FREEZE";		break;
+		case Command::MOVE_POS:		commandString = timeString + "MOVE TO POS";		break;
+		case Command::MOVE_TARGET:	commandString = timeString + "MOVE TO TARGET";	break;
+		case Command::ATTACK:		commandString = timeString + "ATTACK";		break;
+		case Command::USE:		commandString = timeString + "USE";			break;
+		case Command::FLEE:		commandString = timeString + "FLEE";		break;
 		};
 	}
 	else
 	{
-		commandString = _T("No Orders");
+		commandString = "No Orders";
 	}
 
 	glPushMatrix();

@@ -115,8 +115,8 @@ void Trigger::onTrigger(void)
 
 bool Trigger::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveList(xml, _T("sounds"), sounds);
-	saveTag(xml, dataFile, _T("triggerRadius"), triggerRadius);
+	saveList(xml, "sounds", sounds);
+	saveTag(xml, dataFile, "triggerRadius", triggerRadius);
 
 	return Actor::saveTidy(xml, dataFile);
 }
@@ -125,19 +125,19 @@ void Trigger::load(const PropertyBag &xml)
 {
 	Actor::load(xml);
 
-	loadList(xml, _T("sounds"), sounds);
+	loadList(xml, "sounds", sounds);
 	if(!xml.getSym(triggerRadius))
 	{
 		triggerRadius = getCylinderRadius(); // default
 	}
 }
 
-_tstring Trigger::getTriggerSfx(void) const
+string Trigger::getTriggerSfx(void) const
 {
-	_tstring sfx;
+	string sfx;
 
 	if(sounds.empty())
-		sfx = _T("");
+		sfx = "";
 	else if(sounds.size()==1)
 		sfx = sounds[0];
 	else
@@ -149,7 +149,7 @@ _tstring Trigger::getTriggerSfx(void) const
 void Trigger::createToolBar(ListPaneWidget *pane)
 {
 	Actor::createToolBar(pane);
-	pane->addElement(new ListElementTweaker<float>	(_T("Trigger Radius"),	&triggerRadius));
+	pane->addElement(new ListElementTweaker<float>	("Trigger Radius",	&triggerRadius));
 }
 
 }; // namespace

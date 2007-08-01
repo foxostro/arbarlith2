@@ -40,7 +40,7 @@ OBJECT_ID Factory< Actor >::uniqueID = 1;
 ActorFactory& getActorFactory(void)
 {
 	static ActorFactory *factory = new ActorFactory; // HACK: this memory is never free'd
-	ASSERT(factory!=0, _T("Factory pointer was null"));
+	ASSERT(factory!=0, "Factory pointer was null");
 	return(*factory);
 }
 

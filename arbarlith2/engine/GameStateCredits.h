@@ -77,7 +77,7 @@ private:
 	float dimness;
 
 	/** The text to scroll through */
-	_tstring text;
+	string text;
 
 	/** Rate of scrolling through the text */
 	float scrollSpeed;

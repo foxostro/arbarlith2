@@ -56,8 +56,8 @@ void TileGate::clear(void)
 	unlockTime = 1000.0f;
 	reactionDelay = 0.0f;
 	initiallyLocked = true;
-	unlockSfx=_T("nill");
-	lockSfx=_T("nill");
+	unlockSfx="nill";
+	lockSfx="nill";
 }
 
 void TileGate::onTrigger(void)
@@ -104,14 +104,14 @@ void TileGate::load(const PropertyBag &xml)
 
 bool TileGate::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("lockedHeight"),	lockedHeight);
-	saveTag(xml, editorData, _T("unlockedHeight"),	unlockedHeight);
-	saveTag(xml, editorData, _T("lockTime"),		lockTime);
-	saveTag(xml, editorData, _T("unlockTime"),	unlockTime);
-	saveTag(xml, editorData, _T("reactionDelay"),	reactionDelay);
-	saveTag(xml, editorData, _T("initiallyLocked"),	initiallyLocked);
-	saveTag(xml, editorData, _T("unlockSfx"),		unlockSfx);
-	saveTag(xml, editorData, _T("lockSfx"),		lockSfx);
+	saveTag(xml, editorData, "lockedHeight",	lockedHeight);
+	saveTag(xml, editorData, "unlockedHeight",	unlockedHeight);
+	saveTag(xml, editorData, "lockTime",		lockTime);
+	saveTag(xml, editorData, "unlockTime",	unlockTime);
+	saveTag(xml, editorData, "reactionDelay",	reactionDelay);
+	saveTag(xml, editorData, "initiallyLocked",	initiallyLocked);
+	saveTag(xml, editorData, "unlockSfx",		unlockSfx);
+	saveTag(xml, editorData, "lockSfx",		lockSfx);
 
 	return Actor::saveTidy(xml, editorData);
 }
@@ -154,7 +154,7 @@ void TileGate::unlockGateImmediately(void)
 	Task *task = makeCallbackInterpolator(tile.getModifiableTileHeight(), tile.getTileHeight(), unlockedHeight, unlockTime, fn);
 	g_Application.addTask(task);
 
-	if(unlockSfx!=_T("nill"))
+	if(unlockSfx!="nill")
 		g_SoundSystem.play3D(unlockSfx, getPos());
 }
 
@@ -168,7 +168,7 @@ void TileGate::lockGateImmediately(void)
 	Task *task = makeCallbackInterpolator(tile.getModifiableTileHeight(), tile.getTileHeight(), lockedHeight, lockTime, fn);
 	g_Application.addTask(task);
 
-	if(lockSfx!=_T("nill"))
+	if(lockSfx!="nill")
 		g_SoundSystem.play3D(lockSfx, getPos());
 }
 
@@ -193,13 +193,13 @@ void TileGate::createToolBar(ListPaneWidget *pane)
 {
 	Actor::createToolBar(pane);
 
-	pane->addElement(new ListElementTweakerString	(_T("Unlocking Sfx"),		&unlockSfx));
-	pane->addElement(new ListElementTweakerString	(_T("Locking Sfx"),		&lockSfx));
-	pane->addElement(new ListElementTweaker<float>	(_T("Locked Height"),		&lockedHeight));
-	pane->addElement(new ListElementTweaker<float>	(_T("Unlocked Height"),		&unlockedHeight));
-	pane->addElement(new ListElementTweaker<float>	(_T("Locking Time"),		&lockTime));
-	pane->addElement(new ListElementTweaker<float>	(_T("Unlocking Time"),		&unlockTime));
-	pane->addElement(new ToggleWidgetText		(_T("Initially Locked"),	&initiallyLocked));
+	pane->addElement(new ListElementTweakerString	("Unlocking Sfx",		&unlockSfx));
+	pane->addElement(new ListElementTweakerString	("Locking Sfx",		&lockSfx));
+	pane->addElement(new ListElementTweaker<float>	("Locked Height",		&lockedHeight));
+	pane->addElement(new ListElementTweaker<float>	("Unlocked Height",		&unlockedHeight));
+	pane->addElement(new ListElementTweaker<float>	("Locking Time",		&lockTime));
+	pane->addElement(new ListElementTweaker<float>	("Unlocking Time",		&unlockTime));
+	pane->addElement(new ToggleWidgetText		("Initially Locked",	&initiallyLocked));
 }
 
 }; // namespace

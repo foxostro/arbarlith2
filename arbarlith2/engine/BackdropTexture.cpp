@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -66,10 +66,10 @@ void BackdropTexture::destroy(void)
 	clear();
 }
 
-void BackdropTexture::create(const _tstring &imageFileName_640x480,
-							 const _tstring &imageFileName_800x600,
-							 const _tstring &imageFileName_1024x768,
-							 const _tstring &imageFileName_1280x768)
+void BackdropTexture::create(const string &imageFileName_640x480,
+							 const string &imageFileName_800x600,
+							 const string &imageFileName_1024x768,
+							 const string &imageFileName_1280x768)
 {
 	destroy();
 
@@ -88,14 +88,14 @@ void BackdropTexture::create(const _tstring &imageFileName_640x480,
 
 
 	if(false==imageFileName_1024x768.empty())
-	{	
+	{
 		texture_1024x768 = new Material;
 		texture_1024x768->loadTexture(imageFileName_1024x768, 0);
-	}	
+	}
 
 
 	if(false==imageFileName_1280x768.empty())
-	{	
+	{
 		texture_1280x768 = new Material;
 		texture_1280x768->loadTexture(imageFileName_1280x768, 0);
 	}

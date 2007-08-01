@@ -80,7 +80,7 @@ void Bullet::update(float deltaTime)
 	}
 }
 
-void Bullet::shoot(OBJECT_ID owner, const vec3 &velocity, int damageValue, const _tstring &particleDef, const _tstring &explosionParticleFile, const _tstring &explosionSoundEffectFile, bool causesFreeze, float knockbackMagnitude)
+void Bullet::shoot(OBJECT_ID owner, const vec3 &velocity, int damageValue, const string &particleDef, const string &explosionParticleFile, const string &explosionSoundEffectFile, bool causesFreeze, float knockbackMagnitude)
 {
 	this->owner = owner;
 	this->damageValue = damageValue;

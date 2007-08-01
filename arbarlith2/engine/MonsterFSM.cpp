@@ -68,7 +68,7 @@ MonsterFSM::MonsterFSM(OBJECT_ID handle)
 
 vec3 MonsterFSM::getRandomWalk(void)
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 
 	const float radius = FRAND_RANGE(0.0f, thresholdWanderTooFar);
 
@@ -91,7 +91,7 @@ float MonsterFSM::distanceToTarget(void) const
 
 float MonsterFSM::distanceToCreature(const Creature &creature) const
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 
 	const float radiusA = m_Owner->getCylinderRadius();
 	const vec3 a = m_Owner->getPos();
@@ -112,7 +112,7 @@ float MonsterFSM::distanceToCreature(const Creature &creature) const
 
 float MonsterFSM::distanceToPoint(const vec3 &b) const
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 
 	const vec3 a = m_Owner->getPos();
 	vec3 delta = a - b;
@@ -123,7 +123,7 @@ float MonsterFSM::distanceToPoint(const vec3 &b) const
 
 bool MonsterFSM::haveTarget(void) const
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 
 	const ActorSet &s = m_Owner->getZone().getObjects();
 
@@ -152,8 +152,8 @@ bool MonsterFSM::haveTarget(void) const
 
 Creature& MonsterFSM::getTarget(void) const
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
-	ASSERT(haveTarget(), _T("This FSM does not have a target creature!"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
+	ASSERT(haveTarget(), "This FSM does not have a target creature!");
 
 	ActorSet &s = m_Owner->getZone().getObjects();
 
@@ -162,13 +162,13 @@ Creature& MonsterFSM::getTarget(void) const
 
 void MonsterFSM::orderTheAttack(void)
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 	m_Owner->QueueCommand(CommandAttack(targetCreatureHANDLE, FRAND_RANGE(0.7f, 1.0f)));
 }
 
 OBJECT_ID MonsterFSM::getClosestTarget(void) const
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 
 	const ActorSet s = getApplicableTargets();
 
@@ -177,7 +177,7 @@ OBJECT_ID MonsterFSM::getClosestTarget(void) const
 
 ActorSet MonsterFSM::getApplicableTargets(void) const
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 
 	ActorSet s = m_Owner->getZone().getObjects().exclude(m_Owner->m_ID).typeFilter<Player>();
 
@@ -203,7 +203,7 @@ ActorSet MonsterFSM::getApplicableTargets(void) const
 
 bool MonsterFSM::States( StateMachineEvent event, Message_s * msg, int state )
 {
-	ASSERT(m_Owner!=0, _T("Owner was NULL"));
+	ASSERT(m_Owner!=0, "Owner was NULL");
 
 // Do the state machine:
 BeginStateMachine

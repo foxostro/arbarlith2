@@ -51,7 +51,7 @@ public:
 	Monster(OBJECT_ID ID);
 
 	/** Gets the name of the proper attack animation */
-	const _tstring getAttackAnim(void) const;
+	const string getAttackAnim(void) const;
 
 	/** Destroys the player instance */
 	virtual void destroy(void);
@@ -66,7 +66,7 @@ public:
 	virtual void update(float deltaTime);
 
 	/** Gets the name of the proper idle animation */
-	virtual const _tstring getSpellCastAnim(void) const;
+	virtual const string getSpellCastAnim(void) const;
 
 	/**
 	Loads the object state

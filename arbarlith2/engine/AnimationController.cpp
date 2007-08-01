@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -45,33 +45,33 @@ AnimationController::AnimationController(void)
 
 void AnimationController::draw(void)
 {
-	ASSERT(m_nCurrentAnimation < m_Animations.size(), _tstring(_T("Invalid m_nCurrentAnimation: ")) + itoa((int)m_nCurrentAnimation));
+	ASSERT(m_nCurrentAnimation < m_Animations.size(), string("Invalid m_nCurrentAnimation: ") + itoa((int)m_nCurrentAnimation));
 
 	m_Animations[m_nCurrentAnimation].draw();
 }
 
 void AnimationController::update(float milliseconds)
 {
-	ASSERT(m_nCurrentAnimation < m_Animations.size(), _tstring(_T("Invalid m_nCurrentAnimation: ")) + itoa((int)m_nCurrentAnimation));
+	ASSERT(m_nCurrentAnimation < m_Animations.size(), string("Invalid m_nCurrentAnimation: ") + itoa((int)m_nCurrentAnimation));
 
 	m_Animations[m_nCurrentAnimation].update(milliseconds);
 }
 
 const AnimationSequence& AnimationController::getAnimation(void) const
 {
-	ASSERT(m_nCurrentAnimation < m_Animations.size(), _tstring(_T("Invalid animation handle: ")) + itoa((int)m_nCurrentAnimation));
+	ASSERT(m_nCurrentAnimation < m_Animations.size(), string("Invalid animation handle: ") + itoa((int)m_nCurrentAnimation));
 	return m_Animations[m_nCurrentAnimation];
 }
 
 AnimationSequence& AnimationController::getAnimation(void)
 {
-	ASSERT(m_nCurrentAnimation < m_Animations.size(), _tstring(_T("Invalid animation handle: ")) + itoa((int)m_nCurrentAnimation));
+	ASSERT(m_nCurrentAnimation < m_Animations.size(), string("Invalid animation handle: ") + itoa((int)m_nCurrentAnimation));
 	return m_Animations[m_nCurrentAnimation];
 }
 
 const AnimationSequence& AnimationController::getAnimation(size_t handle) const
 {
-	ASSERT(handle < m_Animations.size(), _tstring(_T("Invalid animation handle: ")) + itoa((int)handle));
+	ASSERT(handle < m_Animations.size(), string("Invalid animation handle: ") + itoa((int)handle));
 	return m_Animations[handle];
 }
 
@@ -81,8 +81,8 @@ size_t AnimationController::addAnimation(AnimationSequence &animation)
 	return m_Animations.size()-1;
 }
 
-size_t AnimationController::getAnimationHandle(const _tstring &name) const
-{	
+size_t AnimationController::getAnimationHandle(const string &name) const
+{
 	// for all animations
 	for(size_t i=0; i<m_Animations.size(); ++i)
 	{
@@ -100,9 +100,9 @@ size_t AnimationController::getAnimationHandle(const _tstring &name) const
 
 bool AnimationController::requestAnimationChange(size_t handle, float speed)
 {
-	ASSERT(handle				< m_Animations.size(),	_tstring(_T("Invalid handle: ")) + itoa((int)handle));
-	ASSERT(m_nCurrentAnimation	< m_Animations.size(),	_tstring(_T("Invalid m_nCurrentAnimation: ")) + itoa((int)m_nCurrentAnimation));
-	
+	ASSERT(handle				< m_Animations.size(),	string("Invalid handle: ") + itoa((int)handle));
+	ASSERT(m_nCurrentAnimation	< m_Animations.size(),	string("Invalid m_nCurrentAnimation: ") + itoa((int)m_nCurrentAnimation));
+
 	AnimationSequence &current = m_Animations[m_nCurrentAnimation];
 	AnimationSequence &requested = m_Animations[handle];
 
@@ -113,13 +113,13 @@ bool AnimationController::requestAnimationChange(size_t handle, float speed)
 	// Fail if the current animation has a higher priority
 	if(!current.isFinished() && current.getPriority() > requested.getPriority())
 		return false;
-	
+
 	// Fail if the requested animation is already playing
 	if(m_nCurrentAnimation == handle)
 	{
 		// change the speed though
 		m_Animations[m_nCurrentAnimation].setSpeed(speed);
-		
+
 		// If the current animation is already playing, but IS finished, then fall-through to restart the animation
 		if(!current.isFinished())
 			return false;
@@ -135,23 +135,23 @@ bool AnimationController::requestAnimationChange(size_t handle, float speed)
 
 float AnimationController::calculateCylindricalRadius(float Time)
 {
-	ASSERT(m_nCurrentAnimation < m_Animations.size(), _tstring(_T("Invalid m_nCurrentAnimation: ")) + itoa((int)m_nCurrentAnimation));
+	ASSERT(m_nCurrentAnimation < m_Animations.size(), string("Invalid m_nCurrentAnimation: ") + itoa((int)m_nCurrentAnimation));
 
 	return m_Animations[m_nCurrentAnimation].CalculateCylindricalRadius(Time);
 }
 
 float AnimationController::calculateRadius(float Time)
 {
-	ASSERT(m_nCurrentAnimation < m_Animations.size(), _tstring(_T("Invalid m_nCurrentAnimation: ")) + itoa((int)m_nCurrentAnimation));
+	ASSERT(m_nCurrentAnimation < m_Animations.size(), string("Invalid m_nCurrentAnimation: ") + itoa((int)m_nCurrentAnimation));
 
 	return m_Animations[m_nCurrentAnimation].CalculateRadius(Time);
 }
 
 float AnimationController::calculateHeight(float Time)
 {
-	ASSERT(m_nCurrentAnimation < m_Animations.size(), _tstring(_T("Invalid m_nCurrentAnimation: ")) + itoa((int)m_nCurrentAnimation));
+	ASSERT(m_nCurrentAnimation < m_Animations.size(), string("Invalid m_nCurrentAnimation: ") + itoa((int)m_nCurrentAnimation));
 
-	return m_Animations[getAnimationHandle(_T("idle"))].CalculateHeight(Time);
+	return m_Animations[getAnimationHandle("idle")].CalculateHeight(Time);
 }
 
 void AnimationController::clear(void)

@@ -47,7 +47,7 @@ void ListenerPrompt::clear(void)
 {
 	Listener::clear();
 
-	message = _T("ERROR: Invalid Message");
+	message = "ERROR: Invalid Message";
 	timeOut = 1000.0f;
 	handle = -1;
 }
@@ -76,8 +76,8 @@ void ListenerPrompt::load(const PropertyBag &xml)
 
 bool ListenerPrompt::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("message"), message);
-	saveTag(xml, editorData, _T("timeOut"), timeOut);
+	saveTag(xml, editorData, "message", message);
+	saveTag(xml, editorData, "timeOut", timeOut);
 	return Listener::saveTidy(xml, editorData);
 }
 
@@ -85,8 +85,8 @@ void ListenerPrompt::createToolBar(ListPaneWidget *pane)
 {
 	Listener::createToolBar(pane);
 
-	pane->addElement(new ListElementTweakerString	(_T("Message Text"),	&message));
-	pane->addElement(new ListElementTweaker<float>	(_T("Message Timeout"),	&timeOut));
+	pane->addElement(new ListElementTweakerString	("Message Text",	&message));
+	pane->addElement(new ListElementTweaker<float>	("Message Timeout",	&timeOut));
 }
 
 }; // namespace

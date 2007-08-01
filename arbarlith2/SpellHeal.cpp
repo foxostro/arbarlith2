@@ -55,11 +55,11 @@ void SpellHeal::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ow
 
 void SpellHeal::castSpell(void)
 {
-	ASSERT(zone!=0, _T("zone is null"));
+	ASSERT(zone!=0, "zone is null");
 
 	ActorSet &zoneObjects = zone->getObjects();
 
-	ASSERT(zoneObjects.isMember(ownerID), _T("owner is not present in the active zone"));
+	ASSERT(zoneObjects.isMember(ownerID), "owner is not present in the active zone");
 
 	Actor &owner = zoneObjects.get(ownerID);
 

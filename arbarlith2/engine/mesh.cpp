@@ -222,14 +222,14 @@ BoundingBox Mesh::calculateBoundingBox()
 
 void Mesh::interpolate(float bias, Mesh *pA, Mesh *pB)
 {
-	ASSERT(pA!=0, _T("Mesh::interpolate  ->  pA was null"));
-	ASSERT(pB!=0, _T("Mesh::interpolate  ->  pB was null"));
+	ASSERT(pA!=0, "Mesh::interpolate  ->  pA was null");
+	ASSERT(pB!=0, "Mesh::interpolate  ->  pB was null");
 
-	ASSERT(m_numOfVerts == pA->m_numOfVerts, _T("Mesh::interpolate  ->  Different number of vertices from keyframe A"));
-	ASSERT(m_numOfVerts == pB->m_numOfVerts, _T("Mesh::interpolate  ->  Different number of vertices from keyframe B"));
+	ASSERT(m_numOfVerts == pA->m_numOfVerts, "Mesh::interpolate  ->  Different number of vertices from keyframe A");
+	ASSERT(m_numOfVerts == pB->m_numOfVerts, "Mesh::interpolate  ->  Different number of vertices from keyframe B");
 
-	ASSERT(m_numOfFaces == pA->m_numOfFaces, _T("Mesh::interpolate  ->  Different number of faces from keyframe A"));
-	ASSERT(m_numOfFaces == pB->m_numOfFaces, _T("Mesh::interpolate  ->  Different number of faces from keyframe B"));
+	ASSERT(m_numOfFaces == pA->m_numOfFaces, "Mesh::interpolate  ->  Different number of faces from keyframe A");
+	ASSERT(m_numOfFaces == pB->m_numOfFaces, "Mesh::interpolate  ->  Different number of faces from keyframe B");
 
 	// Set some pointers up for the arrays to avoid dereferencing pA and pB a million times a frame
 	unsigned int *elA = pA->m_pElements;

@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -41,13 +41,13 @@ typedef Factory<StateMachine> StateMachineFactory;
 
 StateMachineFactory& getStateMachineFactory(void);template<class T> struct StateMachineRegistrar
 {
-	StateMachineRegistrar(const _tstring typeName)
+	StateMachineRegistrar(const string typeName)
 	{
 		::Engine::getStateMachineFactory().registerType<T>(typeName);
 	}
 };
 
-#define GEN_FSM_RTTI_CPP(TYPE, NAME) namespace { ::Engine::StateMachineRegistrar< TYPE > _registrar(_T(NAME)); }
+#define GEN_FSM_RTTI_CPP(TYPE, NAME) namespace { ::Engine::StateMachineRegistrar< TYPE > _registrar( NAME ); }
 
 } // namespace Engine
 

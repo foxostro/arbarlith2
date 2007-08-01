@@ -38,7 +38,7 @@ namespace Engine {
 Widget::Widget(void)
 : m_bVisible(true),
   dumb(false),
-  widgetName(_T("This widget has not been assigned a name.")),
+  widgetName("This widget has not been assigned a name."),
   dead(false),
   depressed(false),
   within(false),
@@ -54,7 +54,7 @@ Widget::~Widget(void)
 
 void Widget::AddChild(Widget *widget)
 {
-	ASSERT(widget!=0, _T("widget was NULL"));
+	ASSERT(widget!=0, "widget was NULL");
 	widget->parent = this;
 	m_Children.push_back(widget);
 }
@@ -195,7 +195,7 @@ void Widget::handleEvents(void)
 			if(depressed && !g_GUI.clickAlreadyProcessedThisTick)
 			{
 				g_GUI.clickAlreadyProcessedThisTick = true; // top-most widgets are updated first anyway
-				g_SoundSystem.play(_T("data/sound/click.wav"));
+				g_SoundSystem.play("data/sound/click.wav");
 				onMouseClick();
 			}
 		}

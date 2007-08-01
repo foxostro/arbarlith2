@@ -5,7 +5,7 @@ E-Mail: mailto:andrewfox@cmu.edu
 Changed to use SDL keys instead of VK keys by Tom Cauchois Feb 2006
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,7 @@ namespace Engine {
 
 EditWidget *EditWidget::currentlyFocused = 0;
 
-EditWidget::EditWidget(const _tstring &label, const vec2 &pos)
+EditWidget::EditWidget(const string &label, const vec2 &pos)
 : LabelWidget(label, pos),
   debounce(false),
   shift(false),
@@ -96,7 +96,7 @@ void EditWidget::onMouseClick(void)
 		currentlyFocused = 0;
 	}
 
-	g_SoundSystem.play(_T("data/sound/click.wav"));
+	g_SoundSystem.play("data/sound/click.wav");
 }
 
 bool EditWidget::hasFocus(void) const
@@ -119,7 +119,7 @@ void EditWidget::update(float)
 			{
 				debounce = true;
 
-				_tstring label = getLabel();
+				string label = getLabel();
 
 				switch(key)
 				{
@@ -127,67 +127,67 @@ void EditWidget::update(float)
 					label = label.substr(0, label.size()-1);
 					break;
 				case SDLK_SPACE:
-					label = label + _T(" ");
+					label = label + " ";
 					break;
 				case SDLK_SLASH: // '/?' key
 					if(shift)
 					{
-						label = label + _T("?");
+						label = label + "?";
 					}
 					else
 					{
-						label = label + _T("/");
+						label = label + "/";
 					}
 					break;
 				case SDLK_COLON:
-					label = label + _T(":");
+					label = label + ":";
 					break;
 				case SDLK_SEMICOLON:
-					label = label + _T(";");
+					label = label + ";";
 					break;
 				case SDLK_QUESTION:
-					label = label + _T("?");
+					label = label + "?";
 					break;
 				case SDLK_BACKSLASH: // '|\' key
 					if(shift)
 					{
-						label = label + _T("|");
+						label = label + "|";
 					}
 					else
 					{
-						label = label + _T("\\");
+						label = label + "\\";
 					}
 					break;
 				case SDLK_KP_DIVIDE:
-					label = label + _T("/");
+					label = label + "/";
 					break;
 				case SDLK_MINUS:
 					if(shift)
 					{
-						label = label + _T("_");
+						label = label + "_";
 					}
 					else
 					{
-						label = label + _T("-");
+						label = label + "-";
 					}
 					break;
 				case SDLK_KP_MINUS:
-					label = label + _T("-");
+					label = label + "-";
 					break;
 				case SDLK_KP_PERIOD:
 				case SDLK_PERIOD:
-					label = label + _T(".");
+					label = label + ".";
 					break;
 				case SDLK_COMMA:
-					label = label + _T(",");
+					label = label + ",";
 					break;
 				default:
 					{
 						if(key >= SDLK_a && key <= SDLK_z)
 						{
-							TCHAR keyName[2] =
+							char keyName[2] =
 							{
-								(TCHAR)(  shift ? toupper((int)key) : tolower((int)key)  ),
+								(char)(  shift ? toupper((int)key) : tolower((int)key)  ),
 								0
 							};
 
@@ -195,16 +195,16 @@ void EditWidget::update(float)
 						}
 						else
 						{
-							if(key==SDLK_1) label += shift ? _T("!") : _T("1");
-							if(key==SDLK_2) label += shift ? _T("@") : _T("2");
-							if(key==SDLK_3) label += shift ? _T("#") : _T("3");
-							if(key==SDLK_4) label += shift ? _T("$") : _T("4");
-							if(key==SDLK_5) label += shift ? _T("%") : _T("5");
-							if(key==SDLK_6) label += shift ? _T("^") : _T("6");
-							if(key==SDLK_7) label += shift ? _T("&") : _T("7");
-							if(key==SDLK_8) label += shift ? _T("*") : _T("8");
-							if(key==SDLK_9) label += shift ? _T("(") : _T("9");
-							if(key==SDLK_0) label += shift ? _T(")") : _T("0");
+							if(key==SDLK_1) label += shift ? "!" : "1";
+							if(key==SDLK_2) label += shift ? "@" : "2";
+							if(key==SDLK_3) label += shift ? "#" : "3";
+							if(key==SDLK_4) label += shift ? "$" : "4";
+							if(key==SDLK_5) label += shift ? "%" : "5";
+							if(key==SDLK_6) label += shift ? "^" : "6";
+							if(key==SDLK_7) label += shift ? "&" : "7";
+							if(key==SDLK_8) label += shift ? "*" : "8";
+							if(key==SDLK_9) label += shift ? "(" : "9";
+							if(key==SDLK_0) label += shift ? ")" : "0";
 						}
 					}
 					break;
@@ -228,4 +228,4 @@ void EditWidget::update(float)
 	hadFocusLastTick = hasFocus();
 }
 
-}; // namespace
+} // namespace Engine

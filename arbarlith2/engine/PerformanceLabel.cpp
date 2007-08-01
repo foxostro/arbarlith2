@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,10 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdafx.h"
 #include "PerformanceLabel.h"
 
-namespace Engine { 
+namespace Engine {
 
 PerformanceLabel::PerformanceLabel(const vec2 &pos, Application &app)
-: LabelWidget(_T("PerformanceLabel has not gathered stats yet"), pos, white, FONT_SIZE_HUGE, app.fontLarge),
+: LabelWidget("PerformanceLabel has not gathered stats yet", pos, white, FONT_SIZE_HUGE, app.fontLarge),
   application(app)
 {
 	m_bVisible = true;
@@ -42,7 +42,7 @@ PerformanceLabel::PerformanceLabel(const vec2 &pos, Application &app)
 
 void PerformanceLabel::update(float)
 {
-	setLabel(_tstring(_T("FPS: ")) + itoa((int)application.getFrameRate()));
+	setLabel(string("FPS: ") + itoa((int)application.getFrameRate()));
 }
 
 } // namespace Engine

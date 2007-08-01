@@ -44,7 +44,7 @@ bool CheckID(TextureHandle &tex, unsigned chkid)
 	return tex.getID()==chkid;
 }
 
-bool CheckStr(TextureHandle &tex, _tstring chkstr)
+bool CheckStr(TextureHandle &tex, string chkstr)
 {
 	return tex.getFileName()==chkstr;
 }
@@ -74,7 +74,7 @@ TextureManager::~TextureManager()
 	}
 }
 
-TextureHandle* TextureManager::Load(const _tstring &fileName)
+TextureHandle* TextureManager::Load(const string &fileName)
 {
 	Image img;
 	TextureHandle tex;
@@ -99,7 +99,7 @@ TextureHandle* TextureManager::Load(const _tstring &fileName)
 
 TextureHandle* TextureManager::Create(Image *img)
 {
-	ASSERT(img!=0, _T("TextureManager::Create - NULL pointer passed."));
+	ASSERT(img!=0, "TextureManager::Create - NULL pointer passed.");
 	return Create(*img);
 }
 
@@ -116,13 +116,13 @@ TextureHandle* TextureManager::Create(Image &img)
 	CHECK_GL_ERROR();
 
 	// pull image data out so we can see it in the debugger
-	const _tstring &fileName = img.getFileName();
+	const string &fileName = img.getFileName();
 	const int width = img.getWidth();
 	const int height = img.getHeight();
 	const int depth = img.getDepth();
 	const unsigned char *data = img.getImage();
 
-	ASSERT(depth == 3 || depth == 4, _T("Image either be RGBA or RGB"));
+	ASSERT(depth == 3 || depth == 4, "Image either be RGBA or RGB");
 
 	// now build mipmaps from the texture data
 	CHECK_GL_ERROR();
@@ -163,7 +163,7 @@ void TextureManager::Set(unsigned texID)
 
 TextureHandle* TextureManager::getHandle(unsigned int texid)
 {
-	ASSERT(!tlist.empty(), _T("No textured allocated"));
+	ASSERT(!tlist.empty(), "No textured allocated");
 
 	// find the id
 	TListType::iterator found = find_if(tlist.begin(), tlist.end(), bind(CheckID, _1, texid));
@@ -174,14 +174,14 @@ TextureHandle* TextureManager::getHandle(unsigned int texid)
 	}
 	else
 	{
-		FAIL(_T("id not found"));
+		FAIL("id not found");
 		return 0;
 	}
 }
 
-TextureHandle* TextureManager::getHandle(const _tstring &str)
+TextureHandle* TextureManager::getHandle(const string &str)
 {
-	ASSERT(!tlist.empty(), _T("No textures allocated."));
+	ASSERT(!tlist.empty(), "No textures allocated.");
 
 	// find the name
 	TListType::iterator found = find_if(tlist.begin(), tlist.end(), bind(CheckStr, _1, str));
@@ -192,7 +192,7 @@ TextureHandle* TextureManager::getHandle(const _tstring &str)
 	}
 	else
 	{
-		FAIL(_T("id not found"));
+		FAIL("id not found");
 		return 0;
 	}
 }
@@ -216,7 +216,7 @@ void TextureManager::Delete(unsigned int texid)
 	}
 }
 
-void TextureManager::Delete(const _tstring &fileName)
+void TextureManager::Delete(const string &fileName)
 {
 	// anything to do?
 	if(!tlist.empty())

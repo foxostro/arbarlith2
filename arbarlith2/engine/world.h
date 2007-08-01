@@ -86,9 +86,9 @@ public:
 	Gets the default file name to save or load the world from
 	@param name The name of the world
 	*/
-	static _tstring getDefaultSaveFileName(const _tstring &name)
+	static string getDefaultSaveFileName(const string &name)
 	{
-		return _T("data/zones/") + name + _T(".xml");
+		return "data/zones/" + name + ".xml";
 	}
 
 	/**
@@ -107,7 +107,7 @@ public:
 	Saves the world to file
 	@param fileName Name of the file to write
 	*/
-	inline void saveToFile(const _tstring &fileName) const
+	inline void saveToFile(const string &fileName) const
 	{
 		save().saveToFile(fileName);
 	}
@@ -123,7 +123,7 @@ public:
 	@param fileName XML source
 	@param xml data source
 	*/
-	void loadFromFile(const _tstring &fileName);
+	void loadFromFile(const string &fileName);
 
 	/** Loads the world from file */
 	inline void loadFromFile(void)
@@ -135,7 +135,7 @@ public:
 	Retrieves the name of the realm
 	@return Name of the realm
 	*/
-	inline const _tstring& getName(void) const
+	inline const string& getName(void) const
 	{
 		return name;
 	}
@@ -144,7 +144,7 @@ public:
 	Sets the name of the realm
 	@param name New name of the realm
 	*/
-	inline void setName(const _tstring &name)
+	inline void setName(const string &name)
 	{
 		this->name = name;
 	}
@@ -206,7 +206,7 @@ public:
 	@param vPos The starting position of the particle system
 	@return Handle to the particle system
 	*/
-	size_t SpawnPfx(_tstring strFile, const vec3 &vPos);
+	size_t SpawnPfx(string strFile, const vec3 &vPos);
 
 	/**
 	Gets the light manager
@@ -295,24 +295,14 @@ public:
 	@param handle The handle to the particle system
 	@return particle system
 	*/
-	inline ParticleSystem& getParticleSystem(size_t handle)
-	{
-		ASSERT(handle<particles.size(), _T("handle is invalid!"));
-		ASSERT(particles[handle]!=0, _T("particles[handle] is null!"));
-		return *particles[handle];
-	}
+	ParticleSystem& getParticleSystem(size_t handle);
 
 	/**
 	Gets a particle system, given its handle
 	@param handle The handle to the particle system
 	@return particle system
 	*/
-	inline const ParticleSystem& getParticleSystem(size_t handle) const
-	{
-		ASSERT(handle<particles.size(), _T("handle is invalid!"));
-		ASSERT(particles[handle]!=0, _T("particles[handle] is null!"));
-		return *particles[handle];
-	}
+	const ParticleSystem& getParticleSystem(size_t handle) const;
 
 private:
 	/**
@@ -366,7 +356,7 @@ public:
 	Name of the World
 	@todo Engine::World::name should be made private
 	*/
-	_tstring name;
+	string name;
 
 private:
 	/** All lights in the World */

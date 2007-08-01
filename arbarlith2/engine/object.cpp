@@ -60,30 +60,30 @@ namespace Engine {
 
 vec3 Project(const vec3 &p); // stdafx.cpp
 
-const _tstring DEFAULT_MODEL = _T("data/cylinder/model.md3xml");
+const string DEFAULT_MODEL = "data/cylinder/model.md3xml";
 
 
-AnimationController* createAnimationController(const _tstring &fileName)
+AnimationController* createAnimationController(const string &fileName)
 {
 	AnimationController *controller = 0;
 
 	if(!fileName.empty())
 	{
-		_tstring fileExtension = toLowerCase(File::getExtension(fileName));
+		string fileExtension = toLowerCase(File::getExtension(fileName));
 
-		if(fileExtension == _T(".3dsxml"))
+		if(fileExtension == ".3dsxml")
 		{
 			_3dsLoader _3ds;
 			controller = _3ds.load(fileName);
 		}
-		else if(fileExtension == _T(".md3xml"))
+		else if(fileExtension == ".md3xml")
 		{
 			Md3Loader md3;
 			controller = md3.load(fileName);
 		}
 		else
 		{
-			ERR(_T("Unknown model format! Expected *.md3xml or *.3dsxml; instead got ") + fileName);
+			ERR("Unknown model format! Expected *.md3xml or *.3dsxml; instead got " + fileName);
 		}
 	}
 
@@ -123,7 +123,7 @@ void Actor::clear(void)
 	m_Mass				= 0.0f;
 	topSpeed			= 2.0f;
 	m_Scale				= 1.0f;
-	m_strName			= _T("Please name this object!");
+	m_strName			= "Please name this object!";
 	cylinderRadius			= 0.0f;
 	sphereRadius			= 0.0f;
 	isLit				= true;
@@ -186,7 +186,7 @@ void Actor::lookAt(const vec3 &center)
 	orientation.set(vec3(0,0,0), x, y, z);
 }
 
-void Actor::LoadModel(const _tstring &fileName)
+void Actor::LoadModel(const string &fileName)
 {
 	m_pModel = createAnimationController(fileName);
 
@@ -194,16 +194,16 @@ void Actor::LoadModel(const _tstring &fileName)
 	if(m_pModel == 0)
 	{
 		// Failure
-		ERR(_tstring(_T("Failed to load model file: ")) + fileName);
+		ERR(string("Failed to load model file: ") + fileName);
 
 		// Try a placeholder instead
 		m_pModel = createAnimationController(DEFAULT_MODEL);
 
-		ASSERT(m_pModel!=0,	_T("failed to load model and failed to load placeholder"));
+		ASSERT(m_pModel!=0,	"failed to load model and failed to load placeholder");
 
 		if(m_pModel==0)
 		{
-			ERR(_T("failed to load model and failed to load placeholder"));
+			ERR("failed to load model and failed to load placeholder");
 		}
 		else
 		{
@@ -220,7 +220,7 @@ void Actor::LoadModel(const _tstring &fileName)
 	setHeight(m_desiredHeight);
 
 	// Use the idle animation until another is selected
-	ChangeAnimation(_T("idle"));
+	ChangeAnimation("idle");
 }
 
 void Actor::Place(const vec3 &pos)
@@ -322,7 +322,7 @@ void Actor::setHeight(float h)
 
 		if(height==0)
 		{
-			TRACE(_tstring(_T("Height was zero, but we'll just pretend its merely tiny: ")) + m_strModelFilename);
+			TRACE(string("Height was zero, but we'll just pretend its merely tiny: ") + m_strModelFilename);
 			height = 0.01f;
 		}
 
@@ -584,12 +584,12 @@ PropertyBag Actor::save(void) const
 
 	if(editorDataFile.empty())
 	{
-		Bag.add(_T("type"), getTypeString());
+		Bag.add("type", getTypeString());
 	}
 	else
 	{
 		// Save a reference to the data file
-		Bag.add(_T("@inherit"), editorDataFile);
+		Bag.add("@inherit", editorDataFile);
 
 		// We will make comparisons to stored data
 		dataFile.loadFromFile(editorDataFile);
@@ -602,20 +602,20 @@ PropertyBag Actor::save(void) const
 
 bool Actor::saveTidy(PropertyBag &Bag, PropertyBag &dataFile) const
 {
-	saveTag(Bag, dataFile, _T("height"),			m_desiredHeight);
-	saveTag(Bag, dataFile, _T("mass"),				m_Mass);
-	saveTag(Bag, dataFile, _T("speed"),				topSpeed);
-	saveTag(Bag, dataFile, _T("model"),				m_strModelFilename);
-	saveTag(Bag, dataFile, _T("name"),				m_strName);
-	saveTag(Bag, dataFile, _T("castShadows"),			castShadows);
-	saveTag(Bag, dataFile, _T("solid"),				solid);
-	saveTag(Bag, dataFile, _T("showModel"),			showModel);
-	saveTag(Bag, dataFile, _T("floating"),			floating);
-	saveTag(Bag, dataFile, _T("look"),				orientation.getAxisZ());
-	saveTag(Bag, dataFile, _T("up"),				orientation.getAxisY());
-	saveTag(Bag, dataFile, _T("frictionAcceleration"),	frictionAcceleration);
+	saveTag(Bag, dataFile, "height",			m_desiredHeight);
+	saveTag(Bag, dataFile, "mass",				m_Mass);
+	saveTag(Bag, dataFile, "speed",				topSpeed);
+	saveTag(Bag, dataFile, "model",				m_strModelFilename);
+	saveTag(Bag, dataFile, "name",				m_strName);
+	saveTag(Bag, dataFile, "castShadows",			castShadows);
+	saveTag(Bag, dataFile, "solid",				solid);
+	saveTag(Bag, dataFile, "showModel",			showModel);
+	saveTag(Bag, dataFile, "floating",			floating);
+	saveTag(Bag, dataFile, "look",				orientation.getAxisZ());
+	saveTag(Bag, dataFile, "up",				orientation.getAxisY());
+	saveTag(Bag, dataFile, "frictionAcceleration",	frictionAcceleration);
 
-	Bag.add(_T("pos"), position);
+	Bag.add("pos", position);
 
 	return true;
 }
@@ -626,13 +626,13 @@ void Actor::load(const PropertyBag &Bag)
 	destroy();
 
 	// kept to support previous versions of the file format
-	if(Bag.get(_T("radius"), m_desiredHeight)) m_desiredHeight*=2.0f;
+	if(Bag.get("radius", m_desiredHeight)) m_desiredHeight*=2.0f;
 
 	// Load the object data
-	Bag.get(_T("height"), m_desiredHeight);
-	Bag.get(_T("mass"),   m_Mass);
-	Bag.get(_T("speed"),  topSpeed);
-	Bag.get(_T("name"),   m_strName);
+	Bag.get("height", m_desiredHeight);
+	Bag.get("mass",   m_Mass);
+	Bag.get("speed",  topSpeed);
+	Bag.get("name",   m_strName);
 
 	Bag.getSym(showModel);
 	Bag.getSym(solid);
@@ -641,7 +641,7 @@ void Actor::load(const PropertyBag &Bag)
 
 	// Set the orientation matrix
 	vec3 zAxis (0,0,1), yAxis(0,1,0), xAxis(1,0,0);
-	Bag.get(_T("look"), &zAxis);
+	Bag.get("look", &zAxis);
 	xAxis = yAxis.cross(zAxis).getNormal();
 
 	orientation.setAxisZ(zAxis);
@@ -650,13 +650,13 @@ void Actor::load(const PropertyBag &Bag)
 	orientation.setPos(vec3(0,0,0));
 
 	// Set the spawn point and location of the object
-	Bag.get(_T("pos"), &position);
+	Bag.get("pos", &position);
 	spawnPoint = validatedPos = position;
 
-	ASSERT(getZone().getMap().onATile(position.x, position.z), _T("position is outside of the bounds of the map"));
+	ASSERT(getZone().getMap().onATile(position.x, position.z), "position is outside of the bounds of the map");
 
 	// Load model data from xml, then load the specified resources
-	if(Bag.get(_T("model"), m_strModelFilename) == true)
+	if(Bag.get("model", m_strModelFilename) == true)
 	{
 		LoadModel(m_strModelFilename);
 	}
@@ -666,9 +666,9 @@ void Actor::load(const PropertyBag &Bag)
 	Bag.getSym(castShadows);
 }
 
-bool Actor::ChangeAnimation(const _tstring &name, float speed)
+bool Actor::ChangeAnimation(const string &name, float speed)
 {
-	ASSERT(m_pModel!=0, _T("Actor::ChangeAnimation  ->  Null Pointer: m_pModel."));
+	ASSERT(m_pModel!=0, "Actor::ChangeAnimation  ->  Null Pointer: m_pModel.");
 
 	if(m_pModel != 0)
 	{
@@ -682,7 +682,7 @@ bool Actor::ChangeAnimation(const _tstring &name, float speed)
 
 bool Actor::ChangeAnimation(size_t nIdx, float Speed)
 {
-	ASSERT(m_pModel!=0, _T("Actor::ChangeAnimation  ->  Null Pointer: m_pModel."));
+	ASSERT(m_pModel!=0, "Actor::ChangeAnimation  ->  Null Pointer: m_pModel.");
 
 	if(m_pModel)
 	{
@@ -697,7 +697,7 @@ bool Actor::ChangeAnimation(size_t nIdx, float Speed)
 #ifdef _DEBUG
 void Actor::OnMessage(Message_s Msg)
 {
-	ASSERT(m_ID == Msg.m_Recipient, _T("Actor::OnMessage  ->  Message was mailed to the wrong object."));
+	ASSERT(m_ID == Msg.m_Recipient, "Actor::OnMessage  ->  Message was mailed to the wrong object.");
 }
 #else
 void Actor::OnMessage(Message_s){}
@@ -709,7 +709,7 @@ bool Actor::wasCollision(OBJECT_ID id)
 	{
 		Actor *actor = *iter;
 
-		ASSERT(actor!=0, _T("actor was null"));
+		ASSERT(actor!=0, "actor was null");
 
 		if(actor->m_ID==id)
 		{
@@ -725,16 +725,16 @@ void Actor::OnCollision(Actor &)
 
 void Actor::createToolBar(ListPaneWidget *pane)
 {
-	ASSERT(pane!=0, _T("The actor pane was expected to have been created before now!"));
+	ASSERT(pane!=0, "The actor pane was expected to have been created before now!");
 
 	// Create a new tool bar
-	pane->addElement(new ToggleWidgetText(		_T("Cast Shadows"),	&castShadows));
-	pane->addElement(new ToggleWidgetText(		_T("Lit"),			&isLit));
-	pane->addElement(new ListElementTweakerString(	_T("Name"),			&m_strName));
-	pane->addElement(new ListElementTweaker<float>(	_T("Height (m)"),		&m_desiredHeight));
-	pane->addElement(new ToggleWidgetText(		_T("Visible"),		&showModel));
-	/*pane->addElement(new ListElementTweakerString(_T("Model"),		&m_strModelFilename));*/
-	pane->addElement(new ListElementTweakerXML(	_T("Position"),		&position));
+	pane->addElement(new ToggleWidgetText(		"Cast Shadows",	&castShadows));
+	pane->addElement(new ToggleWidgetText(		"Lit",			&isLit));
+	pane->addElement(new ListElementTweakerString(	"Name",			&m_strName));
+	pane->addElement(new ListElementTweaker<float>(	"Height (m)",		&m_desiredHeight));
+	pane->addElement(new ToggleWidgetText(		"Visible",		&showModel));
+	/*pane->addElement(new ListElementTweakerString("Model",		&m_strModelFilename));*/
+	pane->addElement(new ListElementTweakerXML(	"Position",		&position));
 }
 
 void Actor::sync(void)
@@ -753,29 +753,29 @@ float Actor::getRealAngleY(void) const
 	return acosf(axis.dot(x));
 }
 
-void Actor::saveList(PropertyBag& xml, const _tstring& name, const vector<_tstring>& list) const
+void Actor::saveList(PropertyBag& xml, const string& name, const vector<string>& list) const
 {
 	PropertyBag bag;
 
-	for(vector<_tstring>::const_iterator iter=list.begin(); iter!=list.end(); ++iter)
+	for(vector<string>::const_iterator iter=list.begin(); iter!=list.end(); ++iter)
 	{
-		bag.add(_T("file"), (*iter));
+		bag.add("file", (*iter));
 	}
 
 	xml.add(name, bag);
 }
 
-void Actor::loadList(const PropertyBag& xml, const _tstring& name, vector<_tstring>& list)
+void Actor::loadList(const PropertyBag& xml, const string& name, vector<string>& list)
 {
 	PropertyBag bag;
 
 	if(xml.get(name, bag))
 	{
-		const size_t numberOfFiles = bag.getNumInstances(_T("file"));
+		const size_t numberOfFiles = bag.getNumInstances("file");
 		for(size_t i=0; i<numberOfFiles; ++i)
 		{
-			_tstring fileName;
-			bag.get(_T("file"), fileName, i);
+			string fileName;
+			bag.get("file", fileName, i);
 			list.push_back(fileName);
 		}
 	}
@@ -852,7 +852,7 @@ bool Actor::isAnythingInProximity(const ActorSet &s, OBJECT_ID &handle) const
 	return isAnythingInProximity(s, handle, getCylinderRadius());
 }
 
-void Actor::loadFromFile(const _tstring &fileName)
+void Actor::loadFromFile(const string &fileName)
 {
 	PropertyBag data;
 	data.loadFromFile(fileName);

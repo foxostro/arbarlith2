@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-WindowWidget::WindowWidget(float x, float y, const _tstring &imageFile)
+WindowWidget::WindowWidget(float x, float y, const string &imageFile)
 {
 	setRelativePos(x,y);
 	depressed = false;
@@ -53,7 +53,7 @@ WindowWidget::WindowWidget(float x, float y, const _tstring &imageFile)
 	matHover.loadTexture(imageFile, 0);
 }
 
-WindowWidget::WindowWidget(float x, float y, const _tstring &imageFile, const _tstring &depressedFile)
+WindowWidget::WindowWidget(float x, float y, const string &imageFile, const string &depressedFile)
 {
 	setRelativePos(x,y);
 	depressed = false;
@@ -69,7 +69,7 @@ WindowWidget::WindowWidget(float x, float y, const _tstring &imageFile, const _t
 	matHover.loadTexture(imageFile, 0);
 }
 
-WindowWidget::WindowWidget(float x, float y, const _tstring &imageFile, const _tstring &depressedFile, const _tstring &hoverFile)
+WindowWidget::WindowWidget(float x, float y, const string &imageFile, const string &depressedFile, const string &hoverFile)
 {
 	setRelativePos(x,y);
 	depressed = false;

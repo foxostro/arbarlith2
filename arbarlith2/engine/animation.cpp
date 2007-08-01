@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@ namespace Engine {
 AnimationSequence::AnimationSequence
 (
 	vector<KeyFrame> keyFrames,
-	const _tstring &name,
+	const string &name,
 	float priority,
 	bool looping,
 	size_t start,
@@ -208,16 +208,27 @@ void AnimationSequence::calculateFOV(mat4 &mat, float &lxMax, float &lyMax) cons
 	}
 }
 
-const Model& AnimationSequence::getFrame(float millisecondsIntoAnimation) const
+const Model& AnimationSequence::getFrame(float milliseconds) const
 {
-	ASSERT(!keyFrames.empty(), _T("no keyframes in the animation sequence"));
-	ASSERT(millisecondsIntoAnimation<=getLength(), _T("Given time is past the end of the animation"));
-	ASSERT(millisecondsIntoAnimation>=0.0f, _T("Given time is before the beginning of the animation"));
+	ASSERT(!keyFrames.empty(), "no keyframes in the animation sequence");
+	ASSERT(milliseconds>=0.0f, "Given time is before the beginning of the animation");
+
+	/*
+
+	TODO: Find out why this assert trips up so much in the Linux build:
+
+	ASSERT(milliseconds<=getLength(), "Given time is past the end of the animation");
+
+	*/
+
 
 	if(keyFrames.size() == 1)
 		return(keyFrames[0].getMeshes());
 
-	const float frameOfAnimation = (millisecondsIntoAnimation / getLength()) * (keyFrames.size() - 1);
+	if(milliseconds > getLength())
+		milliseconds = getLength();
+
+	const float frameOfAnimation = (milliseconds / getLength()) * (keyFrames.size() - 1);
 	const size_t lowerFrame = (size_t)floor(frameOfAnimation);
 	const size_t upperFrame = (size_t)ceil(frameOfAnimation);
 	const float bias = frameOfAnimation - lowerFrame;
@@ -227,10 +238,10 @@ const Model& AnimationSequence::getFrame(float millisecondsIntoAnimation) const
 
 const Model& AnimationSequence::getFrame(size_t lowerFrame, size_t upperFrame, float bias) const
 {
-	ASSERT(!keyFrames.empty(), _T("no keyframes in the animation sequence"));
-	ASSERT(lowerFrame < keyFrames.size(), _T("lower keyframe out of range:") + itoa((int)lowerFrame));
-	ASSERT(upperFrame < keyFrames.size(), _T("upper keyframe out of range: ")+ itoa((int)upperFrame));
-	ASSERT(bias >= 0.0f && bias <= 1.0f, _T("bias is out of range: ") + ftoa(bias));
+	ASSERT(!keyFrames.empty(), "no keyframes in the animation sequence");
+	ASSERT(lowerFrame < keyFrames.size(), "lower keyframe out of range:" + itoa((int)lowerFrame));
+	ASSERT(upperFrame < keyFrames.size(), "upper keyframe out of range: "+ itoa((int)upperFrame));
+	ASSERT(bias >= 0.0f && bias <= 1.0f, "bias is out of range: " + ftoa(bias));
 
 	if(lowerFrame == upperFrame)
 		return(keyFrames[lowerFrame].getMeshes());

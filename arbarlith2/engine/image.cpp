@@ -47,7 +47,7 @@ Image::Image(void)
 :imageName(0)
 {}
 
-Image::Image(const _tstring &fileName)
+Image::Image(const string &fileName)
 :imageName(0)
 {
 	load(fileName);
@@ -59,16 +59,16 @@ Image::~Image()
 	ilDeleteImages(1, &imageName);
 }
 
-bool Image::load(const _tstring &_fileName)
+bool Image::load(const string &_fileName)
 {
 	PROFILE
 
-	const _tstring fileName = File::fixFilename(pathAppend(getWorkingDirectory(), _fileName));
+	const string fileName = File::fixFilename(pathAppend(getWorkingDirectory(), _fileName));
 
 	// anything to do?
 	if(fileName.empty())
 	{
-		FAIL(_T("Cannot load image when filename is empty!"));
+		FAIL("Cannot load image when filename is empty!");
 		return false;
 	}
 
@@ -80,19 +80,19 @@ bool Image::load(const _tstring &_fileName)
 	ilBindImage(imageName);
 
 
-	char *s = toAnsiCharArray(fileName);
+	char *s = strdup(fileName);
 
 	if(!ilLoadImage(s))
 	{
 		ILenum err;
 		while((err=ilGetError()) != IL_NO_ERROR)
 		{
-			ERR(_tstring(_T("IL Error: ")) + itoa(err));
+			ERR(string("IL Error: ") + itoa(err));
 		}
 
 		delete[] s;
 
-		FAIL(_tstring(_T("Failed to load image: ")) + fileName);
+		FAIL(string("Failed to load image: ") + fileName);
 
 		return false;
 	}

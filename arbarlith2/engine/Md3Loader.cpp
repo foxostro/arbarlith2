@@ -279,9 +279,9 @@ public:
 	Vertex* vertices;
 };
 
-AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
+AnimationController* Md3Loader::loadFromFile(const string &fileName) const
 {
-	_tstring md3;
+	string md3;
 
 	PropertyBag xml;
 	xml.loadFromFile(fileName);
@@ -290,14 +290,14 @@ AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
 	AnimationController *controller = new AnimationController();
 
 	// Get key frames from the first source
-	xml.get(_T("md3"), md3, 0);
+	xml.get("md3", md3, 0);
 	vector<KeyFrame> keyFrames = loadKeyFrames(md3);
 
 	// Get the rest of the key frames
-	const size_t numMD3 = xml.getNumInstances(_T("md3"));
+	const size_t numMD3 = xml.getNumInstances("md3");
 	for(size_t i=1; i<numMD3; ++i)
 	{
-		xml.get(_T("md3"), md3, i);
+		xml.get("md3", md3, i);
 
 		vector<KeyFrame> k = loadKeyFrames(md3);
 
@@ -308,18 +308,18 @@ AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
 	}
 
 	// Build the animations from these keyframes
-	const size_t numAnimations = xml.getNumInstances(_T("animation"));
+	const size_t numAnimations = xml.getNumInstances("animation");
 	for(size_t i=0; i<numAnimations; ++i)
 	{
 		PropertyBag animation;
-		_tstring name;
+		string name;
 		bool looping=false;
 		int start=0;
 		float priority=0;
 		int length=0;
 		float fps=0;
 
-		xml.get(_T("animation"), animation, i);
+		xml.get("animation", animation, i);
 		animation.getSym(name);
 		animation.getSym(priority);
 		animation.getSym(looping);
@@ -335,7 +335,7 @@ AnimationController* Md3Loader::loadFromFile(const _tstring &fileName) const
 	return controller;
 }
 
-vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
+vector<KeyFrame> Md3Loader::loadKeyFrames(const string &fileName)
 {
 	vector<KeyFrame> keyFrames;
 
@@ -348,11 +348,11 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 
 	File file(fileName, true);
 
-	ASSERT(file.loaded(), _T("MD3 file failed to open: ") + fileName);
+	ASSERT(file.loaded(), "MD3 file failed to open: " + fileName);
 
 	if(!file.loaded())
 	{
-		FAIL(_T("MD3 failed to open: ") + fileName);
+		FAIL("MD3 failed to open: " + fileName);
 	}
 
 	// Only the first frame loads texture files.  The other frames use a copy of the handles and that copy is stored in here.
@@ -363,11 +363,11 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 
 	ASSERT
 	(
-	header.magicNumber[0] == _T('I') &&
-	header.magicNumber[1] == _T('D') &&
-	header.magicNumber[2] == _T('P') &&
-	header.magicNumber[3] == _T('3'),
-	_T("Magic number failed to validate! This file is not an MD3 file: ") + fileName
+	header.magicNumber[0] == 'I' &&
+	header.magicNumber[1] == 'D' &&
+	header.magicNumber[2] == 'P' &&
+	header.magicNumber[3] == '3',
+	"Magic number failed to validate! This file is not an MD3 file: " + fileName
 	);
 
 	// Allocate Frame objects
@@ -398,7 +398,7 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 	// Take the all the surfaces and push each frame into the mesh manager
 	for(int i=0; i<surfaces[0].header.numFrames; ++i)
 	{
-		_tstring name = fileName + _T("#") + itoa(i);
+		string name = fileName + "#" + itoa(i);
 
 		// Create a mesh from the surface
 		Mesh *mesh = surfaces[0].getObject(i);
@@ -410,7 +410,7 @@ vector<KeyFrame> Md3Loader::loadKeyFrames(const _tstring &fileName)
 			if(header.numSurfaces > 0)
 			{
 				mesh->material.clear();
-				mesh->material.loadTexture(toTString(surfaces[0].shaders[0].name), 0);
+				mesh->material.loadTexture(surfaces[0].shaders[0].name, 0);
 
 				// Keep a copy of the material to propagate to the subsequent frames
 				md3Material = mesh->material;
@@ -461,11 +461,11 @@ void Surface::create(File &file, size_t)
 
 	ASSERT
 	(
-	header.magicNumber[0] == _T('I') &&
-	header.magicNumber[1] == _T('D') &&
-	header.magicNumber[2] == _T('P') &&
-	header.magicNumber[3] == _T('3'),
-	_T("MD3::Surface::create  ->  This file is a corrupted MD3 file.")
+	header.magicNumber[0] == 'I' &&
+	header.magicNumber[1] == 'D' &&
+	header.magicNumber[2] == 'P' &&
+	header.magicNumber[3] == '3',
+	"MD3::Surface::create  ->  This file is a corrupted MD3 file."
 	);
 
 	// Allocate Shaders

@@ -90,7 +90,7 @@ public:
 	*/
 	void setActiveSpell(int x)
 	{
-		ASSERT(x >= 0 && (size_t)x < spellList.size(), _T("Spell index was out of bounds"));
+		ASSERT(x >= 0 && (size_t)x < spellList.size(), "Spell index was out of bounds");
 		activeIdx = x;
 	}
 
@@ -101,7 +101,7 @@ public:
 	*/
 	Spell& getSpell(size_t spellIdx) const
 	{
-		ASSERT(spellIdx < spellList.size(), _T("Spell index was out of bounds"));
+		ASSERT(spellIdx < spellList.size(), "Spell index was out of bounds");
 		return *spellList[spellIdx];
 	}
 
@@ -144,7 +144,7 @@ public:
 	virtual void drawStateCountdown(void) const;
 
 	/** Gets the name of the proper idle animation */
-	virtual const _tstring getSpellCastAnim(void) const;
+	virtual const string getSpellCastAnim(void) const;
 
 	/** Perform collision response to the objects we detected interesection with */
 	virtual void DoCollisionResponse(void);

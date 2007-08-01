@@ -41,8 +41,8 @@ namespace Engine {
 
 SplashScreen::SplashScreen(void)
 {
-	const _tstring nill = _T("");
-	const _tstring splashScreenImage = _T("data/sprites/backdrops/splash.png");
+	const string nill = "";
+	const string splashScreenImage = "data/sprites/backdrops/splash.png";
 
 	splash.create(nill,
 	              splashScreenImage,

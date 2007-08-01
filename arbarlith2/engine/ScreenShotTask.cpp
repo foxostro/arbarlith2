@@ -41,7 +41,7 @@ Include the DevIL headers
 
 namespace Engine {
 
-int stoi(const _tstring &s); // stdafx.cpp
+int stoi(const string &s); // stdafx.cpp
 
 ScreenShotTask::ScreenShotTask(void)
 :screenShotDebounce(false)
@@ -73,30 +73,30 @@ void ScreenShotTask::takeScreenShot(void)
 	ilBindImage(handle);
 	ilutGLScreen();
 
-	createDirectory(_T("sshots/"));
+	createDirectory("sshots/");
 
-	char *pszScreenShotFileName = toAnsiCharArray(getScreenShotFileName());
+	char *pszScreenShotFileName = strdup(getScreenShotFileName());
 	ilSaveImage(pszScreenShotFileName);
 	delete[] pszScreenShotFileName;
 
 	ilDeleteImages(1, &handle);
 }
 
-_tstring ScreenShotTask::getScreenShotFileName(void)
+string ScreenShotTask::getScreenShotFileName(void)
 {
 	int highestNumber = 0;
 
-	const _tstring screen = _tstring(_T("screen"));
-	const _tstring ext = _tstring(_T(".jpg"));
+	const string screen = string("screen");
+	const string ext = string(".jpg");
 
-	SearchFile files(_T("sshots/*.jpg"));
+	SearchFile files("sshots/*.jpg");
 
-	for(vector<_tstring>::const_iterator iter=files.m_Files.begin();
+	for(vector<string>::const_iterator iter=files.m_Files.begin();
 	    iter!=files.m_Files.end();
 	    ++iter)
 	{
-		const _tstring fileName =(*iter);
-		const _tstring strNum = fileName.substr(screen.length(),
+		const string fileName =(*iter);
+		const string strNum = fileName.substr(screen.length(),
 		fileName.length() - screen.length() - ext.length());
 		const int number = stoi(strNum);
 
@@ -106,7 +106,7 @@ _tstring ScreenShotTask::getScreenShotFileName(void)
 		}
 	}
 
-	return _tstring(_T("sshots/screen")) + itoa(++highestNumber) + ext;
+	return string("sshots/screen") + itoa(++highestNumber) + ext;
 }
 
 } //namespace Engine

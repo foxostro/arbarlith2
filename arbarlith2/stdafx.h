@@ -32,25 +32,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _CLIENT_STDAFX_H_
 
 #ifdef _WIN32
-
-#if defined(_MSC_VER)
-#define _CRT_SECURE_NO_DEPRECATE
-#pragma warning( disable: 4512 ) // cannot generate assignment operator
-#endif
-
-#include <windows.h>
-#include <direct.h>
-#include <tchar.h>
-
+#	if defined(_MSC_VER)
+#		define _CRT_SECURE_NO_DEPRECATE
+#		pragma warning( disable: 4512 ) // cannot generate assignment operator
+#	endif
+#	include <windows.h>
+#	include <direct.h>
 #else
-
-#include <unistd.h>
-#define TCHAR char
-#define _tmkdir mkdir
-#define _T(s) s
-
+#	include <unistd.h>
 #endif
-
 
 #include <queue>
 #include <vector>
@@ -70,13 +60,5 @@ using namespace std;
 #include "engine/Application.h"
 
 using namespace Engine;
-
-#ifndef M_PI
-#define M_PI ((double)3.14159265)
-#endif
-
-#ifndef M_E
-#define M_E ((double)2.71828183)
-#endif
 
 #endif

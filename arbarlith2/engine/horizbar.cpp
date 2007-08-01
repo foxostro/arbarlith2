@@ -38,8 +38,8 @@ HorizBar::HorizBar(float x,
                    float y,
                    float capacity,
                    float startingPosition,
-                   const _tstring &strForeground,
-                   const _tstring &strBackground,
+                   const string &strForeground,
+                   const string &strBackground,
                    bool leftAlign)
 : m_ForeImage(0),
   m_BackImage(0),
@@ -65,9 +65,9 @@ HorizBar::HorizBar(float x,
 
 void HorizBar::update(float)
 {
-	ASSERT(m_Capacity!=0, _T("invalid member data: Bar capacity was zero"));
-	ASSERT(m_ForeImage!=0, _T("invalid member data: m_ForeImage was NULL"));
-	ASSERT(m_BackImage!=0, _T("invalid member data: m_BackImage was NULL"));
+	ASSERT(m_Capacity!=0, "invalid member data: Bar capacity was zero");
+	ASSERT(m_ForeImage!=0, "invalid member data: m_ForeImage was NULL");
+	ASSERT(m_BackImage!=0, "invalid member data: m_BackImage was NULL");
 
 	const float width = (m_Position / m_Capacity) * initialWidth;
 

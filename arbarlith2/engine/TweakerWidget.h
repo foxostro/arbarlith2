@@ -44,12 +44,12 @@ namespace Engine {
 class TweakerWidgetString : public EditWidget
 {
 private:
-	_tstring *myValue;
-	_tstring myLabel;
+	string *myValue;
+	string myLabel;
 
 public:
-	TweakerWidgetString(const _tstring &label, _tstring *value, const vec2 &pos)
-	:EditWidget(_T("null"), pos)
+	TweakerWidgetString(const string &label, string *value, const vec2 &pos)
+	:EditWidget("null", pos)
 	{
 		myLabel = label;
 		myValue = value;
@@ -61,24 +61,24 @@ public:
 
 		if(!hasFocus())
 		{
-			_tstring label = myLabel + _tstring(_T(": ")) + getString();
+			string label = myLabel + string(": ") + getString();
 
 			// If the text is too long, we have to cut it off
 			if(label.size() > 27)
 			{
-				label = label.substr(0,23) + _T("...");
+				label = label.substr(0,23) + "...";
 			}
 
 			setLabel(label);
 		}
 	}
 
-	virtual _tstring getString(void)
+	virtual string getString(void)
 	{
 		return (*myValue);
 	}
 
-	virtual _tstring getValue(void)
+	virtual string getValue(void)
 	{
 		(*myValue) = getLabel();
 
@@ -104,13 +104,13 @@ template<class TYPE>
 class TweakerWidget : public EditWidget
 {
 private:
-	_tstring myLabel;
+	string myLabel;
 
 	TYPE *myValue;
 
 public:
-	TweakerWidget(const _tstring &label, TYPE *value, const vec2 &pos)
-	: EditWidget(_T("null"), pos),
+	TweakerWidget(const string &label, TYPE *value, const vec2 &pos)
+	: EditWidget("null", pos),
 	  myLabel(label),
 	  myValue(value)
 	{}
@@ -121,22 +121,22 @@ public:
 
 		if(!hasFocus())
 		{
-			_tstring label = myLabel + _tstring(_T(": ")) + getString();
+			string label = myLabel + string(": ") + getString();
 
 			// If the text is too long, we have to cut it off
 			if(label.size() > 27)
 			{
-				label = label.substr(0,23) + _T("...");
+				label = label.substr(0,23) + "...";
 			}
 
 			setLabel(label);
 		}
 	}
 
-	virtual _tstring getString(void)
+	virtual string getString(void)
 	{
-		_tstringstream ss;
-		_tstring ret;
+		stringstream ss;
+		string ret;
 
 		ss << (*myValue);
 		ss >> ret;
@@ -146,7 +146,7 @@ public:
 
 	virtual TYPE getValue(void)
 	{
-		_tstringstream ss;
+		stringstream ss;
 
 		ss << getLabel().c_str();
 		ss >> (*myValue);
@@ -173,11 +173,11 @@ class TweakerWidgetXML : public EditWidget
 {
 private:
 	XmlDataType *myValue;
-	_tstring myLabel;
+	string myLabel;
 
 public:
-	TweakerWidgetXML(const _tstring &label, XmlDataType *value, const vec2 &pos)
-	:EditWidget(_T("null"), pos)
+	TweakerWidgetXML(const string &label, XmlDataType *value, const vec2 &pos)
+	:EditWidget("null", pos)
 	{
 		myLabel = label;
 		myValue = value;
@@ -189,28 +189,28 @@ public:
 
 		if(!hasFocus())
 		{
-			_tstring label = myLabel + _tstring(_T(": ")) + getString();
+			string label = myLabel + string(": ") + getString();
 
 			// If the text is too long, we have to cut it off
 			if(label.size() > 27)
 			{
-				label = label.substr(0,23) + _T("...");
+				label = label.substr(0,23) + "...";
 			}
 
 			setLabel(label);
 		}
 	}
 
-	virtual _tstring getString(void)
+	virtual string getString(void)
 	{
 		XmlDataType *value = static_cast<XmlDataType*>(myValue);
-		_tstring ret = value->ToString();
+		string ret = value->ToString();
 		return ret;
 	}
 
 	virtual void getValue(void)
 	{
-		_tstring str = getLabel();
+		string str = getLabel();
 
 		XmlDataType *value = static_cast<XmlDataType*>(myValue);
 		value->FromString(str);

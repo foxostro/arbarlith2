@@ -48,7 +48,7 @@ Creates an explosion that damages nearby creatures
 @param explosionParticleFile file name of the explosion particle system description file
 @param soundEffectFileName the sound effect to play for the explosion
 */
-void createExplosion(World &world, const vec3 &position, int damageValue, float radius, OBJECT_ID attackerID, const _tstring &explosionParticleFile, const _tstring &soundEffectFileName);
+void createExplosion(World &world, const vec3 &position, int damageValue, float radius, OBJECT_ID attackerID, const string &explosionParticleFile, const string &soundEffectFileName);
 
 } // namespace Arbarlith2
 

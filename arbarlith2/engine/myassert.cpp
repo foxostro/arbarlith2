@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright Â© 2003-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #ifdef _WIN32
-#define STRICT
-#include <windows.h>
+#	define STRICT
+#	include <windows.h>
+#else
+#	include <iostream>
+#	define IDIGNORE 1
+#	define IDRETRY 2
+#	define IDABORT 3
 #endif
 
 #include "stdafx.h"
@@ -39,33 +44,53 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-bool assertionFailed(int lineNumber,
-                     const TCHAR *pszFileName,
-                     const _tstring &message)
+void DebugBreak(void)
 {
-	const _tstring fullMessage = message +
-				     _T("\nFile: ") + pszFileName +
-				     _T("\nLine: ") + itoa(lineNumber);
+#ifdef _WIN32
+	::DebugBreak();
+#endif
+}
 
-	Log(message,
-		"Assertion",
-		pszFileName,
-		lineNumber);
-
+bool assertionFailed(int lineNumber,
+                     const char *pszFileName,
+                     const string &message)
+{
 	bool result = false;
+	int response = IDABORT;
+
+	const string fullMessage = message +
+				     "\nFile: " + pszFileName +
+				     "\nLine: " + itoa(lineNumber);
+
+	Log(message, "Assertion", pszFileName, lineNumber);
 
 #ifndef _WIN32
-	abort();
+	std::cout << "Choose a response:" << endl
+	          << "\t1) Ignore - Continues execution, risking a crash" << endl
+	          << "\t2) Retry  - Trips the debugger, if attached" << endl
+	          << "\t3) Abort  - Aborts execution immediately" << endl
+	          << ">";
+	std::cout.flush();
+	std::cin >> response;
+	std::cout << endl;
 #else
-	char *pszFullMessage = toAnsiCharArray(fullMessage);
+	{
+		char *pszFullMessage = strdup(fullMessage);
 
-	switch(MessageBox(NULL,
-	                  pszFullMessage,
-	                  "Assert",
-	                  MB_ABORTRETRYIGNORE |
-	                  MB_ICONERROR |
-	                  MB_SETFOREGROUND |
-	                  MB_TOPMOST))
+		response = MessageBox(NULL,
+							  pszFullMessage,
+							  "Assert",
+							  MB_ABORTRETRYIGNORE |
+							  MB_ICONERROR |
+							  MB_SETFOREGROUND |
+							  MB_TOPMOST);
+
+		delete [] pszFullMessage;
+		pszFullMessage=0;
+	}
+#endif
+
+	switch(response)
 	{
 	case IDIGNORE:
 		result = false; // allow execution to continue
@@ -80,14 +105,10 @@ bool assertionFailed(int lineNumber,
 		break;
 
 	default:
-		ERR(_T("Unexpected input from MessageBox, aborting..."));
+		ERR("Unexpected input! Aborting...");
 		abort();
 		break;
 	};
-
-	delete [] pszFullMessage;
-	pszFullMessage=0;
-#endif
 
 	return result;
 }

@@ -31,7 +31,7 @@ void Switch::clear(void)
 {
 	promptHandle = -1;
 	fadeTimer = time = 1000.0f;
-	actionLabel = _T("flip the switch."); // default prompt
+	actionLabel = "flip the switch."; // default prompt
 
 	Trigger::clear();
 }
@@ -46,8 +46,8 @@ void Switch::load(const PropertyBag &xml)
 
 bool Switch::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, _T("actionLabel"), actionLabel);
-	saveTag(xml, dataFile, _T("time"), time);
+	saveTag(xml, dataFile, "actionLabel", actionLabel);
+	saveTag(xml, dataFile, "time", time);
 
 	return Trigger::saveTidy(xml, dataFile);
 }
@@ -90,8 +90,8 @@ void Switch::update(float deltaTime)
 		{
 			const Player &player = dynamic_cast<const Player &>(getZone().getObjects().get(user));
 
-			_tstring useKeyName = g_Keys.getKeyName(player.KEY_PLAYER_USE)[0];
-			_tstring message = _T("Press ") + useKeyName + _T(" to ") + actionLabel;
+			string useKeyName = g_Keys.getKeyName(player.KEY_PLAYER_USE)[0];
+			string message = "Press " + useKeyName + " to " + actionLabel;
 
 			promptHandle = prompt.add(message, fadeTimer);
 		}

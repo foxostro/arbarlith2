@@ -59,7 +59,7 @@ public:
 	@param active Filename of the icon when the spell is active / selected
 	@param inactive Filename of the icon when the spell is inactive / not-selected
 	*/
-	virtual void loadIcon(const _tstring &active, const _tstring &inactive);
+	virtual void loadIcon(const string &active, const string &inactive);
 
 	/**
 	Loads spell data
@@ -117,7 +117,7 @@ public:
 	Gets the text to describe the spell on the spell selection menu
 	@return one line of text
 	*/
-	inline const _tstring& getDescriptionText(void) const
+	inline const string& getDescriptionText(void) const
 	{
 		return descriptionText;
 	}
@@ -128,13 +128,13 @@ public:
 	@param zone The zone in which the spell applies
 	@param ownerID Spell caster owner
 	*/
-	void loadFromFile(const _tstring &fileName, Engine::World *zone, Engine::OBJECT_ID ownerID);
+	void loadFromFile(const string &fileName, Engine::World *zone, Engine::OBJECT_ID ownerID);
 
 	/**
 	Returns diagnostic data about the spell in a string of text
 	@return a string of text
 	*/
-	virtual _tstring toString(void) const;
+	virtual string toString(void) const;
 
 public:
 	/** Spell cast time */
@@ -182,7 +182,7 @@ protected:
 
 private:
 	/** Text to describe the spell on the spell selection menu */
-	_tstring descriptionText;
+	string descriptionText;
 
 	/** Draws a red X over the spell icon */
 	void drawSpell_X(float x, float y, float size) const;

@@ -50,7 +50,7 @@ MenuWorldSelection::~MenuWorldSelection(void)
 
 void MenuWorldSelection::create(void)
 {
-	Menu::create(_T("data/sprites/backdrops/menu.jpg"));
+	Menu::create("data/sprites/backdrops/menu.jpg");
 
 	debounceEnter = true;
 }
@@ -64,7 +64,7 @@ void MenuWorldSelection::populateElements(void)
 		switch(i)
 		{
 		case MENU_WORLD_SELECTION_RETURN:
-			elements.push_back(  Element(vec2(200.0f, 600.0f), _T("Return"))  );
+			elements.push_back(  Element(vec2(200.0f, 600.0f), "Return")  );
 			break;
 
 		case MENU_WORLD_SELECTION_WORLD1: elements.push_back(getLabel(1)); break;
@@ -79,7 +79,7 @@ void MenuWorldSelection::activateElement(int selectedIndex)
 	switch(selectedIndex)
 	{
 	case MENU_WORLD_SELECTION_RETURN:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		GameStateMenu::GetSingleton().enterGameMenuScreen();
 		break;
 
@@ -95,12 +95,12 @@ Menu::Element MenuWorldSelection::getLabel(int worldNum)
 {
 	bool unlocked = worldNum<=g_Application.unlockedWorld;
 
-	return Element(vec2(200.0f, 500.0f - (worldNum-1)*100.0f), (unlocked ? _T("World ") : _T("[Locked] World ")) + itoa(worldNum), unlocked);
+	return Element(vec2(200.0f, 500.0f - (worldNum-1)*100.0f), (unlocked) ? "World " : "[Locked] World " + itoa(worldNum), unlocked);
 }
 
 void MenuWorldSelection::enterWorld(int worldNum)
 {
-	g_SoundSystem.play(_T("data/sound/activate.wav"));
+	g_SoundSystem.play("data/sound/activate.wav");
 	g_Application.enterWorld(worldNum);
 }
 

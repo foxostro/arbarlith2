@@ -56,8 +56,8 @@ void TriggerParticles::onTrigger(void)
 
 bool TriggerParticles::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, _T("pfxFileName"), pfxFileName);
-	saveTag(xml, dataFile, _T("pfxLocation"), pfxLocation);
+	saveTag(xml, dataFile, "pfxFileName", pfxFileName);
+	saveTag(xml, dataFile, "pfxLocation", pfxLocation);
 
 	return Trigger::saveTidy(xml, dataFile);
 }
@@ -78,8 +78,8 @@ void TriggerParticles::createToolBar(ListPaneWidget *pane)
 	Trigger::createToolBar(pane);
 
 	// Add to the tool bar
-	pane->addElement(new ListElementTweakerString(	_T("Particle FX"),	&pfxFileName));
-	pane->addElement(new ListElementTweakerXML(	_T("PFX Location"),	&pfxLocation));
+	pane->addElement(new ListElementTweakerString(	"Particle FX",	&pfxFileName));
+	pane->addElement(new ListElementTweakerXML(	"PFX Location",	&pfxLocation));
 }
 
 }; // namespace

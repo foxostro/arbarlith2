@@ -33,10 +33,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-ToggleWidget::ToggleWidget(bool *value, const _tstring& imageFileTRUE, const _tstring& imageFileFALSE)
+ToggleWidget::ToggleWidget(bool *value, const string& imageFileTRUE, const string& imageFileFALSE)
 :myValue(value)
 {
-	ASSERT(value!=0, _T("value was NULL"));
+	ASSERT(value!=0, "value was NULL");
 
 	TextureHandle *handle = g_TextureMgr.Load(imageFileTRUE);
 	matTRUE.setTexture(handle, 0);
@@ -49,10 +49,10 @@ ToggleWidget::ToggleWidget(bool *value, const _tstring& imageFileTRUE, const _ts
 	matMouseOverFALSE.loadTexture(imageFileFALSE, 0);
 }
 
-ToggleWidget::ToggleWidget(bool *value, const _tstring& imageFileTRUE, const _tstring& imageFileMouseOverTRUE, const _tstring& imageFileFALSE, const _tstring& imageFileMouseOverFALSE)
+ToggleWidget::ToggleWidget(bool *value, const string& imageFileTRUE, const string& imageFileMouseOverTRUE, const string& imageFileFALSE, const string& imageFileMouseOverFALSE)
 :myValue(value)
 {
-	ASSERT(value!=0, _T("value was NULL"));
+	ASSERT(value!=0, "value was NULL");
 
 	TextureHandle *handle = g_TextureMgr.Load(imageFileTRUE);
 	matTRUE.setTexture(handle, 0);

@@ -41,39 +41,39 @@ namespace Engine {
 ToolBarForEditorTools::ToolBarForEditorTools(float x, float y)
 :SelectionList(x, y)
 {
-	ListElementWidget *pencilTool = new ToggleWidget(new bool(true), _T("data/sprites/list/editor/pencil_on.png"),	_T("data/sprites/list/editor/pencil_on_over.png"),	_T("data/sprites/list/editor/pencil_off.png"),	_T("data/sprites/list/editor/pencil_off_over.png"));
+	ListElementWidget *pencilTool = new ToggleWidget(new bool(true), "data/sprites/list/editor/pencil_on.png",	"data/sprites/list/editor/pencil_on_over.png",	"data/sprites/list/editor/pencil_off.png",	"data/sprites/list/editor/pencil_off_over.png");
 	pencilTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_TILE_PENCIL_TOOL);
 	addSelectableElement(pencilTool);
 
-	ListElementWidget *blockTool = new ToggleWidget(new bool(true), _T("data/sprites/list/editor/block_on.png"),	_T("data/sprites/list/editor/block_on_over.png"),	_T("data/sprites/list/editor/block_off.png"),	_T("data/sprites/list/editor/block_off_over.png"));
+	ListElementWidget *blockTool = new ToggleWidget(new bool(true), "data/sprites/list/editor/block_on.png",	"data/sprites/list/editor/block_on_over.png",	"data/sprites/list/editor/block_off.png",	"data/sprites/list/editor/block_off_over.png");
 	blockTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_TILE_BLOCK_TOOL);
 	addSelectableElement(blockTool);
 
-	ListElementWidget *destroyTool = new ToggleWidget(new bool(false), _T("data/sprites/list/editor/destroy_on.png"),	_T("data/sprites/list/editor/destroy_on_over.png"),	_T("data/sprites/list/editor/destroy_off.png"),	_T("data/sprites/list/editor/destroy_off_over.png"));
+	ListElementWidget *destroyTool = new ToggleWidget(new bool(false), "data/sprites/list/editor/destroy_on.png",	"data/sprites/list/editor/destroy_on_over.png",	"data/sprites/list/editor/destroy_off.png",	"data/sprites/list/editor/destroy_off_over.png");
 	destroyTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_DESTROY_TOOL);
 	addSelectableElement(destroyTool);
 
-	ListElementWidget *createTool = new ToggleWidget(new bool(false), _T("data/sprites/list/editor/create_on.png"),	_T("data/sprites/list/editor/create_on_over.png"),	_T("data/sprites/list/editor/create_off.png"),	_T("data/sprites/list/editor/create_off_over.png"));
+	ListElementWidget *createTool = new ToggleWidget(new bool(false), "data/sprites/list/editor/create_on.png",	"data/sprites/list/editor/create_on_over.png",	"data/sprites/list/editor/create_off.png",	"data/sprites/list/editor/create_off_over.png");
 	createTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_CREATE_TOOL);
 	addSelectableElement(createTool);
 
-	ListElementWidget *rotateTool = new ToggleWidget(new bool(false), _T("data/sprites/list/editor/rotate_on_y.png"),	_T("data/sprites/list/editor/rotate_on_over_y.png"),	_T("data/sprites/list/editor/rotate_off_y.png"),	_T("data/sprites/list/editor/rotate_off_over_y.png"));
+	ListElementWidget *rotateTool = new ToggleWidget(new bool(false), "data/sprites/list/editor/rotate_on_y.png",	"data/sprites/list/editor/rotate_on_over_y.png",	"data/sprites/list/editor/rotate_off_y.png",	"data/sprites/list/editor/rotate_off_over_y.png");
 	rotateTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_ROTATE_TOOL);
 	addSelectableElement(rotateTool);
 
-	ListElementWidget *rotateXTool = new ToggleWidget(new bool(false), _T("data/sprites/list/editor/rotate_on_x.png"),	_T("data/sprites/list/editor/rotate_on_over_x.png"),	_T("data/sprites/list/editor/rotate_off_x.png"),	_T("data/sprites/list/editor/rotate_off_over_x.png"));
+	ListElementWidget *rotateXTool = new ToggleWidget(new bool(false), "data/sprites/list/editor/rotate_on_x.png",	"data/sprites/list/editor/rotate_on_over_x.png",	"data/sprites/list/editor/rotate_off_x.png",	"data/sprites/list/editor/rotate_off_over_x.png");
 	rotateXTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_ROTATE_X_TOOL);
 	addSelectableElement(rotateXTool);
 
-	ListElementWidget *rotateZTool = new ToggleWidget(new bool(false), _T("data/sprites/list/editor/rotate_on_z.png"),	_T("data/sprites/list/editor/rotate_on_over_z.png"),	_T("data/sprites/list/editor/rotate_off_z.png"),	_T("data/sprites/list/editor/rotate_off_over_z.png"));
+	ListElementWidget *rotateZTool = new ToggleWidget(new bool(false), "data/sprites/list/editor/rotate_on_z.png",	"data/sprites/list/editor/rotate_on_over_z.png",	"data/sprites/list/editor/rotate_off_z.png",	"data/sprites/list/editor/rotate_off_over_z.png");
 	rotateZTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_ROTATE_Z_TOOL);
 	addSelectableElement(rotateZTool);
 
-	ListElementWidget *moveTool = new ToggleWidget(new bool(false), _T("data/sprites/list/editor/move_on.png"),		_T("data/sprites/list/editor/move_on_over.png"),	_T("data/sprites/list/editor/move_off.png"),	_T("data/sprites/list/editor/move_off_over.png"));
+	ListElementWidget *moveTool = new ToggleWidget(new bool(false), "data/sprites/list/editor/move_on.png",		"data/sprites/list/editor/move_on_over.png",	"data/sprites/list/editor/move_off.png",	"data/sprites/list/editor/move_off_over.png");
 	moveTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_MOVE_TOOL);
 	addSelectableElement(moveTool);
 
-	ListElementWidget *selectTool = new ToggleWidget(new bool(true), _T("data/sprites/list/editor/select_on.png"),	_T("data/sprites/list/editor/select_on_over.png"),	_T("data/sprites/list/editor/select_off.png"),	_T("data/sprites/list/editor/select_off_over.png"));
+	ListElementWidget *selectTool = new ToggleWidget(new bool(true), "data/sprites/list/editor/select_on.png",	"data/sprites/list/editor/select_on_over.png",	"data/sprites/list/editor/select_off.png",	"data/sprites/list/editor/select_off_over.png");
 	selectTool->widgetName = STRINGIFY(ToolBarForEditorTools::EDITOR_SELECT_TOOL);
 	addSelectableElement(selectTool);
 
@@ -171,4 +171,4 @@ ToolBarForEditorTools::EDITOR_TOOLS ToolBarForEditorTools::chooseSelectedTool(vo
 	return currentTool;
 }
 
-}; // namespace
+} // namespace Engine

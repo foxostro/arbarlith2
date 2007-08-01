@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect_TextureReplace_FFP.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -54,10 +54,10 @@ void Effect_TextureReplace_FFP::clear(void)
 
 void Effect_TextureReplace_FFP::begin(void)
 {
-	CHECK_GL_ERROR(); 
+	CHECK_GL_ERROR();
 
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
-	
+
 	glDisable(GL_LIGHTING);
 	glDisable(GL_BLEND);
 	glCullFace(GL_BACK);
@@ -71,9 +71,9 @@ void Effect_TextureReplace_FFP::end(void)
 	CHECK_GL_ERROR();
 }
 
-_tstring Effect_TextureReplace_FFP::getRequiredExtensions(void) const
+string Effect_TextureReplace_FFP::getRequiredExtensions(void) const
 {
-	return _tstring();
+	return string();
 }
 
 int Effect_TextureReplace_FFP::getRequiredTextureUnits(void) const
@@ -130,9 +130,9 @@ bool Effect_TextureReplace_FFP::requiresTexCoordStream(void) const
 	return true;
 }
 
-_tstring Effect_TextureReplace_FFP::getName(void) const
+string Effect_TextureReplace_FFP::getName(void) const
 {
-	return _T("Effect_TextureReplace_FFP");
+	return "Effect_TextureReplace_FFP";
 }
 
 

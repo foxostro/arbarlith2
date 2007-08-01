@@ -57,7 +57,7 @@ public:
 	AnimationSequence
 	(
 		vector<KeyFrame> keyFrames,
-		const _tstring &name,
+		const string &name,
 		float priority,
 		bool looping,
 		size_t start,
@@ -72,7 +72,7 @@ public:
 	AnimationSequence(const AnimationSequence &animation);
 
 	/** Gets the name of the animation */
-	const _tstring& getName(void) const
+	const string& getName(void) const
 	{
 		return m_strName;
 	}
@@ -235,7 +235,7 @@ private:
 	vector<KeyFrame> keyFrames;
 
 	/** The name of the animation */
-	_tstring m_strName;
+	string m_strName;
 
 	/** Used for determing the animation of choice during animation selection */
 	float m_Priority;

@@ -70,7 +70,7 @@ public:
 	*/
 	CallbackInterpolator(float *value, float startingValue, float endingValue, float timeLimit, FN fn)
 	{
-		ASSERT(value!=0, _T("value was null"));
+		ASSERT(value!=0, "value was null");
 
 		this->value = value;
 		this->startingValue = startingValue;

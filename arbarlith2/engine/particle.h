@@ -180,7 +180,7 @@ public:
 
 private:
 	/** Name of the particle type */
-	_tstring typeName;
+	string typeName;
 
 	/** Multiplier for the size of the particle */
 	float sizeMultiplier;
@@ -257,7 +257,7 @@ public:
 		return age>lifeSpan;
 	}
 
-	inline const _tstring& getName(void) const
+	inline const string& getName(void) const
 	{
 		return typeName;
 	}
@@ -377,7 +377,7 @@ class ParticleSystem : public ParticleBody
 {
 private:
 	/** Particle-Template's Name -> Particle-Template */
-	map<_tstring, ParticleElement> templatesByName;
+	map<string, ParticleElement> templatesByName;
 
 	/** Particle materials available for a template to specify */
 	vector<Material> materials;
@@ -409,7 +409,7 @@ public:
 	Constructor
 	@param fileName File to load data from
 	*/
-	ParticleSystem(const _tstring &fileName);
+	ParticleSystem(const string &fileName);
 
 	/**
 	Constructor
@@ -446,14 +446,14 @@ public:
 	Retrieves a particle template given its name
 	@param name Name of the particle template
 	*/
-	const ParticleElement& getTemplate(const _tstring &name);
+	const ParticleElement& getTemplate(const string &name);
 
 	/**
 	Gets the material handle when given a material name
 	@param name Name of the material
 	@return handle to the material
 	*/
-	size_t getMaterialHandle(const _tstring &name) const;
+	size_t getMaterialHandle(const string &name) const;
 
 	/**
 	Retrieves a material given its handle

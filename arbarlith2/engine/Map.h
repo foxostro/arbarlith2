@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -105,7 +105,7 @@ public:
 	@param materialFileName The filename of the material
 	@return material ID code
 	*/
-	MAP_MATERIAL_ID loadMapMaterial(const _tstring &materialFileName);
+	MAP_MATERIAL_ID loadMapMaterial(const string &materialFileName);
 
 	/**
 	Creates a map from data in an XML source
@@ -118,14 +118,14 @@ public:
 	@param xml The XML source
 	@param zoneName Name of the World
 	*/
-	void save(PropertyBag &xml, const _tstring &zoneName) const;
+	void save(PropertyBag &xml, const string &zoneName) const;
 
 	/**
 	Saves the map
 	@return xml resultant XML element
 	@param zoneName Name of the World
 	*/
-	PropertyBag save(const _tstring &zoneName) const
+	PropertyBag save(const string &zoneName) const
 	{
 		PropertyBag xml;
 		save(xml, zoneName);
@@ -170,8 +170,8 @@ public:
 	*/
 	inline Tile& getTile(int x, int z)
 	{
-		ASSERT(x >= 0 && x < width,  _T("x is invalid"));
-		ASSERT(z >= 0 && z < height, _T("z is invalid"));
+		ASSERT(x >= 0 && x < width,  "x is invalid");
+		ASSERT(z >= 0 && z < height, "z is invalid");
 
 		return grid[z*width + x];
 	}
@@ -184,8 +184,8 @@ public:
 	*/
 	inline const Tile& getTile(int x, int z) const
 	{
-		ASSERT(x >= 0 && x < width,  _T("x is invalid"));
-		ASSERT(z >= 0 && z < height, _T("z is invalid"));
+		ASSERT(x >= 0 && x < width,  "x is invalid");
+		ASSERT(z >= 0 && z < height, "z is invalid");
 
 		return grid[z*width + x];
 	}
@@ -245,7 +245,7 @@ public:
 	@param wallFileName Specifies the file name of the texture to apply to the tile's walls
 	@param tileHeight The height of te tiles, specified in meters
 	*/
-	void fill(TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName, float tileHeight);
+	void fill(TILE_TYPE tileType, TILE_PROPERTIES properties, const string &floorFileName, const string &wallFileName, float tileHeight);
 
 	/**
 	Fills a rectangle of the map with tiles of the given characteristics
@@ -258,7 +258,7 @@ public:
 	@param wallFileName Specifies the file name of the texture to apply to the tile's walls
 	@param tileHeight The height of te tiles, specified in meters
 	*/
-	inline void fillBlock(float startX, float startZ, float endX, float endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName, float tileHeight)
+	inline void fillBlock(float startX, float startZ, float endX, float endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const string &floorFileName, const string &wallFileName, float tileHeight)
 	{
 		int sX = (int)floorf(startX / tileMetersX);
 		int sZ = (int)floorf(startZ / tileMetersX);
@@ -279,7 +279,7 @@ public:
 	@param wallFileName Specifies the file name of the texture to apply to the tile's walls
 	@param tileHeight The height of te tiles, specified in meters
 	*/
-	void fillBlock(int startX, int startZ, int endX, int endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName, float tileHeight);
+	void fillBlock(int startX, int startZ, int endX, int endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const string &floorFileName, const string &wallFileName, float tileHeight);
 
 	/**
 	Fills the map with tiles of the given characteristics except, with random heights
@@ -287,7 +287,7 @@ public:
 	@param floorFileName Specifies the file name of the texture to apply to the tile's floor
 	@param wallFileName Specifies the file name of the texture to apply to the tile's walls
 	*/
-	void fillRandom(TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName);
+	void fillRandom(TILE_TYPE tileType, TILE_PROPERTIES properties, const string &floorFileName, const string &wallFileName);
 
 	/** Rebuilds the display list for the entire map */
 	void reaquire(void) const;

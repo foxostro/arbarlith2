@@ -41,11 +41,11 @@ namespace Engine {
 class LabelWidget : public Widget
 {
 public:
-	LabelWidget(const _tstring &label, const vec2 &pos);
+	LabelWidget(const string &label, const vec2 &pos);
 
 	LabelWidget
 		(
-			const _tstring &label,
+			const string &label,
 			const vec2 &pos,
 			const COLOR &color,
 			FONT_SIZE FontSize,
@@ -56,7 +56,7 @@ public:
 	Gets the label
 	@return label
 	*/
-	inline const _tstring& getLabel(void) const
+	inline const string& getLabel(void) const
 	{
 		return labelText;
 	}
@@ -66,7 +66,7 @@ public:
 	@param label The new label text
 	@todo Consider newline characters when calculating the bounds of the text
 	*/
-	void setLabel(const _tstring& label);
+	void setLabel(const string& label);
 
 	/**
 	Sets the label font
@@ -96,7 +96,7 @@ protected:
 
 private:
 	/** Label text */
-	_tstring labelText;
+	string labelText;
 
 	/** Font size */
 	FONT_SIZE fontSize;

@@ -66,7 +66,7 @@ public:
 	*/
 	void Create
 	(
-		const _tstring &title,
+		const string &title,
 		unsigned int width,
 		unsigned int height,
 		const ColorFormat &format,
@@ -82,7 +82,7 @@ public:
 
 	//mutators for certain window properties; otherwise, just create a new window
 	void SetFullscreen(bool fullscreen);
-	void SetTitle(const _tstring &title);
+	void SetTitle(const string &title);
 	void Resize(int width, int height);
 
 	//accessors for window properties; behavior is undefined/stupid if no window exists
@@ -92,7 +92,7 @@ public:
 	unsigned int GetColorDepth() const;
 	unsigned int GetZDepth() const { return zdepth; }
 	bool GetFullscreen() const { return fullscreen; }
-	const _tstring& GetTitle() const { return title; }
+	const string& GetTitle() const { return title; }
 
 	//input state and message loop corresponding to this window
 	SDLInput input;
@@ -103,7 +103,7 @@ private:
 	unsigned int width, height, zdepth;
 	bool fullscreen;
 	ColorFormat format;
-	_tstring title;
+	string title;
 };
 
 

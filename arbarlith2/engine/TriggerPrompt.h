@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "tstring.h"
 #include "widget.h"
 
-namespace Engine { 
+namespace Engine {
 
 class TextWriter;
 
@@ -58,7 +58,7 @@ public:
 	@param lifeSpan Milliseconds before the message expires
 	@return Handle to the message that was added
 	*/
-	HANDLE add(const _tstring &message, float lifeSpan);
+	HANDLE add(const string &message, float lifeSpan);
 
 	/**
 	Immediately removes a specific message
@@ -98,7 +98,7 @@ private:
 		@param msg The message to display
 		@param lifespan Milliseconds before the message expires
 		*/
-		inline void create(const _tstring &msg, float lifespan)
+		inline void create(const string &msg, float lifespan)
 		{
 			message = msg;
 			lifeSpan = lifespan;
@@ -144,14 +144,14 @@ private:
 		}
 
 		/** Gets the message string */
-		inline const _tstring& getMessage(void) const
+		inline const string& getMessage(void) const
 		{
 			return message;
 		}
 
 	private:
 		/** The message string */
-		_tstring message;
+		string message;
 
 		/** Milliseconds the message will live before expiring */
 		float lifeSpan;

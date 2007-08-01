@@ -67,7 +67,7 @@ public:
 	Gets the OpenGL extensions required to execute the Effect
 	@return OpenGL extension strings
 	*/
-	virtual _tstring getRequiredExtensions(void) const;
+	virtual string getRequiredExtensions(void) const;
 
 	/**
 	Gets the number of texture units necessary to properly execute the Effect
@@ -123,7 +123,7 @@ public:
 	Retrieve the name of the Effect
 	@return The name of the Effect
 	*/
-	virtual _tstring getName(void) const;
+	virtual string getName(void) const;
 
 	/**
 	Has the Effect determine how well it can implement an effect signature

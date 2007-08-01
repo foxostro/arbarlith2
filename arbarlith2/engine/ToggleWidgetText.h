@@ -45,7 +45,7 @@ private:
 	bool *myValue;
 
 	/** Text description of the value */
-	_tstring myLabel;
+	string myLabel;
 
 	/** The label that displays the status of the value */
 	LabelWidget *statusLbl;
@@ -63,7 +63,7 @@ public:
 	@param label Text description of the value.  Goes into the creation of the label text for the widget.
 	@param value The value that the toggle widget will toggle on and off
 	*/
-	ToggleWidgetText(const _tstring& label, bool *value);
+	ToggleWidgetText(const string& label, bool *value);
 
 	/** Called in the even of a mouse click */
 	virtual void onMouseClick(void);
@@ -86,7 +86,7 @@ public:
 	*/
 	inline bool getValue(void) const
 	{
-		ASSERT(myValue!=0, _T("myValue was NULL"));
+		ASSERT(myValue!=0, "myValue was NULL");
 		return(*myValue);
 	}
 
@@ -96,7 +96,7 @@ public:
 	*/
 	inline void setValue(bool value)
 	{
-		ASSERT(myValue!=0, _T("myValue was NULL"));
+		ASSERT(myValue!=0, "myValue was NULL");
 		(*myValue) = value;
 	}
 };

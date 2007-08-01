@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -56,7 +56,7 @@ public:
 	@param imageFileTRUE The image used for the element when the value is true
 	@param imageFileFALSE The image used for the element when the value is false
 	*/
-	ListElementLabel(const _tstring &label, const _tstring& imageFileTRUE, const _tstring& imageFileFALSE)
+	ListElementLabel(const string &label, const string& imageFileTRUE, const string& imageFileFALSE)
 	: ToggleWidget(&isActive, imageFileTRUE, imageFileTRUE, imageFileFALSE, imageFileFALSE),
 	  myLabel(0),
 	  isActive(false)
@@ -74,7 +74,7 @@ public:
 	@param imageFileMouseOverTRUE The image used for the element on mouse over when the value is true
 	@param imageFileMouseOverFALSE The image used for the element on mouse over when the value is false
 	*/
-	ListElementLabel(const _tstring &label, const _tstring& imageFileTRUE, const _tstring& imageFileMouseOverTRUE, const _tstring& imageFileFALSE, const _tstring& imageFileMouseOverFALSE)
+	ListElementLabel(const string &label, const string& imageFileTRUE, const string& imageFileMouseOverTRUE, const string& imageFileFALSE, const string& imageFileMouseOverFALSE)
 	: ToggleWidget(&isActive, imageFileTRUE, imageFileMouseOverTRUE, imageFileFALSE, imageFileMouseOverFALSE),
 	  myLabel(0),
 	  isActive(false)
@@ -87,7 +87,7 @@ public:
 	Gets the label
 	@return label
 	*/
-	inline _tstring getLabel(void) const
+	inline string getLabel(void) const
 	{
 		return myLabel->getLabel();
 	}

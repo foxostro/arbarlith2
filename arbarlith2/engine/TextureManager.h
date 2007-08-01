@@ -59,7 +59,7 @@ public:
 	@param fileName texture to load
 	@return TextureHandle
 	*/
-	TextureHandle* Load(const _tstring &fileName);
+	TextureHandle* Load(const string &fileName);
 
 	/**
 	Create a texture from an image
@@ -91,7 +91,7 @@ public:
 	Get info by texture name
 	@param name Texture name
 	*/
-	TextureHandle* getHandle(const _tstring &name);
+	TextureHandle* getHandle(const string &name);
 
 	/**
 	Delete a single texture
@@ -103,7 +103,7 @@ public:
 	Delete a single texture
 	@param name The texture name
 	*/
-	void Delete(const _tstring &name);
+	void Delete(const string &name);
 
 	/** Release all textures */
 	void release(void);

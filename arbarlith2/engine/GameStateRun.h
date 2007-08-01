@@ -85,7 +85,7 @@ public:
 	/** Gets a reference to the trigger prompt but denies users from altering the pointer */
 	inline TriggerPrompt& getPrompt(void) const
 	{
-		ASSERT(triggerPrompt!=0, _T("triggerPrompt was null"));
+		ASSERT(triggerPrompt!=0, "triggerPrompt was null");
 		return(*triggerPrompt);
 	}
 

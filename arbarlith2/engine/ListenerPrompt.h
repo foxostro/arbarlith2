@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -78,7 +78,7 @@ protected:
 
 private:
 	/** Text of the message to display */
-	_tstring message;
+	string message;
 
 	/** Number of milliseconds that will be specified for the life span of the message */
 	float timeOut;

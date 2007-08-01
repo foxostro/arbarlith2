@@ -64,7 +64,7 @@ public:
 	Immediately loads a texture into texture unit one
 	@param materialFileName Texture file name
 	*/
-	Material(const _tstring &materialFileName);
+	Material(const string &materialFileName);
 
 	/** Destructor */
 	~Material(void);
@@ -86,7 +86,7 @@ public:
 	@param fileName The file name of the image file containing the texture
 	@param textureUnit The texture unit to bind the texture with
 	*/
-	void loadTexture(const _tstring &fileName, unsigned int textureUnit);
+	void loadTexture(const string &fileName, unsigned int textureUnit);
 
 	/**
 	Loads a texture
@@ -106,7 +106,7 @@ public:
 	Retrieve the name of the material
 	@return The name of the material
 	*/
-	const _tstring& getName(void) const
+	const string& getName(void) const
 	{
 		return myName;
 	}
@@ -115,7 +115,7 @@ public:
 	Changes the name of the material
 	@param name The new name of the material
 	*/
-	void setName(const _tstring &name)
+	void setName(const string &name)
 	{
 		myName = name;
 	}
@@ -158,7 +158,7 @@ public:
 
 private:
 	/** Name of te material */
-	_tstring myName;
+	string myName;
 
 	/** The signature of the effect that this material is designed to work with */
 	int effect;

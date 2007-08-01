@@ -148,7 +148,7 @@ public:
 	Sets the Finite State Machine of the creature
 	@param strFSM The name of the FSM
 	*/
-	void setFSM(const _tstring &strFSM);
+	void setFSM(const string &strFSM);
 
 	/**
 	Retrieves a pointer to the AI state machine
@@ -232,7 +232,7 @@ public:
 	Gets the name of the Creature.
 	@return The Creature's name
 	*/
-	inline const _tstring& getName(void) const
+	inline const string& getName(void) const
 	{
 		return m_strName;
 	}
@@ -244,71 +244,71 @@ public:
 	virtual void createToolBar(ListPaneWidget *pane);
 
 	/** Gets the name of the proper pain animation */
-	virtual const _tstring getPainAnim(void) const;
+	virtual const string getPainAnim(void) const;
 
 	/** Gets the name of the proper dying animation */
-	virtual const _tstring getDyingAnim(void) const;
+	virtual const string getDyingAnim(void) const;
 
 	/** Gets the name of the proper attack animation */
-	virtual const _tstring getAttackAnim(void) const;
+	virtual const string getAttackAnim(void) const;
 
 	/** Gets the name of the proper idle/stand animation */
-	virtual const _tstring getIdleAnim(void) const;
+	virtual const string getIdleAnim(void) const;
 
 	/** Gets the name of the proper run-fwd animation */
-	virtual const _tstring getRunFwdAnim(void) const;
+	virtual const string getRunFwdAnim(void) const;
 
 	/** Gets the name of the proper run-fwd animation */
-	virtual const _tstring getRunRevAnim(void) const;
+	virtual const string getRunRevAnim(void) const;
 
 	/** Gets the name of the proper run-left animation */
-	virtual const _tstring getRunLeftAnim(void) const;
+	virtual const string getRunLeftAnim(void) const;
 
 	/** Gets the name of the proper run-right animation */
-	virtual const _tstring getRunRightAnim(void) const;
+	virtual const string getRunRightAnim(void) const;
 
 	/** Gets the name of the proper run-fwd-left animation */
-	virtual const _tstring getRunLeftFwdAnim(void) const;
+	virtual const string getRunLeftFwdAnim(void) const;
 
 	/** Gets the name of the proper run-fwd-right animation */
-	const _tstring getRunRightFwdAnim(void) const;
+	const string getRunRightFwdAnim(void) const;
 
 	/** Gets the name of the proper run-rev-left animation */
-	virtual const _tstring getRunLeftRevAnim(void) const;
+	virtual const string getRunLeftRevAnim(void) const;
 
 	/** Gets the name of the proper run-rev-right animation */
-	virtual const _tstring getRunRightRevAnim(void) const;
+	virtual const string getRunRightRevAnim(void) const;
 
 	/**
 	Gets the name of the proper walking animation
 	@param speed meters per second speed of the creature
 	@return animation name
 	*/
-	virtual const _tstring getWalkAnim(float speed) const;
+	virtual const string getWalkAnim(float speed) const;
 
 	/**
 	Get the name of the sound effect file to play when the creature is dying
 	@return sound effect file name
 	*/
-	virtual const _tstring getDyingSfx(void) const;
+	virtual const string getDyingSfx(void) const;
 
 	/**
 	Get the name of the sound effect file to play when the creature is hurt
 	@return sound effect file name
 	*/
-	virtual const _tstring getHurtSfx(void) const;
+	virtual const string getHurtSfx(void) const;
 
 	/**
 	Get the name of the sound effect file to play when the creature is does an attack action
 	@return sound effect file name
 	*/
-	virtual const _tstring getAttackSfx(void) const;
+	virtual const string getAttackSfx(void) const;
 
 	/**
 	Get the name of the sound effect file to play when the creature is does an attack action
 	@return sound effect file name
 	*/
-	virtual const _tstring getAttnSfx(void) const;
+	virtual const string getAttnSfx(void) const;
 
 	/** Called in the event that the we are placed */
 	virtual void OnPlace(void);
@@ -521,16 +521,16 @@ protected:
 	virtual void walkTowards(const vec3 &target, float speed);
 
 	/** Dying sounds */
-	vector<_tstring> dyingSounds;
+	vector<string> dyingSounds;
 
 	/** Pain sounds */
-	vector<_tstring> painSounds;
+	vector<string> painSounds;
 
 	/** Melee attack sounds */
-	vector<_tstring> attackSounds;
+	vector<string> attackSounds;
 
 	/** Attention sounds */
-	vector<_tstring> attnSounds;
+	vector<string> attnSounds;
 
 	/** essential state of the Creature */
 	enum

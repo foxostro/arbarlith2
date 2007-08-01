@@ -39,7 +39,7 @@ class TextureHandle
 {
 private:
 	/** file name of the texture */
-	_tstring fileName;
+	string fileName;
 
 	/** width of texture */
 	int width;
@@ -65,10 +65,10 @@ public:
 	@param alpha Indicates the texture has an alpha component
 	@param id
 	*/
-	TextureHandle(const _tstring &fileName, int width, int height, bool alpha, unsigned int id);
+	TextureHandle(const string &fileName, int width, int height, bool alpha, unsigned int id);
 
 	/** Gets the file name of the texture */
-	_tstring getFileName(void) const
+	string getFileName(void) const
 	{
 		return fileName;
 	}

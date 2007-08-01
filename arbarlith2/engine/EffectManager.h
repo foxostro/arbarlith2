@@ -70,11 +70,11 @@ private:
 	Effect* queryRaw(effect_sig signature);
 
 	/**
-	Determine if a sequence of OpenGL extensions in the given _tstring are supported.
-	@param The extension _tstring to test
+	Determine if a sequence of OpenGL extensions in the given string are supported.
+	@param The extension string to test
 	@return If any extension is unsupported, then return false.
 	*/
-	bool isSupported(const _tstring &extensions);
+	bool isSupported(const string &extensions);
 
 	/** signature of the currently bound effect */
 	effect_sig currentSig;

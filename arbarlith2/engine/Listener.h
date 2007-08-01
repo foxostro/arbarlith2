@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -70,7 +70,7 @@ protected:
 	Given an expression, create the signal conditions
 	@param expression defines the signal conditions
 	*/
-	void setupSignals(const _tstring &expression);
+	void setupSignals(const string &expression);
 
 	/**
 	Determine whether the proper conditions have been attained for trigger activation.
@@ -116,7 +116,7 @@ private:
 	bool anySignal;
 
 	/** Signal expression */
-	_tstring expression;
+	string expression;
 };
 
 } // namespace Engine

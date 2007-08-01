@@ -75,53 +75,53 @@ public:
 	virtual void load(const PropertyBag &data);
 
 	/** Gets the name of the proper pain animation */
-	virtual const _tstring getPainAnim(void) const;
+	virtual const string getPainAnim(void) const;
 
 	/** Gets the name of the proper dying animation */
-	virtual const _tstring getDyingAnim(void) const;
+	virtual const string getDyingAnim(void) const;
 
 	/** Gets the name of the proper attack animation */
-	virtual const _tstring getAttackAnim(void) const;
+	virtual const string getAttackAnim(void) const;
 
 	/** Gets the name of the proper idle animation */
-	virtual const _tstring getIdleAnim(void) const;
+	virtual const string getIdleAnim(void) const;
 
 	/** Gets the name of the proper run-fwd animation */
-	virtual const _tstring getRunFwdAnim(void) const;
+	virtual const string getRunFwdAnim(void) const;
 
 	/** Gets the name of the proper run-fwd animation */
-	virtual const _tstring getRunRevAnim(void) const;
+	virtual const string getRunRevAnim(void) const;
 
 	/** Gets the name of the proper run-left animation */
-	virtual const _tstring getRunLeftAnim(void) const;
+	virtual const string getRunLeftAnim(void) const;
 
 	/** Gets the name of the proper run-right animation */
-	virtual const _tstring getRunRightAnim(void) const;
+	virtual const string getRunRightAnim(void) const;
 
 	/** Gets the name of the proper run-fwd-left animation */
-	virtual const _tstring getRunLeftFwdAnim(void) const;
+	virtual const string getRunLeftFwdAnim(void) const;
 
 	/** Gets the name of the proper run-fwd-right animation */
-	virtual const _tstring getRunRightFwdAnim(void) const;
+	virtual const string getRunRightFwdAnim(void) const;
 
 	/** Gets the name of the proper run-rev-left animation */
-	virtual const _tstring getRunLeftRevAnim(void) const;
+	virtual const string getRunLeftRevAnim(void) const;
 
 	/** Gets the name of the proper run-rev-right animation */
-	virtual const _tstring getRunRightRevAnim(void) const;
+	virtual const string getRunRightRevAnim(void) const;
 
 	/**
 	Gets the name of the current item
 	@return Name of the current item
 	*/
-	_tstring getItemName(void) const;
+	string getItemName(void) const;
 
 	/**
 	Gets the name of the proper walking animation
 	@param speed meters per second speed of the creature
 	@return animation name
 	*/
-	virtual const _tstring getWalkAnim(float speed) const;
+	virtual const string getWalkAnim(float speed) const;
 
 	/**
 	Put an item in the player's inventory
@@ -157,7 +157,7 @@ public:
 	@param out Returns an ID to the actor, or INVALID_ID
 	@return true if the actor was found
 	*/
-	virtual bool inventoryQuery(const _tstring &name, OBJECT_ID &out) const;
+	virtual bool inventoryQuery(const string &name, OBJECT_ID &out) const;
 
 	/**
 	Sets or changes the player number

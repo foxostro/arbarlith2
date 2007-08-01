@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -79,7 +79,7 @@ protected:
 
 private:
 	/** Name of the gate to affect */
-	_tstring gateName;
+	string gateName;
 
 	/** Opens the gate when triggered, as opposed to closing it */
 	bool open;

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -54,11 +54,11 @@ private:
 		@param label A text label to superimpose over the widget
 		@param value Value to associate with the element
 		*/
-		ELEMENT(const _tstring &label, const T &value)
-		: ListElementLabel(label, _T("data/sprites/list/listwidget_depressed.png"),
-		                          _T("data/sprites/list/listwidget_depressed_over.png"),
-		                          _T("data/sprites/list/listwidget.png"),
-		                          _T("data/sprites/list/listwidget_hover.png")),
+		ELEMENT(const string &label, const T &value)
+		: ListElementLabel(label, "data/sprites/list/listwidget_depressed.png",
+		                          "data/sprites/list/listwidget_depressed_over.png",
+		                          "data/sprites/list/listwidget.png",
+		                          "data/sprites/list/listwidget_hover.png"),
 		  myValue(value)
 		{}
 
@@ -96,7 +96,7 @@ public:
 	@param label Element's label
 	@param value Element's value
 	*/
-	void addElement(const _tstring &label, const T &value)
+	void addElement(const string &label, const T &value)
 	{
 		addSelectableElement(new ELEMENT(label, value));
 	}

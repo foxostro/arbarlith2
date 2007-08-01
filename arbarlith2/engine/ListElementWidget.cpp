@@ -32,17 +32,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SelectionList.h"
 #include "ListElementWidget.h"
 
-namespace Engine { 
+namespace Engine {
 
-_tstring ListElementWidget::normalImg = _T("data/sprites/list/listwidget.png");
-_tstring ListElementWidget::depressedImg = _T("data/sprites/list/listwidget_depressed.png");
-_tstring ListElementWidget::hoverImg = _T("data/sprites/list/listwidget_hover.png");
+string ListElementWidget::normalImg = "data/sprites/list/listwidget.png";
+string ListElementWidget::depressedImg = "data/sprites/list/listwidget_depressed.png";
+string ListElementWidget::hoverImg = "data/sprites/list/listwidget_hover.png";
 
 ListElementWidget::ListElementWidget(void)
 :WindowWidget(0, 0, normalImg, depressedImg, hoverImg)
 {}
 
-ListElementWidget::ListElementWidget(float, float, const _tstring &imageFile, const _tstring &depressedFile, const _tstring &hoverFile)
+ListElementWidget::ListElementWidget(float, float, const string &imageFile, const string &depressedFile, const string &hoverFile)
 :WindowWidget(0, 0, imageFile, depressedFile, hoverFile)
 {}
 

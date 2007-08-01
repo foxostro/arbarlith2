@@ -124,10 +124,10 @@ private:
 	bool initiallyLocked;
 
 	/** Sound effect file to play when the gate unlocks */
-	_tstring unlockSfx;
+	string unlockSfx;
 
 	/** Sound effect file to play when the gate locks */
-	_tstring lockSfx;
+	string lockSfx;
 };
 
 } // namespace Arbarlith2

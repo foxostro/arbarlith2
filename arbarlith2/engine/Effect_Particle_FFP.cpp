@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect_Particle_FFP.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -59,7 +59,7 @@ void Effect_Particle_FFP::begin(void)
 	glColor4fv(white);
 
 	glDisable(GL_LIGHTING);
-	
+
 	// Transparency
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	glEnable(GL_BLEND);
@@ -76,9 +76,9 @@ void Effect_Particle_FFP::end(void)
 	CHECK_GL_ERROR();
 }
 
-_tstring Effect_Particle_FFP::getRequiredExtensions(void) const
+string Effect_Particle_FFP::getRequiredExtensions(void) const
 {
-	return _tstring();
+	return string();
 }
 
 int Effect_Particle_FFP::getRequiredTextureUnits(void) const
@@ -132,9 +132,9 @@ bool Effect_Particle_FFP::requiresTexCoordStream(void) const
 	return true;
 }
 
-_tstring Effect_Particle_FFP::getName(void) const
+string Effect_Particle_FFP::getName(void) const
 {
-	return _T("Effect_Particle_FFP");
+	return "Effect_Particle_FFP";
 }
 
 int Effect_Particle_FFP::howGood(effect_sig signature) const

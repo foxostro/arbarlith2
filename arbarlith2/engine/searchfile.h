@@ -1,7 +1,7 @@
 // SearchFile.h: interface for the SearchFile class.
 // Desc: Searches for files matching a given pattern
 // Author: Andrew Fox
-// 
+//
 // Win32 Version:
 // Based on the SearchFile class in the Titan Engine by Ignacio Castaño Aguado
 // Also based on the _find, _wfind example from MSDN
@@ -14,15 +14,15 @@
 #define _SEARCHFILE_INCLUDE
 
 
-namespace Engine { 
+namespace Engine {
 
 
 class SearchFile
 {
 public:
-	SearchFile(_tstring strPattern=_T("*"));
+	SearchFile(string strPattern="*");
 
-	std::vector<_tstring> m_Files;
+	std::vector<string> m_Files;
 };
 
 

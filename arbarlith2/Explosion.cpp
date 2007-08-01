@@ -52,7 +52,7 @@ int splashDamage(float radius, float distance, int baseDamage)
 	return (int)floorf(baseDamage * powf((float)M_E, -SQR(distance/radius)));
 }
 
-void createExplosion(World &world, const vec3 &position, int damageValue, float radius, OBJECT_ID attackerID, const _tstring &explosionParticleFile, const _tstring &soundEffectFileName)
+void createExplosion(World &world, const vec3 &position, int damageValue, float radius, OBJECT_ID attackerID, const string &explosionParticleFile, const string &soundEffectFileName)
 {
 	// spawn some explosion FX
 	world.SpawnPfx(explosionParticleFile, position);
@@ -65,7 +65,7 @@ void createExplosion(World &world, const vec3 &position, int damageValue, float 
 	{
 		Creature *a = dynamic_cast<Creature*>(i->second);
 
-		ASSERT(a!=0, _T("Object included in filtered set \'world.getObjects().typeFilter<Creature>()\' was nnot a Creature!"));
+		ASSERT(a!=0, "Object included in filtered set \'world.getObjects().typeFilter<Creature>()\' was nnot a Creature!");
 
 		int finalDamage = splashDamage(radius, vec3(position - a->getPos()).getMagnitude(), damageValue);
 

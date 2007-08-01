@@ -73,7 +73,7 @@ protected:
 
 private:
 	/** Data file of the monster to spawn */
-	_tstring monsterDataFile;
+	string monsterDataFile;
 
 	/** Maximum number to spawn on regular difficulty */
 	int maxMonsters;

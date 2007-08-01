@@ -1,8 +1,8 @@
 /* Written by Tom Cauchois, February 2006, for Parasomnia: Decadence of Darkness
-   
+
    Andrew Fox, July 2006: SetFullscreen sets a flag to activate the setting on restart.
-   Andrew Fox, August 2006: Release and reaquire assets so that changing resolutions does not corrupt video 
-   
+   Andrew Fox, August 2006: Release and reaquire assets so that changing resolutions does not corrupt video
+
    Email: mailto:tcauchoi@andrew.cmu.edu,
           mailto:andrewfox@cmu.edu
 */
@@ -12,7 +12,7 @@
 #include "SDLwindow.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 //Color-channel depths for the given color formats
 //Color formats are:
@@ -31,7 +31,7 @@ SDLWindow::SDLWindow(Application &app)
   zdepth(16),
   fullscreen(false),
   format(R8G8B8A8),
-  title(_T("SDL Window"))
+  title("SDL Window")
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
 }
@@ -48,7 +48,7 @@ unsigned int SDLWindow::GetColorDepth() const
 
 void SDLWindow::Create
 (
-	const _tstring &title,
+	const string &title,
 	unsigned int width,
 	unsigned int height,
 	const ColorFormat &format,
@@ -74,18 +74,15 @@ void SDLWindow::Create
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,blueBits[format]);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,alphaBits[format]);
 
-	const string &ansi = toAnsiString(title);
-	const char * titleptr = ansi.c_str();
+	SDL_WM_SetCaption(title.c_str(), title.c_str());
 
-	SDL_WM_SetCaption(titleptr, titleptr);
-	
 	//note: uncomment SDL_RESIZEABLE if you want to be able to resize the window,
 	//although that might hurt performance
 	windowSurface = SDL_SetVideoMode(width,height,depth[format],
 		SDL_OPENGL | SDL_HWSURFACE | SDL_DOUBLEBUF |
 		(fullscreen?SDL_FULLSCREEN:0) /* | SDL_RESIZEABLE */);
-	ASSERT(windowSurface != NULL, _T("Couldn't create window!")); //SDL_GetError() for more info
-	
+	ASSERT(windowSurface != NULL, "Couldn't create window!"); //SDL_GetError() for more info
+
 	//check that the GL attributes were correctly set
 	{
 		int attrib;
@@ -118,7 +115,7 @@ void SDLWindow::SetFullscreen(bool fullscreen)
 		application.release();
 
 		Create(title,width,height,format,zdepth,fullscreen);
-	
+
 		OpenGL::GetSingleton().InitGL();
 		OpenGL::GetSingleton().ReSizeGLScene(width,height);
 
@@ -136,7 +133,7 @@ void SDLWindow::Resize(const int width, const int height)
 		application.release();
 
 		Create(title,width,height,format,zdepth,fullscreen);
-	
+
 		OpenGL::GetSingleton().InitGL();
 		OpenGL::GetSingleton().ReSizeGLScene(width,height);
 
@@ -144,11 +141,10 @@ void SDLWindow::Resize(const int width, const int height)
 	}
 }
 
-void SDLWindow::SetTitle(const _tstring &title)
+void SDLWindow::SetTitle(const string &title)
 {
 	this->title = title;
-
-	SDL_WM_SetCaption(toAnsiString(title).c_str(), 0);
+	SDL_WM_SetCaption(title.c_str(), 0);
 }
 
 SDLInput::SDLInput()

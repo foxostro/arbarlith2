@@ -46,11 +46,11 @@ GameStateCredits::GameStateCredits(Application &app)
   scrollSpeed(70.0f),
   y(600.0f)
 {
-	File file(_T("credits.txt"), false);
+	File file("credits.txt", false);
 
 	if(!file.loaded())
 	{
-		FAIL(_T("credits.txt failed to load"));
+		FAIL("credits.txt failed to load");
 	}
 
 	const size_t size = file.getSize();
@@ -59,15 +59,10 @@ GameStateCredits::GameStateCredits(Application &app)
 
 	char *buffer = new char[size];
 
-	if(buffer==0)
-	{
-		FAIL(_T("Failed to allocate memory buffer for credits.txt"));
-	}
-
 	// Copy file data
 	memset(buffer, 0, size);
 	file.read(buffer, size);
-	text = toTString(buffer);
+	text = buffer;
 
 	// Release the buffer
 	delete [] buffer;

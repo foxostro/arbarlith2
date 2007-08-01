@@ -44,10 +44,10 @@ namespace Engine {
 Menu::Menu(void)
 {
 	clear();
-	create(_T("data/sprites/backdrops/menu.jpg"));
+	create("data/sprites/backdrops/menu.jpg");
 }
 
-Menu::Menu(const _tstring &imageFileName)
+Menu::Menu(const string &imageFileName)
 {
 	clear();
 	create(imageFileName);
@@ -69,13 +69,13 @@ void Menu::clear(void)
 	font = 0;
 }
 
-void Menu::create(const _tstring &imageFileName)
+void Menu::create(const string &imageFileName)
 {
 	destroy();
 
 	font = &g_Application.fontLarge;
 
-	menuBackdrop.create(_T(""), imageFileName, _T(""), _T(""));
+	menuBackdrop.create("", imageFileName, "", "");
 
 	// Populate the menu elements
 	populateElements();
@@ -130,7 +130,7 @@ void Menu::draw(void)
 	for(size_t i=0; i<elements.size(); ++i)
 	{
 		Element &item = elements[i];
-		const _tstring &label = item.getLabel();
+		const string &label = item.getLabel();
 		bool enabled = item.isEnabled();
 		bool selected = (size_t)selectedIndex==i;
 		COLOR color = enabled ? (((size_t)selectedIndex==i) ? yellow : white) : (selected ? (yellow*0.7f) : (white*0.7f));
@@ -160,43 +160,43 @@ void Menu::draw(void)
 void Menu::populateElements(void)
 {
 	elements.clear();
-	elements.push_back( Element(vec2(200.0f, 600.0f), _T("New Game"), true)                          );
-	elements.push_back( Element(vec2(200.0f, 500.0f), _T("Continue"), g_Application.isWorldLoaded()) );
-	elements.push_back( Element(vec2(200.0f, 400.0f), _T("Options"),  true)                          );
-	elements.push_back( Element(vec2(200.0f, 300.0f), _T("Credits"),  true)                          );
-	elements.push_back( Element(vec2(200.0f, 200.0f), _T("Quit"),     true)                          );
+	elements.push_back( Element(vec2(200.0f, 600.0f), "New Game", true)                          );
+	elements.push_back( Element(vec2(200.0f, 500.0f), "Continue", g_Application.isWorldLoaded()) );
+	elements.push_back( Element(vec2(200.0f, 400.0f), "Options",  true)                          );
+	elements.push_back( Element(vec2(200.0f, 300.0f), "Credits",  true)                          );
+	elements.push_back( Element(vec2(200.0f, 200.0f), "Quit",     true)                          );
 }
 
 void Menu::activateElement(int selectedIndex)
 {
-	const _tstring gameFileName = pathAppend(getAppDataDirectory(), _T("game.sav"));
+	const string gameFileName = pathAppend(getAppDataDirectory(), "game.sav");
 
 	switch(selectedIndex)
 	{
 	case 0:
 		// Go to the world selection screen
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		GameStateMenu::GetSingleton().enterGameMenuWorldSelection();
 		break;
 
 	case 1:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		g_Application.changeGameState(GAME_STATE_RUN);
 		break;
 
 	case 2:
 		// Go to the options screen
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		GameStateMenu::GetSingleton().enterGameMenuOptions();
 		break;
 
 	case 3:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		g_Application.changeGameState(GAME_STATE_CREDITS);
 		break;
 
 	case 4:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		g_WaitScreen.Render();
 		g_Input.Quit = true;
 		break;
@@ -220,7 +220,7 @@ void Menu::update(void)
 			}
 			else
 			{
-				g_SoundSystem.play(_T("data/sound/disabled.wav"));
+				g_SoundSystem.play("data/sound/disabled.wav");
 			}
 		}
 	}
@@ -238,7 +238,7 @@ void Menu::update(void)
 			selectedIndex--;
 			selectedIndex = selectedIndex < 0 ? (signed int)elements.size()-1 : selectedIndex;
 
-			g_SoundSystem.play(_T("data/sound/down.wav"));
+			g_SoundSystem.play("data/sound/down.wav");
 		}
 	}
 	else
@@ -255,7 +255,7 @@ void Menu::update(void)
 			selectedIndex++;
 			selectedIndex = selectedIndex >= (signed int)elements.size() ? 0 : selectedIndex;
 
-			g_SoundSystem.play(_T("data/sound/up.wav"));
+			g_SoundSystem.play("data/sound/up.wav");
 		}
 	}
 	else

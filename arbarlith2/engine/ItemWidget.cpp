@@ -36,7 +36,7 @@ namespace Engine {
 
 
 ItemWidget::ItemWidget(const vec2 &pos)
-: LabelWidget(_T("[nill]"), pos, white, FONT_SIZE_LARGE, g_Application.fontLarge),
+: LabelWidget("[nill]", pos, white, FONT_SIZE_LARGE, g_Application.fontLarge),
   item(0)
 {
 	setItem(0);
@@ -48,11 +48,11 @@ void ItemWidget::setItem(Item *item)
 
 	if(item != 0)
 	{
-		setLabel(_tstring(_T("Current Item: ")) + item->getName());
+		setLabel(string("Current Item: ") + item->getName());
 	}
 	else
 	{
-		setLabel(_T("Current Item: none"));
+		setLabel("Current Item: none");
 	}
 }
 

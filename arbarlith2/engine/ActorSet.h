@@ -62,7 +62,7 @@ public:
 	*/
 	ActorSet(PropertyBag &xml, World *zone)
 	{
-		ASSERT(zone!=0, _T("zone was NULL"));
+		ASSERT(zone!=0, "zone was NULL");
 		clear();
 		load(xml, zone);
 	}
@@ -94,7 +94,7 @@ public:
 	@param zone The starting realm of the object
 	@return The unique identifier to the new object
 	*/
-	OBJECT_ID create(const _tstring &type, World *zone);
+	OBJECT_ID create(const string &type, World *zone);
 
 	/**
 	Creates an object
@@ -102,7 +102,7 @@ public:
 	@param zone The starting realm of the object
 	@return a pointer to the object
 	*/
-	Actor* createPtr(const _tstring &type, World *zone);
+	Actor* createPtr(const string &type, World *zone);
 
 	/**
 	Gets an object from the set
@@ -116,7 +116,7 @@ public:
 	@param name Name of the object
 	@return reference of the object
 	*/
-	vector<Actor*> getByName(const _tstring &name);
+	vector<Actor*> getByName(const string &name);
 
 	/**
 	Gets an object from the set
@@ -180,7 +180,7 @@ public:
 	@param out Returns an ID to the actor, or INVALID_ID
 	@return true if the actor was found
 	*/
-	bool query(const _tstring &name, OBJECT_ID &out) const;
+	bool query(const string &name, OBJECT_ID &out) const;
 
 	/**
 	Gets all objects within the frustum
@@ -337,7 +337,7 @@ public:
 	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
-	void spawnNow(const _tstring &dataFile, const vec3 &position, World *zone);
+	void spawnNow(const string &dataFile, const vec3 &position, World *zone);
 
 	/**
 	request that an actor be spawned on the next update
@@ -351,7 +351,7 @@ public:
 	@param dataFile The datafile of the actor (specifies type)
 	@param position position to place the actor
 	*/
-	void spawn(const _tstring &dataFile, const vec3 &position);
+	void spawn(const string &dataFile, const vec3 &position);
 
 	/**
 	request that an actor be spawned on the next update
@@ -380,7 +380,7 @@ private:
 
 	struct RequestedSpawn
 	{
-		_tstring monsterDataFile;
+		string monsterDataFile;
 		vec3 position;
 	};
 

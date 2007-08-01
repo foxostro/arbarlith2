@@ -6,8 +6,8 @@
 	<looping>TRUE</looping>
 	<fps>2.5</fps>
 
-	<keyframe>data/skeleton/idle01.3DS</keyframe>		
-	<keyframe>data/skeleton/idle01.3DS</keyframe>
+	<keyframe>data/skeleton/idle01.3ds</keyframe>		
+	<keyframe>data/skeleton/idle01.3ds</keyframe>
 </animation>
 
 <animation>

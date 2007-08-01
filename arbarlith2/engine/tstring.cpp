@@ -28,108 +28,31 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "stdafx.h"
+#include "tstring.h"
+#include "myassert.h"
 
-wstring toUnicodeString(const string &str)
+#include <cmath>
+#include <sstream>
+
+namespace Engine {
+
+char* strdup(const std::string &src)
 {
-#ifdef _WIN32
+	char *dst = new char[src.size()+1];
 
-	const char *ansistr = str.c_str();
+	for(size_t i=0; i<src.size(); ++i) dst[i] = src[i];
+	dst[src.size()] = 0; // null-terminate the std::string
 
-	int lenA = lstrlenA(ansistr);
-
-	if(lenA > 0)
-	{
-		int lenW = ::MultiByteToWideChar(CP_ACP, 0, ansistr, lenA, 0, 0);
-
-		if(lenW > 0)
-		{
-			BSTR unicodestr = ::SysAllocStringLen(0, lenW);
-
-			if(unicodestr != 0)
-			{
-				::MultiByteToWideChar(CP_ACP, 0, ansistr, lenA, unicodestr, lenW);
-				wstring s = unicodestr;
-				::SysFreeString(unicodestr);
-				return s;
-			}
-		}
-	}
-
-	return wstring();
-
-#else
-
-	/*
-	Slower than the Windows version (???), but at least easier to read!
-	*/
-
-	wstring r;
-
-	r.reserve(str.size());
-
-	for(size_t i=0; i<str.size(); ++i)
-	{
-		r += (wchar_t)str[i];
-	}
-
-	return r;
-
-#endif
-}
-
-wstring toUnicodeString(const wstring &unicodestr)
-{
-	return unicodestr;
-}
-
-string toAnsiString(const string &ansistr)
-{
-	return ansistr;
-}
-
-string toAnsiString(const wstring &unicodestr)
-{
-	char *ansistr = toAnsiCharArray(unicodestr);
-	string s = ansistr;
-	delete [] ansistr;
-	return s;
-}
-
-char* toAnsiCharArray(const string &ansistr)
-{
-	char *dst = new char[ansistr.size()+1];
-
-	for(size_t i=0; i<ansistr.size(); ++i) dst[i] = ansistr[i];
-	dst[ansistr.size()] = 0;
-
-	ASSERT(strcmp(dst, ansistr.c_str())==0, _T("Failed to duplicate ANSI string \"") + ansistr + _T("\""));
+	ASSERT(strcmp(dst, src.c_str())==0,
+		   "Failed to duplicate string: \"" + src + "\"");
 
 	return dst;
 }
 
-char* toAnsiCharArray(const wstring &unicodestr)
-{
-	size_t lenW = wcslen(unicodestr.c_str());
-	char *ansistr = new char[lenW+1];
-
-	for(size_t i=0; i<lenW; ++i)
-	{
-		ansistr[i] = static_cast<char>(unicodestr[i]);
-	}
-	ansistr[lenW] = 0;
-
-	ASSERT(strlen(ansistr)==lenW, _T("strlen(ansistr) != lenW"));
-
-	return ansistr;
-}
-
-namespace Engine {
-
-int stoi(const _tstring &s)
+int stoi(const std::string &s)
 {
     int ret = 0;
-    _tstringstream stream;
+    std::stringstream stream;
 
     stream << s;
     stream >> ret;
@@ -137,10 +60,10 @@ int stoi(const _tstring &s)
     return ret;
 }
 
-float stof(const _tstring &s)
+float stof(const std::string &s)
 {
     float ret = 0.0f;
-    _tstringstream stream;
+    std::stringstream stream;
 
     stream << s;
     stream >> ret;
@@ -148,10 +71,10 @@ float stof(const _tstring &s)
     return ret;
 }
 
-_tstring itoa(int i)
+std::string itoa(int i)
 {
-    _tstring ret;
-    _tstringstream stream;
+    std::string ret;
+    std::stringstream stream;
 
     stream << i;
     stream >> ret;
@@ -159,10 +82,10 @@ _tstring itoa(int i)
     return ret;
 }
 
-_tstring ftoa(float f, int dec)
+std::string ftoa(float f, int dec)
 {
-    _tstring ret;
-    _tstringstream stream;
+    std::string ret;
+    std::stringstream stream;
 
     stream.precision(dec);
     stream << f;
@@ -171,7 +94,7 @@ _tstring ftoa(float f, int dec)
     return ret;
 }
 
-_tstring fitToFieldSize(const _tstring &in, size_t fieldSize, JUSTIFY justify)
+std::string fitToFieldSize(const std::string &in, size_t fieldSize, JUSTIFY justify)
 {
     if(in.size() > fieldSize)
     {
@@ -187,9 +110,9 @@ _tstring fitToFieldSize(const _tstring &in, size_t fieldSize, JUSTIFY justify)
         size_t leftCharsRemaining = (size_t)floor((fieldSize-in.size()) / 2.0);
         size_t rightCharsRemaining = (size_t)ceil((fieldSize-in.size()) / 2.0);
 
-        _tstring pad;			for(size_t i=0; i<charsRemaining; ++i) pad += _T(" ");
-        _tstring padLeftHalf;	for(size_t i=0; i<leftCharsRemaining; ++i) padLeftHalf += _T(" ");
-        _tstring padRightHalf;	for(size_t i=0; i<rightCharsRemaining; ++i) padRightHalf += _T(" ");
+        std::string pad;			for(size_t i=0; i<charsRemaining; ++i) pad += " ";
+        std::string padLeftHalf;	for(size_t i=0; i<leftCharsRemaining; ++i) padLeftHalf += " ";
+        std::string padRightHalf;	for(size_t i=0; i<rightCharsRemaining; ++i) padRightHalf += " ";
 
         switch(justify)
         {
@@ -201,23 +124,23 @@ _tstring fitToFieldSize(const _tstring &in, size_t fieldSize, JUSTIFY justify)
     }
 }
 
-_tstring toLowerCase(const _tstring &in)
+std::string toLowerCase(const std::string &in)
 {
-    _tstring str(in);
+    std::string str(in);
 
-    for(_tstring::iterator iter = str.begin(); iter != str.end(); ++iter)
-        (*iter) = (TCHAR)tolower(*iter);
+    for(std::string::iterator iter = str.begin(); iter != str.end(); ++iter)
+        (*iter) = (char)tolower(*iter);
 
     return str;
 }
 
-_tstring replace(const _tstring &source,
-                 const _tstring &find,
-                 const _tstring &replace)
+std::string replace(const std::string &source,
+                 const std::string &find,
+                 const std::string &replace)
 {
-    _tstring output = source;
+    std::string output = source;
 
-    for(size_t j = 0; (j=source.find(find, j)) != _tstring::npos; ++j)
+    for(size_t j = 0; (j=source.find(find, j)) != std::string::npos; ++j)
     {
         output.replace(j, find.length(), replace);
     }
@@ -225,17 +148,17 @@ _tstring replace(const _tstring &source,
     return output;
 }
 
-void tokenize(const _tstring& str,
-              vector<_tstring>& tokens,
-              const _tstring& delimiters)
+void tokenize(const std::string& str,
+              std::vector<std::string>& tokens,
+              const std::string& delimiters)
 {
     // Skip delimiters at beginning.
-    _tstring::size_type lastPos = str.find_first_not_of(delimiters, 0);
+    std::string::size_type lastPos = str.find_first_not_of(delimiters, 0);
 
     // Find first "non-delimiter".
-    _tstring::size_type pos     = str.find_first_of(delimiters, lastPos);
+    std::string::size_type pos     = str.find_first_of(delimiters, lastPos);
 
-    while (_tstring::npos != pos || _tstring::npos != lastPos)
+    while (std::string::npos != pos || std::string::npos != lastPos)
     {
         // Found a token, add it to the vector.
         tokens.push_back(str.substr(lastPos, pos - lastPos));

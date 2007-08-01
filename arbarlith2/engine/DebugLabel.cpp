@@ -36,7 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 namespace Engine {
 
 DebugLabel::DebugLabel(const vec2 &pos, Application &app)
-: LabelWidget(_T("DebugLabel has not gathered stats yet"), pos, white, FONT_SIZE_HUGE, app.fontLarge),
+: LabelWidget("DebugLabel has not gathered stats yet", pos, white, FONT_SIZE_HUGE, app.fontLarge),
   application(app)
 {
 	m_bVisible = true;
@@ -44,13 +44,13 @@ DebugLabel::DebugLabel(const vec2 &pos, Application &app)
 
 void DebugLabel::update(float)
 {
-	_tstring output = _T("Signals: ");
+	string output = "Signals: ";
 
 	for(size_t i=0; i<NUM_SIGNALS; ++i)
 	{
 		output += (application.getWorld().router.signals[i]<300.0f)
-			? _T("1 ")
-			: _T("0 ");
+			? "1 "
+			: "0 ";
 	}
 
 	setLabel(output);

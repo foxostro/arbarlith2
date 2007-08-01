@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "PropertyBag.h"
 #include "Effect_Receive_Shadows.h"
 
-namespace Engine { 
+namespace Engine {
 
 static float shadowAlphaThreshold = 0.90f;
 
@@ -73,9 +73,9 @@ void Effect_Receive_Shadows::end(void)
 	CHECK_GL_ERROR();
 }
 
-_tstring Effect_Receive_Shadows::getRequiredExtensions(void) const
+string Effect_Receive_Shadows::getRequiredExtensions(void) const
 {
-	return _T("GL_ARB_multitexture");
+	return "GL_ARB_multitexture";
 }
 
 int Effect_Receive_Shadows::getRequiredTextureUnits(void) const
@@ -126,9 +126,9 @@ bool Effect_Receive_Shadows::requiresTexCoordStream(void) const
 	return true;
 }
 
-_tstring Effect_Receive_Shadows::getName(void) const
+string Effect_Receive_Shadows::getName(void) const
 {
-	return _T("Effect_Receive_Shadows");
+	return "Effect_Receive_Shadows";
 }
 
 int Effect_Receive_Shadows::howGood(effect_sig) const

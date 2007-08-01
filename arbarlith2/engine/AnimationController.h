@@ -107,14 +107,14 @@ public:
 	@return The animation handle
 	@throws std::invalid_argument When the animation does not exist
 	*/
-	size_t getAnimationHandle(const _tstring &name) const;
+	size_t getAnimationHandle(const string &name) const;
 
 	/**
 	Records an animation request
 	@param name The name of the animation
 	@param speed The speed of the animation
 	*/
-	inline bool requestAnimationChange(const _tstring &name, float speed)
+	inline bool requestAnimationChange(const string &name, float speed)
 	{
 		return requestAnimationChange(getAnimationHandle(name), speed);
 	}

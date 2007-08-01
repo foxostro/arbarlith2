@@ -99,11 +99,14 @@ extern bool supportsAniostropy;
 
 #ifdef _DEBUG
 #define FLUSH_GL_ERROR() {while(glGetError()!=GL_NO_ERROR);}
-#define CHECK_GL_ERROR()                                                                                                                  \
-{                                                                                                                                         \
-	GLenum errorCode;                                                                                                                 \
-	while( (errorCode=glGetError()) != GL_NO_ERROR)                                                                                   \
-		FAIL(_tstring(_T("Line #")) + itoa(__LINE__) + _tstring(_T(": ")) + toTString((const char*)gluErrorString(errorCode))  ); \
+#define CHECK_GL_ERROR() \
+{                                                                 \
+	GLenum errorCode;                                             \
+	while( (errorCode=glGetError()) != GL_NO_ERROR)               \
+	{                                                             \
+		FAIL("Line #" + itoa(__LINE__) +                          \
+		     ": " + (const char*)gluErrorString(errorCode));      \
+	}                                                             \
 }
 #else
 #define FLUSH_GL_ERROR()

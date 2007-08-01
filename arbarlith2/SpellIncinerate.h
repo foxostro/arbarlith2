@@ -45,7 +45,7 @@ public:
 	@param ownerID Spell caster owner
 	@param fileName Loads spell data from the file
 	*/
-	SpellIncinerate(World *zone, OBJECT_ID ownerID, const _tstring &fileName)
+	SpellIncinerate(World *zone, OBJECT_ID ownerID, const string &fileName)
 	{
 		loadFromFile(fileName, zone, ownerID);
 	}

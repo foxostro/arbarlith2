@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2005-2007 Game Creation Society
+Copyright Â© 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@ namespace Engine {
 
 TextWriter::TextWriter(void)
 {
-	fileName = _T("nill");
+	fileName = "nill";
 
 	fontSize.insert(make_pair(FONT_SIZE_HUGE, 24.f));
 	fontSize.insert(make_pair(FONT_SIZE_LARGE, 16.f));
@@ -65,7 +65,7 @@ void TextWriter::reaquire(void)
 	setup(fileName);
 }
 
-void TextWriter::setup(const _tstring &fileName)
+void TextWriter::setup(const string &fileName)
 {
 	this->fileName = fileName;
 
@@ -77,11 +77,11 @@ void TextWriter::setup(const _tstring &fileName)
 void TextWriter::setup(PropertyBag &xml)
 {
 	PropertyBag FontBag;
-	_tstring fontImageFileName = File::fixFilename(_T("data/fonts/default.png")); // default font image
+	string fontImageFileName = File::fixFilename("data/fonts/default.png"); // default font image
 
 	// Load the font configuration files
-	xml.get(_T("font"), FontBag);
-	FontBag.get(_T("image"), fontImageFileName);
+	xml.get("font", FontBag);
+	FontBag.get("image", fontImageFileName);
 
 	fontImageFileName = File::fixFilename(fontImageFileName);
 
@@ -92,10 +92,10 @@ void TextWriter::setup(PropertyBag &xml)
 	float s = 8.f;
 
 	// Load the font sizes
-	FontBag.get(_T("huge"), h);
-	FontBag.get(_T("large"), l);
-	FontBag.get(_T("normal"), n);
-	FontBag.get(_T("small"), s);
+	FontBag.get("huge", h);
+	FontBag.get("large", l);
+	FontBag.get("normal", n);
+	FontBag.get("small", s);
 
 	fontSize.clear();
 	fontSize.insert(make_pair(FONT_SIZE_HUGE, h));
@@ -117,9 +117,9 @@ void TextWriter::setup(PropertyBag &xml)
 	int bytesPerPixel	= fontImage.getDepth();
 	bool alpha		= bytesPerPixel==4;
 
-	ASSERT(font!=0,		_T("font was NULL"));
-	ASSERT(fontWidth>16,	_T("font width is too narrow"));
-	ASSERT(fontHeight>16,	_T("font height is too narrow"));
+	ASSERT(font!=0,		"font was NULL");
+	ASSERT(fontWidth>16,	"font width is too narrow");
+	ASSERT(fontHeight>16,	"font height is too narrow");
 
 	// The number of columns and rows of characters conatined in the font
 	const int numCols = 16;
@@ -211,38 +211,38 @@ void TextWriter::setup(PropertyBag &xml)
 	delete[] buffer;
 	buffer=0;
 
-	TRACE(_tstring(_T("Created font: ")) + fontImageFileName);
+	TRACE(string("Created font: ") + fontImageFileName);
 }
 
 TextWriter::Character& TextWriter::getCharacter(char z)
 {
-	ASSERT(z >= 0, _T("Invalid character"));
+	ASSERT(z >= 0, "Invalid character");
 
 	return characters[  (size_t)((z >= 0) ? z : '?')  ];
 }
 
 const TextWriter::Character& TextWriter::getCharacter(char z) const
 {
-	ASSERT(z >= 0, _T("Invalid character"));
+	ASSERT(z >= 0, "Invalid character");
 
 	return characters[  (size_t)((z >= 0) ? z : '?')  ];
 }
 
 TextWriter::Character& TextWriter::getCharacter(wchar_t z)
 {
-	ASSERT(z < 128, _T("Invalid character"));
+	ASSERT(z < 128, "Invalid character");
 
 	return characters[  (size_t)((z < 128) ? z : '?')  ];
 }
 
 const TextWriter::Character& TextWriter::getCharacter(wchar_t z) const
 {
-	ASSERT(z < 128, _T("Invalid character"));
+	ASSERT(z < 128, "Invalid character");
 
 	return characters[  (size_t)((z < 128) ? z : '?')  ];
 }
 
-void TextWriter::drawChar(const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, TCHAR z, const COLOR &color) const
+void TextWriter::drawChar(const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, char z, const COLOR &color) const
 {
 	glBindTexture(GL_TEXTURE_2D, getCharacter(z).charTex);
 	glColor4fv(color);
@@ -255,7 +255,7 @@ void TextWriter::drawChar(const vec3 &a, const vec3 &b, const vec3 &c, const vec
 	glEnd();
 }
 
-void TextWriter::putChar(vec3 *offset, TCHAR character, const COLOR *color, FONT_SIZE size, bool useBillboard) const
+void TextWriter::putChar(vec3 *offset, char character, const COLOR *color, FONT_SIZE size, bool useBillboard) const
 {
 	const float _size = fontSize.find(size)->second;
 
@@ -282,7 +282,7 @@ void TextWriter::putChar(vec3 *offset, TCHAR character, const COLOR *color, FONT
 		up = vec3(0, 1, 0);
 	}
 
-	if(character == _T('\n'))
+	if(character == '\n')
 	{
 		if(useBillboard)
 		{
@@ -327,7 +327,7 @@ void TextWriter::disableMultiTex(void)
 	glEnable(GL_TEXTURE_2D);
 }
 
-void TextWriter::write(const _tstring &text, const COLOR &color, FONT_SIZE size, bool useBillboard) const
+void TextWriter::write(const string &text, const COLOR &color, FONT_SIZE size, bool useBillboard) const
 {
 	CHECK_GL_ERROR();
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -353,15 +353,15 @@ void TextWriter::write(const _tstring &text, const COLOR &color, FONT_SIZE size,
 	CHECK_GL_ERROR();
 }
 
-vec2 TextWriter::getDimensions(const _tstring &text, FONT_SIZE size) const
+vec2 TextWriter::getDimensions(const string &text, FONT_SIZE size) const
 {
 	float row_width=0;
 	float max_width=0;
 	int numLines=1;
 
-	for(_tstring::const_iterator i = text.begin(); i != text.end(); ++i)
+	for(string::const_iterator i = text.begin(); i != text.end(); ++i)
 	{
-		if((*i) == _T('\n'))
+		if((*i) == '\n')
 		{
 			numLines++;
 			max_width = max(max_width, row_width);

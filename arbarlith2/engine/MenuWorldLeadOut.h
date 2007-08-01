@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ public:
 	Constructor
 	@param imageFileName File name for the backdrop image
 	*/
-	MenuWorldLeadOut(const _tstring &imageFileName);
+	MenuWorldLeadOut(const string &imageFileName);
 
 	/** Destructor */
 	~MenuWorldLeadOut(void);
@@ -54,7 +54,7 @@ public:
 	Allocates all resources
 	@param imageFileName File name for the backdrop image
 	*/
-	virtual void create(const _tstring &imageFileName);
+	virtual void create(const string &imageFileName);
 
 protected:
 	/** Populates the menu elements */

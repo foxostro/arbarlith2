@@ -80,7 +80,7 @@ const unsigned short OBJECT_MATERIAL = 0x4130;
 /** Sub-chunk of OBJECT_MESH, texture coordinates */
 const unsigned short OBJECT_UV = 0x4140;
 
-AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
+AnimationController* _3dsLoader::loadFromFile(const string &fileName) const
 {
 	PropertyBag xml;
 	xml.loadFromFile(fileName);
@@ -88,30 +88,30 @@ AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 	AnimationController* controller = new AnimationController();
 
 	bool truespaceModel = false;
-	xml.get(_T("Truespace"), truespaceModel);
+	xml.get("Truespace", truespaceModel);
 
-	_tstring skin;
-	xml.get(_T("forceSkin"), skin);
+	string skin;
+	xml.get("forceSkin", skin);
 
-	for(size_t i=0, numAnimations=xml.getNumInstances(_T("animation")); i<numAnimations; ++i)
+	for(size_t i=0, numAnimations=xml.getNumInstances("animation"); i<numAnimations; ++i)
 	{
-		PropertyBag animation = xml.getBag(_T("animation"), i);
-		_tstring name = animation.getString(_T("name"));
-		float fps = animation.getFloat(_T("fps"));
+		PropertyBag animation = xml.getBag("animation", i);
+		string name = animation.getString("name");
+		float fps = animation.getFloat("fps");
 
 		// Optional properties
 		bool looping = false;
 		float priority = 0.0f;
 
-		animation.get(_T("looping"), looping);
-		animation.get(_T("priority"), priority);
+		animation.get("looping", looping);
+		animation.get("priority", priority);
 
 		// Load all the keyframes
 		vector<KeyFrame> keyFrames;
-		const size_t length=animation.getNumInstances(_T("keyframe"));
+		const size_t length=animation.getNumInstances("keyframe");
 		for(size_t j=0; j<length; ++j)
 		{
-			_tstring keyFrameFile = animation.getString(_T("keyframe"), j);
+			string keyFrameFile = animation.getString("keyframe", j);
 
 			Model keyFrame = loadKeyFrame(keyFrameFile);
 
@@ -132,20 +132,20 @@ AnimationController* _3dsLoader::loadFromFile(const _tstring &fileName) const
 	return controller;
 }
 
-Engine::Model _3dsLoader::loadKeyFrame(const _tstring &fileName) const
+Engine::Model _3dsLoader::loadKeyFrame(const string &fileName) const
 {
 	// Open the file
 	File file(fileName, true);
 	if(!file.loaded())
 	{
-		FAIL(_T("Failed to open 3DS file: ") + fileName);
+		FAIL("Failed to open 3DS file: " + fileName);
 	}
 
 	// Make sure this is a 3DS file
 	Chunk currentChunk(file);
 	if(currentChunk.getID() != PRIMARY)
 	{
-		FAIL(_T("PRIMARY chunk not found!  This is not a valid 3DS file: ") + fileName);
+		FAIL("PRIMARY chunk not found!  This is not a valid 3DS file: " + fileName);
 	}
 
 	// recursively load all chunks
@@ -185,7 +185,7 @@ _3dsLoader::Chunk::Chunk(Chunk &parentChunk)
 
 int _3dsLoader::Chunk::getString(char *s)
 {
-	ASSERT(s!=0, _T("string was null"));
+	ASSERT(s!=0, "string was null");
 
 	int index = 0;
 
@@ -225,18 +225,18 @@ void _3dsLoader::processNextChunk(Chunk &parentChunk, Wrapper &model) const
 
 void _3dsLoader::processVersionChunk(Chunk &currentChunk) const
 {
-	ASSERT(currentChunk.getID()==VERSION, _T("Expected chunk ID VERSION"));
+	ASSERT(currentChunk.getID()==VERSION, "Expected chunk ID VERSION");
 
 	// If the file version is over 3, give a warning that there could be a problem
 	if((currentChunk.getSize() == 4) && (currentChunk.peekChar() > 0x03))
 	{
-		ERR(_T("This 3DS file is over version 3 so it may load incorrectly"));
+		ERR("This 3DS file is over version 3 so it may load incorrectly");
 	}
 }
 
 void _3dsLoader::processObjectInfoChunk(Chunk &currentChunk, Wrapper &model) const
 {
-	ASSERT(currentChunk.getID()==OBJECTINFO, _T("Expected chunk ID OBJECTINFO"));
+	ASSERT(currentChunk.getID()==OBJECTINFO, "Expected chunk ID OBJECTINFO");
 
 	// Ignore the mesh version data
 	// if the object has a texture, the next chunk should be MATERIAL, followed by OBJECT.
@@ -245,14 +245,14 @@ void _3dsLoader::processObjectInfoChunk(Chunk &currentChunk, Wrapper &model) con
 
 void _3dsLoader::processObjectChunk(Chunk &currentChunk, Wrapper &wrapper) const
 {
-	ASSERT(currentChunk.getID()==OBJECT, _T("Expected chunk ID OBJECT"));
+	ASSERT(currentChunk.getID()==OBJECT, "Expected chunk ID OBJECT");
 
 	Mesh *mesh = new Mesh;
 
 	currentChunk.getString(mesh->m_strName);
 
 	// set up a little trap to tell if an object material was encountered
-	const _tstring &trap = _T("FOOBARBARIAN");
+	const string &trap = "FOOBARBARIAN";
 	mesh->material.setName(trap);
 
 
@@ -311,7 +311,7 @@ void _3dsLoader::processNextObjectChunk(Chunk &currentChunk, Wrapper &wrapper, M
 
 void _3dsLoader::readVertices(Chunk &currentChunk, Mesh *mesh) const
 {
-	ASSERT(currentChunk.getID()==OBJECT_VERTICES, _T("Expected chunk ID OBJECT_VERTICES"));
+	ASSERT(currentChunk.getID()==OBJECT_VERTICES, "Expected chunk ID OBJECT_VERTICES");
 
 	currentChunk.read(&mesh->m_numOfVerts, 2);
 
@@ -378,7 +378,7 @@ void _3dsLoader::cullDegenerateMeshes(Engine::Model &model) const
 
 void _3dsLoader::readVertexIndices(Chunk &currentChunk, Wrapper &wrapper, Mesh *mesh) const
 {
-	ASSERT(currentChunk.getID()==OBJECT_FACES, _T("Expected chunk ID OBJECT_FACES"));
+	ASSERT(currentChunk.getID()==OBJECT_FACES, "Expected chunk ID OBJECT_FACES");
 
 	unsigned short int trashVisibilityFlag=0;
 
@@ -446,7 +446,7 @@ void _3dsLoader::generateNormals(Mesh *mesh) const
 
 void _3dsLoader::readUVCoordinates(Chunk &currentChunk, Mesh *mesh) const
 {
-	ASSERT(currentChunk.getID()==OBJECT_UV, _T("Expected chunk ID OBJECT_UV"));
+	ASSERT(currentChunk.getID()==OBJECT_UV, "Expected chunk ID OBJECT_UV");
 
 	currentChunk.read(&mesh->m_numTexVertex, 2);
 
@@ -459,33 +459,32 @@ void _3dsLoader::readUVCoordinates(Chunk &currentChunk, Mesh *mesh) const
 
 void _3dsLoader::readObjectMaterial(Chunk &currentChunk, Wrapper &model, Mesh *mesh) const
 {
-	ASSERT(currentChunk.getID()==OBJECT_MATERIAL, _T("Expected chunk ID OBJECT_MATERIAL"));
+	ASSERT(currentChunk.getID()==OBJECT_MATERIAL, "Expected chunk ID OBJECT_MATERIAL");
 
 	char materialName[255] = {0};
 	currentChunk.getString(materialName);
 
-	mesh->material = model.getMaterial(toTString(materialName));
+	mesh->material = model.getMaterial(materialName);
 
 	// We don't care about shared vertices, so skip the rest
 }
 
 void _3dsLoader::readMaterialMapFile(Chunk &currentChunk, Material &material) const
 {
-	ASSERT(currentChunk.getID()==MATMAPFILE, _T("Expected chunk ID MATMAPFILE"));
+	ASSERT(currentChunk.getID()==MATMAPFILE, "Expected chunk ID MATMAPFILE");
 
 	const size_t size = currentChunk.getSize() - currentChunk.tell();
 	char *relativeFileName = new char[size];
 	currentChunk.read(relativeFileName, size);
 
-	const _tstring chunkFile = currentChunk.getFilename();
-	const _tstring path = File::getPath(chunkFile);
-	const _tstring relativeFileNameT = toTString(relativeFileName);
-	const _tstring absoluteFileName = pathAppend(path, relativeFileNameT);
+	const string chunkFile = currentChunk.getFilename();
+	const string path = File::getPath(chunkFile);
+	const string absoluteFileName = pathAppend(path, relativeFileName);
 
-	TRACE(_T("3DS current file: ") + chunkFile);
-	TRACE(_T("3DS current path: ") + path);
-	TRACE(_tstring(_T("3DS material: ")) + relativeFileName);
-	TRACE(_T("Reading 3DS material from: ") + absoluteFileName);
+	TRACE("3DS current file: " + chunkFile);
+	TRACE("3DS current path: " + path);
+	TRACE(string("3DS material: ") + relativeFileName);
+	TRACE("Reading 3DS material from: " + absoluteFileName);
 
 	material.loadTexture(absoluteFileName, 0);
 
@@ -494,18 +493,18 @@ void _3dsLoader::readMaterialMapFile(Chunk &currentChunk, Material &material) co
 
 void _3dsLoader::readMaterialName(Chunk &currentChunk, Material &material) const
 {
-	ASSERT(currentChunk.getID()==MATNAME, _T("Expected chunk ID MATNAME"));
+	ASSERT(currentChunk.getID()==MATNAME, "Expected chunk ID MATNAME");
 
 	size_t size = currentChunk.getSize() - currentChunk.tell();
 	char *materialName = new char[size];
 	currentChunk.read(materialName, size);
 
-	material.setName(toTString(materialName));
+	material.setName(materialName);
 
 	delete[] materialName;
 }
 
-void _3dsLoader::forceSkin(Engine::Model &model, const _tstring &skinFileName) const
+void _3dsLoader::forceSkin(Engine::Model &model, const string &skinFileName) const
 {
 	Material material;
 	material.loadTexture(skinFileName, 0);

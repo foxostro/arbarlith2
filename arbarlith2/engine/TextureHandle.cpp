@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,19 +34,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "TextureHandle.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
 TextureHandle::TextureHandle(void)
 {
-	fileName=_T("(nill)");
+	fileName="(nill)";
 	width=height=0;
 	alpha=false;
 	id=0;
 }
 
-TextureHandle::TextureHandle(const _tstring &fileName, int width, int height, bool alpha, unsigned int id)
+TextureHandle::TextureHandle(const string &fileName, int width, int height, bool alpha, unsigned int id)
 {
 	this->fileName = fileName;
 	this->width = width;
@@ -64,10 +64,10 @@ void TextureHandle::release(void)
 void TextureHandle::reaquire(void)
 {
 	release();
-	
+
 	Image img(fileName);
 	int depth = img.getDepth();
-	
+
 	// get a new id
 	glGenTextures(1, &id);
 

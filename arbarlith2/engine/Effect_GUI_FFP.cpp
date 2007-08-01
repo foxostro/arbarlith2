@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect_GUI_FFP.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -105,17 +105,17 @@ void Effect_GUI_FFP::end(void)
 	// Restore the model view matrix
 	glMatrixMode(GL_MODELVIEW);
 	glPopMatrix();
-	
+
 	//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	glPopAttrib();
-	
-	CHECK_GL_ERROR(); 
+
+	CHECK_GL_ERROR();
 }
 
-_tstring Effect_GUI_FFP::getRequiredExtensions(void) const
+string Effect_GUI_FFP::getRequiredExtensions(void) const
 {
-	return _tstring();
+	return string();
 }
 
 int Effect_GUI_FFP::getRequiredTextureUnits(void) const
@@ -165,9 +165,9 @@ bool Effect_GUI_FFP::requiresTexCoordStream(void) const
 	return false;
 }
 
-_tstring Effect_GUI_FFP::getName(void) const
+string Effect_GUI_FFP::getName(void) const
 {
-	return _T("Effect_GUI_FFP");
+	return "Effect_GUI_FFP";
 }
 
 

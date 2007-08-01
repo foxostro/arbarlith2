@@ -69,11 +69,11 @@ SpellCasterFSM::SpellCasterFSM(OBJECT_ID handle)
 
 void SpellCasterFSM::orderTheAttack(void)
 {
-	ASSERT(m_Owner!=0, _T("Owner was null"));
-	ASSERT(haveTarget(), _T("Method requires that owner has a target first"));
+	ASSERT(m_Owner!=0, "Owner was null");
+	ASSERT(haveTarget(), "Method requires that owner has a target first");
 
 	Monster* monsterOwner = dynamic_cast<Monster*>(m_Owner);
-	ASSERT(monsterOwner!=0, _T("Owner is not a Monster type object.  This is required."));
+	ASSERT(monsterOwner!=0, "Owner is not a Monster type object.  This is required.");
 
 	if(distanceToTarget() < thresholdSpellRange)
 	{
@@ -82,7 +82,7 @@ void SpellCasterFSM::orderTheAttack(void)
 
 		// Cast an offensive spell at the target
 		Spell *spell = monsterOwner->getSpellPtr();
-		ASSERT(spell!=0, _T("Owner's preferred spell was null"));
+		ASSERT(spell!=0, "Owner's preferred spell was null");
 		spell->beginCast();
 	}
 	else

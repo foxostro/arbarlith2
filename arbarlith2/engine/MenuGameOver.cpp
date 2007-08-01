@@ -50,18 +50,18 @@ MenuGameOver::~MenuGameOver(void)
 
 void MenuGameOver::create(void)
 {
-	Menu::create(_T("data/sprites/backdrops/gameover.jpg"));
+	Menu::create("data/sprites/backdrops/gameover.jpg");
 }
 
 void MenuGameOver::populateElements(void)
 {
 	elements.clear();
-	elements.push_back( Element(vec2(30.0f, 100.0f), _T("Game Over")) );
+	elements.push_back( Element(vec2(30.0f, 100.0f), "Game Over") );
 }
 
 void MenuGameOver::activateElement(int)
 {
-	g_SoundSystem.play(_T("data/sound/activate.wav"));
+	g_SoundSystem.play("data/sound/activate.wav");
 	GameStateMenu::GetSingleton().enterGameMenuScreen();
 }
 

@@ -16,8 +16,8 @@ namespace Engine {
 
 WaitScreen::WaitScreen(void)
 {
-	const _tstring nill = _T("");
-	const _tstring waitScreenImage = _T("data/sprites/backdrops/wait.jpg");
+	const string nill = "";
+	const string waitScreenImage = "data/sprites/backdrops/wait.jpg";
 
 	backDrop.create(nill,
 					waitScreenImage,

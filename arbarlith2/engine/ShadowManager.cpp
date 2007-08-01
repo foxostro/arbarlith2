@@ -123,7 +123,7 @@ void ShadowManager::update(const ActorSet &zoneActors, float deltaTime)
 
 void ShadowManager::reassignShadows(void)
 {
-	ASSERT(zone!=0, _T("zone was null!  Make sure to call setZone before using the shadow manager."));
+	ASSERT(zone!=0, "zone was null!  Make sure to call setZone before using the shadow manager.");
 
 	// get the set of active lights
 	vector<const Light*> lights = zone->getLightManager().getActiveSet();
@@ -194,8 +194,8 @@ size_t ShadowManager::getMaxShadows(void) const
 
 const Shadow& ShadowManager::getShadow(size_t idx) const
 {
-	ASSERT(idx < getMaxShadows(), _T("idx is invalid: ") + itoa((int)idx));
-	ASSERT(shadows[idx]!=0, _T("shadows[idx] is null"));
+	ASSERT(idx < getMaxShadows(), "idx is invalid: " + itoa((int)idx));
+	ASSERT(shadows[idx]!=0, "shadows[idx] is null");
 	return(*shadows[idx]);
 }
 

@@ -67,8 +67,8 @@ void PowerupHeal::load(const PropertyBag &xml)
 
 bool PowerupHeal::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, _T("healValue"), healValue);
-	saveTag(xml, dataFile, _T("healTime"), healTime);
+	saveTag(xml, dataFile, "healValue", healValue);
+	saveTag(xml, dataFile, "healTime", healTime);
 
 	return Powerup::saveTidy(xml, dataFile);
 }
@@ -78,8 +78,8 @@ void PowerupHeal::createToolBar(ListPaneWidget *pane)
 	Powerup::createToolBar(pane);
 
 	// Add to the tool bar
-	pane->addElement(new ListElementTweaker<float>	(_T("healTime"),	&healTime));
-	pane->addElement(new ListElementTweaker<int>	(_T("healValue"),	&healValue));
+	pane->addElement(new ListElementTweaker<float>	("healTime",	&healTime));
+	pane->addElement(new ListElementTweaker<int>	("healValue",	&healValue));
 }
 
 } // namespace

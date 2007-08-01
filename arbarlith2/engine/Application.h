@@ -82,7 +82,7 @@ public:
 	*/
 	SoundSystem& getSoundSystem(void)
 	{
-		ASSERT(soundSystem!=0, _T("soundSystem was NULL"));
+		ASSERT(soundSystem!=0, "soundSystem was NULL");
 		return(*soundSystem);
 	}
 
@@ -132,7 +132,7 @@ public:
 	*/
 	unsigned int getFrameRate(void) const
 	{
-		ASSERT(fme!=0, _T("fme was NULL"));
+		ASSERT(fme!=0, "fme was NULL");
 		return fme->getFPS();
 	}
 
@@ -169,7 +169,7 @@ public:
 	*/
 	inline World& getWorld(void)
 	{
-		ASSERT(world!=0, _T("world was null"));
+		ASSERT(world!=0, "world was null");
 		return(*world);
 	}
 
@@ -179,7 +179,7 @@ public:
 	*/
 	inline const World& getWorld(void) const
 	{
-		ASSERT(world!=0, _T("world was null"));
+		ASSERT(world!=0, "world was null");
 		return(*world);
 	}
 
@@ -243,7 +243,7 @@ public:
 	bool soundEnabled;
 
 	/** Indicates the music file that we would like to play for the menu */
-	_tstring menuMusic;
+	string menuMusic;
 
 	/** Performance setting to control the technique for rendering the game world */
 	enum
@@ -299,7 +299,7 @@ private:
 	float mouseSensitivity;
 
 	/** Filename for the settings file */
-	_tstring defaultSetupFileName;
+	string defaultSetupFileName;
 
 	/** The active game state */
 	GAME_STATE gameState;

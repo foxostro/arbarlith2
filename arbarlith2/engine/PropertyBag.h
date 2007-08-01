@@ -32,7 +32,7 @@ public:
 	represents this item.
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	virtual _tstring save(int indentlevel=0) const = 0;
+	virtual string save(int indentlevel=0) const = 0;
 
 	/**
 	Equality operator
@@ -61,7 +61,7 @@ public:
 	@param data The string data to accept
 	@param convert If true, the string should be made safe for an XML file
 	*/
-	PropertyBagString(const _tstring &data, bool convert = true);
+	PropertyBagString(const string &data, bool convert = true);
 
 	/**
 	Constructor
@@ -69,14 +69,14 @@ public:
 	@param data The string data to accept
 	@param convert If true, the string should be made safe for an XML file
 	*/
-	PropertyBagString(const _tstring &name, const _tstring &data, bool convert = true);
+	PropertyBagString(const string &name, const string &data, bool convert = true);
 
 	/**
 	Return a string representation of some XML structure that in turn
 	represents this item.
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	virtual _tstring save(int indentlevel=0) const;
+	virtual string save(int indentlevel=0) const;
 
 	/**
 	Equality operator
@@ -89,7 +89,7 @@ public:
 	Gets the data from the item, converted as appropriate.
 	@return data from this item
 	*/
-	_tstring getData(void) const;
+	string getData(void) const;
 
 	/**
 	Sets data for the item
@@ -98,17 +98,17 @@ public:
 	a form safe for XML.
 	@return The actual data stored for this item
 	*/
-	const _tstring& setData(const _tstring &data, bool convert);
+	const string& setData(const string &data, bool convert);
 
 	/**
 	Sets the name of the item
 	@param name The new name of the item
 	@return The name actually set for the item
 	*/
-	const _tstring& setName(const _tstring &name);
+	const string& setName(const string &name);
 
 	/** Gets the name of the item */
-	const _tstring& getName(void) const;
+	const string& getName(void) const;
 
 	/**
 	Makes a string safe for insertion into an XML file by replacing special
@@ -116,7 +116,7 @@ public:
 	@param str String parameter
 	@return Safe string
 	*/
-	static _tstring makeStringSafe(const _tstring &str);
+	static string makeStringSafe(const string &str);
 
 	/**
 	Takes a string made safe for an XML file and replaces the entities like
@@ -124,25 +124,25 @@ public:
 	@param str String parameter
 	@return Original string
 	*/
-	static _tstring restoreFromSafeString(const _tstring &str);
+	static string restoreFromSafeString(const string &str);
 
 private:
 	/** Has the item been converted to a safe form? */
 	bool itemHasBeenConverted;
 
 	/** Name of the item */
-	_tstring itemName;
+	string itemName;
 
 	/** Data stored for this item*/
-	_tstring itemData;
+	string itemData;
 };
 
 /** Contains property bag items */
 class PropertyBag : public PropertyBagItem
 {
 private:
-	/** _tstring -> PropertyBagItem */
-	typedef multimap<_tstring, PropertyBagItem *> PropertyMap;
+	/** string -> PropertyBagItem */
+	typedef multimap<string, PropertyBagItem *> PropertyMap;
 
 	/** Property bag content */
 	PropertyMap data;
@@ -161,7 +161,7 @@ public:
 	Construct from a string
 	@param s String from which to accept data
 	*/
-	PropertyBag(const _tstring &s);
+	PropertyBag(const string &s);
 
 	/** Clear out the property bag */
 	void clear(void);
@@ -184,14 +184,14 @@ public:
 	represents this item.
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	virtual _tstring save(int indentlevel=0) const;
+	virtual string save(int indentlevel=0) const;
 
 	/**
 	Saves to file some XML structure that in turn represents this item.
 	@param fileName Name of the file to write
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	void saveToFile(const _tstring &fileName, int indentLevel=0) const;
+	void saveToFile(const string &fileName, int indentLevel=0) const;
 
 	/**
 	Loads the contents of the property bag from file.  It is possible to
@@ -202,108 +202,111 @@ public:
 	@param merge If true, then the contents of the file are merged with any
 	existing contents of this bag.
 	*/
-	void loadFromFile(const _tstring &fileName, bool merge = false);
+	void loadFromFile(const string &fileName, bool merge = false);
 
 	/**
 	Remove all instances of the item
 	@param key Name of the key to remove
 	*/
-	void remove(const _tstring &key);
+	void remove(const string &key);
 
 	/**
 	Remove all instances of the item
 	@param key Name of the key to remove
 	@param instance Index of the instance to remove
 	*/
-	void remove(const _tstring &key, int instance);
+	void remove(const string &key, int instance);
 
 	/**
 	Gets the number of instances of data elements paired with the given key
 	@param key Key value
 	@return The number of times the key is present in the data
 	*/
-	size_t getNumInstances(const _tstring &key) const;
+	size_t getNumInstances(const string &key) const;
 
 	/** Adds a generic XmlDataType */
-	inline void add(const _tstring &key, const XmlDataType &data)
+	inline void add(const string &key, const XmlDataType &data)
 	{
 		add(key, (const XmlDataType*)(&data));
 	}
 
 	/** Adds a generic XmlDataType */
-	void add(const _tstring &key, const XmlDataType *data);
+	void add(const string &key, const XmlDataType *data);
+
+	/** Adds a C string */
+	void add(const string& key, const char* data, bool convert = true);
 
 	/** Adds a string */
-	void add(const _tstring &key, const _tstring &data, bool convert = true);
+	void add(const string &key, const string &data, bool convert = true);
 
 	/** Adds an int */
-	void add(const _tstring &key, int data);
+	void add(const string &key, int data);
 
 	/** Adds a size_t */
-	void add(const _tstring &key, size_t data);
+	void add(const string &key, size_t data);
 
 	/** Adds a double */
-	void add(const _tstring &key, double data);
+	void add(const string &key, double data);
 
 	/** Adds a float */
-	void add(const _tstring &key, float data);
+	void add(const string &key, float data);
 
 	/** Adds a bool */
-	void add(const _tstring &key, bool data);
+	void add(const string &key, bool data);
 
 	/** Adds a PropertyBag */
-	void add(const _tstring &key, const PropertyBag &contents);
+	void add(const string &key, const PropertyBag &contents);
 
 	/** Gets a generic XmlDataType */
-	inline bool get(const _tstring &key, XmlDataType &dest, size_t instance = 0) const
+	inline bool get(const string &key, XmlDataType &dest, size_t instance = 0) const
 	{
 		return get(key, (XmlDataType*)(&dest), instance);
 	}
 
 	/** Gets a generic XmlDataType */
-	bool get(const _tstring &key, XmlDataType *dest, size_t instance = 0) const;
+	bool get(const string &key, XmlDataType *dest, size_t instance = 0) const;
 
 	/** Gets a string */
-	bool get(const _tstring &key, _tstring &dest, size_t instance = 0) const;
+	bool get(const string &key, string &dest, size_t instance = 0) const;
 
 	/** Gets an int */
-	bool get(const _tstring &key, int &dest, size_t instance = 0) const;
+	bool get(const string &key, int &dest, size_t instance = 0) const;
 
 	/** Gets a size_t */
-	bool get(const _tstring &key, size_t &dest, size_t instance = 0) const;
+	bool get(const string &key, size_t &dest, size_t instance = 0) const;
 
 	/** Gets a double */
-	bool get(const _tstring &key, double &dest, size_t instance = 0) const;
+	bool get(const string &key, double &dest, size_t instance = 0) const;
 
 	/** Gets a float */
-	bool get(const _tstring &key, float &dest, size_t instance = 0) const;
+	bool get(const string &key, float &dest, size_t instance = 0) const;
 
 	/** Gets a bool */
-	bool get(const _tstring &key, bool &dest, size_t instance = 0) const;
+	bool get(const string &key, bool &dest, size_t instance = 0) const;
 
 	/** Gets a PropertyBag */
-	bool get(const _tstring &key, PropertyBag &dest, size_t instance = 0) const;
+	bool get(const string &key, PropertyBag &dest, size_t instance = 0) const;
 
 	/** Gets a string */
-	_tstring getString(const _tstring &key, size_t instance = 0) const;
+	string getString(const string &key, size_t instance = 0) const;
 
 	/** Gets an int */
-	int getInt(const _tstring &key, size_t instance = 0) const;
+	int getInt(const string &key, size_t instance = 0) const;
 
 	/** Gets a size_t */
-	size_t getSizeT(const _tstring &key, size_t instance = 0) const;
+	size_t getSizeT(const string &key, size_t instance = 0) const;
 
 	/** Gets a double */
-	double getDouble(const _tstring &key, size_t instance = 0) const;
+	double getDouble(const string &key, size_t instance = 0) const;
 
 	/** Gets a float */
-	float getFloat(const _tstring &key, size_t instance = 0) const;
+	float getFloat(const string &key, size_t instance = 0) const;
 
 	/** Gets a bool */
-	bool getBool(const _tstring &key, size_t instance = 0) const;
+	bool getBool(const string &key, size_t instance = 0) const;
 
 	/** Gets a PropertyBag */
-	PropertyBag getBag(const _tstring &key, size_t instance = 0) const;
+	PropertyBag getBag(const string &key, size_t instance = 0) const;
 
 private:
 	/**
@@ -311,7 +314,7 @@ private:
 	@param tagName Name of the tag
 	@param tagContent Content if the tag
 	*/
-	void insertTag(const _tstring &tagName, const _tstring &tagContent);
+	void insertTag(const string &tagName, const string &tagContent);
 
 	/**
 	Interprets the contents of the string as property bag contents and
@@ -320,7 +323,7 @@ private:
 	@param allowInheritance If true, allows @inherit tags to evaluate
 	@return true if successful, false otherwise
 	*/
-	bool loadMergeFromString(const _tstring &newStuff, bool allowInheritance);
+	bool loadMergeFromString(const string &newStuff, bool allowInheritance);
 
 	/**
 	Merges the contents of another PropertyBag with this one

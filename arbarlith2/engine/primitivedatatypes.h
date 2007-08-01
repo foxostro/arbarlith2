@@ -25,7 +25,7 @@ public:
     Gets the string representation of the object
     @return string representation
     */
-    virtual _tstring ToString(void) const = 0;
+    virtual string ToString(void) const = 0;
 
     /**
     Retrieve from a string representation
@@ -33,13 +33,13 @@ public:
     @return true if successful, false if otherwise.  Usually, this means
     that the given string representation was invalid
     */
-    virtual bool FromString(_tstring str) = 0;
+    virtual bool FromString(string str) = 0;
 
     /**
     Cast to a string
     @return string representation
     */
-    operator _tstring ()
+    operator string ()
     {
         return ToString();
     }

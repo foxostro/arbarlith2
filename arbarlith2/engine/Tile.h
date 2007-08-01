@@ -167,7 +167,7 @@ public:
 	@param wallFileName Material for the tile
 	@param owner Map that owns this Tile
 	*/
-	void create(int x, int z, TILE_TYPE type, TILE_PROPERTIES propertiesBitmap, float tileHeight, const _tstring &floorFileName, const _tstring &wallFileName, Map &owner);
+	void create(int x, int z, TILE_TYPE type, TILE_PROPERTIES propertiesBitmap, float tileHeight, const string &floorFileName, const string &wallFileName, Map &owner);
 
 private:
 	/** Tile type */

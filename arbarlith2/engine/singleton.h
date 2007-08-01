@@ -41,7 +41,7 @@ class Singleton
 		}
 		static inline T& GetSingleton()
 		{
-			ASSERT(ms_singleton!=0, _T("ms_singleton was NULL"));
+			ASSERT(ms_singleton!=0, "ms_singleton was NULL");
 
 			return(*ms_singleton);
 		}

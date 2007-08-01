@@ -84,7 +84,7 @@ public:
 
 	void setOwner(Creature *owner)
 	{
-		ASSERT(owner!=0, _T("Owner parameter was NULL"));
+		ASSERT(owner!=0, "Owner parameter was NULL");
 		m_Owner = owner;
 	}
 

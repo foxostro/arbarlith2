@@ -96,7 +96,7 @@ World::~World()
 	destroy();
 }
 
-void World::loadFromFile(const _tstring &fileName)
+void World::loadFromFile(const string &fileName)
 {
 	PropertyBag bag;
 	bag.loadFromFile(fileName);
@@ -112,7 +112,7 @@ void World::clear()
 	shadowManager.clear();
 	map.clear();
 
-	name = _T("nill");
+	name = "nill";
 	clockTicks=0.0f;
 	NumOfPlayers = 0;
 
@@ -145,48 +145,48 @@ void World::reaquire(void)
 
 PropertyBag World::save(void) const
 {
-	TRACE(_T("Saving game world..."));
+	TRACE("Saving game world...");
 
 	PropertyBag bag;
 
-	bag.add(_T("objects"), getObjects().save());
-	bag.add(_T("player"), getPlayer(0).save());
-	bag.add(_T("map"), map.save(name));
-	bag.add(_T("name"), name);
-	bag.add(_T("fog"), fog.save());
-	bag.add(_T("ambientLight"), getLightManager().ambientLight);
-	bag.add(_T("music"), music.save());
+	bag.add("objects", getObjects().save());
+	bag.add("player", getPlayer(0).save());
+	bag.add("map", map.save(name));
+	bag.add("name", name);
+	bag.add("fog", fog.save());
+	bag.add("ambientLight", getLightManager().ambientLight);
+	bag.add("music", music.save());
 
-	TRACE(_T("...finished"));
+	TRACE("...finished");
 
 	return bag;
 }
 
 void World::load(const PropertyBag &bag)
 {
-	TRACE(_T("Loading game world..."));
+	TRACE("Loading game world...");
 	g_WaitScreen.Render();
 
 	// Destroy any old instance of this realm
 	destroy();
-	TRACE(_T("...destroyed existing World data first..."));
+	TRACE("...destroyed existing World data first...");
 
-	name = bag.getString(_T("name"));
+	name = bag.getString("name");
 
 	// Load the music set
-	music.load( bag.getBag(_T("music")) );
+	music.load( bag.getBag("music") );
 	music.update();
 
 	// Load the fog
-	fog.load( bag.getBag(_T("fog")) );
+	fog.load( bag.getBag("fog") );
 
 	// Load the ambient lighting intensity for the World
 	Light::BRIGHTNESS = 1.0f;
 	Dimmer::alphaBlur = 0.0f;
-	getLightManager().ambientLight = bag.getFloat(_T("ambientLight"));
+	getLightManager().ambientLight = bag.getFloat("ambientLight");
 
 	// Load the map
-	map.create( bag.getBag(_T("map")) );
+	map.create( bag.getBag("map") );
 
 	// Initialize the lighting system
 	lightManager.create();
@@ -194,12 +194,12 @@ void World::load(const PropertyBag &bag)
 	shadowManager.setZone(this);
 
 	// Load the objects bags
-	getObjects().load(bag.getBag(_T("objects")), this);
+	getObjects().load(bag.getBag("objects"), this);
 
 	// Load the players
-	reloadPlayers( bag.getBag(_T("player")) );
+	reloadPlayers( bag.getBag("player") );
 
-	TRACE(_T("...finished (Loading \"") + getName() + _T(")"));
+	TRACE("...finished (Loading \"" + getName() + ")");
 }
 
 void World::draw(void) const
@@ -390,7 +390,7 @@ void World::drawParticles(void) const
 		{
 			ParticleSystem *system = (*iter);
 
-			ASSERT(system!=0, _T("system was NULL"));
+			ASSERT(system!=0, "system was NULL");
 
 			if(!system->isDead())
 			{
@@ -454,9 +454,9 @@ void World::updateShadows(float deltaTime)
 	}
 }
 
-size_t World::SpawnPfx(_tstring strFile, const vec3 &position)
+size_t World::SpawnPfx(string strFile, const vec3 &position)
 {
-	ASSERT(!strFile.empty(), _T("Bad parameter strFile specifies no filename"));
+	ASSERT(!strFile.empty(), "Bad parameter strFile specifies no filename");
 
 	ParticleSystem *s = new ParticleSystem(strFile);
 	s->setPosition(position);
@@ -471,40 +471,40 @@ const Player& World::getPlayer(size_t playerNum) const
 {
 	const Player *player = getPlayerPtr(playerNum);
 
-	ASSERT(player!=0, _T("player[") + itoa((int)playerNum) + _T("] was null"));
+	ASSERT(player!=0, "player[" + itoa((int)playerNum) + "] was null");
 
 	return(*player);
 }
 
 Player& World::getPlayer(size_t playerNum)
 {
-	ASSERT(playerNum < MAX_PLAYERS, _T("invalid player number"));
+	ASSERT(playerNum < MAX_PLAYERS, "invalid player number");
 
 	Player *player = getPlayerPtr(playerNum);
 
-	ASSERT(player!=0, _T("player[") + itoa((int)playerNum) + _T("] was null"));
+	ASSERT(player!=0, "player[" + itoa((int)playerNum) + "] was null");
 
 	return(*player);
 }
 
 const Player* World::getPlayerPtr(size_t playerNum) const
 {
-	ASSERT(playerNum < MAX_PLAYERS, _T("invalid player number"));
+	ASSERT(playerNum < MAX_PLAYERS, "invalid player number");
 	return player[playerNum];
 }
 
 Player* World::getPlayerPtr(size_t playerNum)
 {
-	ASSERT(playerNum < MAX_PLAYERS, _T("invalid player number"));
+	ASSERT(playerNum < MAX_PLAYERS, "invalid player number");
 	return player[playerNum];
 }
 
 void World::reloadPlayers(const PropertyBag &playerBag)
 {
-	TRACE(_T("Reloading all the players..."));
+	TRACE("Reloading all the players...");
 
 
-	_tstring file, type;
+	string file, type;
 
 	if(playerBag.getSym(file))
 	{
@@ -522,20 +522,20 @@ void World::reloadPlayers(const PropertyBag &playerBag)
 	const int numOfJoysticks = SDL_NumJoysticks();
 
 #if _PLAYER_ONE_HAS_NO_JOYSTICK_
-	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player #1 will always be on the keyboard"));
+	TRACE("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player #1 will always be on the keyboard");
 	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks + 1, MAX_PLAYERS);
 #else
-	TRACE(_T("_PLAYER_ONE_HAS_NO_JOYSTICK_ is NOT defined, so player #1 will always be on the keyboard and joystick #1"));
+	TRACE("_PLAYER_ONE_HAS_NO_JOYSTICK_ is NOT defined, so player #1 will always be on the keyboard and joystick #1");
 	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks, MAX_PLAYERS);
 #endif
 
-	TRACE(_T("Expecting ") + itoa((int)NumOfPlayers) + _T(" players"));
+	TRACE("Expecting " + itoa((int)NumOfPlayers) + " players");
 
 	// Create the players
 	for(int i = 0; (size_t)i < NumOfPlayers; ++i)
 	{
 		player[i] = dynamic_cast<Player*>(getObjects().createPtr(type, this));
-		ASSERT(player[i]!=0, _T("Failed to construct player #") + itoa(i));
+		ASSERT(player[i]!=0, "Failed to construct player #" + itoa(i));
 
 		player[i]->load(playerBag);
 		player[i]->setPlayerNumber(i);
@@ -547,10 +547,10 @@ void World::reloadPlayers(const PropertyBag &playerBag)
 			player[i]->Place(player[i]->getPos() + offset);
 		}
 
-		TRACE(_T("Loaded player #") + itoa(i));
+		TRACE("Loaded player #" + itoa(i));
 	}
 
-	TRACE(_T("...finished (Reloading the players)"));
+	TRACE("...finished (Reloading the players)");
 }
 
 vec3 World::findAveragePlayerPosition(void) const
@@ -558,8 +558,8 @@ vec3 World::findAveragePlayerPosition(void) const
 	vec3 averagePlayerPosition;
 	const size_t numOfPlayers = getNumOfPlayers();
 
-	ASSERT(numOfPlayers!=0, _T("Number of players is zero, and it shouldn't be."));
-	ASSERT(numOfPlayers < MAX_PLAYERS, _T("Number of players (") + itoa((int)numOfPlayers) + _T(") is too large!  The maximum is ") + itoa((int)MAX_PLAYERS));
+	ASSERT(numOfPlayers!=0, "Number of players is zero, and it shouldn't be.");
+	ASSERT(numOfPlayers < MAX_PLAYERS, "Number of players (" + itoa((int)numOfPlayers) + ") is too large!  The maximum is " + itoa((int)MAX_PLAYERS));
 
 	for(size_t i=0; i<numOfPlayers; ++i)
 	{
@@ -593,6 +593,28 @@ void World::updateCamera(void)
 	}
 
 	g_Camera.lookAt(averagePlayerPosition + vec3(cameraDistance,cameraDistance,cameraDistance), averagePlayerPosition, vec3(0,1,0));
+}
+
+ParticleSystem& World::getParticleSystem(size_t handle)
+{
+	ASSERT(handle < particles.size(),
+		   "Paricle handle is invalid: " + itoa((int)handle) +
+		   "of " + itoa((int)particles.size()));
+
+	ASSERT(particles[handle] != 0, "particles[handle] is null!");
+
+	return *particles[handle];
+}
+
+const ParticleSystem& World::getParticleSystem(size_t handle) const
+{
+	ASSERT(handle < particles.size(),
+		   "Paricle handle is invalid: " + itoa((int)handle) +
+		   "of " + itoa((int)particles.size()));
+
+	ASSERT(particles[handle] != 0, "particles[handle] is null!");
+
+	return *particles[handle];
 }
 
 } // namespace Engine

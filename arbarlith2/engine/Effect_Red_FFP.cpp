@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Effect_Red_FFP.h"
 
 
-namespace Engine { 
+namespace Engine {
 
 
 
@@ -85,9 +85,9 @@ void Effect_Red_FFP::end(void)
 	CHECK_GL_ERROR();
 }
 
-_tstring Effect_Red_FFP::getRequiredExtensions(void) const
+string Effect_Red_FFP::getRequiredExtensions(void) const
 {
-	return _tstring();
+	return string();
 }
 
 int Effect_Red_FFP::getRequiredTextureUnits(void) const
@@ -124,9 +124,9 @@ bool Effect_Red_FFP::requiresTexCoordStream(void) const
 	return false;
 }
 
-_tstring Effect_Red_FFP::getName(void) const
+string Effect_Red_FFP::getName(void) const
 {
-	return _T("Effect_Red_FFP");
+	return "Effect_Red_FFP";
 }
 
 int Effect_Red_FFP::howGood(effect_sig signature) const

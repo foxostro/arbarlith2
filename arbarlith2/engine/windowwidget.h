@@ -45,7 +45,7 @@ public:
 	@param y relative y
 	@param imageFile The image file to use for an unaffected widget
 	*/
-	WindowWidget(float x, float y, const _tstring &imageFile);
+	WindowWidget(float x, float y, const string &imageFile);
 
 	/**
 	Constructor
@@ -54,7 +54,7 @@ public:
 	@param imageFile The image file to use for an unaffected widget
 	@param depressedFile The image file to use for a depressed widget
 	*/
-	WindowWidget(float x, float y, const _tstring &imageFile, const _tstring &depressedFile);
+	WindowWidget(float x, float y, const string &imageFile, const string &depressedFile);
 
 	/**
 	Constructor
@@ -64,7 +64,7 @@ public:
 	@param depressedFile The image file to use for a depressed widget
 	@param hoverFile The image file to use for a widget with mouse hover
 	*/
-	WindowWidget(float x, float y, const _tstring &imageFile, const _tstring &depressedFile, const _tstring &hoverFile);
+	WindowWidget(float x, float y, const string &imageFile, const string &depressedFile, const string &hoverFile);
 
 	/** Destructor */
 	virtual ~WindowWidget(void);

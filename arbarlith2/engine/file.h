@@ -37,32 +37,32 @@ namespace Engine {
 Creates a directory
 @param path Directory to create
 */
-void createDirectory(const _tstring &path);
+void createDirectory(const string &path);
 
 /**
 Use this command to set the current working directory
 @param path The new drectory to set as the current working directory
 @return true if the current working directory was changed, false otherwise
 */
-bool setWorkingDirectory(const _tstring &path);
+bool setWorkingDirectory(const string &path);
 
 /**
 Gets the current working directory
 @return The current working directory
 */
-_tstring getWorkingDirectory(void);
+string getWorkingDirectory(void);
 
 /**
 Gets the home directory of the current user
 @return The home directory
 */
-_tstring getAppDataDirectory(void);
+string getAppDataDirectory(void);
 
 /**
 Gets the directory where the application is located
 @return Application's directory
 */
-_tstring getApplicationDirectory(void);
+string getApplicationDirectory(void);
 
 /**
 Appends a file name to a path
@@ -70,7 +70,7 @@ Appends a file name to a path
 @param fileName file name
 @return The composite path
 */
-_tstring pathAppend(const _tstring &path, const _tstring &fileName);
+string pathAppend(const string &path, const string &fileName);
 
 /**
 Wraps low-level file input / output operations
@@ -92,11 +92,11 @@ private:
 	@param fileName file to examine
 	@return Size of the file in bytes
 	*/
-	static streamsize getBytesOnDisk(const _tstring &fileName);
+	static streamsize getBytesOnDisk(const string &fileName);
 
 protected:
 	/** Location of the file */
-	_tstring fileName;
+	string fileName;
 
 public:
 	/** Status of a disk/file operation */
@@ -130,7 +130,7 @@ public:
 	@param fileName The file to open
 	@param binary The file is binary data
 	*/
-	File(const _tstring &fileName, bool binary)
+	File(const string &fileName, bool binary)
 	{
 		clear();
 		openFile(fileName, binary);
@@ -159,7 +159,7 @@ public:
 	@param binary The file is binary data
 	@return true if the file was opened and read correctly, false otherwise
 	*/
-	bool openFile(const _tstring &fileName, bool binary);
+	bool openFile(const string &fileName, bool binary);
 
 	/**
 	Saves the data to the specified file
@@ -167,7 +167,7 @@ public:
 	@param binary The file is binary data
 	@return true if the file was opened and written correctly, false otherwise
 	*/
-	bool saveFile(const _tstring &fileName, bool binary);
+	bool saveFile(const string &fileName, bool binary);
 
 	/**
 	Saves the data to the file specified in this->fileName
@@ -315,7 +315,7 @@ public:
 	Gets the full file path and name
 	@return file name and path
 	*/
-	const _tstring& getFilename(void) const
+	const string& getFilename(void) const
 	{
 		return fileName;
 	}
@@ -324,40 +324,40 @@ public:
 	Gets the full file path and name
 	@return file name and path
 	*/
-    _tstring getFilenameNoPath(void) const;
+    string getFilenameNoPath(void) const;
 
     /**
     Gets the full file path and name
     @param fileName File name
     @return file name and path
     */
-    static _tstring getFilenameNoPath(const _tstring &fileName);
+    static string getFilenameNoPath(const string &fileName);
 
 	/**
 	Get the directory the file was located in
 	@return file path
 	*/
-	_tstring getPath(void) const;
+	string getPath(void) const;
 
 	/**
 	Get the directory the file was located in
 	@param fileName File name
 	@return file path
 	*/
-	static _tstring getPath(const _tstring &fileName);
+	static string getPath(const string &fileName);
 
 	/**
 	Get the file extension
 	@return extension
 	*/
-	_tstring getExtension(void) const;
+	string getExtension(void) const;
 
 	/**
 	Transforms the given file name into all lower case with UNIX style slashes
 	@param fileName File name to transform
 	@return transformed filename
 	*/
-	static _tstring fixFilename(const _tstring &fileName);
+	static string fixFilename(const string &fileName);
 
 	/**
 	Finds the extension marker in a string.
@@ -371,28 +371,28 @@ public:
 	@return Index of the extension delimiter character in the fileName.
 	If there is no extension, then the length of the filename is returned.
 	*/
-	static size_t findExtensionDelimeter(const _tstring &fileName);
+	static size_t findExtensionDelimeter(const string &fileName);
 
 	/**
 	Removes a file extension from the file name
 	@param fileName The name of the file to extract the extension from
 	@return Removes a file extension from a file path and returns the modified file name.
 	*/
-	static _tstring stripExtension(const _tstring &fileName);
+	static string stripExtension(const string &fileName);
 
 	/**
 	Gets the file extension from a file path
 	@param fileName The name of the file to extract the extension from
 	@return Returns the file extension
 	*/
-	static _tstring getExtension(const _tstring &fileName);
+	static string getExtension(const string &fileName);
 
 	/**
 	Determine if a file exists on disk
 	@param fileName Name of the file to check access permissions on
 	@return true if the file is on disk, false otherwise
 	*/
-	static bool isFileOnDisk(const _tstring &fileName);
+	static bool isFileOnDisk(const string &fileName);
 };
 
 } //namespace Engine

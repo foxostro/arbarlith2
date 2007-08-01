@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -80,7 +80,7 @@ public:
 	Gets the OpenGL extensions required to execute the Effect
 	@return OpenGL extension strings
 	*/
-	virtual _tstring getRequiredExtensions(void) const = 0;
+	virtual string getRequiredExtensions(void) const = 0;
 
 	/**
 	Gets the number of texture units necessary to properly execute the Effect
@@ -145,7 +145,7 @@ public:
 	Retrieve the name of the Effect
 	@return The name of the Effect
 	*/
-	virtual _tstring getName(void) const = 0;
+	virtual string getName(void) const = 0;
 
 	/**
 	Has the Effect determine how well it can implement an effect signature

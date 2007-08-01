@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -44,13 +44,13 @@ private:
 	@param fileName File name of some MD3 file
 	@return key frames
 	*/
-	static vector<KeyFrame> loadKeyFrames(const _tstring &fileName);
+	static vector<KeyFrame> loadKeyFrames(const string &fileName);
 
 	/**
 	Loads a model from file
 	@param fileName The file name of the model
 	*/
-	virtual AnimationController* loadFromFile(const _tstring &fileName) const;
+	virtual AnimationController* loadFromFile(const string &fileName) const;
 };
 
 } // namespace Engine

@@ -77,7 +77,7 @@ protected:
 
 private:
 	/** The file name of the pfx that will be spawned */
-	_tstring pfxFileName;
+	string pfxFileName;
 
 	/** The position of the particle effect */
 	vec3 pfxLocation;

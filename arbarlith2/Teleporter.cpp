@@ -45,7 +45,7 @@ Teleporter::Teleporter(OBJECT_ID ID)
 void Teleporter::clear(void)
 {
 	Switch::clear();
-	actionLabel = _T("enter.");
+	actionLabel = "enter.";
 	destinationPosition.zero();
 }
 
@@ -77,11 +77,11 @@ void Teleporter::createToolBar(ListPaneWidget *pane)
 {
 	// hide options from base classes other than the Actor
 
-	pane->addElement(new ToggleWidgetText(		_T("Lit"),				&isLit));
-	pane->addElement(new ListElementTweaker<float>(	_T("Height (m)"),			&m_desiredHeight));
-	pane->addElement(new ListElementTweakerString(	_T("Model"),			&m_strModelFilename));
-	pane->addElement(new ListElementTweakerXML(	_T("Position"),			&position));
-	pane->addElement(new ListElementTweakerXML(	_T("Destination Position"),	&destinationPosition));
+	pane->addElement(new ToggleWidgetText(		"Lit",				&isLit));
+	pane->addElement(new ListElementTweaker<float>(	"Height (m)",			&m_desiredHeight));
+	pane->addElement(new ListElementTweakerString(	"Model",			&m_strModelFilename));
+	pane->addElement(new ListElementTweakerXML(	"Position",			&position));
+	pane->addElement(new ListElementTweakerXML(	"Destination Position",	&destinationPosition));
 }
 
 void Teleporter::load(const PropertyBag &xml)
@@ -93,7 +93,7 @@ void Teleporter::load(const PropertyBag &xml)
 
 bool Teleporter::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("destinationPosition"),	destinationPosition);
+	saveTag(xml, editorData, "destinationPosition",	destinationPosition);
 
 	return Switch::saveTidy(xml, editorData);
 }

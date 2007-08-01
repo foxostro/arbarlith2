@@ -55,15 +55,15 @@ void EditorToolBar::clear(void)
 	world = 0;
 	tileEditor_type = TILE_BLOCK;
 	tileEditor_properties = 0;
-	tileEditor_floorTextureFile = _T("data/tiles/floor/floor.jpg");
-	tileEditor_wallTextureFile = _T("data/tiles/floor/wall.JPG");
+	tileEditor_floorTextureFile = "data/tiles/floor/floor.jpg";
+	tileEditor_wallTextureFile = "data/tiles/floor/wall.JPG";
 	tileEditor_height = 0.0f;
 	shouldSave = false;
 	shouldLoad = false;
 	shouldNew = false;
 	snapToGrid = false;
 	leftClickDebounce = false;
-	nextObject = _T("nill");
+	nextObject = "nill";
 	selected = 0;
 	toolBarTools = 0;
 	toolBarMisc = 0;
@@ -90,7 +90,7 @@ void EditorToolBar::destroy(void)
 
 void EditorToolBar::create(void)
 {
-	ASSERT(world!=0, _T("world was null!  Call setWorld method first!"));
+	ASSERT(world!=0, "world was null!  Call setWorld method first!");
 
 // Get rid of everything old
 	destroy();
@@ -101,8 +101,8 @@ void EditorToolBar::create(void)
 	AddChild(toolBarZone);
 
 // Populate the World properties panel
-	toolBarZone->addElement(new ListElementTweaker<float>( _T("Ambient Light [0,1]"), &(world->getLightManager().ambientLight)  ));
-	toolBarZone->addElement(new ListElementTweakerString(  _T("World Name"),          &(world->name)  ));
+	toolBarZone->addElement(new ListElementTweaker<float>( "Ambient Light [0,1]", &(world->getLightManager().ambientLight)  ));
+	toolBarZone->addElement(new ListElementTweakerString(  "World Name",          &(world->name)  ));
 
 // Create the Tools panel
 	toolBarTools = new ToolBarForEditorTools(0, 160);
@@ -115,10 +115,23 @@ void EditorToolBar::create(void)
 	AddChild(toolBarMisc);
 
 // Populate the misc toolbar
-	toolBarMisc->addElement(new ToggleWidget(&snapToGrid,		_T("data/sprites/list/editor/snap_on.png"),		_T("data/sprites/list/editor/snap_off.png")));
-	toolBarMisc->addElement(new ToggleWidget(&shouldSave,		_T("data/sprites/list/editor/save_down.png"),	_T("data/sprites/list/editor/save_up.png")));
-	toolBarMisc->addElement(new ToggleWidget(&shouldLoad,		_T("data/sprites/list/editor/load_down.png"),	_T("data/sprites/list/editor/load_up.png")));
-	toolBarMisc->addElement(new ToggleWidget(&shouldNew,		_T("data/sprites/list/editor/new_on.png"),		_T("data/sprites/list/editor/new_on_over.png"),	_T("data/sprites/list/editor/new_off.png"),		_T("data/sprites/list/editor/new_off_over.png")));
+	toolBarMisc->addElement(new ToggleWidget(&snapToGrid,
+	                                         "data/sprites/list/editor/snap_on.png",
+	                                         "data/sprites/list/editor/snap_off.png"));
+
+	toolBarMisc->addElement(new ToggleWidget(&shouldSave,
+	                                         "data/sprites/list/editor/save_down.png",
+	                                         "data/sprites/list/editor/save_up.png"));
+
+	toolBarMisc->addElement(new ToggleWidget(&shouldLoad,
+	                                         "data/sprites/list/editor/load_down.png",
+	                                         "data/sprites/list/editor/load_up.png"));
+
+	toolBarMisc->addElement(new ToggleWidget(&shouldNew,
+	                                         "data/sprites/list/editor/new_on.png",
+	                                         "data/sprites/list/editor/new_on_over.png",
+	                                         "data/sprites/list/editor/new_off.png",
+	                                         "data/sprites/list/editor/new_off_over.png"));
 
 	// Create some controls for the map editor
 	createObjectPalette();
@@ -133,13 +146,13 @@ void EditorToolBar::create(void)
 	AddChild(toolBarTilePropreties);
 
 	toolBarTilePropreties->addElement(new CycleTextureSelectorState(&textureSelectorState));
-	toolBarTilePropreties->addElement(new ToggleWidgetText						(_T("Select Type"),		&(tileTypeSelector->m_bVisible)));
-	//toolBarTilePropreties->addElement(new ToggleWidgetText						(_T("Select Height"),	&(tileHeightSelector->m_bVisible)));
-	toolBarTilePropreties->addElement(new ListElementTweaker<TILE_PROPERTIES>	(_T("Tile Properties"),	&tileEditor_properties));
-	toolBarTilePropreties->addElement(new ListElementTweaker<float>				(_T("Tile Height"),		&tileEditor_height));
+	toolBarTilePropreties->addElement(new ToggleWidgetText						("Select Type",		&(tileTypeSelector->m_bVisible)));
+	//toolBarTilePropreties->addElement(new ToggleWidgetText					("Select Height",	&(tileHeightSelector->m_bVisible)));
+	toolBarTilePropreties->addElement(new ListElementTweaker<TILE_PROPERTIES>	("Tile Properties",	&tileEditor_properties));
+	toolBarTilePropreties->addElement(new ListElementTweaker<float>				("Tile Height",		&tileEditor_height));
 
 // Create the mouse cursor label
-	mousePosLabel = new LabelWidget(_T("label here"), vec2(700,700));
+	mousePosLabel = new LabelWidget("label here", vec2(700,700));
 	AddChild(mousePosLabel);
 
 // Create the actor properties pane
@@ -150,21 +163,21 @@ void EditorToolBar::create(void)
 
 void EditorToolBar::createObjectPalette(void)
 {
-	objectPalette = new FileSelectionList(_T("data/objects/*.xml"), 80+64, 100);
+	objectPalette = new FileSelectionList("data/objects/*.xml", 80+64, 100);
 	objectPalette->m_bVisible = false;
 	AddChild(objectPalette);
 }
 
 void EditorToolBar::createWallTextureSelector(void)
 {
-	texturePalette_Wall = new FileSelectionList(_T("data/tiles/wall/*.JPG"), 320, 100);
+	texturePalette_Wall = new FileSelectionList("data/tiles/wall/*.JPG", 320, 100);
 	texturePalette_Wall->m_bVisible = false;
 	AddChild(texturePalette_Wall);
 }
 
 void EditorToolBar::createFloorTextureSelector(void)
 {
-	texturePalette_Floor = new FileSelectionList(_T("data/tiles/floor/*.JPG"), 320, 100);
+	texturePalette_Floor = new FileSelectionList("data/tiles/floor/*.JPG", 320, 100);
 	texturePalette_Floor->m_bVisible = false;
 	AddChild(texturePalette_Floor);
 }
@@ -173,8 +186,8 @@ void EditorToolBar::createTileTypeSelector(void)
 {
 	tileTypeSelector = new StringSelectionList<TILE_TYPE>(1024-341, 10);
 	tileTypeSelector->m_bVisible = false;
-	tileTypeSelector->addElement(_T("Empty"), TILE_EMPTY);
-	tileTypeSelector->addElement(_T("Block"), TILE_BLOCK);
+	tileTypeSelector->addElement("Empty", TILE_EMPTY);
+	tileTypeSelector->addElement("Block", TILE_BLOCK);
 	AddChild(tileTypeSelector);
 }
 
@@ -182,13 +195,13 @@ void EditorToolBar::createTileHeightSelector(void)
 {
 	tileHeightSelector = new StringSelectionList<float>(1024-341, 10);
 	tileHeightSelector->m_bVisible = false;
-	tileHeightSelector->addElement(_T("-5.0"), -5.0f);
-	tileHeightSelector->addElement(_T("-1.0"), -1.0f);
-	tileHeightSelector->addElement(_T("0.0"), 0.0f);
-	tileHeightSelector->addElement(_T("1.0"), 1.0f);
-	tileHeightSelector->addElement(_T("2.4"), 2.4f);
-	tileHeightSelector->addElement(_T("0.5"), 0.5f);
-	tileHeightSelector->addElement(_T("5.0"), 5.0f);
+	tileHeightSelector->addElement("-5.0", -5.0f);
+	tileHeightSelector->addElement("-1.0", -1.0f);
+	tileHeightSelector->addElement("0.0", 0.0f);
+	tileHeightSelector->addElement("1.0", 1.0f);
+	tileHeightSelector->addElement("2.4", 2.4f);
+	tileHeightSelector->addElement("0.5", 0.5f);
+	tileHeightSelector->addElement("5.0", 5.0f);
 	AddChild(tileHeightSelector);
 }
 
@@ -220,22 +233,22 @@ void EditorToolBar::drawInWorldSpace(void) const
 
 TILE_TYPE EditorToolBar::getTileType(void) const
 {
-	ASSERT(tileTypeSelector!=0, _T("EditorToolBar::getTileType  ->  tileTypeSelector was null"));
+	ASSERT(tileTypeSelector!=0, "EditorToolBar::getTileType  ->  tileTypeSelector was null");
 	return tileTypeSelector->getValue();
 }
 
 void EditorToolBar::update(float deltaTime)
 {
-	ASSERT(world!=0,                 _T("world was null!  Call setWorld first!"));
-	ASSERT(toolBarTools!=0,          _T("toolBarTools was null"));
-	ASSERT(toolBarMisc!=0,           _T("toolBarMisc was null"));
-	ASSERT(toolBarZone!=0,           _T("toolBarZone was null"));
-	ASSERT(mousePosLabel!=0,         _T("mousePosLabel was null"));
-	ASSERT(objectPalette!=0,         _T("objectPalette was null"));
-	ASSERT(tileTypeSelector!=0,      _T("tileTypeSelector was null"));
-	ASSERT(texturePalette_Wall!=0,   _T("texturePalette_Wall was null"));
-	ASSERT(texturePalette_Floor!=0,  _T("texturePalette_Floor was null"));
-	ASSERT(tileHeightSelector!=0,    _T("tileHeightSelector was null"));
+	ASSERT(world!=0,                 "world was null!  Call setWorld first!");
+	ASSERT(toolBarTools!=0,          "toolBarTools was null");
+	ASSERT(toolBarMisc!=0,           "toolBarMisc was null");
+	ASSERT(toolBarZone!=0,           "toolBarZone was null");
+	ASSERT(mousePosLabel!=0,         "mousePosLabel was null");
+	ASSERT(objectPalette!=0,         "objectPalette was null");
+	ASSERT(tileTypeSelector!=0,      "tileTypeSelector was null");
+	ASSERT(texturePalette_Wall!=0,   "texturePalette_Wall was null");
+	ASSERT(texturePalette_Floor!=0,  "texturePalette_Floor was null");
+	ASSERT(tileHeightSelector!=0,    "tileHeightSelector was null");
 
 
 
@@ -260,10 +273,10 @@ void EditorToolBar::update(float deltaTime)
 		mousePos = getGroundPickPos(0.0f);
 
 		// update the mouse cursor to show this position
-		mousePosLabel->setLabel(_tstring(_T("Mouse: (")) + ftoa(mousePos.x) +
-								_tstring(_T(", ")) + ftoa(mousePos.y) +
-								_tstring(_T(", ")) + ftoa(mousePos.z) +
-								_tstring(_T(")")));
+		mousePosLabel->setLabel(string("Mouse: (") + ftoa(mousePos.x) +
+								string(", ") + ftoa(mousePos.y) +
+								string(", ") + ftoa(mousePos.z) +
+								string(")"));
 
 
 		// Update the tool bar widgets
@@ -275,7 +288,7 @@ void EditorToolBar::update(float deltaTime)
 
 			// Decide the selected object
 			{
-				_tstring o = chooseNextObject();
+				string o = chooseNextObject();
 				if(!o.empty())
 				{
 					nextObject = o;
@@ -327,7 +340,7 @@ void EditorToolBar::update(float deltaTime)
 						// Rebuild the map display list
 						map.reaquire();
 
-						g_SoundSystem.play(_T("data/sound/activate.wav"));
+						g_SoundSystem.play("data/sound/activate.wav");
 					}
 				}
 
@@ -454,7 +467,7 @@ void EditorToolBar::update(float deltaTime)
 
 void EditorToolBar::createNewMap(void)
 {
-	ASSERT(world!=0, _T("world was null!  Call setWorld first!"));
+	ASSERT(world!=0, "world was null!  Call setWorld first!");
 
 	ActorSet &objects = world->getObjects();
 	Map &map = world->getMap();
@@ -466,25 +479,25 @@ void EditorToolBar::createNewMap(void)
 
 	// Add a player object
 	PropertyBag newGame;
-	newGame.loadFromFile(_T("data/zone/World1.xml"));
+	newGame.loadFromFile("data/zone/World1.xml");
 	world->reloadPlayers(newGame);
 }
 
-_tstring EditorToolBar::chooseTileWallTexture(void)
+string EditorToolBar::chooseTileWallTexture(void)
 {
-	ASSERT(texturePalette_Wall!=0, _T("EditorToolBar::chooseTileWallTexture  ->  texturePalette_Wall was null"));
-	return pathAppend(_T("data/tiles/wall"), texturePalette_Wall->getFilename());
+	ASSERT(texturePalette_Wall!=0, "EditorToolBar::chooseTileWallTexture  ->  texturePalette_Wall was null");
+	return pathAppend("data/tiles/wall", texturePalette_Wall->getFilename());
 }
 
-_tstring EditorToolBar::chooseTileFloorTexture(void)
+string EditorToolBar::chooseTileFloorTexture(void)
 {
-	ASSERT(texturePalette_Floor!=0, _T("EditorToolBar::chooseTileFloorTexture  ->  texturePalette_Floor was null"));
-	return pathAppend(_T("data/tiles/floor"), texturePalette_Floor->getFilename());
+	ASSERT(texturePalette_Floor!=0, "EditorToolBar::chooseTileFloorTexture  ->  texturePalette_Floor was null");
+	return pathAppend("data/tiles/floor", texturePalette_Floor->getFilename());
 }
 
-_tstring EditorToolBar::chooseNextObject(void)
+string EditorToolBar::chooseNextObject(void)
 {
-	ASSERT(objectPalette!=0, _T("EditorToolBar::chooseNextObject  ->  objectPalette was null"));
+	ASSERT(objectPalette!=0, "EditorToolBar::chooseNextObject  ->  objectPalette was null");
 	return objectPalette->getFilename();
 }
 
@@ -558,7 +571,7 @@ vec3 EditorToolBar::getGroundPickPos(float elevation) const
 
 void EditorToolBar::onLeftMouseDown()
 {
-	ASSERT(world!=0, _T("world was null!  Call setWorld first!"));
+	ASSERT(world!=0, "world was null!  Call setWorld first!");
 
 	if(g_GUI.mouseOverSomeWidget) return;
 
@@ -672,18 +685,18 @@ void EditorToolBar::onLeftMouseDown()
 			leftClickDebounce=true;
 
 			// Create objects from a palette of available types
-			_tstring nextObject = getNextObject();
+			string nextObject = getNextObject();
 
-			_tstring rtti;
+			string rtti;
 			PropertyBag ThisObjBag;
 
-			_tstring editorDataFile;
+			string editorDataFile;
 
 			// Gets the objects for the object palette
-			editorDataFile = _tstring(_T("data/objects/")) + nextObject;
+			editorDataFile = string("data/objects/") + nextObject;
 
 			ThisObjBag.loadFromFile(editorDataFile);
-			ThisObjBag.get(_T("type"), rtti);
+			ThisObjBag.get("type", rtti);
 
 			// Create the object inside the game world
 			OBJECT_ID id = objects.create(rtti, world);
@@ -738,7 +751,7 @@ void EditorToolBar::onLeftMouseDown()
 				// Rebuild the map display list
 				map.reaquire();
 
-				g_SoundSystem.play(_T("data/sound/click.wav"));
+				g_SoundSystem.play("data/sound/click.wav");
 			}
 		}
 		break;
@@ -750,7 +763,7 @@ void EditorToolBar::onLeftMouseDown()
 			{
 				drag = true;
 
-				g_SoundSystem.play(_T("data/sound/click.wav"));
+				g_SoundSystem.play("data/sound/click.wav");
 
 				mouseDownPos = getGroundPickPos(0.0f);
 			}
@@ -785,4 +798,4 @@ void EditorToolBar::hideActorPane(void)
 	actorProperties->m_bVisible = false;
 }
 
-}; // namespace
+} // namespace Engine

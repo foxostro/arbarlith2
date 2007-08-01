@@ -45,9 +45,9 @@ GameStateSpellMenu::GameStateSpellMenu(Application &app)
 : GameState(app),
   dimness(0.7f)
 {
-	TRACE(_T("Constructing GameStateSpellMenu... "));
+	TRACE("Constructing GameStateSpellMenu... ");
 
-	padlock.loadTexture(_T("data/sprites/padlock.png"), 0);
+	padlock.loadTexture("data/sprites/padlock.png", 0);
 
 	for(int i=0; i<MAX_PLAYERS; ++i)
 	{
@@ -55,7 +55,7 @@ GameStateSpellMenu::GameStateSpellMenu(Application &app)
 		rightDebounce[i] = false;
 	}
 
-	TRACE(_T("...finished (Constructing GameStateSpellMenu)"));
+	TRACE("...finished (Constructing GameStateSpellMenu)");
 }
 
 GameStateSpellMenu::~GameStateSpellMenu(void)
@@ -107,7 +107,7 @@ void GameStateSpellMenu::update(float)
 
 void GameStateSpellMenu::updateForPlayer(size_t playerNumber)
 {
-	ASSERT(playerNumber < MAX_PLAYERS, _T("invalid player number"));
+	ASSERT(playerNumber < MAX_PLAYERS, "invalid player number");
 
 	Arbarlith2::MyPlayer &player = dynamic_cast<Arbarlith2::MyPlayer&>(application.getWorld().getPlayer(playerNumber));
 
@@ -149,14 +149,14 @@ void GameStateSpellMenu::onRotateClockwise(vector<Arbarlith2::Spell*> spellList,
 {
 	activeIdx++;
 	if((size_t)activeIdx >= spellList.size()) activeIdx = 0;
-	g_SoundSystem.play(_T("data/sound/up.wav"));
+	g_SoundSystem.play("data/sound/up.wav");
 }
 
 void GameStateSpellMenu::onRotateCounterClockwise(vector<Arbarlith2::Spell*> spellList, int &activeIdx)
 {
 	activeIdx--;
 	if(activeIdx < 0) activeIdx = (int)spellList.size()-1;
-	g_SoundSystem.play(_T("data/sound/down.wav"));
+	g_SoundSystem.play("data/sound/down.wav");
 }
 
 void GameStateSpellMenu::drawForPlayer(Arbarlith2::MyPlayer &player, float cx, float cy, float radius) const
@@ -171,7 +171,7 @@ void GameStateSpellMenu::drawForPlayer(Arbarlith2::MyPlayer &player, float cx, f
 		float x = cx + radius*cosf(angle);
 		float y = cy + radius*sinf(angle);
 
-		ASSERT(player.getActiveSpell()>=0, _T("player.getActiveSpell() was negative, which really doesn't make much sense: ") + itoa(player.getActiveSpell()));
+		ASSERT(player.getActiveSpell()>=0, "player.getActiveSpell() was negative, which really doesn't make much sense: " + itoa(player.getActiveSpell()));
 
 		spell.drawIcon2D(i==(size_t)player.getActiveSpell(), x, y, (80.0f/250.0f) * radius);
 	}
@@ -189,13 +189,13 @@ void GameStateSpellMenu::drawForPlayer(Arbarlith2::MyPlayer &player, float cx, f
 void GameStateSpellMenu::onEnter(void)
 {
 	application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, 0.0f, dimness, 333));
-	g_SoundSystem.play(_T("data/sound/activate.wav"));
+	g_SoundSystem.play("data/sound/activate.wav");
 }
 
 void GameStateSpellMenu::onExit(void)
 {
 	application.addTask(new LinearInterpolator(&Dimmer::alphaBlur, dimness, 0.0f, 333));
-	g_SoundSystem.play(_T("data/sound/disabled.wav"));
+	g_SoundSystem.play("data/sound/disabled.wav");
 }
 
 void GameStateSpellMenu::release(void)

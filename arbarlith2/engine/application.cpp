@@ -69,7 +69,7 @@ namespace Engine {
 Application* g_pApplication = 0; // TODO: remove the global Application object
 
 Application::Application(void)
-: defaultSetupFileName(_T("setup.xml"))
+: defaultSetupFileName("setup.xml")
 {
 	clear();
 }
@@ -81,15 +81,15 @@ Application::~Application(void)
 
 void Application::loadFonts(void)
 {
-	fontSmall.setup(_T("data/fonts/proggy.xml"));
-	fontLarge.setup(_T("data/fonts/narkism.xml"));
+	fontSmall.setup("data/fonts/proggy.xml");
+	fontLarge.setup("data/fonts/narkism.xml");
 }
 
 void Application::start(void)
 {
 	PROFILE;
-        
-    TRACE(_T("Starting application..."));
+
+    TRACE("Starting application...");
 
     // Work within the directory where the executable is located
     setWorkingDirectory(getApplicationDirectory());
@@ -108,60 +108,60 @@ void Application::start(void)
 	loadFonts();
 
 	// Load the key bindings
-	TRACE(_T("Loading controller bindings..."));
+	TRACE("Loading controller bindings...");
 	new Controller();
-	TRACE(_T("...Loaded controller bindings"));
+	TRACE("...Loaded controller bindings");
 
 	// Seed the random number generator
-	TRACE(_T("Seeding the random number generator..."));
+	TRACE("Seeding the random number generator...");
 	srand(SDL_GetTicks());
-	TRACE(_T("...Seeded the random number generator"));
+	TRACE("...Seeded the random number generator");
 
 	// Do the splash screen
 	{
-		TRACE(_T("Doing splash screen..."));
+		TRACE("Doing splash screen...");
 		SplashScreen splashScreen;
 		splashScreen.doSplash(5000);
-		TRACE(_T("...Finished with splash screen"));
+		TRACE("...Finished with splash screen");
 	}
 
 	// Initialize the wait screen
 	new WaitScreen();
 	g_WaitScreen.Render();
-	TRACE(_T("Wait screen started."));
+	TRACE("Wait screen started.");
 
 	// Create the frame timer
-	TRACE(_T("Creating the frame timer..."));
+	TRACE("Creating the frame timer...");
 	fme = new NeHe::Frame();
-	TRACE(_T("...Created the frame timer"));
+	TRACE("...Created the frame timer");
 
 	// Create the sound manager
 	addTask(soundSystem = new SoundSystem);
-	TRACE(_T("Sound system initialized"));
+	TRACE("Sound system initialized");
 
 	// Prepare handlers for various key press events
 	addTask(new ScreenShotTask);
-	TRACE(_T("Started screen shot task"));
+	TRACE("Started screen shot task");
 
 	addTask(new EditorKeyDetector);
-	TRACE(_T("Started editor hotkey task"));
+	TRACE("Started editor hotkey task");
 
 	addTask(new MenuKeyDetector);
-	TRACE(_T("Started menu hotkey task"));
+	TRACE("Started menu hotkey task");
 
 	addTask(new SpellMenuKeyDetector);
-	TRACE(_T("Started spell-menu hotkey task"));
+	TRACE("Started spell-menu hotkey task");
 
 	addTask(new DebugDisplayToggleKeyDetector(*this));
-	TRACE(_T("Started debug-info hotkey task"));
+	TRACE("Started debug-info hotkey task");
 
 	addTask(new FPSDisplayToggleKeyDetector);
-	TRACE(_T("Started FPS-display hotkey task"));
+	TRACE("Started FPS-display hotkey task");
 
 
 	// Create a task to handle the GUI
 	new WidgetManager;
-	TRACE(_T("Started the game GUI task"));
+	TRACE("Started the game GUI task");
 	g_WaitScreen.Render();
 
 	// Start the profiler system
@@ -169,51 +169,51 @@ void Application::start(void)
 	Profiler::ProfileInit();
 	addTask(makePeriodicCallbackTask(500.0f,
                                      &Profiler::ProfileDumpOutputToBuffer));
-	TRACE(_T("Started the game profiler task"));
+	TRACE("Started the game profiler task");
 	g_WaitScreen.Render();
 #endif
 
 	// set up the game states
-	TRACE(_T("Creating game state objects..."));
+	TRACE("Creating game state objects...");
 	{
 		states[GAME_STATE_RUN] = new GameStateRun(*this);
-		TRACE(_T("...created GameStateRun..."));
+		TRACE("...created GameStateRun...");
 
 		states[GAME_STATE_EDITOR] = new GameStateEditor(*this);
-		TRACE(_T("...created GameStateEditor..."));
+		TRACE("...created GameStateEditor...");
 
 		states[GAME_STATE_MENU] = new GameStateMenu(*this);
-		TRACE(_T("...created GameStateMenu..."));
+		TRACE("...created GameStateMenu...");
 
 		states[GAME_STATE_SPELL_MENU] = new GameStateSpellMenu(*this);
-		TRACE(_T("...created GameStateSpellMenu..."));
+		TRACE("...created GameStateSpellMenu...");
 
 		states[GAME_STATE_CREDITS] = new GameStateCredits(*this);
-		TRACE(_T("...created GameStateCredits..."));
+		TRACE("...created GameStateCredits...");
 	}
-	TRACE(_T("...finished (Creating game state objects)"));
+	TRACE("...finished (Creating game state objects)");
 
-	TRACE(_T("Entering the menu game state..."));
+	TRACE("Entering the menu game state...");
 	gameState = GAME_STATE_MENU;
 	states[GAME_STATE_MENU]->onEnter();
-	TRACE(_T("...finished (Entering the menu game state)"));
+	TRACE("...finished (Entering the menu game state)");
 
 	// Complete
-	TRACE(_T("...Finished starting up"));
+	TRACE("...Finished starting up");
 	g_WaitScreen.Render();
 }
 
 void Application::run(void)
 {
-	TRACE(_T("Running"));
+	TRACE("Running");
 	g_WaitScreen.Render();
 
 	while(!g_Input.Quit)
 	{
 		GameState *state = states[gameState];
 
-		ASSERT(0!=fme, _T("fme was null"));
-		ASSERT(0!=state, _T("state was null"));
+		ASSERT(0!=fme, "fme was null");
+		ASSERT(0!=state, "state was null");
 
 		// update the frame timer
 		fme->Update();
@@ -266,36 +266,36 @@ list<Task*> Application::pruneDeadTasks(list<Task*> tasks)
 
 void Application::stop(void)
 {
-	TRACE(_T("Shutting down application..."));
+	TRACE("Shutting down application...");
 	g_WaitScreen.Render();
 
     for(list<Task*>::iterator iter = tasks.begin(); iter != tasks.end(); ++iter)
         delete(*iter);
     tasks.clear();
-    TRACE(_T("Deleted tasks"));
+    TRACE("Deleted tasks");
 
     g_GUI.Destroy();
-    TRACE(_T("Destroyed the GUI"));
+    TRACE("Destroyed the GUI");
 
     OpenGL::Destroy();
-    TRACE(_T("Destroyed the OpenGL context"));
+    TRACE("Destroyed the OpenGL context");
 
     Controller::Destroy();
-    TRACE(_T("Destroyed the key binding manager"));
+    TRACE("Destroyed the key binding manager");
 
     WaitScreen::Destroy();
-    TRACE(_T("Destroyed the Wait screen"));
+    TRACE("Destroyed the Wait screen");
 
 	clear();
 
-	TRACE(_T("...shutdown completed"));
+	TRACE("...shutdown completed");
 }
 
 void Application::clear(void)
 {
 	unlockedWorld = 1;
 
-	menuMusic = _T("data/music/Rachel01.mp3");
+	menuMusic = "data/music/Rachel01.mp3";
 	soundEnabled = true;
 
 	graphicsMode=LIGHTING_ENABLED;
@@ -319,26 +319,26 @@ void Application::clear(void)
 
 void Application::startDevIL()
 {
-	TRACE(_T("Initializing DevIL..."));
+	TRACE("Initializing DevIL...");
 
-	TRACE(_T("Linked against IL with IL_VERSION of ") + itoa(IL_VERSION));
-	TRACE(_T("Linked against ILU with ILU_VERSION of ") + itoa(ILU_VERSION));
-	TRACE(_T("Linked against ILUT with ILUT_VERSION of ") + itoa(ILUT_VERSION));
+	TRACE("Linked against IL with IL_VERSION of " + itoa(IL_VERSION));
+	TRACE("Linked against ILU with ILU_VERSION of " + itoa(ILU_VERSION));
+	TRACE("Linked against ILUT with ILUT_VERSION of " + itoa(ILUT_VERSION));
 
 	// First, check the DevIL image library's version
 	if(ilGetInteger(IL_VERSION_NUM) < IL_VERSION)
 	{
-		FAIL(_T("IL_VERSION_NUM is different than expected!"));
+		FAIL("IL_VERSION_NUM is different than expected!");
 	}
 
 	if(ilGetInteger(ILU_VERSION_NUM) < ILU_VERSION)
 	{
-		FAIL(_T("ILU_VERSION_NUM is different than expected!"));
+		FAIL("ILU_VERSION_NUM is different than expected!");
 	}
 
 	if(ilGetInteger(ILUT_VERSION_NUM) < ILUT_VERSION)
 	{
-		FAIL(_T("ILUT_VERSION_NUM is different than expected!"));
+		FAIL("ILUT_VERSION_NUM is different than expected!");
 	}
 
 	/*
@@ -351,7 +351,7 @@ void Application::startDevIL()
 	iluInit();
 	ilutInit();
 
-	TRACE(_T("...DevIL initialized successfully"));
+	TRACE("...DevIL initialized successfully");
 }
 
 void Application::startOpenGL()
@@ -363,7 +363,7 @@ void Application::startOpenGL()
 	int height      = 600;   // dimensions of window
 	int depth       = 32;    // bits per pixel
 
-	const _tstring setupFileName = pathAppend(getAppDataDirectory(),
+	const string setupFileName = pathAppend(getAppDataDirectory(),
                                               defaultSetupFileName);
 
 	if(File::isFileOnDisk(setupFileName))
@@ -385,14 +385,14 @@ void Application::startOpenGL()
 
 	// Create an OpenGL context
 	new SDLWindow(*this);
-	g_Window.Create(_T("Game Creation Society"),
+	g_Window.Create("Game Creation Society",
 					width,
 					height,
 					SDLWindow::R8G8B8A8,
 					24,
 					fullscreen);
 	new OpenGL(width, height);
-	TRACE(_T("Created OpenGL context and window"));
+	TRACE("Created OpenGL context and window");
 
 	if(fullscreen)
 	{
@@ -402,6 +402,8 @@ void Application::startOpenGL()
 
 void Application::saveXmlConfigFiles(void)
 {
+	TRACE("Saving configuration file...");
+
 	PropertyBag BaseBag, FogBag, PerfBag, window;
 
 	// Save the mouse sensitivity value
@@ -417,27 +419,27 @@ void Application::saveXmlConfigFiles(void)
 	PerfBag.addSym(textureFilter);
 	PerfBag.addSym(aniostropy);
 
-	BaseBag.add(_T("performance"), PerfBag);
+	BaseBag.add("performance", PerfBag);
 
 	// Save the window settings too
-	window.add(_T("width"), (int)g_Window.GetWidth());
-	window.add(_T("height"), (int)g_Window.GetHeight());
-	window.add(_T("depth"), (int)g_Window.GetColorDepth());
-	window.add(_T("fullscreen"), (bool)g_Window.GetFullscreen());
+	window.add("width", (int)g_Window.GetWidth());
+	window.add("height", (int)g_Window.GetHeight());
+	window.add("depth", (int)g_Window.GetColorDepth());
+	window.add("fullscreen", (bool)g_Window.GetFullscreen());
 	BaseBag.addSym(window);
 
 	// We'll save settings to the home directory
     BaseBag.saveToFile(pathAppend(getAppDataDirectory(),
                                   defaultSetupFileName));
 
-	TRACE(_T("Config files saved"));
+	TRACE("...configuration file saved");
 }
 
 void Application::loadXmlConfigFiles(void)
 {
 	PropertyBag BaseBag, FogBag, PerfBag;
 
-	_tstring setupFileName = pathAppend(getAppDataDirectory(),
+	string setupFileName = pathAppend(getAppDataDirectory(),
                                         defaultSetupFileName);
 
 	if(File::isFileOnDisk(setupFileName))
@@ -456,7 +458,7 @@ void Application::loadXmlConfigFiles(void)
 	BaseBag.getSym(soundEnabled);
 
 	// Load settings
-	BaseBag.get(_T("performance"), PerfBag);
+	BaseBag.get("performance", PerfBag);
 	PerfBag.getSym(useParticleEffects);
 	PerfBag.getSym(useBlurEffects);
 	PerfBag.getSym(textureFilter);
@@ -465,12 +467,12 @@ void Application::loadXmlConfigFiles(void)
 	if(!supportsAniostropy && textureFilter==2)
 		textureFilter = 1;
 
-	TRACE(_T("Config files parsed."));
+	TRACE("Config files parsed.");
 }
 
 Task* Application::addTask(Task *task)
 {
-	ASSERT(task!=0, _T("task was NULL"));
+	ASSERT(task!=0, "task was NULL");
 	tasks.push_back(task);
 	return task;
 }
@@ -478,23 +480,23 @@ Task* Application::addTask(Task *task)
 void Application::enterWorld(int worldNum)
 {
 	ASSERT(worldNum>=0 && worldNum<3,
-    _T("Parameter \'worldNum\' is invalid: ") + itoa(worldNum));
+    "Parameter \'worldNum\' is invalid: " + itoa(worldNum));
 
 	ASSERT(worldNum<=unlockedWorld,
-    _T("Parameter \'worldNum\' specifies a world that is currently locked: #")
-    + itoa(worldNum) + _T(" while only worlds #0 through #")
-    + itoa(unlockedWorld) + _T("are unlocked."));
+    "Parameter \'worldNum\' specifies a world that is currently locked: #"
+    + itoa(worldNum) + " while only worlds #0 through #"
+    + itoa(unlockedWorld) + "are unlocked.");
 
-	const _tstring worlds[] =
+	const string worlds[] =
 	{
-		_T("data/zones/World1.xml"),
-		_T("data/zones/World2.xml"),
-		_T("data/zones/World3.xml")
+		"data/zones/World1.xml",
+		"data/zones/World2.xml",
+		"data/zones/World3.xml"
 	};
 
-	const _tstring &worldFileName = worlds[worldNum];
+	const string &worldFileName = worlds[worldNum];
 
-	TRACE(_T("Starting the game from file: ") + worldFileName);
+	TRACE("Starting the game from file: " + worldFileName);
 
 	delete world;
 	world = new World;
@@ -525,7 +527,7 @@ Camera& Application::getCamera(void)
 
 void Application::release(void)
 {
-	TRACE(_T("Releasing game state resources..."));
+	TRACE("Releasing game state resources...");
 	g_WaitScreen.Render();
 
 	for(map<GAME_STATE,GameState*>::iterator i = states.begin();
@@ -534,14 +536,14 @@ void Application::release(void)
 		(i->second)->release();
     }
 
-	TRACE(_T("...Releasing game world resources..."));
+	TRACE("...Releasing game world resources...");
 
 	if(world!=0) world->release();
 	fontLarge.release();
 	fontSmall.release();
     g_TextureMgr.release();
 
-    TRACE(_T("...completely released"));
+    TRACE("...completely released");
 }
 
 void Application::reaquire(void)
@@ -550,12 +552,12 @@ void Application::reaquire(void)
 	fontLarge.reaquire();
 	fontSmall.reaquire();
 
-	TRACE(_T("Reaquiring game world resources"));
+	TRACE("Reaquiring game world resources");
 	g_WaitScreen.Render();
 
 	if(world!=0) world->reaquire();
 
-	TRACE(_T("Reaquiring game state resources"));
+	TRACE("Reaquiring game state resources");
 
     for(map<GAME_STATE,GameState*>::iterator i = states.begin();
         i != states.end(); ++i)

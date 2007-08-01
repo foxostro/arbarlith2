@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "GameStateMenu.h"
 #include "MenuOptions.h"
 
-namespace Engine { 
+namespace Engine {
 
 MenuOptions::MenuOptions(void)
 {
@@ -49,7 +49,7 @@ MenuOptions::~MenuOptions(void)
 
 void MenuOptions::create(void)
 {
-	Menu::create(_T("data/sprites/backdrops/menu.jpg"));
+	Menu::create("data/sprites/backdrops/menu.jpg");
 
 	debounceEnter = true;
 }
@@ -63,28 +63,28 @@ void MenuOptions::populateElements(void)
 		switch(i)
 		{
 		case MENU_OPTIONS_RETURN:
-			elements.push_back( Element(vec2(200.0f, 600.0f), _T("Return")) );
+			elements.push_back( Element(vec2(200.0f, 600.0f), "Return") );
 			break;
 
-		case MENU_OPTIONS_SHADOW:	
+		case MENU_OPTIONS_SHADOW:
 			switch(g_Application.graphicsMode)
 			{
-			case Application::SHADOWS_AND_LIGHTING_ENABLED:		elements.push_back(  Element(vec2(200.0f, 500.0f), _T("Shadows are On"))  ); break;
-			case Application::LIGHTING_ENABLED:			elements.push_back(  Element(vec2(200.0f, 500.0f), _T("Lighting is On"))  ); break;
-			case Application::SHADOWS_AND_LIGHTING_DISABLED:	elements.push_back(  Element(vec2(200.0f, 500.0f), _T("Lighting is Off"))  ); break;
+			case Application::SHADOWS_AND_LIGHTING_ENABLED:		elements.push_back(  Element(vec2(200.0f, 500.0f), "Shadows are On")  ); break;
+			case Application::LIGHTING_ENABLED:			elements.push_back(  Element(vec2(200.0f, 500.0f), "Lighting is On")  ); break;
+			case Application::SHADOWS_AND_LIGHTING_DISABLED:	elements.push_back(  Element(vec2(200.0f, 500.0f), "Lighting is Off")  ); break;
 			};
 			break;
 
 		case MENU_OPTIONS_MUTE_SOUND:
-			elements.push_back(  Element(vec2(200.0f, 400.0f), g_Application.soundEnabled ? _T("Sound is ENABLED") : _T("Sound is MUTED"))  );
+			elements.push_back(  Element(vec2(200.0f, 400.0f), g_Application.soundEnabled ? "Sound is ENABLED" : "Sound is MUTED")  );
 			break;
 
 		case MENU_OPTIONS_RES:
-			elements.push_back(  Element(vec2(200.0f, 300.0f), itoa((int)g_Window.GetWidth()) + _tstring(_T("x")) + itoa((int)g_Window.GetHeight()))  );
+			elements.push_back(  Element(vec2(200.0f, 300.0f), itoa((int)g_Window.GetWidth()) + "x" + itoa((int)g_Window.GetHeight()))  );
 			break;
 
 		case MENU_OPTIONS_FS:
-			elements.push_back(  Element(vec2(200.0f, 200.0f), g_Window.GetFullscreen() ? _T("Exit Fullscreen") : _T("Enter Fullscreen"))  );
+			elements.push_back(  Element(vec2(200.0f, 200.0f), g_Window.GetFullscreen() ? "Exit Fullscreen" : "Enter Fullscreen")  );
 			break;
 		}
 	}
@@ -98,12 +98,12 @@ void MenuOptions::activateElement(int selectedIndex)
 	switch(selectedIndex)
 	{
 	case MENU_OPTIONS_RETURN:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		GameStateMenu::GetSingleton().enterGameMenuScreen();
 		break;
 
 	case MENU_OPTIONS_SHADOW:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		switch(g_Application.graphicsMode)
 		{
 		case Application::SHADOWS_AND_LIGHTING_ENABLED:		g_Application.graphicsMode = Application::LIGHTING_ENABLED; break;
@@ -116,7 +116,7 @@ void MenuOptions::activateElement(int selectedIndex)
 		if(!g_Application.soundEnabled)
 		{
 			g_Application.soundEnabled = true;
-			g_SoundSystem.play(_T("data/sound/activate.wav"));
+			g_SoundSystem.play("data/sound/activate.wav");
 			g_SoundSystem.playMusic(g_Application.menuMusic);
 		}
 		else
@@ -127,7 +127,7 @@ void MenuOptions::activateElement(int selectedIndex)
 		break;
 
 	case MENU_OPTIONS_FS:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 
 		if(g_Window.GetFullscreen())
 		{
@@ -144,8 +144,8 @@ void MenuOptions::activateElement(int selectedIndex)
 
 	case MENU_OPTIONS_RES:
 		{
-			g_SoundSystem.play(_T("data/sound/activate.wav"));
-			
+			g_SoundSystem.play("data/sound/activate.wav");
+
 			switch(g_Window.GetWidth())
 			{
 			case 640:	g_Window.Resize(800, 600);	break;

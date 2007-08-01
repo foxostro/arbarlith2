@@ -65,7 +65,7 @@ void SoundSystem::stopAll(void)
 void SoundSystem::stop(SOUND_HANDLE)
 {}
 
-SOUND_HANDLE SoundSystem::play(const _tstring &, bool, float)
+SOUND_HANDLE SoundSystem::play(const string &, bool, float)
 {
 	if(!g_Application.soundEnabled)
 	{
@@ -76,7 +76,7 @@ SOUND_HANDLE SoundSystem::play(const _tstring &, bool, float)
 	return 0;
 }
 
-SOUND_HANDLE SoundSystem::play3D(const _tstring &, const vec3 &, bool, float)
+SOUND_HANDLE SoundSystem::play3D(const string &, const vec3 &, bool, float)
 {
 	if(!g_Application.soundEnabled)
 	{
@@ -87,7 +87,7 @@ SOUND_HANDLE SoundSystem::play3D(const _tstring &, const vec3 &, bool, float)
 	return 0;
 }
 
-SOUND_HANDLE SoundSystem::playMusic(const _tstring &)
+SOUND_HANDLE SoundSystem::playMusic(const string &)
 {
 	return 0;
 }

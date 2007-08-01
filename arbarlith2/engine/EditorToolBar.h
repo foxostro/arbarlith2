@@ -59,10 +59,10 @@ private:
 	TILE_PROPERTIES tileEditor_properties;
 
 	/** the current texture image for a new tile's wall */
-	_tstring tileEditor_wallTextureFile;
+	string tileEditor_wallTextureFile;
 
 	/** the current texture image for a new tile's floor */
-	_tstring tileEditor_floorTextureFile;
+	string tileEditor_floorTextureFile;
 
 	/** the current height for a new tile */
 	float tileEditor_height;
@@ -83,7 +83,7 @@ private:
 	bool leftClickDebounce;
 
 	/** The file name of the XML object selected for creation */
-	_tstring nextObject;
+	string nextObject;
 
 	/** One Actor may be selected in the object editor mode */
 	Actor *selected;
@@ -138,19 +138,19 @@ private:
 	Reads the SelectionList palette and decides which object has been selected to be created
 	@return The file name of the XML object selected for creation
 	*/
-	_tstring chooseNextObject(void);
+	string chooseNextObject(void);
 
 	/**
 	Reads the SelectionList palette and decides which texture has been selected for the wall
 	@return The file name of the texture image
 	*/
-	_tstring chooseTileWallTexture(void);
+	string chooseTileWallTexture(void);
 
 	/**
 	Reads the SelectionList palette and decides which texture has been selected for the floor
 	@return The file name of the texture image
 	*/
-	_tstring chooseTileFloorTexture(void);
+	string chooseTileFloorTexture(void);
 
 	/**
 	Selects an actor and shows the actor pane
@@ -229,7 +229,7 @@ public:
 	Gets the currently selected object template
 	@return The currently selected object template
 	*/
-	const _tstring& getNextObject(void) const
+	const string& getNextObject(void) const
 	{
 		return nextObject;
 	}
@@ -249,7 +249,7 @@ public:
 	*/
 	inline World& getWorld(void)
 	{
-		ASSERT(world!=0, _T("world was null"));
+		ASSERT(world!=0, "world was null");
 		return *world;
 	}
 
@@ -259,7 +259,7 @@ public:
 	*/
 	inline const World& getWorld(void) const
 	{
-		ASSERT(world!=0, _T("world was null"));
+		ASSERT(world!=0, "world was null");
 		return *world;
 	}
 

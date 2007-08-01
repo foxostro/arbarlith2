@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,17 +34,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-map< _tstring, AnimationController* > ModelLoader::cache;
+map< string, AnimationController* > ModelLoader::cache;
 
-void ModelLoader::insertInCache(const _tstring &fileName, AnimationController *controller)
+void ModelLoader::insertInCache(const string &fileName, AnimationController *controller)
 {
-	ASSERT(controller!=0, _T("controller was null"));
+	ASSERT(controller!=0, "controller was null");
 	cache.insert(make_pair(fileName, controller));
 }
 
-AnimationController* ModelLoader::getFromCache(const _tstring &fileName)
+AnimationController* ModelLoader::getFromCache(const string &fileName)
 {
-	map< _tstring, AnimationController* >::const_iterator iter = cache.find(fileName);
+	map< string, AnimationController* >::const_iterator iter = cache.find(fileName);
 
 	if(iter == cache.end())
 	{
@@ -56,7 +56,7 @@ AnimationController* ModelLoader::getFromCache(const _tstring &fileName)
 	}
 }
 
-AnimationController* ModelLoader::load(const _tstring &fileName)
+AnimationController* ModelLoader::load(const string &fileName)
 {
 	PROFILE
 
@@ -69,8 +69,8 @@ AnimationController* ModelLoader::load(const _tstring &fileName)
 		insertInCache(fileName, controller);
 	}
 
-	ASSERT(controller!=0, _T("controller was null"));
-	
+	ASSERT(controller!=0, "controller was null");
+
 	return new AnimationController(*controller); // copy allocated for the client alone
 }
 

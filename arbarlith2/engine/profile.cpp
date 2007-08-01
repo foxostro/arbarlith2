@@ -135,7 +135,7 @@ void ProfileInit( void )
 
    g_startProfile = GetExactTime();
 
-   g_ProfileText = new Engine::LabelWidget(_T("blank"), vec2(100.0f, 768.0f / 2));
+   g_ProfileText = new Engine::LabelWidget("blank", vec2(100.0f, 768.0f / 2));
    g_GUI.addWidget(g_ProfileText);
 }
 
@@ -152,14 +152,14 @@ void ProfileBegin( char* name )
          g_samples[i].iOpenProfiles++;
          g_samples[i].iProfileInstances++;
          g_samples[i].fStartTime = GetExactTime();
-         ASSERT( g_samples[i].iOpenProfiles == 1, _T("max 1 open at once") );
+         ASSERT( g_samples[i].iOpenProfiles == 1, "max 1 open at once" );
          return;
        }
        i++;
    }
 
    if( i >= NUM_PROFILE_SAMPLES ) {
-      FAIL(_T("Exceeded Max Available Profile Samples"));
+      FAIL("Exceeded Max Available Profile Samples");
       return;
    }
 
@@ -231,21 +231,21 @@ void ProfileDumpOutputToBuffer( void )
    g_endProfile = GetExactTime();
    MarkTimeThisTick();
 
-   _tstring output;
-   output += _T(" Ave  :  Min  :  Max  :   #   : Profile Name\n");
-   output += _T("--------------------------------------------\n");
+   string output;
+   output += " Ave  :  Min  :  Max  :   #   : Profile Name\n";
+   output += "--------------------------------------------\n";
 
    while( i < NUM_PROFILE_SAMPLES && g_samples[i].bValid == true ) {
       unsigned int indent = 0;
       float sampleTime, percentTime, aveTime, minTime, maxTime;
-      _tstring indentedName;
-      _tstring ave, min, max, num;
+      string indentedName;
+      string ave, min, max, num;
 
       if( g_samples[i].iOpenProfiles < 0 ) {
-         FAIL(_T("ProfileEnd() called without a ProfileBegin()"));
+         FAIL("ProfileEnd() called without a ProfileBegin()");
       }
       else if( g_samples[i].iOpenProfiles > 0 ) {
-         FAIL(_T("ProfileBegin() called without a ProfileEnd()"));
+         FAIL("ProfileBegin() called without a ProfileEnd()");
       }
 
       sampleTime = g_samples[i].fAccumulator - g_samples[i].fChildrenSampleTime;
@@ -272,10 +272,10 @@ void ProfileDumpOutputToBuffer( void )
 
       indentedName.clear();
       for(indent=0; indent<g_samples[i].iNumParents; indent++)
-         indentedName += _T("   ");
-	  indentedName += toTString(g_samples[i].szName);
+         indentedName += "   ";
+	  indentedName += g_samples[i].szName;
 
-	  output += ave + _T(" : ") + min + _T(" : ") + max + _T(" : ") + num + _T(" : ") + indentedName + _T("\n");
+	  output += ave + " : " + min + " : " + max + " : " + num + " : " + indentedName + "\n";
       i++;
    }
 
@@ -289,16 +289,14 @@ void ProfileDumpOutputToBuffer( void )
 
    if(g_ProfileText)
    {
-	   _tstring outputT = toTString(output);
-
-	   g_ProfileText->setLabel(outputT);
+	   g_ProfileText->setLabel(output);
 	   g_ProfileText->m_bVisible = g_Application.displayDebugData;
    }
 }
 
 
 
-const _tstring& ProfileGetBuffer(void)
+const string& ProfileGetBuffer(void)
 {
 	return g_ProfileText->getLabel();
 }
@@ -350,7 +348,7 @@ void StoreProfileInHistory( char* name, float percent )
       g_history[i].fAve = g_history[i].fMin = g_history[i].fMax = percent;
    }
    else {
-      FAIL(_T("Exceeded Max Available Profile Samples!"));
+      FAIL("Exceeded Max Available Profile Samples!");
    }
 }
 

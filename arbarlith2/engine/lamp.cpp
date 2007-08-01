@@ -119,10 +119,10 @@ void Lamp::load(const PropertyBag &xml)
 
 bool Lamp::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, _T("active"), active);
-	saveTag(xml, dataFile, _T("constant"), constant);
-	saveTag(xml, dataFile, _T("linear"), linear);
-	saveTag(xml, dataFile, _T("quadratic"), quadratic);
+	saveTag(xml, dataFile, "active", active);
+	saveTag(xml, dataFile, "constant", constant);
+	saveTag(xml, dataFile, "linear", linear);
+	saveTag(xml, dataFile, "quadratic", quadratic);
 
 	return Switch::saveTidy(xml, dataFile);
 }
@@ -149,10 +149,10 @@ void Lamp::createToolBar(ListPaneWidget *pane)
 	Switch::createToolBar(pane);
 
 	// Add to the tool bar
-	pane->addElement(new ListElementTweaker<float>	(_T("constant"),	&constant));
-	pane->addElement(new ListElementTweaker<float>	(_T("linear"),		&linear));
-	pane->addElement(new ListElementTweaker<float>	(_T("quadratic"),	&quadratic));
-	pane->addElement(new ToggleWidgetText			(_T("active"),		&active));
+	pane->addElement(new ListElementTweaker<float>	("constant",	&constant));
+	pane->addElement(new ListElementTweaker<float>	("linear",		&linear));
+	pane->addElement(new ListElementTweaker<float>	("quadratic",	&quadratic));
+	pane->addElement(new ToggleWidgetText			("active",		&active));
 }
 
 }; // namespace

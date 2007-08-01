@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2005-2007 Game Creation Society
+Copyright Â© 2005-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ private:
 	unsigned int imageName;
 
 	/** File name */
-	_tstring fileName;
+	string fileName;
 
 public:
 	/**
@@ -57,7 +57,7 @@ public:
 	Loads an image on construction
 	@param fileName The image to load
 	*/
-	Image(const _tstring &fileName);
+	Image(const string &fileName);
 
 	/**
 	Destructor
@@ -69,7 +69,7 @@ public:
 	@param fileName The image to load
 	@return true if the image was loaded, false otherwise
 	*/
-	bool load(const _tstring &fileName);
+	bool load(const string &fileName);
 
 	/**
 	Get the width of the image
@@ -102,7 +102,7 @@ public:
 	Gets the file name of the image
 	@return file name
 	*/
-	_tstring getFileName(void) const
+	string getFileName(void) const
 	{
 		return fileName;
 	}

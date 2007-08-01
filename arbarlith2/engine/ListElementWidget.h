@@ -40,13 +40,13 @@ class ListElementWidget : public WindowWidget
 {
 private:
 	/** Image when the element is unaffected */
-	static _tstring normalImg;
+	static string normalImg;
 
 	/** Image when the element is depressed */
-	static _tstring depressedImg;
+	static string depressedImg;
 
 	/** Image when the mouse is over the element */
-	static _tstring hoverImg;
+	static string hoverImg;
 
 public:
 	/** Constructor */
@@ -60,7 +60,7 @@ public:
 	@param depressedFile The image file to use for a depressed widget
 	@param hoverFile The image file to use for a widget with mouse hover
 	*/
-	ListElementWidget(float x, float y, const _tstring &imageFile, const _tstring &depressedFile, const _tstring &hoverFile);
+	ListElementWidget(float x, float y, const string &imageFile, const string &depressedFile, const string &hoverFile);
 
 	/** Called in the even of a mouse click */
 	virtual void onMouseClick(void);

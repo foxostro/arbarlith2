@@ -80,18 +80,18 @@ void Map::destroyMaterialsLegend(void)
 
 void Map::loadMaterialsLegend(const PropertyBag &materialsLegend)
 {
-	TRACE(_T("Loading materials legend..."));
+	TRACE("Loading materials legend...");
 
 	destroyMaterialsLegend();
 
-	TRACE(_T("Expecting to find ") + itoa((int)materialsLegend.getNumInstances(_T("material"))) + _T(" materials"));
+	TRACE("Expecting to find " + itoa((int)materialsLegend.getNumInstances("material")) + " materials");
 
-	for(size_t i=0, numberOfEntries=materialsLegend.getNumInstances(_T("material")); i<numberOfEntries; ++i)
+	for(size_t i=0, numberOfEntries=materialsLegend.getNumInstances("material"); i<numberOfEntries; ++i)
 	{
-		loadMapMaterial(  materialsLegend.getString(_T("material"), i)  );
+		loadMapMaterial(materialsLegend.getString("material", i));
 	}
 
-	TRACE(_T("...finished (Loading materials legend)"));
+	TRACE("...finished (Loading materials legend)");
 }
 
 PropertyBag Map::saveMaterialsLegend(void) const
@@ -100,25 +100,25 @@ PropertyBag Map::saveMaterialsLegend(void) const
 
 	for(MAP_MATERIAL_ID i=0; (size_t)i<materialsLegend.size(); ++i)
 	{
-		xml.add(  _T("material"), File::fixFilename(materialsLegend[i]->getName())  );
+		xml.add(  "material", File::fixFilename(materialsLegend[i]->getName())  );
 	}
 
 	return xml;
 }
 
-MAP_MATERIAL_ID Map::loadMapMaterial(const _tstring &materialFileName)
+MAP_MATERIAL_ID Map::loadMapMaterial(const string &materialFileName)
 {
-	_tstring fixedMaterialFileName = File::fixFilename(materialFileName);
+	string fixedMaterialFileName = File::fixFilename(materialFileName);
 
 	for(size_t i=0; i < materialsLegend.size(); ++i)
 	{
-		const _tstring &fileName = File::fixFilename(materialsLegend[i]->getName());
+		const string &fileName = File::fixFilename(materialsLegend[i]->getName());
 
 		if(fileName == fixedMaterialFileName)
 			return (MAP_MATERIAL_ID)i;
 	}
 
-	TRACE(_T("Loading map material: ") + fixedMaterialFileName);
+	TRACE("Loading map material: " + fixedMaterialFileName);
 
 	materialsLegend.push_back(new Material(fixedMaterialFileName));
 
@@ -129,7 +129,7 @@ MAP_MATERIAL_ID Map::loadMapMaterial(const _tstring &materialFileName)
 
 const Material* Map::getMapMaterial(MAP_MATERIAL_ID materialID) const
 {
-	ASSERT((size_t)materialID<materialsLegend.size(), _T("materialID invalid"));
+	ASSERT((size_t)materialID<materialsLegend.size(), "materialID invalid");
 	return ((size_t)materialID<materialsLegend.size()) ? materialsLegend[materialID] : 0;
 }
 
@@ -141,18 +141,18 @@ void Map::create(const PropertyBag &xml)
 	destroy();
 
 	// Get the scaling of the map along the X and Z directions
-	tileMetersX = xml.getFloat(_T("tileMetersX"));
+	tileMetersX = xml.getFloat("tileMetersX");
 
 	// Load materials used in this map
-	loadMaterialsLegend( xml.getBag(_T("materialsLegend")) );
+	loadMaterialsLegend( xml.getBag("materialsLegend") );
 
 	// Get the dimensions of the map
-	width = xml.getInt(_T("width"));
-	height = xml.getInt(_T("height"));
+	width = xml.getInt("width");
+	height = xml.getInt("height");
 
 	// Get the name of the binary map file
-	const _tstring tileDataFileName = xml.getString(_T("tileDataFileName"));
-	TRACE(_T("Loading tile data: ") + tileDataFileName);
+	const string tileDataFileName = xml.getString("tileDataFileName");
+	TRACE("Loading tile data: " + tileDataFileName);
 
 	// Allocate tile data
 	grid = new Tile[width * height];
@@ -163,7 +163,7 @@ void Map::create(const PropertyBag &xml)
 
 	if(!tileDataFile.loaded())
 	{
-		ERR(_T("Failed to load the binary tile data file from the Map definition: ") + tileDataFileName);
+		ERR("Failed to load the binary tile data file from the Map definition: " + tileDataFileName);
 		makeNewMap();
 	}
 	else
@@ -190,13 +190,13 @@ void Map::makeNewMap(void)
 	const int BORDER = 6;
 
 	resize(SIZE);
-	fillBlock(BORDER, BORDER, SIZE-BORDER, SIZE-BORDER, TILE_BLOCK, 0, _T("data/tiles/floor/floor.jpg"), _T("data/tiles/wall/wall.jpg"), 0.0f);
+	fillBlock(BORDER, BORDER, SIZE-BORDER, SIZE-BORDER, TILE_BLOCK, 0, "data/tiles/floor/floor.jpg", "data/tiles/wall/wall.jpg", 0.0f);
 }
 
 void Map::resize(int width)
 {
-	ASSERT(width > 0, _T("width is zero or negative"));
-	ASSERT(width < 512, _T("width is too large"));
+	ASSERT(width > 0, "width is zero or negative");
+	ASSERT(width < 512, "width is too large");
 
 	// Delete the old map
 	delete[] grid;
@@ -207,25 +207,25 @@ void Map::resize(int width)
 	grid = new Tile[width * width];
 
 	// Fill the test map
-	fill(TILE_BLOCK, TILE_PROPERTY_IMPASSABLE, _T("data/tiles/floor/floor.jpg"), _T("data/tiles/wall/wall.jpg"), 2.4f);
+	fill(TILE_BLOCK, TILE_PROPERTY_IMPASSABLE, "data/tiles/floor/floor.jpg", "data/tiles/wall/wall.jpg", 2.4f);
 
 	// remake the tree
 	delete quadTree;
 	quadTree = new QuadTreeNode(grid, 0, 0, width, width, tileMetersX);
 }
 
-void Map::save(PropertyBag &xml, const _tstring &zoneName) const
+void Map::save(PropertyBag &xml, const string &zoneName) const
 {
-	xml.add(_T("width"), width);
-	xml.add(_T("height"), height);
-	xml.add(_T("tileMetersX"), tileMetersX);
+	xml.add("width", width);
+	xml.add("height", height);
+	xml.add("tileMetersX", tileMetersX);
 
 	// Save materials used in this map
-	xml.add(_T("materialsLegend"), saveMaterialsLegend());
+	xml.add("materialsLegend", saveMaterialsLegend());
 
 	// save tile data
-	_tstring tileDataFileName = pathAppend(_T("data/zones"), zoneName + _T(".bin"));
-	xml.add(_T("tileDataFileName"), tileDataFileName);
+	string tileDataFileName = pathAppend("data/zones", zoneName + ".bin");
+	xml.add("tileDataFileName", tileDataFileName);
 
 	File file;
 	for(int i=0; i<width*height; ++i)
@@ -235,7 +235,7 @@ void Map::save(PropertyBag &xml, const _tstring &zoneName) const
 	file.saveFile(tileDataFileName, true);
 }
 
-void Map::fill(TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName, float tileHeight)
+void Map::fill(TILE_TYPE tileType, TILE_PROPERTIES properties, const string &floorFileName, const string &wallFileName, float tileHeight)
 {
 	for(int y=0; y<height; ++y)
 	{
@@ -246,7 +246,7 @@ void Map::fill(TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &f
 	reaquire();
 }
 
-void Map::fillRandom(TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName)
+void Map::fillRandom(TILE_TYPE tileType, TILE_PROPERTIES properties, const string &floorFileName, const string &wallFileName)
 {
 	for(int y=0; y<height; ++y)
 	{
@@ -274,7 +274,7 @@ void Map::reaquire(void) const
 void Map::release(void) const
 {}
 
-void Map::fillBlock(int startX, int startZ, int endX, int endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const _tstring &floorFileName, const _tstring &wallFileName, float tileHeight)
+void Map::fillBlock(int startX, int startZ, int endX, int endZ, TILE_TYPE tileType, TILE_PROPERTIES properties, const string &floorFileName, const string &wallFileName, float tileHeight)
 {
 	for(int z=min(startZ, endZ); z<=max(startZ, endZ); ++z)
 	{

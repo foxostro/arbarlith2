@@ -49,7 +49,7 @@ void Listener::clear(void)
 	Trigger::clear();
 	signals.clear();
 	anySignal=false;
-	expression = _T("any: 1 ; 2 ; 3 ; 4 ; 5");
+	expression = "any: 1 ; 2 ; 3 ; 4 ; 5";
 }
 
 bool Listener::pollConditions(void) const
@@ -78,7 +78,7 @@ bool Listener::pollConditions(void) const
 	}
 }
 
-void Listener::setupSignals(const _tstring &expression)
+void Listener::setupSignals(const string &expression)
 {
 	// reset
 	anySignal = true;
@@ -86,26 +86,26 @@ void Listener::setupSignals(const _tstring &expression)
 	getZone().router.unsubscribeToAllSignals(m_ID);
 
 
-	vector<_tstring> tokens;
-	_tstring delimeters = _T(":;, \t\n");
+	vector<string> tokens;
+	string delimeters = ":;, \t\n";
 	tokenize(expression, tokens, delimeters);
 
 
-	for(vector<_tstring>::const_iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
+	for(vector<string>::const_iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
 	{
 		int signalIndex=0;
 
-		if(toLowerCase(*iter) == _T("any"))
+		if(toLowerCase(*iter) == "any")
 		{
 			anySignal = true;
 		}
-		else if(toLowerCase(*iter) == _T("all"))
+		else if(toLowerCase(*iter) == "all")
 		{
 			anySignal = false;
 		}
 		else
 		{
-			_tstringstream ss;
+			stringstream ss;
 			ss << (*iter);
 			ss >> signalIndex;
 			signals.insert(make_pair(signalIndex, 5000.0f));
@@ -124,7 +124,7 @@ void Listener::load(const PropertyBag &xml)
 
 bool Listener::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, _T("expression"), expression);
+	saveTag(xml, editorData, "expression", expression);
 	return Trigger::saveTidy(xml, editorData);
 }
 
@@ -156,7 +156,7 @@ void Listener::createToolBar(ListPaneWidget *pane)
 {
 	// hide options from base classes other than the Actor
 
-	pane->addElement(new ListElementTweakerString(_T("Expression"), &expression));
+	pane->addElement(new ListElementTweakerString("Expression", &expression));
 }
 
 void Listener::sync(void)

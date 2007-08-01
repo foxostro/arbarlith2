@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ TriggerPrompt::TriggerPrompt(void)
 	setRelativePos(vec2(20, 700));
 }
 
-TriggerPrompt::HANDLE TriggerPrompt::add(const _tstring &text, float lifeSpan)
+TriggerPrompt::HANDLE TriggerPrompt::add(const string &text, float lifeSpan)
 {
 	for(HANDLE handle=0; handle<MAX_PROMPT_MESSAGES; ++handle)
 	{
@@ -67,7 +67,7 @@ void TriggerPrompt::remove(HANDLE handle)
 		return;
 	}
 
-	ASSERT(handle>=0 && handle<MAX_PROMPT_MESSAGES, _T("Invalid handle: ") + itoa(handle));
+	ASSERT(handle>=0 && handle<MAX_PROMPT_MESSAGES, "Invalid handle: " + itoa(handle));
 	messages[handle].remove();
 }
 
@@ -78,13 +78,13 @@ void TriggerPrompt::renew(HANDLE handle)
 		return;
 	}
 
-	ASSERT(handle>=0 && handle<MAX_PROMPT_MESSAGES, _T("Invalid handle: ") + itoa(handle));
+	ASSERT(handle>=0 && handle<MAX_PROMPT_MESSAGES, "Invalid handle: " + itoa(handle));
 	messages[handle].renew();
 }
 
 void TriggerPrompt::draw(void) const
 {
-	ASSERT(font!=0, _T("Font is null"));
+	ASSERT(font!=0, "Font is null");
 
 	if(!isVisible()) return;
 

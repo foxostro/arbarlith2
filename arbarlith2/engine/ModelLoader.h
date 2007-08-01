@@ -41,7 +41,7 @@ class ModelLoader
 {
 private:
 	/** Stores previously loaded MD3 models */
-	static map< _tstring, AnimationController* > cache;
+	static map< string, AnimationController* > cache;
 
 protected:
 	/**
@@ -49,20 +49,20 @@ protected:
 	@param fileName file name to identify the model
 	@param controller animated model to cache
 	*/
-	static void insertInCache(const _tstring &fileName, AnimationController *controller);
+	static void insertInCache(const string &fileName, AnimationController *controller);
 
 	/**
 	Gets the model from the cache
 	@param fileName file name to identify the model
 	@return animated model retrieved from the cache
 	*/
-	static AnimationController* getFromCache(const _tstring &fileName);
+	static AnimationController* getFromCache(const string &fileName);
 
 	/**
 	Loads a model from file
 	@param fileName The file name of the model
 	*/
-	virtual AnimationController* loadFromFile(const _tstring &fileName) const = 0;
+	virtual AnimationController* loadFromFile(const string &fileName) const = 0;
 
 public:
 	/** Destructor */
@@ -72,7 +72,7 @@ public:
 	Loads a model from file or the cache
 	@param fileName The file name of the model
 	*/
-	AnimationController* load(const _tstring &fileName);
+	AnimationController* load(const string &fileName);
 };
 
 } // namespace Engine

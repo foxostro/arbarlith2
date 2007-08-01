@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -62,19 +62,19 @@ void Spell::clear(void)
 
 	available = false; // must be learned first
 
-	descriptionText = _T("ERROR: no description available for this spell");
+	descriptionText = "ERROR: no description available for this spell";
 }
 
 void Spell::setZone(World *zone, OBJECT_ID ownerID)
 {
-	ASSERT(zone!=0, _T("zone is null"));
-	ASSERT(zone->getObjects().isMember(ownerID), _T("owner is not present in the active zone"));
+	ASSERT(zone!=0, "zone is null");
+	ASSERT(zone->getObjects().isMember(ownerID), "owner is not present in the active zone");
 
 	this->zone = zone;
 	this->ownerID = ownerID;
 }
 
-void Spell::loadFromFile(const _tstring &fileName, Engine::World *world, Engine::OBJECT_ID ownerID)
+void Spell::loadFromFile(const string &fileName, Engine::World *world, Engine::OBJECT_ID ownerID)
 {
 	PropertyBag xml;
 	xml.loadFromFile(fileName);
@@ -83,8 +83,8 @@ void Spell::loadFromFile(const _tstring &fileName, Engine::World *world, Engine:
 
 void Spell::load(PropertyBag &xml, Engine::World *world, Engine::OBJECT_ID ownerID)
 {
-	_tstring activeIcon;
-	_tstring inactiveIcon;
+	string activeIcon;
+	string inactiveIcon;
 
 	destroy();
 
@@ -107,7 +107,7 @@ void Spell::destroy(void)
 	clear();
 }
 
-void Spell::loadIcon(const _tstring &active, const _tstring &inactive)
+void Spell::loadIcon(const string &active, const string &inactive)
 {
 	matActive.loadTexture(active, 0);
 	matInactive.loadTexture(inactive, 0);
@@ -288,20 +288,20 @@ void Spell::cancelCast(void)
 void Spell::castSpell(void)
 {}
 
-_tstring Spell::toString(void) const
+string Spell::toString(void) const
 {
 	float seconds = timer / 1000.0f;
-	_tstring timeString = ftoa(seconds, 1);
+	string timeString = ftoa(seconds, 1);
 
-	_tstring stateString = _T("<indefinite>");
+	string stateString = "<indefinite>";
 	switch(state)
 	{
-	case READY: stateString = _T("READY"); break;
-	case CASTING: stateString = _T("CASTING"); break;
-	case COOLING: stateString = _T("COOLING"); break;
+	case READY: stateString = "READY"; break;
+	case CASTING: stateString = "CASTING"; break;
+	case COOLING: stateString = "COOLING"; break;
 	}
 
-	return _T("Spell state: ") + stateString + _T("  ; ") + timeString;
+	return "Spell state: " + stateString + "  ; " + timeString;
 }
 
 } // namespace Engine

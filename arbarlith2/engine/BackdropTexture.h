@@ -60,10 +60,10 @@ public:
 	@param imageFileName_1024x768 Image file name for the backdrop at 1024x768 resolution
 	@param imageFileName_1280x768 Image file name for the backdrop at 1280x768 resolution
 	*/
-	void create(const _tstring &imageFileName_640x480,
-				const _tstring &imageFileName_800x600,
-				const _tstring &imageFileName_1024x768,
-				const _tstring &imageFileName_1280x768);
+	void create(const string &imageFileName_640x480,
+				const string &imageFileName_800x600,
+				const string &imageFileName_1024x768,
+				const string &imageFileName_1280x768);
 
 	/**
 	Gets the texture for this resolution

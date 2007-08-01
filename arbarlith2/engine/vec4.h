@@ -584,18 +584,18 @@ public:
 	}
 
 	/**
-	Retrieves the vector from a _tstring reresentation
-	@param str The _tstring representation of the vector
+	Retrieves the vector from a string reresentation
+	@param str The string representation of the vector
 	@return true if successful, false otherwise.
 	*/
-	bool FromString(_tstring str)
+	bool FromString(string str)
 	{
-		vector<_tstring> tokens;
+		vector<string> tokens;
 
 		str = toLowerCase(str); // establishes case-insensitivity
 
-		tokenize(str, tokens, _T("(,)"));
-		if(tokens[0] == _T("&vec"))
+		tokenize(str, tokens, "(,)");
+		if(tokens[0] == "&vec")
         {
 			x = stof(tokens[1]);
 			y = stof(tokens[2]);
@@ -608,12 +608,12 @@ public:
 	}
 
 	/**
-	Serializes the vector as a _tstring
-	@return The _tstring to represent the vector
+	Serializes the vector as a string
+	@return The string to represent the vector
 	*/
-	_tstring ToString(void) const
+	string ToString(void) const
 	{
-		return _tstring(_T("&vec(")) + ftoa(x, 4) + _T(", ") + ftoa(y, 4) + _T(", ") + ftoa(z, 4) + _T(")");
+		return string("&vec(") + ftoa(x, 4) + ", " + ftoa(y, 4) + ", " + ftoa(z, 4) + ")";
 	}
 };
 

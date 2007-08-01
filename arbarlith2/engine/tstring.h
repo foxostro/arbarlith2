@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright Â© 2006-2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -32,52 +32,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TSTRING_H
 
 #include <string>
-using std::string;
-using std::wstring;
-
-#include <sstream>
-using std::stringstream;
-
-typedef basic_stringstream<wchar_t> wstringstream;
-
-#ifdef _UNICODE
-typedef wstring _tstring;
-typedef wstringstream _tstringstream;
-#else
-typedef string _tstring;
-typedef stringstream _tstringstream;
-#endif
-
-wstring toUnicodeString(const string &ansistr);
-wstring toUnicodeString(const wstring &unicodestr);
-
-string toAnsiString(const string &ansistr);
-string toAnsiString(const wstring &unicodestr);
-
-char* toAnsiCharArray(const string &ansistr);
-char* toAnsiCharArray(const wstring &unicodestr);
-
-#ifdef _UNICODE
-#define toTString toUnicodeString
-#define STRINGIFY(a) toUnicodeString(#a)
-#else
-#define toTString toAnsiString
-#define STRINGIFY(a) toAnsiString(#a)
-#endif
+#include <vector>
 
 namespace Engine {
 
-/** Represents some value as a _tstring */
-_tstring itoa(int i);
+/**
+Copies the given std::string into a new C std::string allocated on the heap.d
+@param s source std::string
+@return C std::string (Null-terminated) allocated in the heap. Free it with delete[]
+*/
+char* strdup(const std::string &s);
 
-/** Represents some value as a _tstring */
-_tstring ftoa(float f, int dec=4);
+/** Represents some value as a std::string */
+std::string itoa(int i);
 
-/** Converts a value from a string to a integer */
-int stoi(const _tstring &s);
+/** Represents some value as a std::string */
+std::string ftoa(float f, int dec=4);
 
-/** Converts a value from a string to a float */
-float stof(const _tstring &s);
+/** Converts a value from a std::string to a integer */
+int stoi(const std::string &s);
+
+/** Converts a value from a std::string to a float */
+float stof(const std::string &s);
 
 /** Specifies how a field should be justified in the fitToFieldSize method */
 enum JUSTIFY
@@ -88,42 +64,42 @@ enum JUSTIFY
 };
 
 /**
-Pads a string and justifies it if it is less than the field size. If it is
-larger than the field size, then the string is cropped at the field length
+Pads a std::string and justifies it if it is less than the field size. If it is
+larger than the field size, then the std::string is cropped at the field length
 @param fieldSize number of character in the field
 */
-_tstring fitToFieldSize(const _tstring &in, size_t fieldSize, JUSTIFY justify);
+std::string fitToFieldSize(const std::string &in, size_t fieldSize, JUSTIFY justify);
 
 /**
-Makes a string all lowercase
-@param in The input string
-@return The lower case string
+Makes a std::string all lowercase
+@param in The input std::string
+@return The lower case std::string
 */
-_tstring toLowerCase(const _tstring &in);
+std::string toLowerCase(const std::string &in);
 
 /**
-Tokenizes a string according to given delimiter characters.
+Tokenizes a std::string according to given delimiter characters.
 Original Source:
 McCuskey, Mason. "Game Programming Tricks of the Trade".
     "Trick 15: Serialization Using XML Property Bags". Premier Press. 2002.
-@param source Source string
-@param tokens Returns the tokens found in the string
-@param delimiters each character in this string is treated as a delimiter
+@param source Source std::string
+@param tokens Returns the tokens found in the std::string
+@param delimiters each character in this std::string is treated as a delimiter
 */
-void tokenize(const _tstring& source,
-              vector<_tstring>& tokens,
-              const _tstring& delimiters = _T(" \t\n"));
+void tokenize(const std::string& source,
+              std::vector<std::string>& tokens,
+              const std::string& delimiters = " \t\n");
 
 /**
-Replaces all occurrences of a substring with a replacement string.
-@param source Source string
+Replaces all occurrences of a substring with a replacement std::string.
+@param source Source std::string
 @param find substring to search for
-@param replace Replacement string.  Substituted over the 'find' string
-@return result string
+@param replace Replacement std::string.  Substituted over the 'find' std::string
+@return result std::string
 */
-_tstring replace(const _tstring &source,
-                 const _tstring &find,
-                 const _tstring &replace);
+std::string replace(const std::string &source,
+                    const std::string &find,
+                    const std::string &replace);
 
 } // namespace Engine
 

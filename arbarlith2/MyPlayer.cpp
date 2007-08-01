@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -75,7 +75,7 @@ void MyPlayer::clear(void)
 
 void MyPlayer::deleteControllerActions(int playerNumber)
 {
-	ASSERT(playerNumber >= 0 && playerNumber < 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
+	ASSERT(playerNumber >= 0 && playerNumber < 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
 	Player::deleteControllerActions(playerNumber);
 
@@ -88,8 +88,8 @@ void MyPlayer::setupControllerActions(int playerNumber)
 {
 	Player::setupControllerActions(playerNumber);
 
-	_tstring num = Engine::itoa(playerNumber+1);
-	KEY_PLAYER_CAST_SPELL = g_Keys.createAction(_T("Player") + num + _T("-Cast"));
+	string num = Engine::itoa(playerNumber+1);
+	KEY_PLAYER_CAST_SPELL = g_Keys.createAction("Player" + num + "-Cast");
 }
 
 void MyPlayer::setupControllerBindings(int playerNumber)
@@ -99,17 +99,17 @@ void MyPlayer::setupControllerBindings(int playerNumber)
 #if _PLAYER_ONE_HAS_NO_JOYSTICK_
 	if(playerNumber>0) // player 2 is on joystick 1, and so forth
 	{
-		_tstring num = Engine::itoa(playerNumber);
-		g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, _T("JOY") + num + _T("_BUTT_3"));
+		string num = Engine::itoa(playerNumber);
+		g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
 	}
 #else
-	_tstring num = Engine::itoa(playerNumber+1);
-	g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, _T("JOY") + num + _T("_BUTT_3"));
+	string num = Engine::itoa(playerNumber+1);
+	g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
 #endif
 
 	if(playerNumber==0) // add keyboard support for player #1
 	{
-		g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, _T("L_Shift"));
+		g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "L_Shift");
 	}
 }
 
@@ -117,12 +117,12 @@ void MyPlayer::load(const PropertyBag &xml)
 {
 	Player::load(xml);
 
-	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/fireball.xml"))    ); // 0 - Fireball
-	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/arctic-wind.xml")) ); // 1 - Arctic Wind
-	spellList.push_back( new SpellIncinerate (&getZone(), m_ID, _T("data/spells/incinerate.xml"))  ); // 2 - Incinerate
-	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/chill.xml"))       ); // 3 - Chill
-	spellList.push_back( new SpellHeal       (&getZone(), m_ID, _T("data/spells/heal.xml"))        ); // 4 - Heal
-	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, _T("data/spells/ice-blast.xml"))   ); // 5 - Ice Blast
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, "data/spells/fireball.xml")    ); // 0 - Fireball
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, "data/spells/arctic-wind.xml") ); // 1 - Arctic Wind
+	spellList.push_back( new SpellIncinerate (&getZone(), m_ID, "data/spells/incinerate.xml")  ); // 2 - Incinerate
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, "data/spells/chill.xml")       ); // 3 - Chill
+	spellList.push_back( new SpellHeal       (&getZone(), m_ID, "data/spells/heal.xml")        ); // 4 - Heal
+	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, "data/spells/ice-blast.xml")   ); // 5 - Ice Blast
 
 	this->activeIdx = 5;
 }
@@ -157,7 +157,7 @@ void MyPlayer::update(float deltaTime)
 	{
 		Spell *spell = spellList[i];
 
-		ASSERT(spell!=0, _T("Spell was NULL while processing spells"));
+		ASSERT(spell!=0, "Spell was NULL while processing spells");
 
 		spell->update(deltaTime);
 	}
@@ -215,13 +215,13 @@ bool MyPlayer::doUseAction(void)
 
 	// No monsters around?  Well then, let's just swing randomly
 	ChangeAnimation(getAttackAnim());
-	g_SoundSystem.play(_T("data/sound/player/p_sword_miss.wav"));
+	g_SoundSystem.play("data/sound/player/p_sword_miss.wav");
 	return true;
 }
 
 bool MyPlayer::canMove(void) const
 {
-	ASSERT(activeIdx >= 0 && (size_t)activeIdx < spellList.size(), _T("Spell index was out of bounds"));
+	ASSERT(activeIdx >= 0 && (size_t)activeIdx < spellList.size(), "Spell index was out of bounds");
 
 	bool movable = Player::canMove();
 	bool stillCasting = spellList[activeIdx]->isCasting();
@@ -252,9 +252,9 @@ void MyPlayer::drawObject(void) const
 	}
 }
 
-const _tstring MyPlayer::getSpellCastAnim(void) const
+const string MyPlayer::getSpellCastAnim(void) const
 {
-	return _tstring(_T("cast")) + getItemName();
+	return string("cast") + getItemName();
 }
 
 void MyPlayer::DoCollisionResponse(void)
@@ -271,20 +271,20 @@ void MyPlayer::DoCollisionResponse(void)
 
 void MyPlayer::OnChangePlayerNumber(int playerNumber)
 {
-	ASSERT(playerNumber >= 0 && playerNumber <= 3, _T("playerNumber is invalid: ") + Engine::itoa(playerNumber));
+	ASSERT(playerNumber >= 0 && playerNumber <= 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
 	Player::OnChangePlayerNumber(playerNumber);
 
-	_tstring playerModel[] =
+	string playerModel[] =
 	{
-		_T("data/hero/model.md3xml"),
-		_T("data/hero-red/model.md3xml"),
-		_T("data/hero-yellow/model.md3xml"),
-		_T("data/hero-blue/model.md3xml"),
+		"data/hero/model.md3xml",
+		"data/hero-red/model.md3xml",
+		"data/hero-yellow/model.md3xml",
+		"data/hero-blue/model.md3xml",
 
 	};
 
-	const _tstring &fileName = playerModel[playerNumber];
+	const string &fileName = playerModel[playerNumber];
 
 	LoadModel(fileName);
 }
@@ -293,7 +293,7 @@ void MyPlayer::drawObjectDebugData(void) const
 {
 	const vec3 base = getPos() + vec3(0, getHeight(), 0);
 
-	ASSERT(activeIdx >= 0 && (size_t)activeIdx < spellList.size(), _T("Spell index was out of bounds"));
+	ASSERT(activeIdx >= 0 && (size_t)activeIdx < spellList.size(), "Spell index was out of bounds");
 	const Spell &spell = *spellList[activeIdx];
 
 	glPushMatrix();

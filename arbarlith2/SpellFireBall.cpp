@@ -43,11 +43,11 @@ void SpellFireBall::clear(void)
 
 	bulletSpeed = 4.0f;
 
-	particleFile = _T("data/particle/fireball.xml");
+	particleFile = "data/particle/fireball.xml";
 
-	explosionParticleFile = _T("data/particle/fireball-explosion.xml");
+	explosionParticleFile = "data/particle/fireball-explosion.xml";
 
-	explosionSoundEffectFile = _T("data/sound/s_explosion.wav");
+	explosionSoundEffectFile = "data/sound/s_explosion.wav";
 
 	causesFreeze = false;
 
@@ -72,11 +72,11 @@ void SpellFireBall::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_I
 
 void SpellFireBall::castSpell(void)
 {
-	ASSERT(zone!=0, _T("zone is null"));
+	ASSERT(zone!=0, "zone is null");
 
 	ActorSet &s = zone->getObjects();
 	
-	ASSERT(s.isMember(ownerID), _T("owner is not present in the active zone"));
+	ASSERT(s.isMember(ownerID), "owner is not present in the active zone");
 
 	Actor &owner = s.get(ownerID);
 

@@ -47,7 +47,7 @@ void StateMachine::Update( Message_s * msg )
 
 void StateMachine::Process( StateMachineEvent event, Message_s * msg )
 {
-	ASSERT(m_Owner!=0, _T("m_Owner was null"));
+	ASSERT(m_Owner!=0, "m_Owner was null");
 
 	if( event == EVENT_Message && msg && GetCCReceiver() > INVALID_ID )
 	{	// CC this message
@@ -63,7 +63,7 @@ void StateMachine::Process( StateMachineEvent event, Message_s * msg )
 	int safetyCount = 50;
 	while( m_stateChange && (--safetyCount >= 0) )
 	{
-		ASSERT(safetyCount > 0, _T("StateMachine::Process - States are flip-flopping in an infinite loop."));
+		ASSERT(safetyCount > 0, "StateMachine::Process - States are flip-flopping in an infinite loop.");
 
 		m_stateChange = false;
 
@@ -92,7 +92,7 @@ void StateMachine::SetState( unsigned int newState )
 
 void StateMachine::SendMsg( MSG_TYPE name, OBJECT_ID receiver )
 {
-	ASSERT(m_Owner!=0, _T("m_Owner was null"));
+	ASSERT(m_Owner!=0, "m_Owner was null");
 
 	Message_s Msg;
 
@@ -108,7 +108,7 @@ void StateMachine::SendMsg( MSG_TYPE name, OBJECT_ID receiver )
 
 void StateMachine::SendDelayedMsg( float delay, MSG_TYPE name, OBJECT_ID receiver )
 {
-	ASSERT(m_Owner!=0, _T("m_Owner was null"));
+	ASSERT(m_Owner!=0, "m_Owner was null");
 
 	Message_s Msg;
 
@@ -124,7 +124,7 @@ void StateMachine::SendDelayedMsg( float delay, MSG_TYPE name, OBJECT_ID receive
 
 void StateMachine::SendDelayedMsgToMe( float delay, MSG_TYPE name, MSG_Scope )
 {
-	ASSERT(m_Owner!=0, _T("m_Owner was null"));
+	ASSERT(m_Owner!=0, "m_Owner was null");
 
 	Message_s Msg;
 
@@ -139,16 +139,16 @@ void StateMachine::SendDelayedMsgToMe( float delay, MSG_TYPE name, MSG_Scope )
 
 double StateMachine::GetTimeInState( void )
 {
-	ASSERT(m_Owner!=0, _T("m_Owner was null"));
+	ASSERT(m_Owner!=0, "m_Owner was null");
 	return( m_Owner->getZone().getClockTicks() - m_timeOnEnter );
 }
 
 void StateMachine::load(const PropertyBag &Bag)
 {
-	Bag.get(_T("currentState"), m_currentState);
-	Bag.get(_T("nextState"),    m_nextState);
-	Bag.get(_T("stateChange"),  m_stateChange);
-	Bag.get(_T("timeOnEnter"),  m_timeOnEnter);
+	Bag.get("currentState", m_currentState);
+	Bag.get("nextState",    m_nextState);
+	Bag.get("stateChange",  m_stateChange);
+	Bag.get("timeOnEnter",  m_timeOnEnter);
 
 	m_Owner = 0;
 	m_ccMessagesToGameObject = INVALID_ID;

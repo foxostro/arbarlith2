@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "ListElementWidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Toggles a variable to true or false when it is clicked. The image used for the widget depends on the value of the variable. */
 class ToggleWidget : public ListElementWidget
@@ -68,7 +68,7 @@ public:
 	@param imageFileTRUE The image used for the element when the value is true
 	@param imageFileFALSE The image used for the element when the value is false
 	*/
-	ToggleWidget(bool *value, const _tstring& imageFileTRUE, const _tstring& imageFileFALSE);
+	ToggleWidget(bool *value, const string& imageFileTRUE, const string& imageFileFALSE);
 
 	/**
 	Constructs the widget
@@ -78,7 +78,7 @@ public:
 	@param imageFileMouseOvereTRUE The image used for the element on mouse over when the value is true
 	@param imageFileMouseOvereFALSE The image used for the element on mouse over when the value is false
 	*/
-	ToggleWidget(bool *value, const _tstring& imageFileTRUE, const _tstring& imageFileMouseOverTRUE, const _tstring& imageFileFALSE, const _tstring& imageFileMouseOverFALSE);
+	ToggleWidget(bool *value, const string& imageFileTRUE, const string& imageFileMouseOverTRUE, const string& imageFileFALSE, const string& imageFileMouseOverFALSE);
 
 	/** Called on the event that the widget is clicked */
 	virtual void onMouseClick(void);
@@ -89,7 +89,7 @@ public:
 	*/
 	inline bool getValue(void) const
 	{
-		ASSERT(myValue!=0, _T("ToggleWidget::isOn  ->  myValue was NULL"));
+		ASSERT(myValue!=0, "ToggleWidget::isOn  ->  myValue was NULL");
 		return(*myValue);
 	}
 
@@ -99,7 +99,7 @@ public:
 	*/
 	inline void setValue(bool value)
 	{
-		ASSERT(myValue!=0, _T("ToggleWidget::isOn  ->  myValue was NULL"));
+		ASSERT(myValue!=0, "ToggleWidget::isOn  ->  myValue was NULL");
 		(*myValue) = value;
 	}
 };

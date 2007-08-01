@@ -49,7 +49,7 @@ Item::Item(OBJECT_ID ID)
 
 void Item::onUse(Actor *a)
 {
-	ASSERT(getZone().getObjects().isMember(m_ID), _T("Somehow, the item is not part of the objects in this World."));
+	ASSERT(getZone().getObjects().isMember(m_ID), "Somehow, the item is not part of the objects in this World.");
 
 	// Remove ourselves from the World
 	zombie = true;

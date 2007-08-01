@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:andrewfox@cmu.edu
 
-Copyright © 2007 Game Creation Society
+Copyright Â© 2007 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -35,9 +35,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "GameStateMenu.h"
 #include "MenuWorldLeadOut.h"
 
-namespace Engine { 
+namespace Engine {
 
-MenuWorldLeadOut::MenuWorldLeadOut(const _tstring &imageFileName)
+MenuWorldLeadOut::MenuWorldLeadOut(const string &imageFileName)
 {
 	create(imageFileName);
 }
@@ -47,7 +47,7 @@ MenuWorldLeadOut::~MenuWorldLeadOut(void)
 	destroy();
 }
 
-void MenuWorldLeadOut::create(const _tstring &imageFileName)
+void MenuWorldLeadOut::create(const string &imageFileName)
 {
 	Menu::create(imageFileName);
 	debounceEnter = false;
@@ -62,7 +62,7 @@ void MenuWorldLeadOut::populateElements(void)
 		switch(i)
 		{
 		case MENU_WORLD_LEADOUT_CONTINUE:
-			elements.push_back(  Element(vec2(30.0f, 100.0f), _T("Continue"))  );
+			elements.push_back(  Element(vec2(30.0f, 100.0f), "Continue")  );
 			break;
 		}
 	}
@@ -73,7 +73,7 @@ void MenuWorldLeadOut::activateElement(int selectedIndex)
 	switch(selectedIndex)
 	{
 	case MENU_WORLD_LEADOUT_CONTINUE:
-		g_SoundSystem.play(_T("data/sound/activate.wav"));
+		g_SoundSystem.play("data/sound/activate.wav");
 		GameStateMenu::GetSingleton().enterGameMenuWorldSelection();
 		break;
 	}

@@ -34,28 +34,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "widgetmanager.h"
 #include "windowwidget.h"
 
-namespace Engine { 
+namespace Engine {
 
 /** Progress bar */
-class HorizBar : public Widget  
+class HorizBar : public Widget
 {
 public:
 	/**
 	Constructor
 	@param x The position of the widget
 	@param y The position of the widget
-	@param capacity The value at which the bar will be completed 
+	@param capacity The value at which the bar will be completed
 	@param startingPosition Starting value of the bar
 	@param strForeground This image is uncovered as the bar progresses
 	@param strBackground This image is the background of the bar as it moves
-	@param leftAlign Indicates that the bar will progress from left to right 
+	@param leftAlign Indicates that the bar will progress from left to right
 	*/
 	HorizBar(float x,
 		     float y,
 			 float capacity,
 			 float startingPosition,
-			 const _tstring &strForeground,
-			 const _tstring &strBackground,
+			 const string &strForeground,
+			 const string &strBackground,
 			 bool leftAlign);
 
 	/**
@@ -66,7 +66,7 @@ public:
 	{
 		return m_Position;
 	}
-	
+
 	/**
 	Gets the capacity of the bar
 	@return capacity
@@ -82,14 +82,14 @@ protected:
 
 private:
 	/** This image is uncovered as the bar progresses */
-	WindowWidget *m_ForeImage;     
-	
+	WindowWidget *m_ForeImage;
+
 	/** This image is the background of the bar as it moves */
-	WindowWidget *m_BackImage;    
-	
+	WindowWidget *m_BackImage;
+
 	/** The value that dtermines the size of the bar */
-	float m_Position;              
-	
+	float m_Position;
+
 	/** The value at which the bar will be completed */
 	float m_Capacity;
 

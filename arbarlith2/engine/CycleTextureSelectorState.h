@@ -52,7 +52,7 @@ private:
 	TEXTURE_SELECTOR_STATE *myValue;
 
 	/** Text description of the value */
-	_tstring myLabel;
+	string myLabel;
 
 	/** The label that displays the status of the value */
 	LabelWidget *statusLbl;
@@ -61,7 +61,7 @@ private:
 	@param state The state of the texture selector
 	@return Label to represent the state of the selector
 	*/
-	static _tstring getLabel(TEXTURE_SELECTOR_STATE state);
+	static string getLabel(TEXTURE_SELECTOR_STATE state);
 
 public:
 	/**
@@ -85,7 +85,7 @@ public:
 	*/
 	inline TEXTURE_SELECTOR_STATE getState(void) const
 	{
-		ASSERT(myValue!=0, _T("myValue was NULL"));
+		ASSERT(myValue!=0, "myValue was NULL");
 		return(*myValue);
 	}
 
@@ -95,7 +95,7 @@ public:
 	*/
 	inline void setState(TEXTURE_SELECTOR_STATE value)
 	{
-		ASSERT(myValue!=0, _T("myValue was NULL"));
+		ASSERT(myValue!=0, "myValue was NULL");
 		(*myValue) = value;
 	}
 };
