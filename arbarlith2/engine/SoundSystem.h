@@ -35,8 +35,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-typedef size_t SOUND_HANDLE;
-
 /** Controls the loading and playing of sounds */
 class SoundSystem : public Task
 {
@@ -65,26 +63,18 @@ public:
 	/**
 	Plays a sound file
 	@param fileName The name of the sound file
-	@param looping true if the sound should loop until we switch Zones
 	@param volume Volume level multiplier
 	@return Returns a handle to the sound
 	*/
-	SOUND_HANDLE play(const string &fileName, bool looping=false, float volume=1.0f);
+	void play(const string &fileName, float volume=1.0f);
 
 	/**
 	Plays a sound file with a 3D position
 	@param fileName The name of the sound file
 	@param pos The position of the sound in space
-	@param looping true if the sound should loop until we switch Zones
 	@return Returns a handle to the sound
 	*/
-	SOUND_HANDLE play3D(const string &fileName, const vec3 &pos, bool looping=false, float volume=1.0f);
-
-	/**
-	Stops a specific sound
-	@param handle The specific sound to stop
-	*/
-	void stop(SOUND_HANDLE handle);
+	void play3D(const string &fileName, const vec3 &pos, float volume=1.0f);
 
 	/** Stops all sounds */
 	void stopAll(void);
@@ -94,7 +84,11 @@ public:
 	@param fileName The name of a music file
 	@return Returns a handle to the sound
 	*/
-	SOUND_HANDLE playMusic(const string &fileName);
+	void playMusic(const string &fileName);
+
+private:
+	/** Quick reference to loaded sound effects */
+	map<string, void*> loadedSounds;
 };
 
 } // namespace Engine

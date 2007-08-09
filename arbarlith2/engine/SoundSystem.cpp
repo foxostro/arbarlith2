@@ -29,6 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
+#include <SDL/SDL_mixer.h>
 #include "SoundSystem.h"
 
 namespace Engine {
@@ -45,11 +46,21 @@ SoundSystem::~SoundSystem(void)
 }
 
 void SoundSystem::clear()
-{}
+{
+	loadedSounds.clear();
+}
 
 void SoundSystem::destroy()
 {
 	stopAll();
+
+	while(!loadedSounds.empty())
+	{
+		Mix_FreeChunk((Mix_Chunk*)loadedSounds.begin()->second);
+		loadedSounds.erase(loadedSounds.begin());
+	}
+
+	Mix_CloseAudio();
 
 	clear();
 }
@@ -57,39 +68,76 @@ void SoundSystem::destroy()
 void SoundSystem::create()
 {
 	destroy();
+
+	int rate = 22050;
+	Uint16 format = AUDIO_S16SYS;
+	int channels = 2;
+	int buffers = 4096;
+
+	if(Mix_OpenAudio(rate, format, channels, buffers) != 0)
+	{
+		ERR(string("Unable to initialize audio: ") + Mix_GetError());
+		g_Application.soundEnabled = false;
+	}
+
+	TRACE("Sound System initialized");
 }
 
 void SoundSystem::stopAll(void)
-{}
-
-void SoundSystem::stop(SOUND_HANDLE)
-{}
-
-SOUND_HANDLE SoundSystem::play(const string &, bool, float)
 {
-	if(!g_Application.soundEnabled)
-	{
-		return 0;
-	}
-
-	// Failure
-	return 0;
+	Mix_FadeOutChannel(-1, 500); // 500ms to fade to silence and halt audio
+	TRACE("Stopped all sounds");
 }
 
-SOUND_HANDLE SoundSystem::play3D(const string &, const vec3 &, bool, float)
+void SoundSystem::play(const string &fileName, float volume)
 {
+	Mix_Chunk *sound = 0;
+
 	if(!g_Application.soundEnabled)
 	{
-		return 0;
+		return;
 	}
 
-	// Failure
-	return 0;
+	// Find the chunk in the cache?
+	map<string, void*>::const_iterator sIter = loadedSounds.find(fileName);
+
+	if(sIter == loadedSounds.end())
+	{
+		sound = Mix_LoadWAV(fileName.c_str());
+
+		if(sound == 0)
+		{
+			ERR(string("Failed to load sound file: ") + Mix_GetError());
+			return;
+		}
+
+		// cache the chunk	now that its loaded
+		loadedSounds.insert(make_pair(fileName, sound));
+
+		TRACE("Loaded and cached sound file:" + fileName);
+	}
+	else
+	{
+		sound = (Mix_Chunk*)(sIter->second);
+	}
+
+	// Play the chunk
+	if(Mix_PlayChannel(-1, sound, 0) == -1)
+	{
+		ERR(string("Failed to play sound file: ") + Mix_GetError());
+		return;
+	}
 }
 
-SOUND_HANDLE SoundSystem::playMusic(const string &)
+void SoundSystem::play3D(const string &fileName, const vec3 &, float)
 {
-	return 0;
+	// stub
+	play(fileName);
+}
+
+void SoundSystem::playMusic(const string &)
+{
+	ERR("playMusic() failed");
 }
 
 void SoundSystem::update(float)

@@ -32,6 +32,7 @@
 			<Add library="IL" />
 			<Add library="ILU" />
 			<Add library="ILUT" />
+			<Add library="SDL_mixer" />
 		</Linker>
 		<Unit filename="arbarlith2/Boss.cpp" />
 		<Unit filename="arbarlith2/Boss.h" />
