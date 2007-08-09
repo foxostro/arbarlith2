@@ -1,4 +1,4 @@
-<max>512</max>
+<max>128</max>
 
 <material>
 	<name>Smoke</name>
@@ -60,7 +60,7 @@
 
 	<falloff>1.5</falloff>
 
-	<length>250.0</length>
+	<length>3000.0</length>
 
 	<looping>FALSE</looping>
 	<cycles>-1</cycles>
@@ -75,7 +75,11 @@
 	<rate>
 		<point>
 			<x>0.0</x>
-			<y>12</y>
+			<y>1</y>
+		</point>
+		<point>
+			<x>0.1</x>
+			<y>0</y>
 		</point>
 	</rate>
 
@@ -157,15 +161,15 @@
 		</point>
 	</red>
 
-	<acceleration>&VEC(0.0, -3.0, 0.0)</acceleration>
-	<initialRadialVelocity>2.0</initialRadialVelocity>
+	<acceleration>&VEC(0.0, 0.0, 0.0)</acceleration>
+	<initialRadialVelocity>3.0</initialRadialVelocity>
 </template>
 
 <emitter>
 	<name>Flame1</name>
 	<template>Flame1</template>
 
-	<falloff>0.01</falloff>
+	<falloff>0.2</falloff>
 
 	<length>150.0</length>
 
@@ -175,21 +179,21 @@
 	<sizemul>
 		<point>
 			<x>0.0</x>
-			<y>0.8</y>
+			<y>0.4</y>
 		</point>
 	</sizemul>
 
 	<rate>
 		<point>
 			<x>0.0</x>
-			<y>64</y>
+			<y>8</y>
 		</point>
 	</rate>
 
 	<lifespan>		
 		<point>
 			<x>1.0</x>
-			<y>1000.0</y>
+			<y>300.0</y>
 		</point>
 	</lifespan>
 </emitter>

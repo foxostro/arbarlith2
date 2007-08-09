@@ -33,26 +33,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FileSelectionList.h"
 #include "ListElementLabel.h"
 
-
 namespace Engine {
 
-
-
-FileSelectionList::FileSelectionList(const string &pattern, float x, float y)
+FileSelectionList::FileSelectionList(const string &searchDirectory,
+                                     const string &fileExtension,
+                                     float x, float y)
 :SelectionList(x, y)
 {
-	SearchFile files(pattern);
-	for(vector<string>::const_iterator iter=files.m_Files.begin(); iter!=files.m_Files.end(); ++iter)
+	vector<string> files = SearchFile(searchDirectory, fileExtension);
+	for(vector<string>::const_iterator iter=files.begin();
+	    iter!=files.end();
+	    ++iter)
 	{
-		string fileName =(*iter);
+		ListElementLabel *fileWidget =
+			new ListElementLabel(*iter,
+							"data/sprites/list/listwidget_depressed.png",
+							"data/sprites/list/listwidget_depressed_over.png",
+							"data/sprites/list/listwidget.png",
+							"data/sprites/list/listwidget_hover.png");
 
-		ListElementLabel *fileWidget = new ListElementLabel(fileName,
-															"data/sprites/list/listwidget_depressed.png",
-															"data/sprites/list/listwidget_depressed_over.png",
-															"data/sprites/list/listwidget.png",
-															"data/sprites/list/listwidget_hover.png");
-
-		selected = fileWidget; // the last widget added will ende up being the selected widget
+		// the selected widget is initially the last widget added
+		selected = fileWidget;
 
 		addSelectableElement(fileWidget);
 	}
@@ -93,4 +94,4 @@ void FileSelectionList::update(float)
 		label->isActive=true;
 }
 
-}; // namespace
+} // namespace Engine

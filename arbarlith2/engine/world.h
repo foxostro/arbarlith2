@@ -173,7 +173,7 @@ public:
 	*/
 	inline Map& getMap(void)
 	{
-		return map;
+		return worldMap;
 	}
 
 	/**
@@ -182,7 +182,7 @@ public:
 	*/
 	inline const Map& getMap(void) const
 	{
-		return map;
+		return worldMap;
 	}
 
 	/** Render the current zone */
@@ -202,11 +202,11 @@ public:
 
 	/**
 	Spawns a particle system
-	@param strFile Source file of the particle system
-	@param vPos The starting position of the particle system
+	@param fileName Source file of the particle system
+	@param position The starting position of the particle system
 	@return Handle to the particle system
 	*/
-	size_t SpawnPfx(string strFile, const vec3 &vPos);
+	size_t SpawnPfx(const string &fileName, const vec3 &position);
 
 	/**
 	Gets the light manager
@@ -291,6 +291,13 @@ public:
 	}
 
 	/**
+	Determines whether the particle system in question is still valid
+	@param handle The handle to the particle system
+	@return true if the particle sytstem is still valid, false otherwise
+	*/
+	bool isParticleSystemValid(size_t handle) const;
+
+	/**
 	Gets a particle system, given its handle
 	@param handle The handle to the particle system
 	@return particle system
@@ -372,7 +379,7 @@ private:
 	ActorSet objects;
 
 	/** Brick and Mortar walls of the World */
-	Map map;
+	Map worldMap;
 
 	/** Storage for all possible players */
 	Player *player[MAX_PLAYERS];
@@ -386,8 +393,14 @@ private:
 	/** Milliseconds since this game began */
 	double clockTicks;
 
-	/** Collection of particle systems in the world */
-	vector<ParticleSystem*> particles;
+	/**
+	Collection of particle systems in the world
+	Maps a particle handle to a particle system
+	*/
+	map<size_t, ParticleSystem*> particles;
+
+	/** Next particle handle to be assigned */
+	size_t nextParticleHandle;
 };
 
 } // namespace Engine

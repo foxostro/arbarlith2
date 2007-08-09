@@ -125,6 +125,15 @@ void MyPlayer::load(const PropertyBag &xml)
 	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, "data/spells/ice-blast.xml")   ); // 5 - Ice Blast
 
 	this->activeIdx = 5;
+	
+#if 0
+	spellList[0]->available = true;
+	spellList[1]->available = true;
+	spellList[2]->available = true;
+	spellList[3]->available = true;
+	spellList[4]->available = true;
+	spellList[5]->available = true;
+#endif
 }
 
 void MyPlayer::update(float deltaTime)

@@ -32,6 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "profile.h"
 
 #include <fstream>
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h> // System calls for file info
 
@@ -74,7 +75,18 @@ void createDirectory(const string &path)
 #ifdef _WIN32
 	_tmkdir(path.c_str());
 #else
-	mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+	if(mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) < 0)
+	{
+		if(errno == EEXIST)
+		{
+			TRACE("Directory exists, but that's OK: " + path);
+		}
+		else
+		{
+			perror("mkdir() failed");
+			ERR(string("mkdir() failed: ") + strerror(errno));
+		}
+	}
 #endif
 }
 
@@ -85,7 +97,17 @@ bool setWorkingDirectory(const string &path)
 #ifdef _WIN32
 	return _tchdir(path.c_str()) != 0;
 #else
-	return chdir(path.c_str()) != 0;
+	if(chdir(path.c_str()) < 0)
+	{
+		perror("chdir() failed");
+		ERR("chdir() failed, error logged to std::err");
+
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 #endif
 }
 
@@ -129,7 +151,7 @@ string getAppDataDirectory(void)
 	TODO: Fix this so it isn't hard-coded for my setup!
 	*/
 
-	finalPath = "/home/arfox/arbarlith2/";
+	finalPath = "/home/arfox/.arbarlith2/";
 
 #endif
 
@@ -172,7 +194,7 @@ string getApplicationDirectory(void)
 	TODO: Fix this so it isn't hard-coded for my setup!
 	*/
 
-	return "~/arbarlith2/trunk/arbarlith2/bin/";
+	return "/home/arfox/arbarlith2/trunk/arbarlith2/bin/";
 
 #endif
 }

@@ -73,7 +73,8 @@ void SpellIncinerate::castSpell(void)
 			Creature &creature = dynamic_cast<Creature&>(s.get(id));
 
 			createExplosion(owner.getZone(),
-			                creature.getPos(),
+			                creature.getPos() +
+									vec3(0,0.5,0)*creature.getHeight(),
 			                damageValue,
 			                1.0f,
 			                ownerID,

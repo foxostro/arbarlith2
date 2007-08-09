@@ -58,7 +58,12 @@ void GameStateEditor::update(float deltaTime)
 	// draw
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	application.getWorld().draw();
-	editorToolBar->drawInWorldSpace();
+
+	if(editorToolBar != 0)
+	{
+		editorToolBar->drawInWorldSpace();
+	}
+
 	g_GUI.draw();
 }
 
@@ -71,9 +76,11 @@ void GameStateEditor::onEnter(void)
 	{
 		// Create the editor tool bar
 		editorToolBar = new EditorToolBar;
-		ASSERT(editorToolBar!=0, "editor toolbar did not load correctly");
-		editorToolBar->create();
+		editorToolBar->create(&application.getWorld());
 		g_GUI.addWidget(editorToolBar);
+
+		TRACE("Created editor toolbar");
+
 	}
 	editorToolBar->m_bVisible = true;
 
@@ -88,8 +95,11 @@ void GameStateEditor::onExit(void)
 	application.getWorld().getMap().reaquire();
 
 	// hide the editor toolbar
-	editorToolBar->m_bVisible = false;
-	editorToolBar->hideActorPane();
+	if(editorToolBar != 0)
+	{
+		editorToolBar->m_bVisible = false;
+		editorToolBar->hideActorPane();
+	}
 
 	if(g_Window.GetFullscreen())
 	{

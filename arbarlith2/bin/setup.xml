@@ -11,7 +11,7 @@
 <verbose>6</verbose>
 <window>
 	<depth>32</depth>
-	<fullscreen>true</fullscreen>
+	<fullscreen>false</fullscreen>
 	<height>600</height>
 	<width>800</width>
 </window>

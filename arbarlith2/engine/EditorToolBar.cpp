@@ -79,6 +79,8 @@ void EditorToolBar::clear(void)
 	drag = false;
 	textureSelectorState = TEXTURE_SELECTOR_HIDE;
 	actorProperties = 0;
+
+	TRACE("EditorToolBar reset");
 }
 
 void EditorToolBar::destroy(void)
@@ -88,12 +90,13 @@ void EditorToolBar::destroy(void)
 	clear();
 }
 
-void EditorToolBar::create(void)
+void EditorToolBar::create(World *_world)
 {
-	ASSERT(world!=0, "world was null!  Call setWorld method first!");
-
 // Get rid of everything old
 	destroy();
+
+// Attach to the game world
+	setWorld(_world);
 
 // Create the World properties panel
 	toolBarZone = new ListPaneWidget(0, 10);
@@ -163,21 +166,21 @@ void EditorToolBar::create(void)
 
 void EditorToolBar::createObjectPalette(void)
 {
-	objectPalette = new FileSelectionList("data/objects/*.xml", 80+64, 100);
+	objectPalette = new FileSelectionList("data/objects/", ".xml", 80+64, 100);
 	objectPalette->m_bVisible = false;
 	AddChild(objectPalette);
 }
 
 void EditorToolBar::createWallTextureSelector(void)
 {
-	texturePalette_Wall = new FileSelectionList("data/tiles/wall/*.JPG", 320, 100);
+	texturePalette_Wall = new FileSelectionList("data/tiles/wall/", ".jpg", 320, 100);
 	texturePalette_Wall->m_bVisible = false;
 	AddChild(texturePalette_Wall);
 }
 
 void EditorToolBar::createFloorTextureSelector(void)
 {
-	texturePalette_Floor = new FileSelectionList("data/tiles/floor/*.JPG", 320, 100);
+	texturePalette_Floor = new FileSelectionList("data/tiles/floor/", ".jpg", 320, 100);
 	texturePalette_Floor->m_bVisible = false;
 	AddChild(texturePalette_Floor);
 }
@@ -233,7 +236,7 @@ void EditorToolBar::drawInWorldSpace(void) const
 
 TILE_TYPE EditorToolBar::getTileType(void) const
 {
-	ASSERT(tileTypeSelector!=0, "EditorToolBar::getTileType  ->  tileTypeSelector was null");
+	ASSERT(tileTypeSelector!=0, "tileTypeSelector was null");
 	return tileTypeSelector->getValue();
 }
 
@@ -796,6 +799,13 @@ void EditorToolBar::hideActorPane(void)
 {
 	selected=0; // make sure no actor is selected
 	actorProperties->m_bVisible = false;
+}
+
+void EditorToolBar::setWorld(World *world)
+{
+	ASSERT(world!=0, "world was null");
+	this->world = world;
+	TRACE("Set world called");
 }
 
 } // namespace Engine

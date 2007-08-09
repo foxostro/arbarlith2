@@ -65,7 +65,9 @@ bool assertionFailed(int lineNumber,
 	Log(message, "Assertion", pszFileName, lineNumber);
 
 #ifndef _WIN32
-	std::cout << "Choose a response:" << endl
+	std::cout << fullMessage << endl
+			  << endl
+	          << "Choose a response:" << endl
 	          << "\t1) Ignore - Continues execution, risking a crash" << endl
 	          << "\t2) Retry  - Trips the debugger, if attached" << endl
 	          << "\t3) Abort  - Aborts execution immediately" << endl

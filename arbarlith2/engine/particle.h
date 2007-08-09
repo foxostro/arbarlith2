@@ -51,6 +51,9 @@ protected:
 	/** Initial velocity of the body (meters per second) */
 	vec3 initialVelocity;
 
+	/** Initial velocity of the particle ourwards from the center point */
+	float initialOutwardVelocity;
+
 	/** Milliseconds since creation*/
 	float age;
 
@@ -60,11 +63,6 @@ public:
 
 	/** The acceleration of the body */
 	vec3 constantAcceleration;
-
-	vec3 center;
-
-	/** Initial radial velocity of the particle */
-	float initialRadialVelocity;
 
 public:
 	/** Destructor */
@@ -83,14 +81,14 @@ public:
 	Constructor
 	@param data Data describing the body
 	*/
-	ParticleBody(PropertyBag &data);
+	ParticleBody(const PropertyBag &data);
 
 	/**
 	Loads data from xml and returns success(true) or failure(false)
 	@param data Data to describe the body
 	@return true if the data loads successfully
 	*/
-	virtual void load(PropertyBag &data);
+	virtual void load(const PropertyBag &data);
 
 	/**
 	Updates the particle position and sets the immediate values for graph related data
@@ -148,7 +146,7 @@ public:
 	Constructor
 	@param xml data on the curve
 	*/
-	ParticleGraph(PropertyBag &xml);
+	ParticleGraph(const PropertyBag &xml);
 
 	/**
 	Loads graph data from xml
@@ -224,7 +222,7 @@ public:
 	@param data Data to describe the element
 	@param system Particle system that owns the emitter
 	*/
-	ParticleElement(PropertyBag &data, ParticleSystem &system);
+	ParticleElement(const PropertyBag &data, ParticleSystem &system);
 
 	/** Copy Constructor */
 	ParticleElement(const ParticleElement &element);
@@ -234,7 +232,7 @@ public:
 	@param data Data to describe the element
 	@param system Particle system that owns the emitter
 	*/
-	void load(PropertyBag &data, ParticleSystem &system);
+	void load(const PropertyBag &data, ParticleSystem &system);
 
 	/**
 	Draws Renders the particle
@@ -302,26 +300,11 @@ private:
 	/** Rate of emission over time */
 	ParticleGraph graphEmissionRate;
 
-	/** immediate rate of emission */
-	float graphEmissionRateImmediate;
-
-	/** The speed at which the particles are ejected from the emitter, over time */
-	ParticleGraph graphSpeed;
-
-	/** Immediate speed at which the particles are ejected from the emitter */
-	float graphSpeedImmediate;
-
 	/** Size multiplier on emission over time */
 	ParticleGraph graphSizeMultiplier;
 
-	/** Immediate Size multiplier on emission */
-	float graphSizeMultiplierImmediate;
-
 	/** Elements are given a life span when they are spawned, however, this may change over time */
 	ParticleGraph graphLifeSpan;
-
-	/** Elements are given a life span when they are spawned */
-	float graphLifeSpanImmediate;
 
 	/** Age of the emitter */
 	float age;
@@ -344,7 +327,7 @@ public:
 	@param data Data to describe the behavior of the emitter
 	@param owner ParticleSystem that owns the emitter
 	*/
-	ParticleEmitter(PropertyBag &data, ParticleSystem &owner);
+	ParticleEmitter(const PropertyBag &data, ParticleSystem &owner);
 
 	/** Copy Constructor */
 	ParticleEmitter(const ParticleEmitter &emitter);
@@ -366,6 +349,10 @@ public:
 	@return true if the emitter is dead
 	*/
 	bool isDead(void) const;
+
+private:
+	/** Emits a particle */
+	void emitParticle(void);
 };
 
 /**

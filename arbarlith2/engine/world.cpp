@@ -105,12 +105,13 @@ void World::loadFromFile(const string &fileName)
 
 void World::clear()
 {
-
 	particles.clear();
+	nextParticleHandle = 5000; // Start counting thew handles at 5000
+
 	objects.clear();
 	lightManager.clear();
 	shadowManager.clear();
-	map.clear();
+	worldMap.clear();
 
 	name = "nill";
 	clockTicks=0.0f;
@@ -121,7 +122,7 @@ void World::clear()
 
 void World::destroy(void)
 {
-	map.destroy();
+	worldMap.destroy();
 	lightManager.destroy();
 	shadowManager.destroy();
 	objects.destroy();
@@ -131,14 +132,14 @@ void World::destroy(void)
 
 void World::release(void)
 {
-	map.release();
+	worldMap.release();
 	lightManager.release();
 	shadowManager.release();
 }
 
 void World::reaquire(void)
 {
-	map.reaquire();
+	worldMap.reaquire();
 	lightManager.reaquire();
 	shadowManager.reaquire();
 }
@@ -151,7 +152,7 @@ PropertyBag World::save(void) const
 
 	bag.add("objects", getObjects().save());
 	bag.add("player", getPlayer(0).save());
-	bag.add("map", map.save(name));
+	bag.add("map", worldMap.save(name));
 	bag.add("name", name);
 	bag.add("fog", fog.save());
 	bag.add("ambientLight", getLightManager().ambientLight);
@@ -186,7 +187,7 @@ void World::load(const PropertyBag &bag)
 	getLightManager().ambientLight = bag.getFloat("ambientLight");
 
 	// Load the map
-	map.create( bag.getBag("map") );
+	worldMap.create(bag.getBag("map"));
 
 	// Initialize the lighting system
 	lightManager.create();
@@ -231,7 +232,7 @@ CHECK_GL_ERROR();
 
 	// draw the scene geometry
 	effect_Begin(effect_TEXTURE_REPLACE);
-		map.draw();
+		worldMap.draw();
 		objects.draw(g_Camera.getFrustum());
 	effect_End();
 
@@ -250,7 +251,7 @@ CHECK_GL_ERROR();
 
 	// draw the scene geometry
 	effect_Begin(useLights ? effect_TEXTURE_LIT : effect_TEXTURE_REPLACE);
-		map.draw();
+		worldMap.draw();
 		objects.draw(g_Camera.getFrustum());
 	effect_End();
 
@@ -373,7 +374,7 @@ CHECK_GL_ERROR();
 
 void World::drawShadowReceivers(void) const
 {
-	map.draw();
+	worldMap.draw();
 	objects.draw(g_Camera.getFrustum());
 }
 
@@ -384,11 +385,11 @@ void World::drawParticles(void) const
 	{
 		effect_Begin(effect_PARTICLE_FX);
 
-		for(vector<ParticleSystem*>::const_iterator iter=particles.begin();
+		for(map<size_t, ParticleSystem*>::const_iterator iter=particles.begin();
 		    iter!=particles.end();
 		    ++iter)
 		{
-			ParticleSystem *system = (*iter);
+			ParticleSystem *system = iter->second;
 
 			ASSERT(system!=0, "system was NULL");
 
@@ -406,21 +407,33 @@ void World::updateParticles(float deltaTime)
 {
 	if(g_Application.useParticleEffects && particles.size()>0)
 	{
-		vector<ParticleSystem*>::iterator i = particles.begin();
+		vector< map<size_t, ParticleSystem*>::iterator > toErase;
 
-		while(i != particles.end())
+		for(map<size_t, ParticleSystem*>::iterator i = particles.begin();
+		    i != particles.end();
+		    ++i)
 		{
-			ParticleSystem *s = (*i);
-			if(s==0 || (s!=0 && s->isDead()))
+			ParticleSystem *s = i->second;
+
+			ASSERT(s != 0, "system was NULL");
+
+			if(!s || (s != 0 && s->isDead()))
 			{
 				delete s;
-				i = particles.erase(i);
+				toErase.push_back(i);
 			}
 			else
 			{
 				s->update(deltaTime);
-				++i;
 			}
+		}
+
+		for(vector< map<size_t, ParticleSystem*>::iterator >::const_iterator i
+					= toErase.begin();
+		    i != toErase.end();
+		    ++i)
+		{
+			particles.erase(*i);
 		}
 	}
 }
@@ -454,17 +467,18 @@ void World::updateShadows(float deltaTime)
 	}
 }
 
-size_t World::SpawnPfx(string strFile, const vec3 &position)
+size_t World::SpawnPfx(const string &fileName, const vec3 &position)
 {
-	ASSERT(!strFile.empty(), "Bad parameter strFile specifies no filename");
+	size_t handle = nextParticleHandle++;
 
-	ParticleSystem *s = new ParticleSystem(strFile);
+	ParticleSystem *s = new ParticleSystem(fileName);
+
 	s->setPosition(position);
 
-	particles.push_back(s);
+	particles.insert(make_pair(handle, s));
 
 	// Return the particle system's ID
-	return(particles.size()-1);
+	return handle;
 }
 
 const Player& World::getPlayer(size_t playerNum) const
@@ -595,26 +609,33 @@ void World::updateCamera(void)
 	g_Camera.lookAt(averagePlayerPosition + vec3(cameraDistance,cameraDistance,cameraDistance), averagePlayerPosition, vec3(0,1,0));
 }
 
+bool World::isParticleSystemValid(size_t handle) const
+{
+	return particles.find(handle) != particles.end();
+}
+
 ParticleSystem& World::getParticleSystem(size_t handle)
 {
-	ASSERT(handle < particles.size(),
-		   "Paricle handle is invalid: " + itoa((int)handle) +
-		   "of " + itoa((int)particles.size()));
+	ASSERT(isParticleSystemValid(handle),
+		   "Paricle handle is invalid: " + itoa((int)handle));
 
-	ASSERT(particles[handle] != 0, "particles[handle] is null!");
+	ParticleSystem *s = particles.find(handle)->second;
 
-	return *particles[handle];
+	ASSERT(s != 0, "particles[handle] is null!");
+
+	return *s;
 }
 
 const ParticleSystem& World::getParticleSystem(size_t handle) const
 {
-	ASSERT(handle < particles.size(),
-		   "Paricle handle is invalid: " + itoa((int)handle) +
-		   "of " + itoa((int)particles.size()));
+	ASSERT(isParticleSystemValid(handle),
+		   "Paricle handle is invalid: " + itoa((int)handle));
 
-	ASSERT(particles[handle] != 0, "particles[handle] is null!");
+	const ParticleSystem *s = particles.find(handle)->second;
 
-	return *particles[handle];
+	ASSERT(s != 0, "particles[handle] is null!");
+
+	return *s;
 }
 
 } // namespace Engine

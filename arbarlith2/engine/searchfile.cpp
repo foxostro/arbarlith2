@@ -28,44 +28,60 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "stdafx.h"
-#include "searchfile.h"
+#include <iostream>
+using namespace std;
 
 #ifdef _WIN32
+#include <io.h>
+#else
+#include <dirent.h>
+#endif
 
-#include <io.h> // for _findfile functions
+#include "myassert.h"
+#include "file.h"
+#include "searchfile.h"
 
-namespace Engine {
-
-SearchFile::SearchFile(string strPattern)
+vector<string> Engine::SearchFile(const string &_searchDirectory,
+                                  const string &fileExtension)
 {
+	vector<string> filesFound;
+
+	// Ensure standard file path separators, etc
+	string searchDirectory = File::fixFilename(_searchDirectory);
+
+#ifdef _WIN32
 	// Search for all files matching the pattern
-	struct _tfinddata_t file;
-	long hFile = (long)_tfindfirst(strPattern.c_str(), &file);
+	struct _finddata_t file;
+	long hFile = (long)_findfirst(searchDirectory.c_str(), &file);
 
 	if(hFile != -1L)
 	{
-		// Get the files matching the pattern
-		do m_Files.push_back(file.name);
-		while(_tfindnext( hFile, &file ) == 0);
+		do
+		{
+			if(File::getExtension(file.name) == fileExtension)
+			{
+				filesFound.push_back(file.name);
+			}
+		}
+		while(_findnext( hFile, &file ) == 0);
 
 		// We are done with the handle
 		_findclose(hFile);
 	}
-}
-
-} // namespace Engine
-
 #else
+	struct dirent *directoryEntry = 0;
+	DIR *directory = opendir(searchDirectory.c_str());
 
-namespace Engine {
+	while((directoryEntry = readdir(directory)) != 0)
+	{
+		if(File::getExtension(directoryEntry->d_name) == fileExtension)
+		{
+			filesFound.push_back(directoryEntry->d_name);
+		}
+	}
 
-SearchFile::SearchFile(string strPattern)
-{
-	// TODO: SearchFile constructor is a stub!
-	FAIL("TODO: SearchFile constructor is a stub!");
-}
-
-} // namespace Engine
-
+	closedir(directory);
 #endif
+
+	return filesFound;
+}

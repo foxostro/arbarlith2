@@ -89,13 +89,13 @@ string ScreenShotTask::getScreenShotFileName(void)
 	const string screen = string("screen");
 	const string ext = string(".jpg");
 
-	SearchFile files("sshots/*.jpg");
+	vector<string> files = SearchFile("sshots/", ext);
 
-	for(vector<string>::const_iterator iter=files.m_Files.begin();
-	    iter!=files.m_Files.end();
+	for(vector<string>::const_iterator iter=files.begin();
+	    iter!=files.end();
 	    ++iter)
 	{
-		const string fileName =(*iter);
+		const string &fileName =(*iter);
 		const string strNum = fileName.substr(screen.length(),
 		fileName.length() - screen.length() - ext.length());
 		const int number = stoi(strNum);

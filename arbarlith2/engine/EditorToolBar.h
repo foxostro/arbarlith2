@@ -219,8 +219,11 @@ public:
 	/** Cleanly destroy and clear the tool bar */
 	void destroy(void);
 
-	/** Initialize the tool bar*/
-	void create(void);
+	/**
+	Initialize the tool bar
+	@param world Game world to which to attach the tool bar
+	*/
+	void create(World *world);
 
 	/** Draw parts of the tool bar in world space */
 	void drawInWorldSpace(void) const;
@@ -267,10 +270,7 @@ public:
 	Sets the world currently bound to the editor
 	@param world the world to bind the editor to
 	*/
-	inline void setZone(World *world)
-	{
-		this->world = world;
-	}
+	void setWorld(World *world);
 };
 
 } // namespace Engine

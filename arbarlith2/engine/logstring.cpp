@@ -83,7 +83,6 @@ void PrintStringToLog(const string &s)
 #endif
 
 	clog << s << endl << endl;
-	cout << s << endl << endl;
 }
 
 void Log(const string &message,

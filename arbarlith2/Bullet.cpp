@@ -76,7 +76,10 @@ void Bullet::update(float deltaTime)
 	}
 	else
 	{
-		getZone().getParticleSystem(particleHandle).setPosition(position);
+		if(getZone().isParticleSystemValid(particleHandle))
+		{
+			getZone().getParticleSystem(particleHandle).setPosition(position);
+		}
 	}
 }
 
@@ -132,7 +135,10 @@ void Bullet::kill(void)
 {
 	zombie=true;
 
-	getZone().getParticleSystem(particleHandle).kill();
+	if(getZone().isParticleSystemValid(particleHandle))
+	{
+		getZone().getParticleSystem(particleHandle).kill();
+	}
 
 	createExplosion
 	(

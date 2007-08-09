@@ -41,17 +41,21 @@ namespace Engine {
 /**
 Represents a point in two dimensional space
 @author Andrew Fox
-@version July 2005
+@version July 2007
 */
 struct Point2
 {
-	/**
-	Default constructor sets all coordinates to zero
-	*/
+	/** Default constructor sets all coordinates to zero */
 	Point2(void)
 	{
 		x = 0.0f;
 		y = 0.0f;
+	}
+
+	Point2(float x, float y)
+	{
+		this->x = x;
+		this->y = y;
 	}
 
 	float x, y;
@@ -631,9 +635,6 @@ Three-Dimensional vector
 */
 typedef vec4 vec3;
 
-
 } // namespace Engine
-
-
 
 #endif

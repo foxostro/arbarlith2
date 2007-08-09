@@ -1,4 +1,4 @@
-<max>512</max>
+<max>128</max>
 
 <material>
 	<name>Smoke</name>
@@ -79,7 +79,7 @@
 	<rate>
 		<point>
 			<x>0.0</x>
-			<y>12</y>
+			<y>1</y>
 		</point>
 	</rate>
 
@@ -191,14 +191,14 @@
 	<rate>
 		<point>
 			<x>0.0</x>
-			<y>8</y>
+			<y>2</y>
 		</point>
 	</rate>
 
 	<lifespan>
 		<point>
 			<x>0.0</x>
-			<y>1000.0</y>
+			<y>800.0</y>
 		</point>
 	</lifespan>
 </emitter>

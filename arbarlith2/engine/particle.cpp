@@ -36,12 +36,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Engine {
 
-/*
-When set to 1, ParticleGraph objects draw a line between the
-initial and ending values without consideration for intermediate values.
-*/
-#define ENABLE_CURVED_GRAPHS (1)
-
 /**
 Get a vector pointing in a random direction
 @param length The length of the vector
@@ -65,21 +59,19 @@ typedef ParticleElement* ELEMENT_PTR;
 ParticleBody::ParticleBody(void)
 : position(0,0,0),
 initialVelocity(0,0,0),
+initialOutwardVelocity(0),
 age(0),
 initialPosition(0,0,0),
-constantAcceleration(0,0,0),
-center(0,0,0),
-initialRadialVelocity(0)
+constantAcceleration(0,0,0)
 {}
 
-ParticleBody::ParticleBody(PropertyBag &Bag)
+ParticleBody::ParticleBody(const PropertyBag &Bag)
 : position(0,0,0),
 initialVelocity(0,0,0),
+initialOutwardVelocity(0),
 age(0),
 initialPosition(0,0,0),
-constantAcceleration(0,0,0),
-center(0,0,0),
-initialRadialVelocity(0)
+constantAcceleration(0,0,0)
 {
 	load(Bag);
 }
@@ -87,20 +79,19 @@ initialRadialVelocity(0)
 ParticleBody::ParticleBody(const ParticleBody &body)
 : position(body.position),
 initialVelocity(body.initialVelocity),
+initialOutwardVelocity(body.initialOutwardVelocity),
 age(body.age),
 initialPosition(body.initialPosition),
-constantAcceleration(body.constantAcceleration),
-center(body.center),
-initialRadialVelocity(body.initialRadialVelocity)
+constantAcceleration(body.constantAcceleration)
 {}
 
-void ParticleBody::load(PropertyBag &Bag)
+void ParticleBody::load(const PropertyBag &Bag)
 {
 	Bag.get("position",              &initialPosition);
 	Bag.get("acceleration",          &constantAcceleration);
-	Bag.get("initialRadialVelocity",  initialRadialVelocity);
+	Bag.get("initialRadialVelocity",  initialOutwardVelocity);
 
-	position = initialPosition; // the Body starts, of course, at the initial position
+	position = initialPosition;
 
 	age = 0.0f;
 }
@@ -118,18 +109,20 @@ void ParticleBody::update(float dTime)
 
 void ParticleBody::setPosition(const vec3 &position, const vec3 &center)
 {
-	initialPosition = position;
-	this->center = center;
+	const vec3 dirAwayFromCenter = vec3(position-center).getNormal();
 
-	initialVelocity = vec3(initialPosition-center).getNormal() * initialRadialVelocity * FRAND_RANGE(0.8f, 1.2f);
+	const float addVariety = FRAND_RANGE(0.8f, 1.2f);
+
+	initialVelocity = dirAwayFromCenter * (initialOutwardVelocity*addVariety);
+
+	initialPosition = position;
 }
 
 void ParticleBody::setPosition(const vec3 &position)
 {
-	initialPosition = position;
-	this->center = position;
-
 	initialVelocity = vec3(0,0,0);
+
+	initialPosition = position;
 }
 
 ParticleGraph::ParticleGraph(void)
@@ -140,7 +133,7 @@ ParticleGraph::ParticleGraph(void)
 	max = vec2(0,0);
 }
 
-ParticleGraph::ParticleGraph(PropertyBag & xml)
+ParticleGraph::ParticleGraph(const PropertyBag & xml)
 {
 	load(xml);
 }
@@ -217,7 +210,7 @@ ParticleElement::ParticleElement(void)
   graphBlueImmediate(0.0f)
 {}
 
-ParticleElement::ParticleElement(PropertyBag &Bag, ParticleSystem &system)
+ParticleElement::ParticleElement(const PropertyBag &Bag, ParticleSystem &system)
 : ParticleBody(Bag),
   materialHandle(0),
   owner(&system),
@@ -251,7 +244,7 @@ ParticleElement::ParticleElement(const ParticleElement &element)
   graphBlueImmediate(element.graphBlueImmediate)
 {}
 
-void ParticleElement::load(PropertyBag &Bag, ParticleSystem &system)
+void ParticleElement::load(const PropertyBag &Bag, ParticleSystem &system)
 {
 	owner = &system;
 
@@ -321,7 +314,10 @@ void ParticleElement::draw(const mat4 &matrix) const
 
 	// Render the billboard
 	{
-		glColor4f(graphRedImmediate, graphGreenImmediate, graphBlueImmediate, graphAlphaImmediate);
+		glColor4f(graphRedImmediate,
+		          graphGreenImmediate,
+		          graphBlueImmediate,
+		          graphAlphaImmediate);
 
 		glBegin(GL_QUADS);
 
@@ -349,76 +345,38 @@ void ParticleElement::update(float deltaTime)
 
 	const float percent = age / lifeSpan;
 
-	graphSizeImmediate     = graphSize       .   getValue(percent);
-	graphAlphaImmediate    = graphAlpha      .   getValue(percent);
-	graphRedImmediate      = graphRed        .   getValue(percent);
-	graphGreenImmediate    = graphGreen      .   getValue(percent);
-	graphBlueImmediate     = graphBlue       .   getValue(percent);
+	graphSizeImmediate     = graphSize  . getValue(percent);
+	graphAlphaImmediate    = graphAlpha . getValue(percent);
+	graphRedImmediate      = graphRed   . getValue(percent);
+	graphGreenImmediate    = graphGreen . getValue(percent);
+	graphBlueImmediate     = graphBlue  . getValue(percent);
 
 	ParticleBody::update(deltaTime);
 }
 
-ParticleEmitter::ParticleEmitter(PropertyBag &Bag, ParticleSystem &Owner)
+ParticleEmitter::ParticleEmitter(const PropertyBag &data, ParticleSystem &Owner)
 : owner(&Owner),
   radiusFalloff(1.0f),
-  graphSpeedImmediate(0.0f),
-  graphSizeMultiplierImmediate(0.0f),
-  graphLifeSpanImmediate(0.0),
   age(0.0f),
   lifeSpan(0.0f),
   looping(false),
   numberOfLifeCycles(0)
 {
-	ASSERT(owner!=0, "owner was null");
+	particleTemplate = owner->getTemplate(data.getString("template"));
 
-	// Get the particle template
-	string templateName;
-	Bag.get("template", templateName);
-	particleTemplate = owner->getTemplate(templateName);
+	graphEmissionRate.load(data.getBag("rate"));
+	graphSizeMultiplier.load(data.getBag("sizemul"));
+	graphLifeSpan.load(data.getBag("lifespan"));
 
-	PropertyBag Rate;
-	Bag.get("rate", Rate);
-	graphEmissionRate.load(Rate);
-
-	PropertyBag Speed;
-	Bag.get("speed", Speed);
-	graphSpeed.load(Speed);
-	graphSpeedImmediate = graphSpeed.getValue(0.0f);
-
-	PropertyBag SizeMul;
-	Bag.get("sizemul", SizeMul);
-	graphSizeMultiplier.load(SizeMul);
-	graphSizeMultiplierImmediate = graphSizeMultiplier.getValue(0.0f);
-
-	PropertyBag LifeBag;
-	Bag.get("lifespan", LifeBag);
-	graphLifeSpan.load(LifeBag);
-	graphLifeSpanImmediate = graphLifeSpan.getValue(0.0f);
-	ASSERT(graphLifeSpanImmediate!=0.0f, "m_LifeSpan==0.0, and causes division by zero.");
-
-	Bag.get("falloff",                   radiusFalloff);
-	Bag.get("length",                    lifeSpan);
-	Bag.get("looping",                   looping);
-	Bag.get("cycles",                    numberOfLifeCycles);
+	radiusFalloff = data.getFloat("falloff");
+	lifeSpan = data.getFloat("length");
+	looping = data.getBool("looping");
+	numberOfLifeCycles = data.getInt("cycles");
 }
 
 ParticleEmitter::ParticleEmitter(const ParticleEmitter &emitter)
-: owner(emitter.owner),
-  particleTemplate(emitter.particleTemplate),
-  radiusFalloff(emitter.radiusFalloff),
-  graphEmissionRate(emitter.graphEmissionRate),
-  graphSpeed(emitter.graphSpeed),
-  graphSpeedImmediate(emitter.graphSpeedImmediate),
-  graphSizeMultiplier(emitter.graphSizeMultiplier),
-  graphSizeMultiplierImmediate(emitter.graphSizeMultiplierImmediate),
-  graphLifeSpan(emitter.graphLifeSpan),
-  graphLifeSpanImmediate(emitter.graphLifeSpanImmediate),
-  age(emitter.age),
-  lifeSpan(emitter.lifeSpan),
-  looping(emitter.looping),
-  numberOfLifeCycles(emitter.numberOfLifeCycles)
 {
-	ASSERT(owner!=0, "owner was null");
+	(*this) = emitter;
 }
 
 ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
@@ -433,11 +391,7 @@ ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
 	lifeSpan                       =   emitter.lifeSpan;
 	looping                        =   emitter.looping;
 	numberOfLifeCycles             =   emitter.numberOfLifeCycles;
-	graphSpeedImmediate            =   emitter.graphSpeedImmediate;
-	graphSpeed                     =   emitter.graphSpeed;
-	graphSizeMultiplierImmediate   =   emitter.graphSizeMultiplierImmediate;
 	graphSizeMultiplier            =   emitter.graphSizeMultiplier;
-	graphLifeSpanImmediate         =   emitter.graphLifeSpanImmediate;
 	graphLifeSpan                  =   emitter.graphLifeSpan;
 
 	return(*this);
@@ -445,49 +399,53 @@ ParticleEmitter &ParticleEmitter::operator=(const ParticleEmitter &emitter)
 
 void ParticleEmitter::update(float deltaTime)
 {
-	ASSERT(owner!=0, "owner was null");
-	ASSERT(lifeSpan!=0.0f, "lifeSpan==0 -> will cause division by zero");
-
 	age += deltaTime;
 
-	if(looping && age>lifeSpan)
+	if(looping && age > lifeSpan)
 	{
 		age = 0.0f;
 
-		if(numberOfLifeCycles>0)
+		if(numberOfLifeCycles > 0)
 			numberOfLifeCycles--;
 	}
 
-	if(isDead())
+	if(!isDead())
 	{
-		return;
+		ASSERT(lifeSpan > 0.0f, "lifeSpan==0 -> will cause division by zero");
+
+		for(size_t i = 0,
+				   numberOfEmittedParticles =
+					(size_t)ceil(graphEmissionRate.getValue(age / lifeSpan));
+			i < numberOfEmittedParticles;
+			++i)
+		{
+			emitParticle();
+		}
 	}
+}
 
-	const float percent = age / lifeSpan;
+void ParticleEmitter::emitParticle(void)
+{
+	ASSERT(owner!=0, "owner was null");
+	ASSERT(lifeSpan > 0.0f, "lifeSpan==0 -> will cause division by zero");
 
-	graphSpeedImmediate          = graphSpeed          .   getValue(percent);
-	graphSizeMultiplierImmediate = graphSizeMultiplier .   getValue(percent);
-	graphLifeSpanImmediate       = graphLifeSpan       .   getValue(percent);
+	// Copy the template
+	ParticleElement particle = particleTemplate;
 
-	ASSERT(graphLifeSpanImmediate!=0.0f, "m_LifeSpanImmediate==0.0, and causes division by zero.");
+	particle.setSizeMultiplier(graphSizeMultiplier.getValue(age / lifeSpan));
 
-	size_t numberOfEmittedParticles = (size_t)ceil(graphEmissionRate.getValue(percent));
-	for(size_t i=0; i < numberOfEmittedParticles; ++i)
-	{
-		ParticleElement particle(particleTemplate);
+	particle.setLifeSpan(graphLifeSpan.getValue(age / lifeSpan));
 
-		particle.setSizeMultiplier(graphSizeMultiplierImmediate);
+	/*
+	Chooses a point at a random distance away from the emitter position,
+	and a random direction. The random distance follows a Gaussian
+	distribution as radius increases.
+	*/
+	const float radius = radiusFalloff * (1 - powf((float)M_E, -SQR(FRAND_RANGE(0,2))));
+	const vec3 offset = GetRandomVector(radius);
+	particle.setPosition(owner->getPosition() + offset, owner->getPosition());
 
-		particle.setLifeSpan(graphLifeSpanImmediate);
-
-		/*
-		Chooses a point at a random distance away from the emitter position, and a random direction.
-		The random distance follows a Gaussian distribution as radius increases.
-		*/
-		particle.setPosition(   owner->getPosition() + GetRandomVector(   radiusFalloff * (1 - powf((float)M_E, -SQR(FRAND_RANGE(0,2))))   )   );
-
-		owner->spawn(particle);
-	}
+	owner->spawn(particle);
 }
 
 bool ParticleEmitter::isDead(void) const
@@ -519,18 +477,18 @@ ParticleSystem::ParticleSystem(const ParticleSystem &system)
 {
 	// Allocate the m_pElements array
 	elements = new ELEMENT_PTR[maxNumberOfParticles];
-	ASSERT(elements!=0,  "ParticleSystem::System  ->  Null Pointer: m_ppElements.");
-	memset(elements, 0, sizeof(ELEMENT_PTR) * maxNumberOfParticles); // Zero the element pointers in the array
+	ASSERT(elements != 0,  "elements[i] was null");
+	memset(elements, 0, sizeof(ELEMENT_PTR) * maxNumberOfParticles);
 
 	// Copy the particle data
 	for(size_t i=0; i<maxNumberOfParticles; ++i)
 	{
-		elements[i] = NULL;
+		elements[i] = 0;
 
-		if(system.elements[i]) // Assumes that system.m_ppElements[i] is a valid pointer
+		if(system.elements[i])
 		{
 			elements[i] = new ParticleElement(*system.elements[i]);
-			ASSERT(elements[i]!=NULL,  "ParticleSystem::ParticleSystem  ->  Null Pointer: m_ppElements[i].");
+			ASSERT(elements[i] != 0, "elements[i] was null");
 		}
 	}
 }
@@ -597,39 +555,28 @@ void ParticleSystem::load(PropertyBag &Bag)
 	// Load the materials from XML for particles
 	for(size_t i=0; i<nMaterials; ++i)
 	{
-		PropertyBag MatBag;
+		PropertyBag MatBag = Bag.getBag("material", i);
+
 		Material mat;
-		string name, imageFilename;
 
-		// Get material data
-		Bag.get("material", MatBag, i);
-		MatBag.get("name", name);
-		MatBag.get("image", imageFilename);
-		MatBag.get("glow", mat.glow);
+		mat.glow = MatBag.getBool("glow");
+		mat.setName(MatBag.getString("name"));
+		mat.loadTexture(MatBag.getString("image"), 0);
 
-		// Create the material
-		mat.setName(name);
-		mat.loadTexture(imageFilename, 0);
-
-		// Record it.
 		materials.push_back(mat);
 	}
 
 	// Load the particle templates
-	for(size_t i=0; i<nTemplates; ++i)
+	for(size_t i = 0; i < nTemplates; ++i)
 	{
-		PropertyBag data;
-		Bag.get("template", data, i);
-		ParticleElement element(data, *this);
+		ParticleElement element(Bag.getBag("template", i), *this);
 		templatesByName.insert(make_pair(element.getName(), element));
 	}
 
 	// Load the emitters
 	for(size_t i=0; i<nEmitters; ++i)
 	{
-		PropertyBag EmitterBag;
-		Bag.get("emitter", EmitterBag, i);
-		ParticleEmitter emitter(EmitterBag, *this);
+		ParticleEmitter emitter(Bag.getBag("emitter", i), *this);
 		emitters.push_back(emitter);
 	}
 
@@ -665,7 +612,9 @@ void ParticleSystem::draw(void) const
 void ParticleSystem::update(float dTime)
 {
 	for(size_t i=0; i<emitters.size(); ++i)
+	{
 		emitters[i].update(dTime);
+	}
 
 	ASSERT(elements!=0, "Cannot update particles: no particle storage has even been allocated!");
 
@@ -741,7 +690,8 @@ bool ParticleSystem::isDead(void) const
 {
 	for(size_t i=0; i<emitters.size(); ++i)
 	{
-		if(!emitters[i].isDead()) return false;
+		if(!emitters[i].isDead())
+			return false;
 	}
 
 	return true;

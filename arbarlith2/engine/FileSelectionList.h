@@ -44,11 +44,14 @@ class FileSelectionList : public SelectionList
 public:
 	/**
 	Constructs the list widget
-	@param pattern The pattern to search for the files with
+	@param searchDirectory Directory to search within
+	@param fileExtension File extension to search for
 	@param x The X-Coordinate of the list widget
 	@param y The Y-Coordinate of the list widget
 	*/
-	FileSelectionList(const string &pattern, float x, float y);
+	FileSelectionList(const string &searchDirectory,
+                      const string &fileExtension,
+                      float x, float y);
 
 	/**
 	Gets the file name from the currently selected element

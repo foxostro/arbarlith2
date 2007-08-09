@@ -37,16 +37,9 @@ string PropertyBagString::makeStringSafe(const string &str)
 	replace all >'s with &gt's
 	*/
 
-	return replace (
-				replace
-				(
-					replace(str, "&", "&amp;"),
-					"<",
-					"&lt;"
-				),
-				">",
-				"&gt;"
-			);
+	return replace(replace(replace(str, "&", "&amp;"),
+										"<", "&lt;"),
+										">", "&gt;");
 }
 
 string PropertyBagString::restoreFromSafeString(const string &str)
@@ -57,16 +50,9 @@ string PropertyBagString::restoreFromSafeString(const string &str)
 	replace all &gt's with >'s
 	*/
 
-	return replace (
-				replace
-				(
-					replace(str, "&amp;", "&"),
-					"&lt;",
-					"<"
-				),
-				"&gt;",
-				">"
-			);
+	return replace (replace(replace(str, "&amp;", "&"),
+					                     "&lt;",  "<"),
+					                     "&gt;",  ">");
 }
 
 bool PropertyBagString::operator==( const PropertyBagItem &r ) const
