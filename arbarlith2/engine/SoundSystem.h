@@ -89,6 +89,9 @@ public:
 private:
 	/** Quick reference to loaded sound effects */
 	map<string, void*> loadedSounds;
+
+	/** Pointer to the music chunk */
+	void *music;
 };
 
 } // namespace Engine

@@ -48,6 +48,7 @@ SoundSystem::~SoundSystem(void)
 void SoundSystem::clear()
 {
 	loadedSounds.clear();
+	music = 0;
 }
 
 void SoundSystem::destroy()
@@ -59,6 +60,8 @@ void SoundSystem::destroy()
 		Mix_FreeChunk((Mix_Chunk*)loadedSounds.begin()->second);
 		loadedSounds.erase(loadedSounds.begin());
 	}
+
+	Mix_FreeMusic((Mix_Music*)music);
 
 	Mix_CloseAudio();
 
@@ -85,8 +88,12 @@ void SoundSystem::create()
 
 void SoundSystem::stopAll(void)
 {
-	Mix_FadeOutChannel(-1, 500); // 500ms to fade to silence and halt audio
-	TRACE("Stopped all sounds");
+	int delay = 500; // 500ms to fade to silence and halt audio
+
+	Mix_FadeOutChannel(-1, delay);
+	Mix_FadeOutMusic(delay);
+
+	TRACE("Fading out all sounds in " + itoa(delay) + " milliseconds!");
 }
 
 void SoundSystem::play(const string &fileName, float volume)
@@ -131,13 +138,24 @@ void SoundSystem::play(const string &fileName, float volume)
 
 void SoundSystem::play3D(const string &fileName, const vec3 &, float)
 {
-	// stub
+	ERR("SoundSystem::play3D is a stub");
 	play(fileName);
 }
 
-void SoundSystem::playMusic(const string &)
+void SoundSystem::playMusic(const string &fileName)
 {
-	ERR("playMusic() failed");
+	if(music != 0)
+	{
+		Mix_HaltMusic();
+		music = 0;
+		TRACE("Stopped music that was already playing!");
+	}
+
+	music = Mix_LoadMUS(fileName.c_str());
+
+	Mix_PlayMusic((Mix_Music*)music, -1);
+
+	TRACE("Playing music: " + fileName);
 }
 
 void SoundSystem::update(float)
