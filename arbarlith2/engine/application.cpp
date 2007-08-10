@@ -136,7 +136,7 @@ void Application::start(void)
 	TRACE("...Created the frame timer");
 
 	// Create the sound manager
-	addTask(soundSystem = new SoundSystem);
+	soundSystem = new SoundSystem();
 	TRACE("Sound system initialized");
 
 	// Prepare handlers for various key press events
@@ -273,6 +273,9 @@ void Application::stop(void)
         delete(*iter);
     tasks.clear();
     TRACE("Deleted tasks");
+
+    delete soundSystem;
+    TRACE("Destroyed the sound system");
 
     g_GUI.Destroy();
     TRACE("Destroyed the GUI");

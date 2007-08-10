@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "myassert.h"
 #include "text.h"
 #include "opengl.h"
+#include "task.h"
 #include "widgetmanager.h"
 #include "SoundSystem.h"
 #include "TextureManager.h"

@@ -31,12 +31,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _SOUNDSYSTEM_H_
 #define _SOUNDSYSTEM_H_
 
-#include "task.h"
-
 namespace Engine {
 
 /** Controls the loading and playing of sounds */
-class SoundSystem : public Task
+class SoundSystem
 {
 public:
 	/** Destructor */
@@ -53,12 +51,6 @@ public:
 
 	/** Deletes all loaded sound files from memory. */
 	void destroy(void);
-
-	/**
-	Updates the FMOD system.  Call once per tick
-	@param deltaTime The millesonds since the last tick
-	*/
-	void update(float deltaTime);
 
 	/**
 	Plays a sound file

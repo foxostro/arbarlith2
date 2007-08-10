@@ -77,7 +77,7 @@ void SoundSystem::create()
 
 	int rate = 22050;
 	Uint16 format = AUDIO_S16SYS;
-	int channels = 2;
+	int channels = 16;
 	int buffers = 4096;
 
 	if(Mix_OpenAudio(rate, format, channels, buffers) != 0)
@@ -105,6 +105,7 @@ void SoundSystem::play(const string &fileName)
 
 	if(!g_Application.soundEnabled)
 	{
+        TRACE("Sound is MUTED");
 		return;
 	}
 
@@ -157,6 +158,12 @@ void SoundSystem::playMusic(const string &fileName)
 		TRACE("Stopped music that was already playing!");
 	}
 
+	if(!g_Application.soundEnabled)
+	{
+        TRACE("Sound is MUTED");
+		return;
+	}
+
 	music = Mix_LoadMUS(fileName.c_str());
 
     Mix_VolumeMusic((int)(MIX_MAX_VOLUME * musicVolume));
@@ -165,9 +172,6 @@ void SoundSystem::playMusic(const string &fileName)
 
 	TRACE("Playing music: " + fileName);
 }
-
-void SoundSystem::update(float)
-{}
 
 void SoundSystem::setSoundEffectVolume(float volume)
 {
