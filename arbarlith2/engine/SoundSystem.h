@@ -63,10 +63,9 @@ public:
 	/**
 	Plays a sound file
 	@param fileName The name of the sound file
-	@param volume Volume level multiplier
 	@return Returns a handle to the sound
 	*/
-	void play(const string &fileName, float volume=1.0f);
+	void play(const string &fileName);
 
 	/**
 	Plays a sound file with a 3D position
@@ -74,7 +73,7 @@ public:
 	@param pos The position of the sound in space
 	@return Returns a handle to the sound
 	*/
-	void play3D(const string &fileName, const vec3 &pos, float volume=1.0f);
+	void play3D(const string &fileName, const vec3 &pos);
 
 	/** Stops all sounds */
 	void stopAll(void);
@@ -86,7 +85,25 @@ public:
 	*/
 	void playMusic(const string &fileName);
 
+    /**
+    Set the volume level for sound effects
+	@param volume Volume level [0.0, 1.0]
+    */
+    void setSoundEffectVolume(float volume);
+
+    /**
+    Set the volume level for music
+	@param volume Volume level [0.0, 1.0]
+    */
+    void setMusicVolume(float volume);
+
 private:
+    /** Global sound effects volume [0.0, 1.0] */
+    float soundVolume;
+
+    /** Global music volume [0.0, 1.0] */
+    float musicVolume;
+
 	/** Quick reference to loaded sound effects */
 	map<string, void*> loadedSounds;
 

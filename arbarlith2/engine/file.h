@@ -287,13 +287,6 @@ public:
 	size_t write(const string &s);
 
 	/**
-	Writes a string to file
-	@param s The string to write
-	@return The number of bytes actually written
-	*/
-	size_t write(const wstring &s);
-
-	/**
 	Writes data from the buffer and copies it into the file from the current cursor position
 	If the internal is not large enough to perform this write, then it will be expanded
 	@param buffer The data buffer

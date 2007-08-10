@@ -49,6 +49,9 @@ void SoundSystem::clear()
 {
 	loadedSounds.clear();
 	music = 0;
+
+    soundVolume = 1.0f;
+    musicVolume = 0.5f;
 }
 
 void SoundSystem::destroy()
@@ -96,7 +99,7 @@ void SoundSystem::stopAll(void)
 	TRACE("Fading out all sounds in " + itoa(delay) + " milliseconds!");
 }
 
-void SoundSystem::play(const string &fileName, float volume)
+void SoundSystem::play(const string &fileName)
 {
 	Mix_Chunk *sound = 0;
 
@@ -128,6 +131,9 @@ void SoundSystem::play(const string &fileName, float volume)
 		sound = (Mix_Chunk*)(sIter->second);
 	}
 
+    // Set volume
+    Mix_VolumeChunk(sound, (int)(MIX_MAX_VOLUME * soundVolume));
+
 	// Play the chunk
 	if(Mix_PlayChannel(-1, sound, 0) == -1)
 	{
@@ -136,7 +142,7 @@ void SoundSystem::play(const string &fileName, float volume)
 	}
 }
 
-void SoundSystem::play3D(const string &fileName, const vec3 &, float)
+void SoundSystem::play3D(const string &fileName, const vec3 &)
 {
 	ERR("SoundSystem::play3D is a stub");
 	play(fileName);
@@ -153,6 +159,8 @@ void SoundSystem::playMusic(const string &fileName)
 
 	music = Mix_LoadMUS(fileName.c_str());
 
+    Mix_VolumeMusic((int)(MIX_MAX_VOLUME * musicVolume));
+
 	Mix_PlayMusic((Mix_Music*)music, -1);
 
 	TRACE("Playing music: " + fileName);
@@ -160,5 +168,21 @@ void SoundSystem::playMusic(const string &fileName)
 
 void SoundSystem::update(float)
 {}
+
+void SoundSystem::setSoundEffectVolume(float volume)
+{
+    ASSERT(volume >= 0.0f, "Volume is negative: " + ftoa(volume));
+    ASSERT(volume > 1.0f,  "Volume is greater than 100%: " + ftoa(volume));
+
+    soundVolume = volume;
+}
+
+void SoundSystem::setMusicVolume(float volume)
+{
+    ASSERT(volume >= 0.0f, "Volume is negative: " + ftoa(volume));
+    ASSERT(volume > 1.0f,  "Volume is greater than 100%: " + ftoa(volume));
+
+    musicVolume = volume;
+}
 
 } // namespace Engine

@@ -72,10 +72,15 @@ void createDirectory(const string &path)
 {
     TRACE(path);
 
+    int result = -1;
+
 #ifdef _WIN32
-	_tmkdir(path.c_str());
+	result = _mkdir(path.c_str());
 #else
-	if(mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) < 0)
+    result = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)
+#endif
+
+	if(result < 0)
 	{
 		if(errno == EEXIST)
 		{
@@ -87,17 +92,21 @@ void createDirectory(const string &path)
 			ERR(string("mkdir() failed: ") + strerror(errno));
 		}
 	}
-#endif
 }
 
 bool setWorkingDirectory(const string &path)
 {
     TRACE(path);
 
+    int result = -1;
+
 #ifdef _WIN32
-	return _tchdir(path.c_str()) != 0;
+    result = _chdir(path.c_str());
 #else
-	if(chdir(path.c_str()) < 0)
+    result = chdir(path.c_str());
+#endif
+
+	if(result < 0)
 	{
 		perror("chdir() failed");
 		ERR("chdir() failed, error logged to std::err");
@@ -108,7 +117,6 @@ bool setWorkingDirectory(const string &path)
 	{
 		return true;
 	}
-#endif
 }
 
 string getWorkingDirectory(void)
@@ -171,9 +179,9 @@ string getApplicationDirectory(void)
 	{
 		// Strip off the filename and extension
 		size_t i;
-		for(i = _tcslen(pathBuffer) - 1; i > 0; --i)
+		for(i = strlen(pathBuffer) - 1; i > 0; --i)
 		{
-			if(pathBuffer[i]=="'\\'")
+			if(pathBuffer[i] == '\\')
 			{
 				pathBuffer[i]=0;
 				break;
@@ -453,11 +461,6 @@ size_t File::write(unsigned char * buffer, size_t count)
 	cursor += count; // may cause EOF if we try to read from this position
 
 	return count;
-}
-
-size_t File::write(const wstring &s)
-{
-	return write(s);
 }
 
 size_t File::write(const string &s)

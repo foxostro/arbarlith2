@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib devil.lib ilu.lib ilut.lib SDL.lib WSock32.Lib fmodex_vc.lib winmm.lib shlwapi.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glew32.lib devil.lib ilu.lib ilut.lib SDL.lib SDL_mixer.lib WSock32.Lib winmm.lib shlwapi.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_D.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"

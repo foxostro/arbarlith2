@@ -50,10 +50,10 @@ bool assertionFailed(int line,
 } // namespace Engine
 
 #ifndef ASSERT
-#	ifdef _DEBUG
-#		define ASSERT(expr, msg) { if(!(expr) && Engine::assertionFailed((int)(__LINE__), __FILE__, (msg))) Engine::DebugBreak(); }
+#	ifdef NDEBUG 
+#		define ASSERT(ignore_expr, ignore_msg) ((void) 0)
 #	else
-#		define ASSERT(exp, str)   ;
+#		define ASSERT(expr, msg) for(;;) { if(!(expr) && Engine::assertionFailed((int)(__LINE__), __FILE__, (msg))) Engine::DebugBreak(); break; }
 #	endif
 #endif
 
