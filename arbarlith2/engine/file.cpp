@@ -154,12 +154,17 @@ string getAppDataDirectory(void)
 	}
 
 #else
+    struct passwd *pwd = getpwuid(getuid());
 
-	/*
-	TODO: Fix this so it isn't hard-coded for my setup!
-	*/
-
-	finalPath = "/home/arfox/.arbarlith2/";
+    if(pwd == 0)
+    {
+        perror("Failed to retrieve user information");
+        finalPath = "./.arbarlith2";
+    }
+    else
+    {
+		finalPath = pathAppend(pw->pw_dir, ".arbarlith2");
+    }
 
 #endif
 
@@ -197,12 +202,8 @@ string getApplicationDirectory(void)
 	return ".\\";
 
 #else
-
-	/*
-	TODO: Fix this so it isn't hard-coded for my setup!
-	*/
-
-	return "/home/arfox/arbarlith2/trunk/arbarlith2/bin/";
+    
+    return "/home/arfox/arbarlith2/trunk/arbarlith2/bin/";
 
 #endif
 }
