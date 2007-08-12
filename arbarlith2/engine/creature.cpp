@@ -137,6 +137,11 @@ void Creature::damage(int amount, OBJECT_ID attackerID)
 	{
 		kill();
 	}
+	else
+	{
+		ChangeAnimation("flinch");
+		g_SoundSystem.play(getHurtSfx());
+	}
 }
 
 void Creature::freeze(void)
@@ -698,7 +703,7 @@ void Creature::OnDeath(void)
 void Creature::kill(void)
 {
 	// Play a sound effect for the creature dying
-	g_SoundSystem.play3D(getDyingSfx(), getPos());
+	g_SoundSystem.play(getDyingSfx());
 
 	// calculate the length of the dying animation
 	size_t animHandle = getAnimationHandle(getDyingAnim());

@@ -223,8 +223,6 @@ TextWriter::Character& TextWriter::getCharacter(char z)
 
 const TextWriter::Character& TextWriter::getCharacter(char z) const
 {
-	ASSERT(z >= 0, "Invalid character");
-
 	return characters[  (size_t)((z >= 0) ? z : '?')  ];
 }
 

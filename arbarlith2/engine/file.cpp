@@ -32,9 +32,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "profile.h"
 
 #include <fstream>
-#include <errno.h>
+#include <cerrno>
+
 #include <sys/types.h>
-#include <sys/stat.h> // System calls for file info
+#include <sys/stat.h>
 
 #ifdef _WIN32
 #
@@ -55,6 +56,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #   endif
 #
 #else
+#
+#	include <pwd.h>
 #
 #   define PATH_SEPARATOR ( '/' )
 #
@@ -77,7 +80,7 @@ void createDirectory(const string &path)
 #ifdef _WIN32
 	result = _mkdir(path.c_str());
 #else
-    result = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)
+    result = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 #endif
 
 	if(result < 0)
@@ -163,13 +166,15 @@ string getAppDataDirectory(void)
     }
     else
     {
-		finalPath = pathAppend(pw->pw_dir, ".arbarlith2");
+		finalPath = pathAppend(pwd->pw_dir, ".arbarlith2");
     }
 
 #endif
 
 	// Ensure that the directory exists
 	createDirectory(finalPath);
+
+	TRACE("Application data will be stored in \"" + finalPath + "\"");
 
 	return finalPath;
 }
@@ -202,7 +207,7 @@ string getApplicationDirectory(void)
 	return ".\\";
 
 #else
-    
+
     return "/home/arfox/arbarlith2/trunk/arbarlith2/bin/";
 
 #endif

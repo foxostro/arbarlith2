@@ -42,6 +42,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "MyPlayer.h"
 
+#define DEBUG_PLAYER 1
+
 namespace Arbarlith2 {
 
 GEN_ACTOR_RTTI_CPP(MyPlayer, "class Arbarlith2::MyPlayer")
@@ -125,14 +127,14 @@ void MyPlayer::load(const PropertyBag &xml)
 	spellList.push_back( new SpellFireBall   (&getZone(), m_ID, "data/spells/ice-blast.xml")   ); // 5 - Ice Blast
 
 	this->activeIdx = 5;
-	
-#if 0
+
+#if DEBUG_PLAYER
 	spellList[0]->available = true;
 	spellList[1]->available = true;
 	spellList[2]->available = true;
-	spellList[3]->available = true;
+	spellList[3]->available = false;
 	spellList[4]->available = true;
-	spellList[5]->available = true;
+	spellList[5]->available = false;
 #endif
 }
 
@@ -141,7 +143,8 @@ void MyPlayer::update(float deltaTime)
 	if(zombie) return;
 
 	// Has the player tried to cast a spell?
-	if(isAlive() && getCanCast(getActiveSpell()) && g_Keys.isKeyDown(KEY_PLAYER_CAST_SPELL))
+	if(isAlive() && getCanCast(getActiveSpell()) &&
+	   g_Keys.isKeyDown(KEY_PLAYER_CAST_SPELL))
 	{
 		if(!spellCastDebounce)
 		{
@@ -149,10 +152,14 @@ void MyPlayer::update(float deltaTime)
 
 			if(getSpell().beginCast())
 			{
+			#if 1
 				// scale the animation speed for the duration of the actual spell cast
 				size_t animHandle = getAnimationHandle(getSpellCastAnim());
 				float delay = getAnimationLength(animHandle);
 				ChangeAnimation(animHandle, delay / getSpell().castTime);
+			#else
+				ChangeAnimation(getSpellCastAnim());
+			#endif
 			}
 		}
 	}
@@ -171,10 +178,12 @@ void MyPlayer::update(float deltaTime)
 		spell->update(deltaTime);
 	}
 
+#if DEBUG_PLAYER
 	if(g_Keys.isKeyDown(KEY_TEST))
 	{
-		getZone().getPlayer(0).kill();
+		getZone().getPlayer(0).damage(1, -1);
 	}
+#endif
 
 	Player::update(deltaTime);
 }
@@ -232,10 +241,12 @@ bool MyPlayer::canMove(void) const
 {
 	ASSERT(activeIdx >= 0 && (size_t)activeIdx < spellList.size(), "Spell index was out of bounds");
 
-	bool movable = Player::canMove();
-	bool stillCasting = spellList[activeIdx]->isCasting();
+	if(spellList[activeIdx]->isCasting())
+	{
+		return false;
+	}
 
-	return movable && !stillCasting;
+	return Player::canMove();
 }
 
 void MyPlayer::drawObject(void) const

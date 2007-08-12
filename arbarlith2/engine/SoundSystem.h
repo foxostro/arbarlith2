@@ -59,14 +59,6 @@ public:
 	*/
 	void play(const string &fileName);
 
-	/**
-	Plays a sound file with a 3D position
-	@param fileName The name of the sound file
-	@param pos The position of the sound in space
-	@return Returns a handle to the sound
-	*/
-	void play3D(const string &fileName, const vec3 &pos);
-
 	/** Stops all sounds */
 	void stopAll(void);
 

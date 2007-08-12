@@ -95,7 +95,9 @@ Menu::Element MenuWorldSelection::getLabel(int worldNum)
 {
 	bool unlocked = worldNum<=g_Application.unlockedWorld;
 
-	return Element(vec2(200.0f, 500.0f - (worldNum-1)*100.0f), (unlocked) ? "World " : "[Locked] World " + itoa(worldNum), unlocked);
+	return Element(vec2(200.0f, 500.0f - (worldNum-1)*100.0f),
+	               string((unlocked)?"World ":"[Locked] World ")+itoa(worldNum),
+	               unlocked);
 }
 
 void MenuWorldSelection::enterWorld(int worldNum)

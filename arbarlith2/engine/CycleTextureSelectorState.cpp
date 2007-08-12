@@ -95,4 +95,4 @@ void CycleTextureSelectorState::onMouseExit(void)
 	statusLbl->m_Color = white;
 }
 
-}; // namespace
+} // namespace Engine

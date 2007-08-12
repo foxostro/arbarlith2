@@ -86,10 +86,12 @@ void SpellIncinerate::castSpell(void)
 
 ActorSet SpellIncinerate::getApplicableGroup(Creature &owner) const
 {
+	size_t hardCap = 8; // can explode up to 8 enemies at once
+
 	if(instanceof(owner, Player))
-		return owner.getZone().getObjects().exclude(owner.m_ID).getClosestSeveral<Creature>(owner.getPos(), 4, spellRadius);
+		return owner.getZone().getObjects().exclude(owner.m_ID).getClosestSeveral<Creature>(owner.getPos(), hardCap, spellRadius);
 	else
-		return owner.getZone().getObjects().exclude(owner.m_ID).getClosestSeveral<Player>(owner.getPos(), 4, spellRadius);
+		return owner.getZone().getObjects().exclude(owner.m_ID).getClosestSeveral<Player>(owner.getPos(), hardCap, spellRadius);
 }
 
 }; // namespace

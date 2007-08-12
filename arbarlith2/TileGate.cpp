@@ -155,7 +155,7 @@ void TileGate::unlockGateImmediately(void)
 	g_Application.addTask(task);
 
 	if(unlockSfx!="nill")
-		g_SoundSystem.play3D(unlockSfx, getPos());
+		g_SoundSystem.play(unlockSfx);
 }
 
 void TileGate::lockGateImmediately(void)
@@ -169,7 +169,7 @@ void TileGate::lockGateImmediately(void)
 	g_Application.addTask(task);
 
 	if(lockSfx!="nill")
-		g_SoundSystem.play3D(lockSfx, getPos());
+		g_SoundSystem.play(lockSfx);
 }
 
 void TileGate::onLocked(void)

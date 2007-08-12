@@ -60,17 +60,25 @@ void Map::clear(void)
 
 void Map::destroy(void)
 {
-	delete[] quadTree;
+	TRACE("Destroying Map...");
+
+	delete quadTree;
 	quadTree=0;
+	TRACE("...destroyed Quad-Tree...");
 
 	delete [] grid;
 	grid = 0;
+	TRACE("...destroyed grid...");
 
 	destroyMaterialsLegend();
+	TRACE("...destroyed materials legend...");
 
 	release();
+	TRACE("...released resources...");
 
 	clear();
+
+	TRACE("...finished Destroying Map");
 }
 
 void Map::destroyMaterialsLegend(void)
@@ -84,9 +92,11 @@ void Map::loadMaterialsLegend(const PropertyBag &materialsLegend)
 
 	destroyMaterialsLegend();
 
-	TRACE("Expecting to find " + itoa((int)materialsLegend.getNumInstances("material")) + " materials");
+	const size_t numberOfEntries = materialsLegend.getNumInstances("material");
 
-	for(size_t i=0, numberOfEntries=materialsLegend.getNumInstances("material"); i<numberOfEntries; ++i)
+	TRACE("Expecting to find " + itoa((int)numberOfEntries) + " materials");
+
+	for(size_t i = 0; i < numberOfEntries; ++i)
 	{
 		loadMapMaterial(materialsLegend.getString("material", i));
 	}
@@ -109,7 +119,7 @@ PropertyBag Map::saveMaterialsLegend(void) const
 MAP_MATERIAL_ID Map::loadMapMaterial(const string &materialFileName)
 {
 	string fixedMaterialFileName = File::fixFilename(materialFileName);
-
+/*
 	for(size_t i=0; i < materialsLegend.size(); ++i)
 	{
 		const string &fileName = File::fixFilename(materialsLegend[i]->getName());
@@ -117,20 +127,30 @@ MAP_MATERIAL_ID Map::loadMapMaterial(const string &materialFileName)
 		if(fileName == fixedMaterialFileName)
 			return (MAP_MATERIAL_ID)i;
 	}
+*/
+	MAP_MATERIAL_ID materialID = materialsLegend.size();
 
-	TRACE("Loading map material: " + fixedMaterialFileName);
+	TRACE("Loading map material: " + fixedMaterialFileName +
+	      " with ID #" + itoa((int)materialID));
 
 	materialsLegend.push_back(new Material(fixedMaterialFileName));
 
-	size_t numMaterials = materialsLegend.size();
-
-	return (MAP_MATERIAL_ID)(numMaterials-1);
+	return materialID;
 }
 
 const Material* Map::getMapMaterial(MAP_MATERIAL_ID materialID) const
 {
-	ASSERT((size_t)materialID<materialsLegend.size(), "materialID invalid");
-	return ((size_t)materialID<materialsLegend.size()) ? materialsLegend[materialID] : 0;
+	ASSERT((size_t)materialID < materialsLegend.size(),
+	       "materialID invalid: " + itoa((int)materialID));
+
+	if((size_t)materialID < materialsLegend.size())
+	{
+		return materialsLegend[materialID];
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void Map::create(const PropertyBag &xml)

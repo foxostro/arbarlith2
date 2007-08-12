@@ -439,4 +439,18 @@ bool ActorSet::query(const string &name, OBJECT_ID &out) const
 	return false;
 }
 
-}; // namespace
+ActorSet ActorSet::exclude(OBJECT_ID id) const
+{
+	ActorSet s = *this;
+
+	ActorSet::iterator iter = s.find(id);
+
+	if(iter != s.end()) // if present
+	{
+		s.erase(iter);
+	}
+
+	return s;
+}
+
+} // namespace Engine

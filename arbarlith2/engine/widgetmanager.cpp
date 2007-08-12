@@ -63,4 +63,4 @@ void WidgetManager::update(float deltaTime)
 	m_RootWidget.ProcessTree(deltaTime);
 }
 
-}; // namespace
+} // namespace Engine

@@ -77,7 +77,7 @@ void SoundSystem::create()
 
 	int rate = 22050;
 	Uint16 format = AUDIO_S16SYS;
-	int channels = 16;
+	int channels = 2;
 	int buffers = 4096;
 
 	if(Mix_OpenAudio(rate, format, channels, buffers) != 0)
@@ -105,7 +105,6 @@ void SoundSystem::play(const string &fileName)
 
 	if(!g_Application.soundEnabled)
 	{
-        TRACE("Sound is MUTED");
 		return;
 	}
 
@@ -141,12 +140,6 @@ void SoundSystem::play(const string &fileName)
 		ERR(string("Failed to play sound file: ") + Mix_GetError());
 		return;
 	}
-}
-
-void SoundSystem::play3D(const string &fileName, const vec3 &)
-{
-	ERR("SoundSystem::play3D is a stub");
-	play(fileName);
 }
 
 void SoundSystem::playMusic(const string &fileName)

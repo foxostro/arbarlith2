@@ -1,4 +1,4 @@
-<forceSkin>data/boulder1/boulder1.jpg</forceSkin>
+<forceSkin>data/boulder1/rock.jpg</forceSkin>
 
 <animation>
 	<name>idle</name>

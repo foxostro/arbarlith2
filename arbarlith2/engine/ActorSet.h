@@ -60,7 +60,7 @@ public:
 	@param xml The XML data source
 	@param zone The home zone of the object
 	*/
-	ActorSet(PropertyBag &xml, World *zone)
+	ActorSet(const PropertyBag &xml, World *zone)
 	{
 		ASSERT(zone!=0, "zone was NULL");
 		clear();
@@ -210,12 +210,7 @@ public:
 	Excludes a particular object from the result set
 	@param id ID of the exluded object
 	*/
-	ActorSet exclude(OBJECT_ID id) const
-	{
-		ActorSet s = *this;
-		s.erase(s.find(id));
-		return s;
-	}
+	ActorSet exclude(OBJECT_ID id) const;
 
 	/**
 	gets the object closest to the given position, or INVALID_ID if the object would be greater than the threshold diatance

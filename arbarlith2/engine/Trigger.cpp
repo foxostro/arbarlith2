@@ -110,7 +110,7 @@ bool Trigger::pollConditions(void) const
 
 void Trigger::onTrigger(void)
 {
-	g_SoundSystem.play3D(getTriggerSfx(), getPos());
+	g_SoundSystem.play(getTriggerSfx());
 }
 
 bool Trigger::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const

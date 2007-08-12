@@ -42,7 +42,7 @@
 	<priority>1.5</priority>
 	<looping>false</looping>
 	<start>21</start>
-	<length>3</length>
+	<length>2</length>
 	<fps>5.0</fps>
 </animation>
 

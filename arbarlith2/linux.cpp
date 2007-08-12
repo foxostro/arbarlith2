@@ -32,8 +32,52 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "stdafx.h"
 
+#include <signal.h>
+#include <execinfo.h>
+
+extern "C" void printBackTrace(FILE *fp)
+{
+	int i;
+	void *bt[256];
+	char **strings;
+	int size;
+
+	fprintf(fp, "################### Backtrace ####################\n");
+
+	size = backtrace(bt, 256);
+	strings = backtrace_symbols(bt, size);
+
+	fprintf(fp, "Number of elements in backtrace: %d\n", size);
+
+	for(i = 0; i < size; ++i)
+	{
+		fprintf(fp, "%s\n", strings[i]);
+	}
+
+	fprintf(fp, "##################################################\n");
+}
+
+extern "C" void handler(int, siginfo_t*, void*)
+{
+	printBackTrace(stdout);
+	printf("Handler done.\n");
+}
+
+void setupSignalHandler(void)
+{
+	struct sigaction SignalAction;
+
+	SignalAction.sa_sigaction = handler;
+	sigemptyset(&SignalAction.sa_mask);
+	SignalAction.sa_flags = SA_SIGINFO;
+	sigaction(SIGSEGV, &SignalAction, 0);
+	sigaction(SIGABRT, &SignalAction, 0);
+}
+
 int main(void)
 {
+	setupSignalHandler();
+
     // Allocate space for the Application object
     g_pApplication = new Engine::Application();
 

@@ -104,10 +104,20 @@ bool Bullet::pollConditions(void) const
 {
 	OBJECT_ID unused;
 
-	// Only consider Creature from our World that are not the Bullet owner
-	ActorSet s = getZone().getObjects().typeFilter<Creature>().exclude(owner);
+	/*
+	Having difficulties here.
+	Broken up to aid in dissecting the backtrace
+	*/
 
-	return isAnythingInProximity(s, unused);
+	const World &world = getZone();
+
+	const ActorSet &objects = world.getObjects();
+
+	const ActorSet &creatures = objects.typeFilter<Creature>();
+
+	const ActorSet &creatures_notowner = creatures.exclude(owner);
+
+	return isAnythingInProximity(creatures_notowner, unused);
 }
 
 void Bullet::onTrigger(void)

@@ -122,12 +122,24 @@ void World::clear()
 
 void World::destroy(void)
 {
+	TRACE("Destroying World...");
+
 	worldMap.destroy();
+	TRACE("...destroyed worldMap...");
+
 	lightManager.destroy();
+	TRACE("...destroyed lightManager...");
+
 	shadowManager.destroy();
+	TRACE("...destroyed shadowManager...");
+
 	objects.destroy();
+	TRACE("...destroyed objects...");
 
 	clear();
+
+
+	TRACE("...finished Destroying World");
 }
 
 void World::release(void)

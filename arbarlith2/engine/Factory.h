@@ -128,6 +128,8 @@ public:
 	template<class T>
 	void registerType(const string &typeName)
 	{
+		TRACE("Registering type \"" + typeName + "\"...");
+
 		const type_info& typeInfo = typeid(T);
 		const OBJECT_TYPE typeID = (OBJECT_TYPE)(&typeInfo); // address of this is constant
 
@@ -138,7 +140,11 @@ public:
 			AllocatorFn fn = &::Engine::allocatorFn<TYPE, T>;
 			toAllocator.insert(  make_pair(typeID, fn)  );
 
-			TRACE("Registered type \"" + typeName + "\"");
+			TRACE("...finished (Registered type \"" + typeName + "\")");
+		}
+		else
+		{
+			TRACE("...finished (\"" + typeName + "\" already registered!)");
 		}
 	}
 

@@ -1,6 +1,6 @@
 <castTime>800.0</castTime>
 <coolDownTime>10000.0</coolDownTime>
-<damageValue>10</damageValue>
+<damageValue>25</damageValue>
 <spellRadius>8.0</spellRadius>
 
 

@@ -64,6 +64,8 @@ GameStateCredits::GameStateCredits(Application &app)
 	file.read(buffer, size);
 	text = buffer;
 
+	TRACE(text);
+
 	// Release the buffer
 	delete [] buffer;
 }

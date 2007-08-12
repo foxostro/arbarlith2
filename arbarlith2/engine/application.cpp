@@ -137,6 +137,7 @@ void Application::start(void)
 
 	// Create the sound manager
 	soundSystem = new SoundSystem();
+	soundSystem->create();
 	TRACE("Sound system initialized");
 
 	// Prepare handlers for various key press events
@@ -499,12 +500,19 @@ void Application::enterWorld(int worldNum)
 
 	const string &worldFileName = worlds[worldNum];
 
-	TRACE("Starting the game from file: " + worldFileName);
+	if(world)
+	{
+		TRACE("Deleting the old World");
+		delete world;
+	}
 
-	delete world;
+	TRACE("Allocating a new World");
 	world = new World;
+
+	TRACE("Starting the game from file: " + worldFileName);
 	world->loadFromFile(worldFileName);
 
+	TRACE("Continuing game now");
 	changeGameState(GAME_STATE_RUN);
 }
 

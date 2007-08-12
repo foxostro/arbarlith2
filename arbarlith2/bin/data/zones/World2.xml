@@ -53,9 +53,10 @@
 		<material>data\tiles\floor\floor_planks.jpg</material>
 		<material>data\tiles\wall\wall_darkwood.jpg</material>
 		<material>data\tiles\floor\floor_stonetile1.jpg</material>
-		<material>data\tiles\wall\wall.JPG</material>
+		<material>data\tiles\wall\wall.jpg</material>
 		<material>data\tiles\floor\floor_stone2.jpg</material>
 		<material>data\tiles\floor\floor_cement.jpg</material>
+		<material>data\tiles\wall\wall.jpg</material>
 	</materialsLegend>
 	<tileDataFileName>data\zones\World2.bin</tileDataFileName>
 	<tileMetersX>1.2</tileMetersX>
