@@ -21,6 +21,7 @@
 <attackCoolDown>625</attackCoolDown>
 <attackChargeTime>2000</attackChargeTime>
 <knockBackAcceleration>400</knockBackAcceleration>
+<damagePercentToStun>0.07</damagePercentToStun>
 
 <dyingSounds>
 <file>data/sound/player/dying.wav</file>
