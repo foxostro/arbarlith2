@@ -228,7 +228,7 @@
 		<pos>&vec(39, 0.1605, 45.25)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -242,7 +242,7 @@
 		<pos>&vec(40.25, 0.1605, 34)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -256,7 +256,7 @@
 		<pos>&vec(17.25, 0.1605, 33.75)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -270,7 +270,7 @@
 		<pos>&vec(15.5, 0.1605, 34.75)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -284,7 +284,7 @@
 		<pos>&vec(18.5, 0.1605, 34.5)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -308,7 +308,7 @@
 		<pos>&vec(37.25, 0.1605, 33.5)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -773,7 +773,7 @@
 		<pos>&vec(97.08, 0.1605, 111.4)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -787,7 +787,7 @@
 		<pos>&vec(96.51, 0.1605, 113.4)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
@@ -821,7 +821,7 @@
 		<pos>&vec(100.3, 0.4561, 114.5)</pos>
 		<showModel>true</showModel>
 		<sounds>
-			<@inherit>data/sound/player/pickup.wav</@inherit>
+			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
