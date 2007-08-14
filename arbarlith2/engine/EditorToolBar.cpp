@@ -281,6 +281,11 @@ void EditorToolBar::update(float deltaTime)
 								string(", ") + ftoa(mousePos.z) +
 								string(")"));
 
+        if(g_Keys.isKeyDown(KEY_TEST))
+        {
+            world->getMap().removeAllMaterials();
+        }
+
 
 		// Update the tool bar widgets
 		switch(toolBarTools->getTool())
@@ -432,7 +437,7 @@ void EditorToolBar::update(float deltaTime)
 		// Save / Load the game
 		if(shouldSave)
 		{
-			world->save();
+			world->saveToFile();
 		}
 		else if(shouldLoad)
 		{
@@ -690,16 +695,13 @@ void EditorToolBar::onLeftMouseDown()
 			// Create objects from a palette of available types
 			string nextObject = getNextObject();
 
-			string rtti;
+            // Gets the objects for the object palette
+			string editorDataFile = pathAppend("data/objects/", nextObject);
+
 			PropertyBag ThisObjBag;
+            ThisObjBag.loadFromFile(editorDataFile);
 
-			string editorDataFile;
-
-			// Gets the objects for the object palette
-			editorDataFile = string("data/objects/") + nextObject;
-
-			ThisObjBag.loadFromFile(editorDataFile);
-			ThisObjBag.get("type", rtti);
+			string rtti = ThisObjBag.getString("type");
 
 			// Create the object inside the game world
 			OBJECT_ID id = objects.create(rtti, world);
@@ -742,7 +744,8 @@ void EditorToolBar::onLeftMouseDown()
 				// get the tile that was picked
 				Tile &tile = map.getTile(groundPos.x, groundPos.z);
 
-				tile.create(map.tileX(groundPos.x),
+#if 1
+                tile.create(map.tileX(groundPos.x),
 							map.tileZ(groundPos.z),
 							tileEditor_type,
 							tileEditor_properties,
@@ -750,6 +753,11 @@ void EditorToolBar::onLeftMouseDown()
 							tileEditor_floorTextureFile,
 							tileEditor_wallTextureFile,
 							map);
+#else
+                tile.setMaterials(tileEditor_wallTextureFile,
+                                  tileEditor_floorTextureFile,
+                                  map);
+#endif
 
 				// Rebuild the map display list
 				map.reaquire();
