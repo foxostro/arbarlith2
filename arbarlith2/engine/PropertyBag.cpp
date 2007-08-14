@@ -448,6 +448,16 @@ bool PropertyBag::loadMergeFromString(const string &data, bool allowInheritance)
 			// Remove the <@inherit> ... </@inherit> element
 			data.remove(inheritTag);
 
+            /*
+            And replace it with another special tag.
+            The aim is to prevent re-inheritance of the same base,
+            and still allow clients to see lineage.
+            */
+            if(data.getNumInstances("@parentFileName") < 1) // only the topmost ancestor
+            {
+                data.add("@parentFileName", parentFileName);
+            }
+
 			// 'data' contains the entire merged structure
 			(*this) = data;
 		}
