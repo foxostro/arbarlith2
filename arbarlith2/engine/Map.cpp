@@ -83,6 +83,11 @@ void Map::destroy(void)
 
 void Map::destroyMaterialsLegend(void)
 {
+    for(size_t i = 0; i < materialsLegend.size(); ++i)
+    {
+        delete materialsLegend[i];
+    }
+
 	materialsLegend.clear();
 }
 
@@ -98,7 +103,7 @@ void Map::loadMaterialsLegend(const PropertyBag &materialsLegend)
 
 	for(size_t i = 0; i < numberOfEntries; ++i)
 	{
-		loadMapMaterial(materialsLegend.getString("material", i));
+		loadMapMaterial(materialsLegend.getString("material", i), true);
 	}
 
 	TRACE("...finished (Loading materials legend)");
@@ -116,19 +121,22 @@ PropertyBag Map::saveMaterialsLegend(void) const
 	return xml;
 }
 
-MAP_MATERIAL_ID Map::loadMapMaterial(const string &materialFileName)
+MAP_MATERIAL_ID Map::loadMapMaterial(const string &materialFileName, bool allowDuplicates)
 {
 	string fixedMaterialFileName = File::fixFilename(materialFileName);
-/*
-	for(size_t i=0; i < materialsLegend.size(); ++i)
-	{
-		const string &fileName = File::fixFilename(materialsLegend[i]->getName());
 
-		if(fileName == fixedMaterialFileName)
-			return (MAP_MATERIAL_ID)i;
-	}
-*/
-	MAP_MATERIAL_ID materialID = materialsLegend.size();
+	if(!allowDuplicates)
+    {
+        for(size_t i=0; i < materialsLegend.size(); ++i)
+        {
+	        const string &fileName = File::fixFilename(materialsLegend[i]->getName());
+
+	        if(fileName == fixedMaterialFileName)
+		        return (MAP_MATERIAL_ID)i;
+        }
+    }
+
+	MAP_MATERIAL_ID materialID = (MAP_MATERIAL_ID)materialsLegend.size();
 
 	TRACE("Loading map material: " + fixedMaterialFileName +
 	      " with ID #" + itoa((int)materialID));
@@ -140,7 +148,7 @@ MAP_MATERIAL_ID Map::loadMapMaterial(const string &materialFileName)
 
 const Material* Map::getMapMaterial(MAP_MATERIAL_ID materialID) const
 {
-	ASSERT((size_t)materialID < materialsLegend.size(),
+    ASSERT((size_t)materialID < materialsLegend.size(),
 	       "materialID invalid: " + itoa((int)materialID));
 
 	if((size_t)materialID < materialsLegend.size())
@@ -224,7 +232,7 @@ void Map::resize(int width)
 	this->width = this->height = width;
 
 	// Allocate the new map
-	grid = new Tile[width * width];
+	grid = new Tile[width * height];
 
 	// Fill the test map
 	fill(TILE_BLOCK, TILE_PROPERTY_IMPASSABLE, "data/tiles/floor/floor.jpg", "data/tiles/wall/wall.jpg", 2.4f);
@@ -271,7 +279,7 @@ void Map::fillRandom(TILE_TYPE tileType, TILE_PROPERTIES properties, const strin
 	for(int y=0; y<height; ++y)
 	{
 		for(int x=0; x<width; ++x)
-			getTile(x,y).create(x,y, tileType, properties, FRAND_RANGE(0.0f, 2.0f), loadMapMaterial(floorFileName), loadMapMaterial(wallFileName), *this);
+			getTile(x,y).create(x,y, tileType, properties, FRAND_RANGE(0.0f, 2.0f), loadMapMaterial(floorFileName, false), loadMapMaterial(wallFileName, false), *this);
 	}
 
 	reaquire();
@@ -300,11 +308,26 @@ void Map::fillBlock(int startX, int startZ, int endX, int endZ, TILE_TYPE tileTy
 	{
 		for(int x=min(startX, endX); x<=max(startX, endX); ++x)
 		{
-			getTile(x,z).create(x,z, tileType, properties, tileHeight, loadMapMaterial(floorFileName), loadMapMaterial(wallFileName), *this);
+			getTile(x,z).create(x,z, tileType, properties, tileHeight, loadMapMaterial(floorFileName, false), loadMapMaterial(wallFileName, false), *this);
 		}
 	}
 
 	reaquire();
+}
+
+void Map::removeAllMaterials(void)
+{
+    destroyMaterialsLegend();
+
+    MAP_MATERIAL_ID floor = loadMapMaterial("data/tiles/floor/floor_stone3.jpg", false);
+    MAP_MATERIAL_ID wall = loadMapMaterial("data/tiles/wall/wall_stone1.jpg", false);
+
+    for(int i = 0; i < (width*height); ++i)
+    {
+        Tile &tile = grid[i];
+
+        tile.setMaterials(wall, floor, *this);
+    }
 }
 
 } // namespace Engine

@@ -103,9 +103,10 @@ public:
 	/**
 	Adds a material to the material legend
 	@param materialFileName The filename of the material
+    @param allowDuplicates If true, then duplicate material textures with different ID codes are permitted
 	@return material ID code
 	*/
-	MAP_MATERIAL_ID loadMapMaterial(const string &materialFileName);
+	MAP_MATERIAL_ID loadMapMaterial(const string &materialFileName, bool allowDuplicates);
 
 	/**
 	Creates a map from data in an XML source
@@ -327,6 +328,9 @@ public:
 	{
 		return tileMetersX;
 	}
+
+    /** Removes all materials on the map and replaces them with some pretty generic ones */
+    void removeAllMaterials(void);
 };
 
 } // namespace Engine
