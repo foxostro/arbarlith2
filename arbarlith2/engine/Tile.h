@@ -169,6 +169,22 @@ public:
 	*/
 	void create(int x, int z, TILE_TYPE type, TILE_PROPERTIES propertiesBitmap, float tileHeight, const string &floorFileName, const string &wallFileName, Map &owner);
 
+    /**
+    Explicitly sets the materials of this Tile
+    @param wallMaterialMat Describes the material that is to be used to texture the Tile
+    @param floorMaterialMat Describes the material to use for ceiling on the Tile
+	@param owner Map that owns this Tile
+    */
+    void setMaterials(const string &wallMaterialMat, const string &floorMaterialMat, Map &owner);
+
+    /**
+    Explicitly sets the materials of this Tile
+    @param wallMaterialMatID Describes the material that is to be used to texture the Tile
+    @param floorMaterialMatID Describes the material to use for ceiling on the Tile
+	@param owner Map that owns this Tile
+    */
+    void setMaterials(MAP_MATERIAL_ID wallMaterialMatID, MAP_MATERIAL_ID floorMaterialMatID, Map &owner);
+
 private:
 	/** Tile type */
 	TILE_TYPE type;

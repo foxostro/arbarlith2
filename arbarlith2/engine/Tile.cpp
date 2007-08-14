@@ -93,11 +93,7 @@ void Tile::create(int x, int z, TILE_TYPE type, TILE_PROPERTIES propertiesBitmap
 	this->propertiesBitmap = propertiesBitmap;
 	this->type = type;
 
-	this->floorMaterialMatID = owner.loadMapMaterial(floorFileName);
-	this->wallMaterialMatID = owner.loadMapMaterial(wallFileName);
-
-	floorMat = owner.getMapMaterial(floorMaterialMatID);
-	wallMat = owner.getMapMaterial(wallMaterialMatID);
+    setMaterials(wallFileName, floorFileName, owner);
 
 	setupBoundingBox(owner.getTileMetersX(), tileHeight);
 
@@ -108,11 +104,8 @@ void Tile::create(int x, int z, TILE_TYPE type, TILE_PROPERTIES propertiesBitmap
 {
 	this->propertiesBitmap = propertiesBitmap;
 	this->type = type;
-	this->floorMaterialMatID = floorMaterialMatID;
-	this->wallMaterialMatID = wallMaterialMatID;
 
-	floorMat = owner.getMapMaterial(floorMaterialMatID);
-	wallMat = owner.getMapMaterial(wallMaterialMatID);
+    setMaterials(wallMaterialMatID, floorMaterialMatID, owner);
 
 	setupBoundingBox(owner.getTileMetersX(), tileHeight);
 
@@ -246,4 +239,22 @@ bool Tile::setPassable(bool passable)
 	return passable;
 }
 
-}; // namespace
+void Tile::setMaterials(const string &wallFileName, const string &floorFileName, Map &owner)
+{
+    this->floorMaterialMatID = owner.loadMapMaterial(floorFileName, false);
+	this->wallMaterialMatID = owner.loadMapMaterial(wallFileName, false);
+
+	floorMat = owner.getMapMaterial(floorMaterialMatID);
+	wallMat = owner.getMapMaterial(wallMaterialMatID);
+}
+
+void Tile::setMaterials(MAP_MATERIAL_ID wallMaterialMatID, MAP_MATERIAL_ID floorMaterialMatID, Map &owner)
+{
+    this->wallMaterialMatID = wallMaterialMatID;
+    this->floorMaterialMatID = floorMaterialMatID;
+
+	floorMat = owner.getMapMaterial(floorMaterialMatID);
+	wallMat = owner.getMapMaterial(wallMaterialMatID);
+}
+
+} // namespace Engine
