@@ -81,7 +81,11 @@ void Widget::RenderTree(const vec2 &base) const
 		draw();
 
 		// draw our children
-		for_each(m_Children.begin(), m_Children.end(), bind(&Widget::RenderTree, _1, absPos));
+        for(list<Widget*>::const_iterator i = m_Children.begin(); i != m_Children.end(); ++i)
+        {
+            Widget *widget = *i;
+            widget->RenderTree(absPos);
+        }
 
 		glPopMatrix();
 	}
@@ -98,7 +102,12 @@ void Widget::ProcessTree(float deltaTime)
 			// Process Children in reverse order of rendering
 			list<Widget*> reversedList;
 			transform(m_Children.begin(), m_Children.end(), back_inserter(reversedList), _1);
-			for_each(reversedList.begin(), reversedList.end(), bind(&Widget::ProcessTree, _1, deltaTime));
+
+            for(list<Widget*>::const_iterator i = reversedList.begin(); i != reversedList.end(); ++i)
+            {
+                Widget *widget = *i;
+                widget->ProcessTree(deltaTime);
+            }
 		}
 
 		update(deltaTime);
@@ -114,7 +123,12 @@ void Widget::handleEventsTree(void)
 			// Process Children in reverse order of rendering
 			list<Widget*> reversedList;
 			transform(m_Children.begin(), m_Children.end(), back_inserter(reversedList), _1);
-			for_each(reversedList.begin(), reversedList.end(), bind(&Widget::handleEventsTree, _1));
+
+            for(list<Widget*>::const_iterator i = reversedList.begin(); i != reversedList.end(); ++i)
+            {
+                Widget *widget = *i;
+                widget->handleEventsTree();
+            }
 		}
 
 		handleEvents();
@@ -123,8 +137,8 @@ void Widget::handleEventsTree(void)
 
 void Widget::pruneDeadChildren(void)
 {
-	// free and remove all dead widgets now
 	list<Widget*>::iterator iter = m_Children.begin();
+
 	while(iter != m_Children.end())
 	{
 		if((*iter)->dead)
@@ -139,7 +153,7 @@ void Widget::pruneDeadChildren(void)
 
 void Widget::update(float)
 {
-	handleEvents();
+    // Do Nothing
 }
 
 float Widget::getMouseX(void) const
@@ -162,6 +176,9 @@ bool Widget::isWithin(void) const
 
 void Widget::handleEvents(void)
 {
+    if(dumb)
+        return;
+
 	bool lastWithin = hover;
 	bool lastMouseDown = mouseDown;
 

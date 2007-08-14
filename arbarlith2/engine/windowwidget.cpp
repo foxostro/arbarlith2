@@ -127,8 +127,10 @@ const Material& WindowWidget::getMaterial(void) const
 {
 	if(hover)
 	{
-		if(depressed)	return matDepressed;
-		else			return matHover;
+		if(depressed)
+            return matDepressed;
+		else
+            return matHover;
 	}
 	else
 	{
