@@ -80,6 +80,7 @@ public:
 	  isActive(false)
 	{
 		myLabel = new LabelWidget(label, vec2(12,2));
+		myLabel->dumb = true;
 		AddChild(myLabel);
 	}
 
@@ -91,6 +92,16 @@ public:
 	{
 		return myLabel->getLabel();
 	}
+
+    virtual void onMouseEnter(void)
+    {
+        myLabel->onMouseEnter();
+    }
+
+    virtual void onMouseExit(void)
+    {
+        myLabel->onMouseExit();
+    }
 };
 
 } // namespace Engine
