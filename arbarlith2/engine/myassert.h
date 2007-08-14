@@ -58,7 +58,7 @@ bool assertionFailed(int line,
 #endif
 
 #ifndef FAIL
-#define FAIL(msg) { if(Engine::assertionFailed((int)(__LINE__), __FILE__, (msg))) Engine::DebugBreak(); }
+#define FAIL(msg) for(;;) { if(Engine::assertionFailed((int)(__LINE__), __FILE__, (msg))) Engine::DebugBreak(); break; }
 #endif
 
 #endif
