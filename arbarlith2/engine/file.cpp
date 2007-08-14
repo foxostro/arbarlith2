@@ -350,6 +350,8 @@ bool File::saveFile(const string &fileName, bool binary)
 		return false;
 	}
 
+	TRACE("...finished saving file: " + fileName);
+
 	return true;
 }
 
