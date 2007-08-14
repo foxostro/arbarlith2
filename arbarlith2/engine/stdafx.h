@@ -36,8 +36,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma warning( disable: 4512 ) // cannot generate assignment operator
 #endif
 
-#define _PLAYER_ONE_HAS_NO_JOYSTICK_ 1	// Set to 1 in order to force player 1 to the keyboard, player 2 to joystick 1, etc
-
 #ifdef _WIN32
 #include <windows.h>
 #include <direct.h>
