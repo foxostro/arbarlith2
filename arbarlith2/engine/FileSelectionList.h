@@ -41,6 +41,9 @@ namespace Engine {
 /** A SelectionList that generates its elements from a list of file names */
 class FileSelectionList : public SelectionList
 {
+private:
+    void add(const string &label);
+
 public:
 	/**
 	Constructs the list widget

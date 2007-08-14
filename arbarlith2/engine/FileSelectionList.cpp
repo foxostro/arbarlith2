@@ -45,18 +45,23 @@ FileSelectionList::FileSelectionList(const string &searchDirectory,
 	    iter!=files.end();
 	    ++iter)
 	{
-		ListElementLabel *fileWidget =
-			new ListElementLabel(*iter,
-							"data/sprites/list/listwidget_depressed.png",
-							"data/sprites/list/listwidget_depressed_over.png",
-							"data/sprites/list/listwidget.png",
-							"data/sprites/list/listwidget_hover.png");
-
-		// the selected widget is initially the last widget added
-		selected = fileWidget;
-
-		addSelectableElement(fileWidget);
+        add(*iter);
 	}
+}
+
+void FileSelectionList::add(const string &label)
+{
+	ListElementLabel *fileWidget =
+		new ListElementLabel(label,
+						"data/sprites/list/listwidget_depressed.png",
+						"data/sprites/list/listwidget_depressed_over.png",
+						"data/sprites/list/listwidget.png",
+						"data/sprites/list/listwidget_hover.png");
+
+	// the selected widget is initially the last widget added
+	selected = fileWidget;
+
+	addSelectableElement(fileWidget);
 }
 
 string FileSelectionList::getFilename(void)
