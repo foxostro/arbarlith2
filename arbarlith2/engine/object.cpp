@@ -145,6 +145,8 @@ void Actor::clear(void)
 	validatedPos.zero();
 	position.zero();
 	velocity.zero();
+    
+    editorDataFile.clear();
 }
 
 void Actor::destroy(void)
@@ -602,18 +604,18 @@ PropertyBag Actor::save(void) const
 
 bool Actor::saveTidy(PropertyBag &Bag, PropertyBag &dataFile) const
 {
-	saveTag(Bag, dataFile, "height",			m_desiredHeight);
-	saveTag(Bag, dataFile, "mass",				m_Mass);
-	saveTag(Bag, dataFile, "speed",				topSpeed);
-	saveTag(Bag, dataFile, "model",				m_strModelFilename);
-	saveTag(Bag, dataFile, "name",				m_strName);
-	saveTag(Bag, dataFile, "castShadows",			castShadows);
-	saveTag(Bag, dataFile, "solid",				solid);
-	saveTag(Bag, dataFile, "showModel",			showModel);
-	saveTag(Bag, dataFile, "floating",			floating);
-	saveTag(Bag, dataFile, "look",				orientation.getAxisZ());
-	saveTag(Bag, dataFile, "up",				orientation.getAxisY());
-	saveTag(Bag, dataFile, "frictionAcceleration",	frictionAcceleration);
+	saveTag(Bag, dataFile, "height",                m_desiredHeight);
+	saveTag(Bag, dataFile, "mass",                  m_Mass);
+	saveTag(Bag, dataFile, "speed",                 topSpeed);
+	saveTag(Bag, dataFile, "model",                 m_strModelFilename);
+	saveTag(Bag, dataFile, "name",				    m_strName);
+	saveTag(Bag, dataFile, "castShadows",           castShadows);
+	saveTag(Bag, dataFile, "solid",                 solid);
+	saveTag(Bag, dataFile, "showModel",             showModel);
+	saveTag(Bag, dataFile, "floating",              floating);
+	saveTag(Bag, dataFile, "look",                  orientation.getAxisZ().getNormal());
+	saveTag(Bag, dataFile, "up",                    orientation.getAxisY().getNormal()); // never used by Actor::load
+	saveTag(Bag, dataFile, "frictionAcceleration",  frictionAcceleration);
 
 	Bag.add("pos", position);
 
@@ -624,6 +626,12 @@ void Actor::load(const PropertyBag &Bag)
 {
 	// Free any used memory and destroy the old object
 	destroy();
+
+    // When we save out again, we need to be able to properly write out @inherit
+    if(Bag.get("@parentFileName", editorDataFile))
+    {
+        TRACE("Remembering that we are derived from: " + editorDataFile);
+    }
 
 	// kept to support previous versions of the file format
 	if(Bag.get("radius", m_desiredHeight)) m_desiredHeight*=2.0f;
@@ -642,6 +650,11 @@ void Actor::load(const PropertyBag &Bag)
 	// Set the orientation matrix
 	vec3 zAxis (0,0,1), yAxis(0,1,0), xAxis(1,0,0);
 	Bag.get("look", &zAxis);
+
+            // Flatten (Note: Prevents rotation about any axis other than the Y-Axis)
+            zAxis.y=0;
+            zAxis.normalize();
+
 	xAxis = yAxis.cross(zAxis).getNormal();
 
 	orientation.setAxisZ(zAxis);
