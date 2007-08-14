@@ -100,7 +100,7 @@ void Spawn::load(const PropertyBag &xml)
 
 bool Spawn::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 {
-	saveTag(xml, editorData, "monsterDatafile",     monsterDataFile);
+	saveTag(xml, editorData, "monsterDataFile",     monsterDataFile);
 	saveTag(xml, editorData, "minMonsters",         minMonsters);
 	saveTag(xml, editorData, "maxMonsters",         maxMonsters);
 	saveTag(xml, editorData, "separationDistance",  separationDistance);
@@ -108,4 +108,4 @@ bool Spawn::saveTidy(PropertyBag &xml, PropertyBag &editorData) const
 	return Listener::saveTidy(xml, editorData);
 }
 
-}; // namespace
+} // namespace Engine
