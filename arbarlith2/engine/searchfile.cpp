@@ -28,6 +28,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <cerrno>
 #include <iostream>
 using namespace std;
 
@@ -39,6 +40,7 @@ using namespace std;
 
 #include "myassert.h"
 #include "file.h"
+#include "logstring.h"
 #include "searchfile.h"
 
 vector<string> Engine::SearchFile(const string &_searchDirectory,
@@ -47,9 +49,12 @@ vector<string> Engine::SearchFile(const string &_searchDirectory,
 	vector<string> filesFound;
 
 	// Ensure standard file path separators, etc
-	string searchDirectory = File::fixFilename(_searchDirectory);
+	string searchDirectory = File::fixFilename(pathAppend(getWorkingDirectory(), _searchDirectory));
 
 #ifdef _WIN32
+
+    searchDirectory = pathAppend(searchDirectory,  + "*" + fileExtension);
+
 	// Search for all files matching the pattern
 	struct _finddata_t file;
 	long hFile = (long)_findfirst(searchDirectory.c_str(), &file);
@@ -68,6 +73,16 @@ vector<string> Engine::SearchFile(const string &_searchDirectory,
 		// We are done with the handle
 		_findclose(hFile);
 	}
+    else
+    {
+        switch(errno)
+        {
+        case EINVAL: ERR("Invalid parameter: filespec or fileinfo was NULL. Or, the operating system returned an unexpected error."); break;
+        case ENOENT: ERR("File specification that could not be matched."); break;
+        case ENOMEM: ERR("Insufficient memory."); break;
+        default: ERR("Unknown error"); break;
+        };
+    }
 #else
 	struct dirent *directoryEntry = 0;
 	DIR *directory = opendir(searchDirectory.c_str());
