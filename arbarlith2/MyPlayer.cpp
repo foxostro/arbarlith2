@@ -44,6 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define DEBUG_PLAYER 1
 
+extern bool _PLAYER_ONE_HAS_NO_JOYSTICK_;	// Set to 1 in order to force player 1 to the keyboard, player 2 to joystick 1, etc
+
 namespace Arbarlith2 {
 
 GEN_ACTOR_RTTI_CPP(MyPlayer, "class Arbarlith2::MyPlayer")
@@ -96,23 +98,28 @@ void MyPlayer::setupControllerActions(int playerNumber)
 
 void MyPlayer::setupControllerBindings(int playerNumber)
 {
-	Player::setupControllerBindings(playerNumber);
-
-#if _PLAYER_ONE_HAS_NO_JOYSTICK_
-	if(playerNumber>0) // player 2 is on joystick 1, and so forth
-	{
-		string num = Engine::itoa(playerNumber);
-		g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
-	}
-#else
-	string num = Engine::itoa(playerNumber+1);
-	g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
-#endif
+	ASSERT(playerNumber >= 0 && playerNumber < 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
 	if(playerNumber==0) // add keyboard support for player #1
 	{
 		g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "L_Shift");
 	}
+
+    if(_PLAYER_ONE_HAS_NO_JOYSTICK_)
+    {
+        if(playerNumber>0) // player 2 is on joystick 1, and so forth
+	    {
+		    string num = Engine::itoa(playerNumber);
+		    g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
+	    }
+    }
+    else
+    {
+        string num = Engine::itoa(playerNumber+1);
+	    g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
+    }
+
+	Player::setupControllerBindings(playerNumber);
 }
 
 void MyPlayer::load(const PropertyBag &xml)
@@ -177,13 +184,6 @@ void MyPlayer::update(float deltaTime)
 
 		spell->update(deltaTime);
 	}
-
-#if DEBUG_PLAYER
-	if(g_Keys.isKeyDown(KEY_TEST))
-	{
-		getZone().getPlayer(0).damage(1, -1);
-	}
-#endif
 
 	Player::update(deltaTime);
 }

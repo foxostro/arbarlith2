@@ -43,6 +43,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "world.h"
 
+extern bool _PLAYER_ONE_HAS_NO_JOYSTICK_;	// Set to 1 in order to force player 1 to the keyboard, player 2 to joystick 1, etc
+
 namespace Engine {
 
 vec3 projectVector(const vec3 &obj); // opengl.cpp
@@ -547,13 +549,16 @@ void World::reloadPlayers(const PropertyBag &playerBag)
 
 	const int numOfJoysticks = SDL_NumJoysticks();
 
-#if _PLAYER_ONE_HAS_NO_JOYSTICK_
-	TRACE("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player #1 will always be on the keyboard");
-	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks + 1, MAX_PLAYERS);
-#else
-	TRACE("_PLAYER_ONE_HAS_NO_JOYSTICK_ is NOT defined, so player #1 will always be on the keyboard and joystick #1");
-	NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks, MAX_PLAYERS);
-#endif
+    if(_PLAYER_ONE_HAS_NO_JOYSTICK_)
+    {
+	    TRACE("_PLAYER_ONE_HAS_NO_JOYSTICK_ is defined, so player #1 will always be on the keyboard");
+	    NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks + 1, MAX_PLAYERS);
+    }
+    else
+    {
+	    TRACE("_PLAYER_ONE_HAS_NO_JOYSTICK_ is NOT defined, so player #1 will always be on the keyboard and joystick #1");
+	    NumOfPlayers = (numOfJoysticks==0) ? 1 : min(numOfJoysticks, MAX_PLAYERS);
+    }
 
 	TRACE("Expecting " + itoa((int)NumOfPlayers) + " players");
 

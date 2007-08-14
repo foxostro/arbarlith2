@@ -43,6 +43,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Switch.h"
 #include "GameStateMenu.h"
 
+// Set to 'true' in order to force player 1 to the keyboard, player 2 to joystick 1, etc
+bool _PLAYER_ONE_HAS_NO_JOYSTICK_ = true;
 
 namespace Engine {
 
@@ -108,25 +110,6 @@ void Player::setupControllerBindings(int playerNumber)
 {
 	ASSERT(playerNumber >= 0 && playerNumber < 3, "playerNumber is invalid: " + Engine::itoa(playerNumber));
 
-#if _PLAYER_ONE_HAS_NO_JOYSTICK_
-	if(playerNumber>0) // player 2 is on joystick 1, and so forth
-	{
-		string num = Engine::itoa(playerNumber);
-		g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "JOY" + num + "_AXIS_Y-");
-		g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
-		g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
-		g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
-		g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
-	}
-#else
-	string num = Engine::itoa(playerNumber+1);
-	g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "JOY" + num + "_AXIS_Y-");
-	g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
-	g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
-	g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
-	g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
-#endif
-
 	if(playerNumber==0) // add keyboard support for player #1
 	{
 		g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "Up");
@@ -136,8 +119,27 @@ void Player::setupControllerBindings(int playerNumber)
 		g_Keys.addBinding(KEY_PLAYER_USE,        "Space");
 	}
 
-	const string &userKeysFile = pathAppend(getAppDataDirectory(), "keys.xml");
-	g_Keys.save(userKeysFile);
+    if(_PLAYER_ONE_HAS_NO_JOYSTICK_)
+    {
+	    if(playerNumber>0) // player 2 is on joystick 1, and so forth
+	    {
+		    string num = Engine::itoa(playerNumber);
+		    g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "JOY" + num + "_AXIS_Y-");
+		    g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
+		    g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
+		    g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
+		    g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
+	    }
+    }
+    else
+    {
+	    string num = Engine::itoa(playerNumber+1);
+	    g_Keys.addBinding(KEY_PLAYER_WALK_FWD,   "JOY" + num + "_AXIS_Y-");
+	    g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
+	    g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
+	    g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
+	    g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
+    }
 }
 
 void Player::enterGameOverScreen(void)
