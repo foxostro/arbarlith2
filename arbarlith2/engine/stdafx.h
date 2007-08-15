@@ -71,6 +71,7 @@ using namespace std;
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/if.hpp>
 #include <boost/lambda/construct.hpp>
+#include <boost/tokenizer.hpp>
 
 using namespace boost;
 using namespace boost::lambda;

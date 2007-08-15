@@ -32,7 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define _VEC4_H_
 
 #include <cmath>
-#include <float.h>
+#include <cfloat>
+#include <boost/tokenizer.hpp>
 
 #include "primitivedatatypes.h"
 
@@ -588,28 +589,11 @@ public:
 	}
 
 	/**
-	Retrieves the vector from a string reresentation
+	Retrieves the vector from a string representation (case insensitive)
 	@param str The string representation of the vector
 	@return true if successful, false otherwise.
 	*/
-	bool FromString(string str)
-	{
-		vector<string> tokens;
-
-		str = toLowerCase(str); // establishes case-insensitivity
-
-		tokenize(str, tokens, "(,)");
-		if(tokens[0] == "&vec")
-        {
-			x = stof(tokens[1]);
-			y = stof(tokens[2]);
-			z = stof(tokens[3]);
-			w = 0.0f;
-
-			return(true);
-		}
-		return(false);  // unknown format
-	}
+	bool FromString(string str);
 
 	/**
 	Serializes the vector as a string

@@ -85,13 +85,10 @@ void Listener::setupSignals(const string &expression)
 	signals.clear();
 	getZone().router.unsubscribeToAllSignals(m_ID);
 
+    char_separator<char> delimeters(":;, \t\n");
+    tokenizer<char_separator<char> > tokens(expression, delimeters);
 
-	vector<string> tokens;
-	string delimeters = ":;, \t\n";
-	tokenize(expression, tokens, delimeters);
-
-
-	for(vector<string>::const_iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
+	for(tokenizer<char_separator<char> >::const_iterator iter = tokens.begin(); iter != tokens.end(); ++iter)
 	{
 		int signalIndex=0;
 

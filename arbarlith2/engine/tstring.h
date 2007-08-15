@@ -78,19 +78,6 @@ Makes a std::string all lowercase
 std::string toLowerCase(const std::string &in);
 
 /**
-Tokenizes a std::string according to given delimiter characters.
-Original Source:
-McCuskey, Mason. "Game Programming Tricks of the Trade".
-    "Trick 15: Serialization Using XML Property Bags". Premier Press. 2002.
-@param source Source std::string
-@param tokens Returns the tokens found in the std::string
-@param delimiters each character in this std::string is treated as a delimiter
-*/
-void tokenize(const std::string& source,
-              std::vector<std::string>& tokens,
-              const std::string& delimiters = " \t\n");
-
-/**
 Replaces all occurrences of a substring with a replacement std::string.
 @param source Source std::string
 @param find substring to search for

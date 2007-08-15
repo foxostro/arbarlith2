@@ -13,6 +13,29 @@ Co-Web Host of www.GameTutorials.com
 
 namespace Engine {
 
+bool vec4::FromString(string _s)
+{
+    string s = toLowerCase(_s);
+
+    boost::char_separator<char> delimeters("(,)\t\n");
+    boost::tokenizer<boost::char_separator<char> > tokens(s, delimeters);
+
+    boost::tokenizer<boost::char_separator<char> >::const_iterator i = tokens.begin();
+
+	if(i == tokens.end())
+        return false;
+    
+    if(string(*i) != "&vec")
+        return false;
+
+    x = stof(*(++i));
+	y = stof(*(++i));
+	z = stof(*(++i));
+	w = 0.0f;
+
+	return true;
+}
+
 bool IntersectedPlane(vec3 vPoly[], vec3 vLine[], vec3 &vNormal, float &originDistance)
 {
 	float distance1=0, distance2=0; // The distances from the 2 points of the line from the plane

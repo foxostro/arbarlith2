@@ -255,19 +255,15 @@ Effect* EffectManager::query(effect_sig signature)
 
 bool EffectManager::isSupported(const string &str)
 {
-	vector<string> extensions;
-	bool supported = true;
+    tokenizer<> extensions(str);
 
-	// Tokenize the string
-	tokenize(str, extensions);
-
-	// Test each extension
-	for(vector<string>::iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
+	for(tokenizer<>::const_iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
 	{
-		supported &= glewIsSupported((*iter).c_str())==GL_TRUE;
+		if(glewIsSupported((*iter).c_str())==GL_FALSE)
+            return false;
 	}
 
-	return supported;
+	return true;
 }
 
 } // namespace Engine
