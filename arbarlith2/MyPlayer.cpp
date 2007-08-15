@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "MyPlayer.h"
 
-#define DEBUG_PLAYER 1
+#define DEBUG_PLAYER 0
 
 extern bool _PLAYER_ONE_HAS_NO_JOYSTICK_;	// Set to 1 in order to force player 1 to the keyboard, player 2 to joystick 1, etc
 
