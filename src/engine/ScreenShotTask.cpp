@@ -33,6 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*
 Include the DevIL headers
 */
+#define ILUT_USE_OPENGL
 #include <IL/il.h>
 #include <IL/ilut.h>
 

@@ -31,6 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _FACTORY_H_
 #define _FACTORY_H_
 
+#include <typeinfo>
+
 namespace Engine {
 
 typedef int OBJECT_ID;
@@ -40,15 +42,15 @@ const OBJECT_ID INVALID_ID = -1;
 #include "tstring.h"
 
 // Generates static RTTI accessor methods for a class
-#define GEN_RTTI(TYPE, NAME)                                                              \
-static string getTypeString(void)                                                       \
-{                                                                                         \
-	return string( NAME );                                                      \
-}                                                                                         \
-static OBJECT_TYPE getType(void)                                                          \
-{                                                                                         \
-	const type_info *typePtr = &typeid(TYPE);                                         \
-	return (OBJECT_TYPE)(typePtr);                                                    \
+#define GEN_RTTI(TYPE, NAME)                                               \
+static string getTypeString(void)                                          \
+{                                                                          \
+	return string( NAME );                                                 \
+}                                                                          \
+static OBJECT_TYPE getType(void)                                           \
+{                                                                          \
+	const type_info *typePtr = &typeid(TYPE);                              \
+	return (OBJECT_TYPE)(typePtr);                                         \
 }
 
 // Evaluates true when the object is of the given type or extends that type
