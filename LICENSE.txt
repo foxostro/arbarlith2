@@ -2,12 +2,10 @@ Portions of the source code are licensed under the BSD License, where noted
 in the source files.
 
 If you did not receive the Source Code for Arbarlith 2 with these files,
-please contact Andrew Fox at <andrewfox@cmu.edu> and he will get it to you.
+please contact Andrew Fox at <foxostro@gmail.com> and he will get it to you.
 
 
-
-
-Copyright © 2007 Game Creation Society
+Copyright (c) 2007,2009 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
