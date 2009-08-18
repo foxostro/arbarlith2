@@ -42,47 +42,7 @@ namespace Engine {
 
 void PrintStringToLog(const string &s)
 {
-	static bool firstTime = true;
-	static fstream stream;
-
-	if(firstTime)
-	{
-		firstTime = false;
-
-        const string appDir = getAppDataDirectory();
-
-		const string logFileName = pathAppend(appDir, "log.txt");
-
-		stream.open(logFileName.c_str(), ios::out);
-
-		if(!stream)
-		{
-			cerr << "Failed to create log file: " << logFileName << endl;
-		}
-		else
-		{
-            cout << "Redirecting std::clog to file: " << logFileName << endl;
-			clog.rdbuf(stream.rdbuf()); // redirect clog to file
-		}
-
-		// Create a header for the log file
-		clog << "=============================================" << endl
-             << "=                                           =" << endl
-#ifdef _DEBUG
-             << "=               Debug Build                 =" << endl
-#else
-             << "=              Release Build                =" << endl
-#endif
-             << "=                                           =" << endl
-             << "=============================================" << endl << endl;
-	}
-
-#ifdef _WIN32
-	// Print message to debugger message window
-	OutputDebugString(string(s + "\n\n").c_str());
-#endif
-
-	clog << s << endl << endl;
+	printf("%s\n\n", s.c_str());
 }
 
 void Log(const string &message,
