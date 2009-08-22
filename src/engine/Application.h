@@ -6,7 +6,7 @@ Modified to use SDL windowing and get rid of ControlData
 February 2006 by Tom Cauchois
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright © 2003-2007 Game Creation Society
+Copyright (c) 2003-2007,2009 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

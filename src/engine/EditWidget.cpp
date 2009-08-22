@@ -5,7 +5,7 @@ E-Mail: mailto:foxostro@gmail.com
 Changed to use SDL keys instead of VK keys by Tom Cauchois Feb 2006
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright (c) 2006,2007,2009 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

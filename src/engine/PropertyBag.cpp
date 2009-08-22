@@ -1,5 +1,5 @@
 /*
-Modified by Andrew Fox in 2003-2007
+Modified by Andrew Fox in 2003-2007,2009
 E-Mail: mailto:foxostro@gmail.com
 
 Original Source:

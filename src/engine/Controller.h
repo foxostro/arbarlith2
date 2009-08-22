@@ -10,10 +10,10 @@ Rewritten as a class instead of all global functions by Andrew Fox Mar 2006
 Modified to add joystick/gamepad support by Michael Collins Mar 2007
 E-Mail: mailto:mdc@andrew.cmu.edu
 
-Refactored by Andrew Fox in Apr 2007
+Spruced up by Andrew Fox in Apr 2007
 Added support for multiple key bindings per action and actions defined at run time
 
-Copyright © 2007 Game Creation Society
+Copyright (c) 2007,2009 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

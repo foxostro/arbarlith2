@@ -5,7 +5,7 @@ E-Mail: mailto:foxostro@gmail.com
 2006 Richard Halstead
 E-mail: mailto:rhalstea@andrew.cmu.edu
 
-Copyright © 2006-2007 Game Creation Society
+Copyright (c) 2006,2007,2009 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

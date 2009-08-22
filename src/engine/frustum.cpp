@@ -328,5 +328,5 @@ Frustum& Frustum::operator=(const Frustum &o)
 // DigiBen@GameTutorials.com
 // Co-Web Host of www.GameTutorials.com
 //
-// © 2001 GameTutorials
+// (c) 2001 GameTutorials
 

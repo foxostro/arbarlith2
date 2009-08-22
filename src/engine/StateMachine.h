@@ -3,7 +3,7 @@ Modified by Andrew Fox in 2004-2006
 E-Mail: mailto:foxostro@gmail.com
 */
 
-/* Copyright © Steve Rabin, 2001.
+/* Copyright (c) Steve Rabin, 2001.
  * All rights reserved worldwide.
  *
  * This software is provided "as is" without express or implied

@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright © 2007 Game Creation Society
+Copyright (c) 2007,2009 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
