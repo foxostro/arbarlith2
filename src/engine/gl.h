@@ -45,8 +45,7 @@ DLL import/export symbols be properly defined.
 /*
 Include the OpenGL headers
 */
-#include <GL/glew.h>
-#include <GL/gl.h>
+#include <GL/GLee.h> // #include <GL/gl.h>
 #include <GL/glu.h>
 
 namespace Engine

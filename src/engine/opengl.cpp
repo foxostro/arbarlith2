@@ -185,24 +185,16 @@ void OpenGL::SetupExtensions(void)
 	TRACE(string("OpenGL Version: ") + (const char*)glGetString(GL_VERSION));
 	TRACE((const char*)glGetString(GL_EXTENSIONS));
 
-	// Initialize extensions
-	GLenum err = glewInit();
-	if (GLEW_OK != err)
-	{
-		// Problem: glewInit failed, something is seriously wrong.
-		ERR((const char*)glewGetErrorString(err));
-	}
-
-	g_bUseMultitexture = glewIsExtensionSupported("GL_ARB_multitexture")==GL_TRUE;
+	g_bUseMultitexture = GLEE_ARB_multitexture;
 	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &g_MultitextureUnits);
 
-	g_bUseFramebufferObjects = glewIsExtensionSupported("GL_EXT_framebuffer_object")==GL_TRUE;
+	g_bUseFramebufferObjects = GLEE_EXT_framebuffer_object;
 
-	g_bUseDepthTexture = glewIsExtensionSupported("GL_ARB_depth_texture")==GL_TRUE;
+	g_bUseDepthTexture = GLEE_ARB_depth_texture;
 
-	supportsShadow = g_bUseMultitexture && g_bUseDepthTexture && glewIsExtensionSupported("GL_ARB_shadow")==GL_TRUE;
+	supportsShadow = g_bUseMultitexture && g_bUseDepthTexture && GLEE_ARB_shadow;
 
-	supportsAniostropy = glewIsExtensionSupported("GL_EXT_texture_filter_anisotropic")==GL_TRUE;
+	supportsAniostropy = GLEE_EXT_texture_filter_anisotropic;
 }
 
 

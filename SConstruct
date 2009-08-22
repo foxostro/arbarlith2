@@ -10,6 +10,6 @@ env .Append(CPPDEFINES="DEBUG")
 env .Append(CPPPATH='prereqs/include')
 env.Append(LDFLAGS = [ '-rdynamic' ])
 env.Append(CCFLAGS = ['-ggdb', '-Wall'])
-env.Append(LIBS = [ 'GL', 'GLU', 'GLEW', 'IL', 'ILU', 'ILUT', 'SDL', 'SDL_mixer' ])
+env.Append(LIBS = [ 'GL', 'GLU', 'GLee', 'IL', 'ILU', 'ILUT', 'SDL', 'SDL_mixer' ])
 env.Program(target = 'bin/arbarlith2', source = SOURCES)
 

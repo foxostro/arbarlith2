@@ -259,8 +259,8 @@ bool EffectManager::isSupported(const string &str)
 
 	for(tokenizer<>::const_iterator iter = extensions.begin(); iter != extensions.end(); ++iter)
 	{
-		if(glewIsSupported((*iter).c_str())==GL_FALSE)
-            return false;
+		if(!Engine::OpenGL::CheckExtension(iter->c_str()))
+			return false;
 	}
 
 	return true;

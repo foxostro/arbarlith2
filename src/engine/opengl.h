@@ -70,7 +70,7 @@ public:
 
 	// Setup all extensions supported by hardware
 	void SetupExtensions(void);
-	bool CheckExtension(const char *str);
+	static bool CheckExtension(const char *str);
 };
 
 

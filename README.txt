@@ -8,12 +8,8 @@ Steps to build:
 	* zlib
 	* libpng
 	* libjpeg
-	* libx11
-	* libxi
-	* libxext
-	* libxmu
 	Accomplish this on Ubuntu with:
-		$ sudo aptitude install zlib1g-dev libjpeg-dev libpng-dev libx11-dev libxi-dev libxext-dev libxmu-dev
+		$ sudo aptitude install zlib1g-dev libjpeg-dev libpng-dev
 2. Download and build other prerequisites:
 	$ cd bootstrap
 	$ ./bootstrap.sh

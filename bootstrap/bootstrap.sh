@@ -81,23 +81,26 @@ function get_sdl_mixer
 	popd # SDL_mixer-1.2.8
 }
 
-# TODO: GLEW requires a lot of bullshit prereqs. Maybe replace with GLee?
-#http://elf-stone.com/downloads/GLee/GLee-5.4.0-src.tar.gz
-
-function get_glew
+function get_glee
 {
-# Building GLEW on Linux requires libx11-dev, libxi-dev, libxext-dev, libxmu-dev
-
-	echo "Getting GLEW 1.5.0"
-	GLEW_URL=http://softlayer.dl.sourceforge.net/project/glew/glew/1.5.0/glew-1.5.0-src.tgz
-	GLEW_TGZ=glew-1.5.0-src.tgz
-	GLEW_MD5=md5s/glew-1.5.0-src.tgz.md5
-	lazy_fetch $GLEW_URL $GLEW_TGZ $GLEW_MD5
-	tar -xzvf $GLEW_TGZ
-	pushd glew/
+	echo "Getting GLEE 5.4.0"
+	GLEE_URL=http://elf-stone.com/downloads/GLee/GLee-5.4.0-src.tar.gz
+	GLEE_TGZ=GLee-5.4.0-src.tar.gz
+	GLEE_MD5=md5s/GLee-5.4.0-src.tar.gz.md5
+	lazy_fetch $GLEE_URL $GLEE_TGZ $GLEE_MD5
+	mkdir GLee-5.4.0-src
+	pushd GLee-5.4.0-src
+		tar -xzvf ../$GLEE_TGZ
+		./configure --prefix=$PREFIX
 		make
-		GLEW_DEST=$PREFIX make install
-	popd # glew/
+		
+		mkdir -p $PREFIX/include/GL/
+		
+		# We will get an error:
+		# "/sbin/ldconfig.real: Can't create temporary cache file /etc/ld.so.cache~: Permission denied"
+		# This is OK.
+		make install
+	popd # GLee-5.4.0-src
 }
 
 function get_devil
@@ -135,7 +138,7 @@ get_scons
 get_boost
 get_sdl
 get_sdl_mixer
-get_glew
+get_glee
 get_devil
 
 echo "Done."
