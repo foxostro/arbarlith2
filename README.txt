@@ -3,11 +3,25 @@ Arbarlith 2
 
 Home page: <http://www.gamecreation.org/games/arbarlith-ii>
 
-To compile Arbarlith 2 from source, you will need the development libraries and
-headers for DevIL (and DevILU and DevILUT), glew, SDL, SDM_mixerm, and Boost.
-If you'd like, use premake4 to autogenerate the appropriate makefile. The one in
-the repo should be up to date, but this coul dbe useful if you modify the
-project on your own.
+Steps to build:
+1. Download and install base prerequisites:
+	* zlib
+	* libpng
+	* libjpeg
+	* libx11
+	* libxi
+	* libxext
+	* libxmu
+	Accomplish this on Ubuntu with:
+		$ sudo aptitude install zlib1g-dev libjpeg-dev libpng-dev libx11-dev libxi-dev libxext-dev libxmu-dev
+2. Download and build other prerequisites:
+	$ cd bootstrap
+	$ ./bootstrap.sh
+3. Build the executable:
+	$ ./scons
+4. Run the game:
+	$ cd bin/
+	$ ./arbarlith2
 
 
 Controls

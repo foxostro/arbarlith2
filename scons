@@ -1,0 +1,4 @@
+#!/bin/sh
+./prereqs/bin/scons $@
+exit $?
+
