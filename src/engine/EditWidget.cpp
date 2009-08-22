@@ -1,6 +1,6 @@
 /*
 Original Author: Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 
 Changed to use SDL keys instead of VK keys by Tom Cauchois Feb 2006
 E-Mail: mailto:tcauchoi@andrew.cmu.edu

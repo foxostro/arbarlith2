@@ -1,6 +1,6 @@
 /*
 Modified by Andrew Fox in 2006 and 2007
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 */
 
 //***********************************************************************//

@@ -1,6 +1,6 @@
 /*
 Originally written 2004-2007 Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 
 Modified to port to SDL and compactify the key lookup tables by Tom Cauchois Feb 2006
 E-Mail: mailto:tcauchoi@andrew.cmu.edu

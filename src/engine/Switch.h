@@ -1,6 +1,6 @@
 /*
 Copyright © 2006-2007 Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 */
 
 #ifndef _SWITCH_H_

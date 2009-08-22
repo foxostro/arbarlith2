@@ -1,6 +1,6 @@
 /*
 Author: Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 
 Copyright © 2007 Game Creation Society
 All rights reserved.

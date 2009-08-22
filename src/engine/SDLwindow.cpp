@@ -4,7 +4,7 @@
    Andrew Fox, August 2006: Release and reaquire assets so that changing resolutions does not corrupt video
 
    Email: mailto:tcauchoi@andrew.cmu.edu,
-          mailto:andrewfox@cmu.edu
+          mailto:foxostro@gmail.com
 */
 
 #include "stdafx.h"

@@ -1,6 +1,6 @@
 /*
 Modified in 2003-2006 by Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 Modified to decouple with windowing and delete ControlData by Tom Cauchois Feb 2006
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 */

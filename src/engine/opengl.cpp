@@ -1,6 +1,6 @@
 /*
-Modified by Andrew Fox in 2003-2007
-E-Mail: mailto:andrewfox@cmu.edu
+Modified by Andrew Fox in 2003,2007,2009
+E-Mail: mailto:foxostro@gmail.com
 Modified to decouple with windowing by Tom Cauchois Feb 2006
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 */

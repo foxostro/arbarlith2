@@ -1,6 +1,6 @@
 /*
 Modified in 2004-2007 by Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 
 Original Author:
 Ben Humphrey (DigiBen)

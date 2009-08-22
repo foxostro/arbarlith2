@@ -1,6 +1,6 @@
 /*
 Modified by Andrew Fox: Uses my own ASSERT() macro
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 
 Author: Richard "superpig" Fine
 Source: www.gamedev.net "Enginuity, Part V"

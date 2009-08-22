@@ -1,6 +1,6 @@
 /*
 Copyright © 2005-2007 Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 2006 Richard Halstead
 E-Mail: mailto:rhalstea@andrew.cmu.edu
 */

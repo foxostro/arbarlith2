@@ -1,7 +1,7 @@
 /*
 Modified by Andrew Fox in 2003-2006
 Original Source: McCuskey, Mason. "Game Programming Tricks of the Trade". "Trick 15: Serialization Using XML Property Bags". Premier Press. 2002.
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 */
 
 #ifndef PRIMITIVEDATATYPES_H__INCLUDED

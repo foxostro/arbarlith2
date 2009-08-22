@@ -1,6 +1,6 @@
 /*
 Original Author: Andrew Fox
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 
 Modified to use SDL windowing and get rid of ControlData February 2006
 by Tom Cauchois

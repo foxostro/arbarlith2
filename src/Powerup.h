@@ -3,7 +3,7 @@ Original Author: Michael Collins
 E-Mail: mailto:mdc1@cmu.edu
 
 Modified by Andrew Fox in Apr-2007 to be more generic towards other types of powerups
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 
 
 Copyright © 2007 Game Creation Society

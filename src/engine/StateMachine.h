@@ -1,6 +1,6 @@
 /*
 Modified by Andrew Fox in 2004-2006
-E-Mail: mailto:andrewfox@cmu.edu
+E-Mail: mailto:foxostro@gmail.com
 */
 
 /* Copyright © Steve Rabin, 2001.
