@@ -26,9 +26,9 @@ ifeq ($(config),debug)
   DEFINES   += -DDEBUG
   INCLUDES  += -I.
   CPPFLAGS  += -MMD $(DEFINES) $(INCLUDES)
-  CFLAGS    += $(CPPFLAGS) $(ARCH) -g
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -ggdb
   CXXFLAGS  += $(CFLAGS) 
-  LDFLAGS   += 
+  LDFLAGS   += -s -rdynamic
   LIBS      += -lGL -lGLU -lGLEW -lSDL -lSDL_mixer -lIL -lILU -lILUT
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 

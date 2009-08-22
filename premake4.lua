@@ -32,6 +32,10 @@ solution "arbarlith2"
         configuration "gmake"
             includedirs { "." }
 
+        configuration { "gmake", "Debug" }
+            buildoptions { "-ggdb" }
+            linkoptions { "-rdynamic" }
+
         configuration "vs2008"
             includedirs { "$(ProjectDir)", "$(ProjectDir)include-win32" }
             libdirs { "$(ProjectDir)lib" }
@@ -39,10 +43,11 @@ solution "arbarlith2"
             
         configuration { "vs2008", "Debug" } 
             linkoptions { "/NODEFAULTLIB:MSVCRT" }
-        
+            flags { "Symbols" }
+
         configuration "Debug"
             defines { "DEBUG" }
-            flags { "Symbols" }
+            -- flags { "Symbols" }
             targetprefix "DEBUG-"
         
         configuration "Release"
