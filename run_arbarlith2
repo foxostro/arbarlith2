@@ -1,3 +1,29 @@
-!/bin/bash
-ARBARLITH2_SHARE="`pwd`/redist/share/arbarlith2" ./redist/bin/arbarlith2
+#!/bin/sh
+# Launches the game, 'Arbarlith 2,' when run on the command-line
+#
+# The game expects certain environment variables to be set so that it can
+# locate resources &c. This script ensures those are set and launches the
+# game.
+#
+# Also, we cannot rely on being located in the same place where the game was
+# originally built. Set environment variables to allow the dynamic linker to
+# complete successfully. This is different on the Mac than on Linux.
 
+BASE="`pwd`/redist"
+CMD="./redist/bin/arbarlith2"
+
+export ARBARLITH2_SHARE="$BASE/share/arbarlith2"
+
+if [ `uname` == "Darwin" ] ; then
+	# We're running on the Mac
+	export DYLD_FALLBACK_LIBRARY_PATH="$BASE/lib/:$DYLD_FALLBACK_LIBRARY_PATH"
+else
+	# Assume a UNIX-like that uses LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH="$BASE/lib/:$LD_LIBRARY_PATH"
+fi
+
+# Now launch the game, passing our args to the game.
+$CMD $@
+
+# Pass return code to the caller
+exit $?

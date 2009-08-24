@@ -13,14 +13,13 @@ Steps to build:
 	Grab these on the command line:
 		$ sudo aptitude install libx11-dev libxi-dev libxext-dev libxmu-dev
 2. Download and build other prerequisites:
-	$ cd bootstrap
+	$ pushd bootstrap
 	$ ./bootstrap.sh
+	$ popd
 3. Build the executable:
 	$ ./scons
 4. Run the game:
-	$ cd bin/
-	$ ./arbarlith2
-
+	$ ./run_arbarlith2
 
 Controls
 --------
