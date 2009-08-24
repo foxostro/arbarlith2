@@ -1,13 +1,7 @@
+# vim:ts=4:sw=4:expandtab
 import os
 import glob
-import subprocess
-
-def get_platform():
-    # XXX: How do I have scons tell me the platform I'm running on?
-    p = subprocess.Popen(['uname'], stdout=subprocess.PIPE)
-    platform = p.communicate()[0]
-    platform = platform.rstrip('\n')
-    return platform
+import platform
 
 SOURCES = glob.glob('src/*.cpp') + glob.glob('src/engine/*.cpp')
 
@@ -21,9 +15,8 @@ env.Append(CPPPATH='redist/include')
 env.Append(CCFLAGS = ['-ggdb', '-Wall' ])
 env.Append(LINKFLAGS = [ '-rdynamic' ])
 
-platform = get_platform();
-if platform == "Darwin":
-	#env.Append(CPPDEFINES="MACOSX")
+if platform.uname()[0] == "Darwin":
+	#env.Append(CPPDEFINES="__MACOSX__")
     env['FRAMEWORKS'] = ['OpenGL', 'System']
     env.Append(LIBS = [ 'GLEW', 'IL', 'ILU', 'ILUT', 'SDL', 'SDLmain', 'SDL_mixer' ])
 else:
