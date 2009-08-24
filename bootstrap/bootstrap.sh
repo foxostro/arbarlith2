@@ -2,7 +2,7 @@
 
 BASE="`pwd`/.."
 WD="$BASE/bootstrap"
-PREFIX="$BASE/prereqs"
+PREFIX="$BASE/redist"
 
 ##############################################################################
 

@@ -91,8 +91,21 @@ void Application::start(void)
 
     TRACE("Starting application...");
 
-    // Work within the directory where the executable is located
-    setWorkingDirectory(getApplicationDirectory());
+    /* Preferably, the share directory is specified in an environment variable.
+	 * We'll set this to our working directory.
+	 * XXX: We don't want to write files to the share directory!
+	 */
+	{
+		const char * share;
+
+		share = getenv("ARBARLITH2_SHARE");
+
+		if(!share) {
+			setWorkingDirectory(getApplicationDirectory());
+		} else {
+			setWorkingDirectory(share);
+		}
+	}
 
 	// Parse the setup files
 	loadXmlConfigFiles();

@@ -13,11 +13,11 @@ SOURCES = glob.glob('src/*.cpp') + glob.glob('src/engine/*.cpp')
 
 env = Environment(ENV=os.environ)
 
-env.ParseConfig('prereqs/bin/sdl-config --cflags')
-env.ParseConfig('prereqs/bin/sdl-config --libs')
+env.ParseConfig('redist/bin/sdl-config --cflags')
+env.ParseConfig('redist/bin/sdl-config --libs')
 
 env.Append(CPPDEFINES="DEBUG")
-env.Append(CPPPATH='prereqs/include')
+env.Append(CPPPATH='redist/include')
 env.Append(CCFLAGS = ['-ggdb', '-Wall' ])
 env.Append(LINKFLAGS = [ '-rdynamic' ])
 
@@ -30,4 +30,4 @@ else:
     env.Append(LIBS = [ 'GL', 'GLU', 'GLEW', 'IL', 'ILU', 'ILUT', 'SDL', 'SDL_mixer' ])
 
 
-env.Program(target = 'bin/arbarlith2', source = SOURCES)
+env.Program(target = 'redist/bin/arbarlith2', source = SOURCES)

@@ -1,0 +1,3 @@
+!/bin/bash
+ARBARLITH2_SHARE="`pwd`/redist/share/arbarlith2" ./redist/bin/arbarlith2
+

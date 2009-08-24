@@ -1,4 +1,4 @@
 #!/bin/sh
-./prereqs/bin/scons $@
+./redist/bin/scons $@
 exit $?
 
