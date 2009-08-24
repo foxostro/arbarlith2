@@ -105,7 +105,7 @@ TextureHandle* TextureManager::Create(Image *img)
 
 TextureHandle* TextureManager::Create(Image &img)
 {
-	unsigned int id=0;
+	GLuint id = 0;
 
 	CHECK_GL_ERROR();
 	glGenTextures(1, &id);
@@ -145,7 +145,7 @@ TextureHandle* TextureManager::Create(Image &img)
 	return getHandle(tex.getID());
 }
 
-void TextureManager::Set(unsigned texID)
+void TextureManager::Set(GLuint texID)
 {
 	// do we need to change the texture
 	if(texID != prestex)
@@ -161,7 +161,7 @@ void TextureManager::Set(unsigned texID)
 	}
 }
 
-TextureHandle* TextureManager::getHandle(unsigned int texid)
+TextureHandle* TextureManager::getHandle(GLuint texid)
 {
 	ASSERT(!tlist.empty(), "No textured allocated");
 
@@ -197,7 +197,7 @@ TextureHandle* TextureManager::getHandle(const string &str)
 	}
 }
 
-void TextureManager::Delete(unsigned int texid)
+void TextureManager::Delete(GLuint texid)
 {
 	// anything to do?
 	if(!tlist.empty())

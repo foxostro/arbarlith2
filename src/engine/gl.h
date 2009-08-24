@@ -42,11 +42,8 @@ DLL import/export symbols be properly defined.
 #	include <windows.h>
 #endif
 
-/*
-Include the OpenGL headers
-*/
-#include <GL/GLee.h> // #include <GL/gl.h>
-#include <GL/glu.h>
+#include <GL/glew.h>
+//#include <SDL/SDL_opengl.h>
 
 namespace Engine
 {

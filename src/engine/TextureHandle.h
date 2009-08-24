@@ -30,6 +30,7 @@ E-Mail: mailto:foxostro@gmail.com
 #ifndef _TEXTURE_HANDLE_H_
 #define _TEXTURE_HANDLE_H_
 
+#include "gl.h"
 
 namespace Engine {
 
@@ -51,7 +52,7 @@ private:
 	bool alpha;
 
 	/** the texture ID */
-	unsigned int id;
+	GLuint id;
 
 public:
 	/** Constructor */
@@ -65,7 +66,7 @@ public:
 	@param alpha Indicates the texture has an alpha component
 	@param id
 	*/
-	TextureHandle(const string &fileName, int width, int height, bool alpha, unsigned int id);
+	TextureHandle(const string &fileName, int width, int height, bool alpha, GLuint id);
 
 	/** Gets the file name of the texture */
 	string getFileName(void) const
@@ -92,7 +93,7 @@ public:
 	}
 
 	/** Gets the texture ID */
-	unsigned int getID(void) const
+	GLuint getID(void) const
 	{
 		return id;
 	}

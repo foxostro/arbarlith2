@@ -37,10 +37,10 @@ namespace Engine {
 
 vec3 Project(const vec3 &p)
 {
-	double modelMat[16], projMat[16];
-	int viewport[4];
-	double winx = 0, winy = 0, winz = 0;
-	double objx = p.x, objy = p.y, objz = p.z;
+	GLdouble modelMat[16], projMat[16];
+	GLint viewport[4];
+	GLdouble winx = 0, winy = 0, winz = 0;
+	GLdouble objx = p.x, objy = p.y, objz = p.z;
 
 	glPushAttrib(GL_ALL_ATTRIB_BITS);
 

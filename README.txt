@@ -5,11 +5,13 @@ Home page: <http://www.gamecreation.org/games/arbarlith-ii>
 
 Steps to build:
 1. Download and install base prerequisites:
-	* zlib
-	* libpng
-	* libjpeg
-	Accomplish this on Ubuntu with:
-		$ sudo aptitude install zlib1g-dev libjpeg-dev libpng-dev
+	On Ubuntu Linux, some libraries are needed to build GLEW:
+		* libx11
+		* libxi
+		* libxext
+		* libxmu
+	Grab these on the command line:
+		$ sudo aptitude install libx11-dev libxi-dev libxext-dev libxmu-dev
 2. Download and build other prerequisites:
 	$ cd bootstrap
 	$ ./bootstrap.sh

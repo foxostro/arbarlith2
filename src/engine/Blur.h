@@ -31,6 +31,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _BLUR_H_
 #define _BLUR_H_
 
+#include "gl.h"
+
 namespace Engine {
 
 class World;
@@ -96,7 +98,7 @@ public:
 
 private:
 	/** A handle to thetexture where the scene is captured */
-	unsigned int scene;
+	GLuint scene;
 
 	/** A screen capture will be performed on the next frame */
 	bool update;

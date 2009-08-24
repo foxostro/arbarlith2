@@ -67,16 +67,19 @@ void Shadow::create(void)
 
 void Shadow::release(void)
 {
-	glDeleteTextures(1, &shadowMapTexture);
+	GLuint t = shadowMapTexture;
+	glDeleteTextures(1, &t);
 	shadowMapTexture = 0;
 }
 
 void Shadow::reaquire(void)
 {
-	glGenTextures(1, &shadowMapTexture);
-	glBindTexture(GL_TEXTURE_2D, shadowMapTexture);
+	GLuint t = shadowMapTexture;
+	glGenTextures(1, &t);
+	glBindTexture(GL_TEXTURE_2D, t);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapSize, shadowMapSize, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadowMapSize, shadowMapSize,
+	             0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

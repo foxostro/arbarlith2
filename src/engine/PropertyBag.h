@@ -272,6 +272,9 @@ public:
 	/** Gets an int */
 	bool get(const string &key, int &dest, size_t instance = 0) const;
 
+	/** Gets a uint */
+	bool get(const string &key, unsigned int &dest, size_t instance = 0) const;
+	
 	/** Gets a size_t */
 	bool get(const string &key, size_t &dest, size_t instance = 0) const;
 
@@ -292,6 +295,9 @@ public:
 
 	/** Gets an int */
 	int getInt(const string &key, size_t instance = 0) const;
+	
+	/** Gets a uint */
+	unsigned int getUint(const string &key, size_t instance = 0) const;
 
 	/** Gets a size_t */
 	size_t getSizeT(const string &key, size_t instance = 0) const;

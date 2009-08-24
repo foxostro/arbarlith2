@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _TEXT_H_
 #define _TEXT_H_
 
+#include "gl.h"
 #include "COLOR.h"
 #include "vec4.h"
 #include "PropertyBag.h"
@@ -71,7 +72,7 @@ private:
 		}
 
 		/** The texture handle of the character */
-		unsigned int charTex;
+		GLuint charTex;
 
 		/** Width of the character from the leftmost edge of the glyph to the rightmost edge (0.0 to 1.0, a portion of the Quad Width) */
 		float width;

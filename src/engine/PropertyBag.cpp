@@ -8,6 +8,8 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 	Premier Press. 2002.
 */
 
+#include <boost/lexical_cast.hpp>
+
 #include "stdafx.h"
 #include "file.h"
 #include "profile.h"
@@ -505,11 +507,19 @@ bool PropertyBag::get(const string& key, int &dest, size_t instance) const
 	return(true);
 }
 
+bool PropertyBag::get(const string& key, unsigned int &dest, size_t instance) const
+{
+	string str;
+	if (!get(key, str, instance)) return(false);
+	dest = boost::lexical_cast<unsigned int>(str);
+	return(true);
+}
+
 bool PropertyBag::get(const string& key, size_t &dest, size_t instance) const
 {
 	string str;
 	if (!get(key, str, instance)) return(false);
-	dest = static_cast<size_t>(stoi(str));
+	dest = boost::lexical_cast<size_t>(str);
 	return(true);
 }
 
@@ -607,6 +617,17 @@ string PropertyBag::getString(const string &key, size_t instance) const
 int PropertyBag::getInt(const string &key, size_t instance) const
 {
 	int x = 0xdeadbeaf;
+	if(!get(key, x, instance))
+	{
+		FAIL("Failed to get int from PropertyBag: " + key +
+		     " (instance #)" + itoa((int)instance));
+	}
+	return x;
+}
+
+unsigned int PropertyBag::getUint(const string &key, size_t instance) const
+{
+	unsigned int x = 0xdeadbeaf;
 	if(!get(key, x, instance))
 	{
 		FAIL("Failed to get int from PropertyBag: " + key +

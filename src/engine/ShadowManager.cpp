@@ -189,7 +189,9 @@ void ShadowManager::reassignShadows(void)
 
 size_t ShadowManager::getMaxShadows(void) const
 {
-	return max(g_MultitextureUnits-2, 0);
+	GLint max_shadows;
+	max_shadows = max((GLint)(g_MultitextureUnits-2), (GLint)0);
+	return (size_t)max_shadows;
 }
 
 const Shadow& ShadowManager::getShadow(size_t idx) const

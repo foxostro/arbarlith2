@@ -36,6 +36,7 @@ E-Mail: mailto:tcauchoi@andrew.cmu.edu
 #ifndef OPENGL_H
 #define OPENGL_H
 
+#include "gl.h"
 #include "timer.h"		// Timing functions
 #include "singleton.h"	// OpenGL will be a Singleton (we will never have more than one :)
 
@@ -70,7 +71,7 @@ public:
 
 	// Setup all extensions supported by hardware
 	void SetupExtensions(void);
-	static bool CheckExtension(const char *str);
+	bool CheckExtension(const char *str);
 };
 
 
@@ -80,7 +81,7 @@ public:
 extern bool g_bUseMultitexture;
 
 /** Indicates the number of available hardware multitexture units */
-extern int g_MultitextureUnits;
+extern GLint g_MultitextureUnits;
 
 /** Indicates support for GL_EXT_framebuffer_object */
 extern bool g_bUseFramebufferObjects;

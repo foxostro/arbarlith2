@@ -28,7 +28,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _WIN32
+#ifndef _WIN32 // FIXME: What about the Mac?
 
 #include "stdafx.h"
 
@@ -74,7 +74,7 @@ void setupSignalHandler(void)
 	sigaction(SIGABRT, &SignalAction, 0);
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
 	setupSignalHandler();
 

@@ -1,38 +1,84 @@
 #!/bin/bash
 
-BASE="`pwd`/../"
+BASE="`pwd`/.."
 WD="$BASE/bootstrap"
-PREFIX="$BASE/prereqs/"
+PREFIX="$BASE/prereqs"
+
+##############################################################################
+
+function check_md5
+{
+	PKG_FILE="$1"
+	MD5_FILE="$2"
+
+	if [ -f "$MD5_FILE" ] ; then
+		echo "MD5 file seems to be present"
+	else
+		echo "MD5 file seems to be missing: $MD5_FILE"
+		exit -1
+	fi
+
+	if [ -f "$PKG_FILE" ] ; then
+		echo "Going to check '$PKG_FILE'"
+	else
+		echo "File seems to be missing: $PKG_FILE"
+		return 1
+	fi
+
+	if [ `uname` == "Darwin" ] ; then
+		CALCULATED=`md5 -q "$PKG_FILE"`
+		EXPECTED=`sed -E 's/^([0-9a-f]+) .*$/\1/' "$MD5_FILE"`
+		
+		if [ "$CALCULATED" == "$EXPECTED" ] ; then
+			return 0
+		else
+			return 1
+		fi
+	else
+		md5sum --check "$MD5_FILE" --status
+		return $?
+	fi
+}
 
 ##############################################################################
 
 function lazy_fetch
 {
-	PKG_URL="$1"
-	PKG_TGZ="$2"
-	PKG_MD5="$3"
+	URL="$1"
+	PKG_FILE="$2"
+	MD5_FILE="$3"
 	
 	# Have we already downloaded it already?
-	md5sum --check "$PKG_MD5" --status
-	
+	check_md5 "$PKG_FILE" "$MD5_FILE"
+
 	if [ $? -ne 0 ] ; then
-		echo "Downloading $PKG_URL..."
-		curl -O $PKG_URL
+		echo "Downloading $URL..."
+		curl -O $URL
 		if [ $? -ne 0 ] ; then
-			echo "Failed to download $PKG_URL"
+			echo "Failed to download $URL"
+			exit -1
+		fi
+
+		# Check the hash on the finished download
+		check_md5 "$PKG_FILE" "$MD5_FILE"
+		if [ $? -ne 0 ] ; then
+			echo "Downloaded '$PKG_FILE', but the MD5 hash looks WRONG."
 			exit -1
 		fi
 	else
-		echo "Already downloaded $PKG_TGZ and the MD5 hash looks OK."
+		echo "Already downloaded '$PKG_FILE' and the MD5 hash looks OK."
 	fi
 }
 
+##############################################################################
+
 function get_scons
 {
-	echo "Getting SCons 1.2.0"
 	SCONS_URL=http://softlayer.dl.sourceforge.net/project/scons/scons/1.2.0/scons-1.2.0.tar.gz
 	SCONS_TGZ=scons-1.2.0.tar.gz
 	SCONS_MD5=md5s/scons-1.2.0.tar.gz.md5
+	
+	echo "Getting SCons 1.2.0"
 	lazy_fetch $SCONS_URL $SCONS_TGZ $SCONS_MD5
 	tar -xzvf $SCONS_TGZ
 	pushd scons-1.2.0
@@ -40,12 +86,15 @@ function get_scons
 	popd # scons-1.2.0
 }
 	
+##############################################################################
+
 function get_boost
 {
-	echo "Getting Boost 1.39.0"
 	BOOST_URL=http://softlayer.dl.sourceforge.net/project/boost/boost/1.39.0/boost_1_39_0.tar.bz2
 	BOOST_PKG=boost_1_39_0.tar.bz2
 	BOOST_MD5=md5s/boost_1_39_0.tar.bz2.md5
+	
+	echo "Getting Boost 1.39.0"
 	lazy_fetch $BOOST_URL $BOOST_PKG $BOOST_MD5
 	tar -xjvf $BOOST_PKG
 	
@@ -55,12 +104,18 @@ function get_boost
 	ln -s `pwd`/boost_1_39_0/boost $PREFIX/include/boost
 }
 
+##############################################################################
+
 function get_sdl
 {
-	echo "Getting SDL 1.2.13"
+# XXX: This version of SDL doesn't compile on Mac OS X 10.6.
+# XXX: SDL on the Mac uses QuickDraw, which was obsoleted starting in 10.6 (deprecated in 10.5)
+
 	SDL_URL=http://www.libsdl.org/release/SDL-1.2.13.tar.gz
 	SDL_TGZ=SDL-1.2.13.tar.gz
 	SDL_MD5=md5s/SDL-1.2.13.tar.gz.md5
+	
+	echo "Getting SDL 1.2.13"
 	lazy_fetch $SDL_URL $SDL_TGZ $SDL_MD5
 	tar -xzvf $SDL_TGZ
 	pushd SDL-1.2.13/
@@ -68,12 +123,15 @@ function get_sdl
 	popd # SDL-1.2.13
 }
 
+##############################################################################
+
 function get_sdl_mixer
 {
-	echo "Getting SDL_mixer 1.2.8"
 	SDL_MIXER_URL=http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-1.2.8.tar.gz
 	SDL_MIXER_TGZ=SDL_mixer-1.2.8.tar.gz
 	SDL_MIXER_MD5=md5s/SDL_mixer-1.2.8.tar.gz.md5
+	
+	echo "Getting SDL_mixer 1.2.8"
 	lazy_fetch $SDL_MIXER_URL $SDL_MIXER_TGZ $SDL_MIXER_MD5
 	tar -xzvf $SDL_MIXER_TGZ
 	pushd SDL_mixer-1.2.8/
@@ -81,51 +139,84 @@ function get_sdl_mixer
 	popd # SDL_mixer-1.2.8
 }
 
-function get_glee
+##############################################################################
+
+function get_glew
 {
-	echo "Getting GLEE 5.4.0"
-	GLEE_URL=http://elf-stone.com/downloads/GLee/GLee-5.4.0-src.tar.gz
-	GLEE_TGZ=GLee-5.4.0-src.tar.gz
-	GLEE_MD5=md5s/GLee-5.4.0-src.tar.gz.md5
-	lazy_fetch $GLEE_URL $GLEE_TGZ $GLEE_MD5
-	mkdir GLee-5.4.0-src
-	pushd GLee-5.4.0-src
-		tar -xzvf ../$GLEE_TGZ
-		./configure --prefix=$PREFIX
+# Building GLEW on Linux requires libx11-dev, libxi-dev, libxext-dev, libxmu-dev
+
+	echo "Getting GLEW 1.5.0"
+	GLEW_URL=http://softlayer.dl.sourceforge.net/project/glew/glew/1.5.0/glew-1.5.0-src.tgz
+	GLEW_TGZ=glew-1.5.0-src.tgz
+	GLEW_MD5=md5s/glew-1.5.0-src.tgz.md5
+	lazy_fetch "$GLEW_URL" "$GLEW_TGZ" "$GLEW_MD5"
+	tar -xzvf "$GLEW_TGZ"
+	mkdir -p "$PREFIX/include/GL"
+	pushd glew/
+		export GLEW_DEST="$PREFIX"
 		make
-		
-		mkdir -p $PREFIX/include/GL/
-		
-		# We will get an error:
-		# "/sbin/ldconfig.real: Can't create temporary cache file /etc/ld.so.cache~: Permission denied"
-		# This is OK.
 		make install
-	popd # GLee-5.4.0-src
+	popd # glew/
 }
+
+##############################################################################
+
+function get_libjpeg
+{
+	LIBJPEG_URL=http://www.ijg.org/files/jpegsrc.v7.tar.gz
+	LIBJPEG_TGZ=jpegsrc.v7.tar.gz
+	LIBJPEG_MD5=md5s/jpegsrc.v7.tar.gz.md5
+	
+	echo "Getting libjpeg 7"
+	lazy_fetch "$LIBJPEG_URL" "$LIBJPEG_TGZ" "$LIBJPEG_MD5"
+	tar -xzvf "$LIBJPEG_TGZ"
+	pushd jpeg-7/
+		./configure --prefix="$PREFIX" \
+		  && make \
+		  && make install
+	popd # jpeg-7/
+}
+
+##############################################################################
+
+function get_libpng
+{
+	LIBPNG_URL=http://softlayer.dl.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz
+	LIBPNG_TGZ=libpng-1.2.39.tar.gz
+	LIBPNG_MD5=md5s/libpng-1.2.39.tar.gz.md5
+	
+	echo "Getting libpng 1.2.39"
+	lazy_fetch "$LIBPNG_URL" "$LIBPNG_TGZ" "$LIBPNG_MD5"
+	tar -xzvf "$LIBPNG_TGZ"
+	pushd libpng-1.2.39/
+		./configure --prefix="$PREFIX" \
+		  && make \
+		  && make install
+	popd # libpng-1.2.39/
+}
+
+##############################################################################
 
 function get_devil
 {
-# DevIL can build without them, but you want to install libpng and libjpeg too
-
-#TODO: Fetch and build zlib, libpng and libjpeg too
-#http://www.zlib.net/zlib-1.2.3.tar.gz
-#http://www.ijg.org/files/jpegsrc.v7.tar.gz
-#http://softlayer.dl.sourceforge.net/project/libpng/00-libpng-stable/1.2.39/libpng-1.2.39.tar.gz
+	DEVIL_URL=http://softlayer.dl.sourceforge.net/project/openil/DevIL/1.6.8%20RC%202/DevIL-1.6.8-rc2.tar.gz
+	DEVIL_TGZ=DevIL-1.6.8-rc2.tar.gz
+	DEVIL_MD5=md5s/DevIL-1.6.8-rc2.tar.gz.md5
 	
-	echo "Getting DevIL 1.7.8"
-	DEVIL_URL=http://softlayer.dl.sourceforge.net/project/openil/DevIL/1.7.8/DevIL-1.7.8.tar.gz
-	DEVIL_TGZ=DevIL-1.7.8.tar.gz
-	DEVIL_MD5=md5s/DevIL-1.7.8.tar.gz.md5
-	lazy_fetch $DEVIL_URL $DEVIL_TGZ $DEVIL_MD5
-	tar -xzvf $DEVIL_TGZ
-	pushd devil-1.7.8/
-		autoreconf -i
-		./configure --prefix=$PREFIX --enable-ILU --enable-ILUT
+	echo "Getting DevIL 1.6.8"
+	lazy_fetch "$DEVIL_URL" "$DEVIL_TGZ" "$DEVIL_MD5"
+	tar -xzvf "$DEVIL_TGZ"
+	pushd DevIL-1.6.8/
+		export CPPFLAGS="-I$PREFIX/include"
+		export LDFLAGS="-L$PREFIX/lib" 
+		./configure --disable-release --prefix="$PREFIX" --with-jpegdir="$PREFIX" 
 		make
 		make install
-	popd # devil-1.7.8/
+	popd # DevIL-1.6.8/
 }
 
+##############################################################################
+##############################################################################
 ##############################################################################
 
 # We'll put prereq libraries in here
@@ -135,10 +226,12 @@ mkdir -p $PREFIX
 cd $WD
 
 get_scons
+get_libjpeg
+get_libpng
+get_devil
+get_glew
 get_boost
 get_sdl
 get_sdl_mixer
-get_glee
-get_devil
 
-echo "Done."
+echo "Done. Prereqs installed in '$PREFIX'"

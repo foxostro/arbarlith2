@@ -46,7 +46,7 @@ TextureHandle::TextureHandle(void)
 	id=0;
 }
 
-TextureHandle::TextureHandle(const string &fileName, int width, int height, bool alpha, unsigned int id)
+TextureHandle::TextureHandle(const string &fileName, int width, int height, bool alpha, GLuint id)
 {
 	this->fileName = fileName;
 	this->width = width;

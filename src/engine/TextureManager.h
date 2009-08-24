@@ -79,13 +79,13 @@ public:
 	Set the current texture
 	@param texID The texture ID
 	*/
-	void Set(unsigned int texID);
+	void Set(GLuint texID);
 
 	/**
 	Get info by texure id
 	@param texID The texture ID
 	*/
-	TextureHandle* getHandle(unsigned int texID);
+	TextureHandle* getHandle(GLuint texID);
 
 	/**
 	Get info by texture name
@@ -97,7 +97,7 @@ public:
 	Delete a single texture
 	@param texID The texture ID
 	*/
-	void Delete(unsigned int texID);
+	void Delete(GLuint texID);
 
 	/**
 	Delete a single texture
