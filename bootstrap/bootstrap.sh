@@ -197,7 +197,7 @@ function get_libpng
 
 ##############################################################################
 
-function get_devil
+function get_devil_168
 {
 	DEVIL_URL=http://softlayer.dl.sourceforge.net/project/openil/DevIL/1.6.8%20RC%202/DevIL-1.6.8-rc2.tar.gz
 	DEVIL_TGZ=DevIL-1.6.8-rc2.tar.gz
@@ -216,6 +216,26 @@ function get_devil
 }
 
 ##############################################################################
+
+function get_devil_178
+{
+	DEVIL_URL=http://softlayer.dl.sourceforge.net/project/openil/DevIL/1.7.8/DevIL-1.7.8.tar.gz
+	DEVIL_TGZ=DevIL-1.7.8.tar.gz
+	DEVIL_MD5=md5s/DevIL-1.7.8.tar.gz.md5
+	
+	echo "Getting DevIL 1.7.8"
+	lazy_fetch "$DEVIL_URL" "$DEVIL_TGZ" "$DEVIL_MD5"
+	tar -xzvf "$DEVIL_TGZ"
+	pushd devil-1.7.8/
+		export CPPFLAGS="-I$PREFIX/include"
+		export LDFLAGS="-L$PREFIX/lib" 
+		configure --disable-release --prefix="$PREFIX" --enable-ILU --enable-ILUT
+		make
+		make install
+	popd # devil-1.7.8/
+}
+
+##############################################################################
 ##############################################################################
 ##############################################################################
 
@@ -226,12 +246,17 @@ mkdir -p $PREFIX
 cd $WD
 
 get_scons
-get_libjpeg
-get_libpng
-get_devil
 get_glew
 get_boost
 get_sdl
 get_sdl_mixer
+get_libjpeg
+get_libpng
+
+if [ `uname` == "Darwin" ] ; then
+	get_devil_168
+else
+	get_devil_178
+fi
 
 echo "Done. Prereqs installed in '$PREFIX'"

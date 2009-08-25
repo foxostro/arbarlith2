@@ -275,11 +275,6 @@ public:
 	/** Gets a uint */
 	bool get(const string &key, unsigned int &dest, size_t instance = 0) const;
 
-	/** Gets a size_t */
-#ifndef _MSC_VER // XXX: Replace this with a proper templated interface so this hack isn't necessary.
-	bool get(const string &key, size_t &dest, size_t instance = 0) const;
-#endif
-
 	/** Gets a double */
 	bool get(const string &key, double &dest, size_t instance = 0) const;
 
