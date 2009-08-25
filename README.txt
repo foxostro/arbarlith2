@@ -3,24 +3,6 @@ Arbarlith 2
 
 Home page: <http://www.gamecreation.org/games/arbarlith-ii>
 
-Steps to build:
-1. Download and install base prerequisites:
-	On Ubuntu Linux, some libraries are needed to build GLEW:
-		* libx11
-		* libxi
-		* libxext
-		* libxmu
-	Grab these on the command line:
-		$ sudo aptitude install libx11-dev libxi-dev libxext-dev libxmu-dev
-2. Download and build other prerequisites:
-	$ pushd bootstrap
-	$ ./bootstrap.sh
-	$ popd
-3. Build the executable:
-	$ ./scons
-4. Run the game:
-	$ ./run_arbarlith2
-
 Controls
 --------
 Arbarlith 2 can be controlled by the keyboard, a gamepad, or a joystick
@@ -127,3 +109,56 @@ Aelyn's body, unable to support Mael's spirit any longer, collapsed on the cold
 floor as he felt the life that was once in him depart.  His eyes slowly closed
 as he felt the power of the Rune converge into a small stone, which he held in
 his hand, for some poor hapless traveler to be posessed once more...
+
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+
+Steps to build on Mac OS X
+---------------------------
+NOTE: Tested on 10.5 for the most part. Until a stable SDL release can build
+on 10.6, Snow Leopard will not be supported.
+1. Download and build other prerequisites:
+	$ pushd bootstrap
+	$ ./bootstrap.sh
+	$ popd
+2. Build the executable:
+	$ ./scons
+3. Run the game:
+	$ ./run_arbarlith2
+	
+	
+Steps to build on Ubuntu Linux
+------------------------------
+NOTE: Tested on Ubuntu Linux 8.04 and 9.04
+1. On Ubuntu Linux, some libraries are needed to build GLEW:
+		* libx11
+		* libxi
+		* libxext
+		* libxmu
+	Grab these on the command line:
+		$ sudo aptitude install libx11-dev libxi-dev libxext-dev libxmu-dev
+2. Download and build other prerequisites:
+	$ pushd bootstrap
+	$ ./bootstrap.sh
+	$ popd
+3. Build the executable:
+	$ ./scons
+4. Run the game:
+	$ ./run_arbarlith2
+	
+
+Steps to build in Visual Studio
+-------------------------------
+NOTE: Tested in Visual Studio 2008 on Windows 7
+1. Get Arbarlith 2 Prerequisites for Windows:
+	* Boost <http://softlayer.dl.sourceforge.net/project/boost/boost/1.39.0/boost_1_39_0.tar.bz2>
+	* SDL <http://www.libsdl.org/release/SDL-devel-1.2.13-VC8.zip>
+	* SDL_mixer <http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.8-VC8.zip>
+	* GLEW <http://softlayer.dl.sourceforge.net/project/glew/glew/1.5.1/glew-1.5.1-win32.zip>
+	* DevIL <http://softlayer.dl.sourceforge.net/project/openil/DevIL%20Windows%20SDK/1.7.8/DevIL-SDK-x86-1.7.8.zip>
+	For your convenience, the correct versions of these prerequisite files have been zipped up in msvc/prereqs-win32.zip.
+	Extract the zip file to "msvc\prereqs-win32\"
+2. Copy the *.dll files in "msvc\prereqs-win32\bin" to "redist\bin\"
+3. Build the Visual Studio Project "msvc\arbarlith2.sln"
+4. Run the game with "msvc\run_arbarlith2.bat"

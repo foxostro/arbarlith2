@@ -515,6 +515,7 @@ bool PropertyBag::get(const string& key, unsigned int &dest, size_t instance) co
 	return(true);
 }
 
+#ifndef _MSC_VER // XXX: Replace this with a proper templated interface so this hack isn't necessary.
 bool PropertyBag::get(const string& key, size_t &dest, size_t instance) const
 {
 	string str;
@@ -522,6 +523,7 @@ bool PropertyBag::get(const string& key, size_t &dest, size_t instance) const
 	dest = boost::lexical_cast<size_t>(str);
 	return(true);
 }
+#endif
 
 bool PropertyBag::get(const string& key, double &dest, size_t instance) const
 {
