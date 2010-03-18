@@ -53,7 +53,7 @@ function lazy_fetch
 
 	if [ $? -ne 0 ] ; then
 		echo "Downloading $URL..."
-		curl -O $URL
+		curl -O "$URL"
 		if [ $? -ne 0 ] ; then
 			echo "Failed to download $URL"
 			exit -1
@@ -68,22 +68,6 @@ function lazy_fetch
 	else
 		echo "Already downloaded '$PKG_FILE' and the MD5 hash looks OK."
 	fi
-}
-
-##############################################################################
-
-function get_scons
-{
-	SCONS_URL=http://softlayer.dl.sourceforge.net/project/scons/scons/1.2.0/scons-1.2.0.tar.gz
-	SCONS_TGZ=scons-1.2.0.tar.gz
-	SCONS_MD5=md5s/scons-1.2.0.tar.gz.md5
-	
-	echo "Getting SCons 1.2.0"
-	lazy_fetch $SCONS_URL $SCONS_TGZ $SCONS_MD5
-	tar -xzvf $SCONS_TGZ
-	pushd scons-1.2.0
-	python setup.py install --prefix=$PREFIX
-	popd # scons-1.2.0
 }
 	
 ##############################################################################
@@ -108,35 +92,32 @@ function get_boost
 
 function get_sdl
 {
-# XXX: This version of SDL doesn't compile on Mac OS X 10.6.
-# XXX: SDL on the Mac uses QuickDraw, which was obsoleted starting in 10.6 (deprecated in 10.5)
-
-	SDL_URL=http://www.libsdl.org/release/SDL-1.2.13.tar.gz
-	SDL_TGZ=SDL-1.2.13.tar.gz
-	SDL_MD5=md5s/SDL-1.2.13.tar.gz.md5
+	SDL_URL=http://www.libsdl.org/release/SDL-1.2.14.tar.gz
+	SDL_TGZ=SDL-1.2.14.tar.gz
+	SDL_MD5=md5s/SDL-1.2.14.tar.gz.md5
 	
-	echo "Getting SDL 1.2.13"
+	echo "Getting SDL 1.2.14"
 	lazy_fetch $SDL_URL $SDL_TGZ $SDL_MD5
 	tar -xzvf $SDL_TGZ
-	pushd SDL-1.2.13/
+	pushd SDL-1.2.14/
 	./configure --prefix=$PREFIX && make && make install
-	popd # SDL-1.2.13
+	popd # SDL-1.2.14
 }
 
 ##############################################################################
 
 function get_sdl_mixer
 {
-	SDL_MIXER_URL=http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-1.2.8.tar.gz
-	SDL_MIXER_TGZ=SDL_mixer-1.2.8.tar.gz
-	SDL_MIXER_MD5=md5s/SDL_mixer-1.2.8.tar.gz.md5
+	SDL_MIXER_URL=http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-1.2.11.tar.gz
+	SDL_MIXER_TGZ=SDL_mixer-1.2.11.tar.gz
+	SDL_MIXER_MD5=md5s/SDL_mixer-1.2.11.tar.gz.md5
 	
-	echo "Getting SDL_mixer 1.2.8"
+	echo "Getting SDL_mixer 1.2.11"
 	lazy_fetch $SDL_MIXER_URL $SDL_MIXER_TGZ $SDL_MIXER_MD5
 	tar -xzvf $SDL_MIXER_TGZ
-	pushd SDL_mixer-1.2.8/
+	pushd SDL_mixer-1.2.11/
 	./configure --prefix=$PREFIX && make && make install
-	popd # SDL_mixer-1.2.8
+	popd # SDL_mixer-1.2.11
 }
 
 ##############################################################################
@@ -146,7 +127,7 @@ function get_glew
 # Building GLEW on Linux requires libx11-dev, libxi-dev, libxext-dev, libxmu-dev
 
 	echo "Getting GLEW 1.5.0"
-	GLEW_URL=http://softlayer.dl.sourceforge.net/project/glew/glew/1.5.0/glew-1.5.0-src.tgz
+	GLEW_URL="http://downloads.sourceforge.net/project/glew/glew/1.5.0/glew-1.5.0-src.tgz?download&amp;failedmirror=softlayer.dl.sourceforge.net"
 	GLEW_TGZ=glew-1.5.0-src.tgz
 	GLEW_MD5=md5s/glew-1.5.0-src.tgz.md5
 	lazy_fetch "$GLEW_URL" "$GLEW_TGZ" "$GLEW_MD5"
@@ -197,26 +178,6 @@ function get_libpng
 
 ##############################################################################
 
-function get_devil_168
-{
-	DEVIL_URL=http://softlayer.dl.sourceforge.net/project/openil/DevIL/1.6.8%20RC%202/DevIL-1.6.8-rc2.tar.gz
-	DEVIL_TGZ=DevIL-1.6.8-rc2.tar.gz
-	DEVIL_MD5=md5s/DevIL-1.6.8-rc2.tar.gz.md5
-	
-	echo "Getting DevIL 1.6.8"
-	lazy_fetch "$DEVIL_URL" "$DEVIL_TGZ" "$DEVIL_MD5"
-	tar -xzvf "$DEVIL_TGZ"
-	pushd DevIL-1.6.8/
-		export CPPFLAGS="-I$PREFIX/include"
-		export LDFLAGS="-L$PREFIX/lib" 
-		./configure --disable-release --prefix="$PREFIX" --with-jpegdir="$PREFIX" 
-		make
-		make install
-	popd # DevIL-1.6.8/
-}
-
-##############################################################################
-
 function get_devil_178
 {
 	DEVIL_URL=http://softlayer.dl.sourceforge.net/project/openil/DevIL/1.7.8/DevIL-1.7.8.tar.gz
@@ -225,6 +186,9 @@ function get_devil_178
 	
 	echo "Getting DevIL 1.7.8"
 	lazy_fetch "$DEVIL_URL" "$DEVIL_TGZ" "$DEVIL_MD5"
+	
+	# XXX: On Mac, this may require a small patch after extracting...
+
 	tar -xzvf "$DEVIL_TGZ"
 	pushd devil-1.7.8/
 		export CPPFLAGS="-I$PREFIX/include"
@@ -245,18 +209,13 @@ mkdir -p $PREFIX
 # We'll do all all work here so as to not clutter the project.
 cd $WD
 
-get_scons
 get_glew
 get_boost
 get_sdl
 get_sdl_mixer
 get_libjpeg
 get_libpng
-
-if [ `uname` == "Darwin" ] ; then
-	get_devil_168
-else
-	get_devil_178
-fi
+get_devil_178
 
 echo "Done. Prereqs installed in '$PREFIX'"
+

@@ -274,6 +274,9 @@ public:
 
 	/** Gets a uint */
 	bool get(const string &key, unsigned int &dest, size_t instance = 0) const;
+	
+	/** Gets a size_t */
+	bool get(const string &key, size_t &dest, size_t instance = 0) const;
 
 	/** Gets a double */
 	bool get(const string &key, double &dest, size_t instance = 0) const;

@@ -515,6 +515,14 @@ bool PropertyBag::get(const string& key, unsigned int &dest, size_t instance) co
 	return(true);
 }
 
+bool PropertyBag::get(const string& key, size_t &dest, size_t instance) const
+{
+	string str;
+	if (!get(key, str, instance)) return(false);
+	dest = boost::lexical_cast<size_t>(str);
+	return(true);
+}
+
 bool PropertyBag::get(const string& key, double &dest, size_t instance) const
 {
 	string str;
