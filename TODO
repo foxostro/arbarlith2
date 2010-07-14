@@ -1,5 +1,6 @@
 TODO
 =====
+* Needs a better Mac app icon
 * Bootstrap script that fetches all apps from permalinks.
 * Bootstrap script with decent error checking.
 * Bootstrap script patches DevIL for Mac OS 10.6
