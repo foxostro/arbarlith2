@@ -116,9 +116,8 @@ his hand, for some poor hapless traveler to be posessed once more...
 
 Steps to build on Mac OS X
 ---------------------------
-NOTE: Tested on 10.5 for the most part. Until a stable SDL release can build
-on 10.6, Snow Leopard will not be supported.
-1. Download and build other prerequisites:
+NOTE: Tested on 10.5 and 10.6.
+1. Download and build prerequisites:
 	$ pushd bootstrap
 	$ ./bootstrap.sh
 	$ popd
@@ -126,11 +125,16 @@ on 10.6, Snow Leopard will not be supported.
 	$ ./scons
 3. Run the game:
 	$ ./run_arbarlith2
+4. Make a redistributable app bundle:
+	$ ./scons
+	$ cd ./make_a_mac_app_bundle
+	$ ./make_bundle.sh
+	$ ditto "./Arbarlith2.app" "/Applications/Arbarlith2.app"
 	
 	
 Steps to build on Ubuntu Linux
 ------------------------------
-NOTE: Tested on Ubuntu Linux 8.04 and 9.04
+NOTE: Tested on 32-bit Ubuntu Linux 8.04 and 9.04
 1. On Ubuntu Linux, some libraries are needed to build GLEW:
 		* libx11
 		* libxi

@@ -1,0 +1,29 @@
+#!/bin/sh
+# Launches the game, 'Arbarlith 2,' when run on the command-line
+#
+# The game expects certain environment variables to be set so that it can
+# locate resources &c. This script ensures those are set and launches the
+# game.
+
+BASE="$( dirname "$(dirname "$0")" )"
+CMD="$BASE/Resources/bin/arbarlith2"
+
+export ARBARLITH2_SHARE="$BASE/Resources/share/arbarlith2"
+
+if [ `uname` == "Darwin" ] ; then
+	# We're running on the Mac
+	export DYLD_FALLBACK_LIBRARY_PATH="$BASE/lib/:$DYLD_FALLBACK_LIBRARY_PATH"
+else
+	# Assume a UNIX-like that uses LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH="$BASE/lib/:$LD_LIBRARY_PATH"
+fi
+
+# Prepare the log and log directory
+LOG_DIR="$HOME/Library/Logs/Arbarlith2"
+LOG_FILE="$LOG_DIR/Arbarlith2.log"
+mkdir -p "$LOG_DIR"
+echo "Started new log when app bundle was launched..." > "$LOG_FILE"
+
+# Now launch the game, passing our args to the game.
+exec "$CMD" $@ 2>&1 1> "$LOG_FILE"
+

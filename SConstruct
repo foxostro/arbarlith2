@@ -7,6 +7,9 @@ SOURCES = glob.glob('src/*.cpp') + glob.glob('src/engine/*.cpp')
 
 env = Environment(ENV=os.environ)
 
+env['CC'] = "gcc"
+env['CXX'] = "g++"
+
 env.ParseConfig('redist/bin/sdl-config --cflags')
 env.ParseConfig('redist/bin/sdl-config --libs')
 
