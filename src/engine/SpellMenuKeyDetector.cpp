@@ -41,7 +41,7 @@ debounce(false)
 
 	for(int i=0; i<3; ++i)
 	{
-		g_Keys.addBinding(menuToggleKey, "JOY" + Engine::itoa(i+1) + "_BUTT_5");
+		g_Keys.addBinding(menuToggleKey, "JOY" + Engine::itoa(i+1) + "_BUTT_9"); // Right-Shoulder on my gamepad
 	}
 
 	g_Keys.addBinding(menuToggleKey, "L_Control");

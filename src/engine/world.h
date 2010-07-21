@@ -269,6 +269,19 @@ public:
 	*/
 	void reloadPlayers(const PropertyBag &newGame);
 
+	/**
+	Signals that a new joystick has been connected to the machine.
+	The input subsystem has already initialized the joystick.
+	@param joystickNumber The number for the new joystick.
+	*/
+	void joystickAdded(int joystickNumber);
+
+	/**
+	Signals that a joystick has been disconnected from the machine.
+	@param joystickNumber The number for the joystick that was disconnected.
+	*/
+	void joystickRemoved(int joystickNumber);
+
 	/** Harmonizes the camera with the current player positions */
 	void updateCamera(void);
 

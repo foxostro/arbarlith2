@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "GameStateMenu.h"
 
 // Set to 'true' in order to force player 1 to the keyboard, player 2 to joystick 1, etc
-bool _PLAYER_ONE_HAS_NO_JOYSTICK_ = true;
+bool _PLAYER_ONE_HAS_NO_JOYSTICK_ = false;
 
 namespace Engine {
 
@@ -128,7 +128,7 @@ void Player::setupControllerBindings(int playerNumber)
 		    g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
 		    g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
 		    g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
-		    g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
+		    g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_13"); // X on my controller
 	    }
     }
     else
@@ -138,8 +138,10 @@ void Player::setupControllerBindings(int playerNumber)
 	    g_Keys.addBinding(KEY_PLAYER_WALK_REV,   "JOY" + num + "_AXIS_Y+");
 	    g_Keys.addBinding(KEY_PLAYER_WALK_LEFT,  "JOY" + num + "_AXIS_X-");
 	    g_Keys.addBinding(KEY_PLAYER_WALK_RIGHT, "JOY" + num + "_AXIS_X+");
-	    g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_2");
+	    g_Keys.addBinding(KEY_PLAYER_USE,        "JOY" + num + "_BUTT_13"); // X on my controller
     }
+
+	TRACE(string("setupControllerBindings for player #") + itoa(playerNumber));
 }
 
 void Player::enterGameOverScreen(void)

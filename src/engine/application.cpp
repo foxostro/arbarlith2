@@ -33,6 +33,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include "stdafx.h"
+
+#include <errno.h>
+#include <unistd.h>
+#include <signal.h>
+
 #include "gl.h"
 #include "SDLwindow.h"
 #include "EffectManager.h"
@@ -64,6 +69,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <IL/ilu.h>
 #include <IL/ilut.h>
 
+#define ENABLE_SPLASH_SCREEN (0) // toggle the splash screen (synchronous; blocks launch for 5 seconds)
+
 namespace Engine {
 
 Application* g_pApplication = 0; // TODO: remove the global Application object
@@ -83,6 +90,20 @@ void Application::loadFonts(void)
 {
 	fontSmall.setup("data/fonts/proggy.xml");
 	fontLarge.setup("data/fonts/narkism.xml");
+}
+
+void Application::startDeviceListener(void)
+{
+	// Start the helper program that listens for changes to USB devices
+	pid_t pid = fork();
+	if(pid<0) {
+		perror("fork failed");
+	} else if(pid==0) {
+		execl("./ListenForDevices", "ListenForDevices", (const char *)NULL);
+		exit(-1);
+	}
+
+	deviceListener = pid;
 }
 
 void Application::start(void)
@@ -107,6 +128,8 @@ void Application::start(void)
 		}
 	}
 
+	startDeviceListener();	
+
 	// Parse the setup files
 	loadXmlConfigFiles();
 
@@ -120,8 +143,9 @@ void Application::start(void)
 	// Load the font setup file
 	loadFonts();
 
-	// Load the key bindings
+	// Load the key bindings, initialize joysticks
 	TRACE("Loading controller bindings...");
+	clearJoystickCookie();
 	new Controller();
 	TRACE("...Loaded controller bindings");
 
@@ -131,12 +155,14 @@ void Application::start(void)
 	TRACE("...Seeded the random number generator");
 
 	// Do the splash screen
+#if ENABLE_SPLASH_SCREEN
 	{
 		TRACE("Doing splash screen...");
 		SplashScreen splashScreen;
 		splashScreen.doSplash(5000);
 		TRACE("...Finished with splash screen");
 	}
+#endif
 
 	// Initialize the wait screen
 	new WaitScreen();
@@ -217,6 +243,102 @@ void Application::start(void)
 	g_WaitScreen.Render();
 }
 
+void Application::clearJoystickCookie(void)
+{
+retry_unlink:
+	if(unlink("/var/tmp/Joystick.cookie")!=0)
+	{
+		if(errno == EBUSY)
+		{
+			errno = 0;
+			goto retry_unlink;
+		}
+
+		if(errno != ENOENT)
+		{
+			TRACE(string("Unlink failed for unexpected reason: ") + itoa(errno));
+			perror("unlink failed");
+			exit(-1);
+		}
+
+		errno = 0;
+	}	
+}
+
+void Application::listenForDevices(void)
+{
+retry_unlink:
+	if(unlink("/var/tmp/Joystick.cookie")==0)
+	{
+		TRACE("Restarting Controller subsystem...");
+
+		// Have all players release their hooks into the input subsystem
+		if(isWorldLoaded())
+		{
+			World& world = getWorld();
+			size_t numOfPlayers = world.getNumOfPlayers();
+
+			for(size_t i=0; i<numOfPlayers; ++i)
+			{
+				Player& player = world.getPlayer(i);
+				player.deleteController();
+			}
+		}
+
+		int n = SDL_NumJoysticks();
+		for(int i=0; i<n; ++i)
+		{
+			printf("joystick[%d]->uid = %d\n", i, SDL_JoystickUID(i));
+		}
+		printf("**********\n");
+
+		// Recreate the input subsystem
+		// TODO: This should try to make sure that joystick indices stay the same as much as possible.
+		Controller::Destroy();
+		SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
+		SDL_InitSubSystem(SDL_INIT_JOYSTICK);
+		new Controller;
+		
+		n = SDL_NumJoysticks();
+		for(int i=0; i<n; ++i)
+		{
+			printf("joystick[%d]->uid = %d\n", i, SDL_JoystickUID(i));
+		}
+
+		// Have all players refresh their hooks into the input subsystem.
+		if(isWorldLoaded())
+		{
+			World& world = getWorld();
+			size_t numOfPlayers = world.getNumOfPlayers();
+
+			for(size_t i=0; i<numOfPlayers; ++i)
+			{
+				Player& player = world.getPlayer(i);
+				player.setupController();
+			}
+
+			world.joystickAdded(-1);
+		}
+	}
+	else
+	{
+		if(errno == EBUSY)
+		{
+			errno = 0;
+			goto retry_unlink;
+		}
+
+		if(errno != ENOENT)
+		{
+			TRACE(string("Unlink failed for unexpected reason: ") + itoa(errno));
+			perror("unlink failed");
+			exit(-1);
+		}
+
+		errno = 0;
+	}
+}
+
 void Application::run(void)
 {
 	TRACE("Running");
@@ -229,29 +351,34 @@ void Application::run(void)
 		ASSERT(0!=fme, "fme was null");
 		ASSERT(0!=state, "state was null");
 
+		// Get user input first
+		g_Input.Pump();
+
+		// Listen for devices being added or removed
+		listenForDevices();
+		
 		// update the frame timer
 		fme->Update();
 		float frameLength = (float)min(fme->getLength(), (unsigned int)70);
-
+		
 		// Update the current game state
 		state->update(frameLength);
-
+		
 		// update all tasks
 		for(std::list<Task*>::const_iterator i=tasks.begin();
             i!=tasks.end(); ++i)
 		{
 			updateTask(*i, frameLength);
 		}
-
+		
 		// Take out the garbage
         // TODO: this really only needs to be run periodically?
 		tasks = pruneDeadTasks(tasks);
-
-		// pump
+		
+		// Display the frame
 		glFlush();
 		g_Window.Flip();
-		g_Input.Pump();
-
+		
 		// check for window resizing
 		if(g_Input.ResizePending())
 		{
@@ -303,6 +430,10 @@ void Application::stop(void)
     WaitScreen::Destroy();
     TRACE("Destroyed the Wait screen");
 
+	kill(deviceListener, SIGINT);
+	waitpid(deviceListener, NULL, 0);
+	TRACE("Killed the device listener process");
+
 	clear();
 
 	TRACE("...shutdown completed");
@@ -330,6 +461,8 @@ void Application::clear(void)
 	soundSystem = 0;
 	fme = 0;
 	world = 0;
+	
+	deviceListener = 0;
 
 	tasks.clear();
 }

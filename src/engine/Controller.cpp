@@ -53,25 +53,25 @@ const Uint8 JOY_BALL = 3;
 
 ACTION_CODE Controller::nextNewActionCode = 1000;
 
-ACTION_CODE KEY_MENU_UP				= INVALID_ACTION_CODE;
-ACTION_CODE KEY_MENU_DOWN			= INVALID_ACTION_CODE;
-ACTION_CODE KEY_MENU_LEFT			= INVALID_ACTION_CODE;
-ACTION_CODE KEY_MENU_RIGHT			= INVALID_ACTION_CODE;
-ACTION_CODE KEY_MENU				= INVALID_ACTION_CODE;
-ACTION_CODE KEY_ENTER				= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_WALK_FWD		= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_WALK_REV		= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_WALK_LEFT	= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_WALK_RIGHT	= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_ROTATE_UP	= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_ROTATE_DOWN	= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_ROTATE_LEFT	= INVALID_ACTION_CODE;
-ACTION_CODE KEY_EDITOR_ROTATE_RIGHT	= INVALID_ACTION_CODE;
-ACTION_CODE KEY_SCREENSHOT		= INVALID_ACTION_CODE;
-ACTION_CODE KEY_ENTER_EDITOR		= INVALID_ACTION_CODE;
-ACTION_CODE KEY_TEST			= INVALID_ACTION_CODE;
-ACTION_CODE KEY_TOGGLE_DEBUG_DATA	= INVALID_ACTION_CODE;
-ACTION_CODE KEY_TOGGLE_FPS		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_MENU_UP					= INVALID_ACTION_CODE;
+ACTION_CODE KEY_MENU_DOWN				= INVALID_ACTION_CODE;
+ACTION_CODE KEY_MENU_LEFT				= INVALID_ACTION_CODE;
+ACTION_CODE KEY_MENU_RIGHT				= INVALID_ACTION_CODE;
+ACTION_CODE KEY_MENU					= INVALID_ACTION_CODE;
+ACTION_CODE KEY_ENTER					= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_WALK_FWD			= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_WALK_REV			= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_WALK_LEFT		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_WALK_RIGHT		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_ROTATE_UP		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_ROTATE_DOWN		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_ROTATE_LEFT		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_EDITOR_ROTATE_RIGHT		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_SCREENSHOT				= INVALID_ACTION_CODE;
+ACTION_CODE KEY_ENTER_EDITOR			= INVALID_ACTION_CODE;
+ACTION_CODE KEY_TEST					= INVALID_ACTION_CODE;
+ACTION_CODE KEY_TOGGLE_DEBUG_DATA		= INVALID_ACTION_CODE;
+ACTION_CODE KEY_TOGGLE_FPS				= INVALID_ACTION_CODE;
 
 JoyDir::JoyDir(SDL_Joystick *Joystick, Uint8 devType, int idx, Sint16 thresh)
 {
@@ -84,10 +84,10 @@ JoyDir::JoyDir(SDL_Joystick *Joystick, Uint8 devType, int idx, Sint16 thresh)
 
 Controller::Controller(void)
 {
-	joystick[0] = 0;
-	joystick[1] = 0;
-	joystick[2] = 0;
-	joystick[3] = 0;
+	joystick[0] = NULL;
+	joystick[1] = NULL;
+	joystick[2] = NULL;
+	joystick[3] = NULL;
 
 	threshold = 8192; // a good value for an XBox 360 Controller, at least
 
@@ -114,12 +114,22 @@ Controller::Controller(void)
 
 Controller::~Controller(void)
 {
-	if(joystick[0]) SDL_JoystickClose(joystick[0]);
-	if(joystick[1]) SDL_JoystickClose(joystick[1]);
-	if(joystick[2]) SDL_JoystickClose(joystick[2]);
-	if(joystick[3]) SDL_JoystickClose(joystick[3]);
+	// Close all joysticks
+	for(int i=0; i<SDL_NumJoysticks() && i < 4; ++i)
+	{
+		if(joystick[i])
+		{
+			SDL_JoystickClose(joystick[i]);
+			joystick[i] = NULL;
+		}
+	}
 
-	// TODO: We also need to free all the JoyDir pointers
+	// We also need to free all the JoyDir objects
+	for(map<string, JoyDir*>::const_iterator i=joymap.begin(); i!=joymap.end(); ++i)
+	{
+		delete i->second;
+	}
+	joymap.clear();
 }
 
 void Controller::setupControllers(void)
@@ -130,7 +140,9 @@ void Controller::setupControllers(void)
 
 		if(joystick[i])
 		{
-			TRACE(string("Joystick ") + SDL_JoystickName(i) + " Successfully opened.");
+			TRACE(string("Joystick opened: Index=") + itoa(i) +
+			      string(" ; Name=\"") + SDL_JoystickName(i) + string("\"") + 
+			      string(" ; UID=") + itoa(SDL_JoystickUID(i)));
 		}
 	}
 }
@@ -329,38 +341,14 @@ void Controller::setDefaults(void)
 	addBinding(KEY_MENU_RIGHT,		"JOY2_AXIS_X+");
 	addBinding(KEY_MENU_RIGHT,		"JOY3_AXIS_X+");
 	addBinding(KEY_MENU_RIGHT,		"JOY4_AXIS_X+");
-	addBinding(KEY_MENU,			"JOY1_BUTT_7");
-	addBinding(KEY_MENU,			"JOY2_BUTT_7");
-	addBinding(KEY_MENU,			"JOY3_BUTT_7");
-	addBinding(KEY_MENU,			"JOY4_BUTT_7");
-	addBinding(KEY_ENTER,			"JOY1_BUTT_0");
-	addBinding(KEY_ENTER,			"JOY1_BUTT_1");
-	addBinding(KEY_ENTER,			"JOY1_BUTT_2");
-	addBinding(KEY_ENTER,			"JOY1_BUTT_3");
-	addBinding(KEY_ENTER,			"JOY1_BUTT_4");
-	addBinding(KEY_ENTER,			"JOY1_BUTT_5");
-	addBinding(KEY_ENTER,			"JOY1_BUTT_6");
-	addBinding(KEY_ENTER,			"JOY2_BUTT_0");
-	addBinding(KEY_ENTER,			"JOY2_BUTT_1");
-	addBinding(KEY_ENTER,			"JOY2_BUTT_2");
-	addBinding(KEY_ENTER,			"JOY2_BUTT_3");
-	addBinding(KEY_ENTER,			"JOY2_BUTT_4");
-	addBinding(KEY_ENTER,			"JOY2_BUTT_5");
-	addBinding(KEY_ENTER,			"JOY2_BUTT_6");
-	addBinding(KEY_ENTER,			"JOY3_BUTT_0");
-	addBinding(KEY_ENTER,			"JOY3_BUTT_1");
-	addBinding(KEY_ENTER,			"JOY3_BUTT_2");
-	addBinding(KEY_ENTER,			"JOY3_BUTT_3");
-	addBinding(KEY_ENTER,			"JOY3_BUTT_4");
-	addBinding(KEY_ENTER,			"JOY3_BUTT_5");
-	addBinding(KEY_ENTER,			"JOY3_BUTT_6");
-	addBinding(KEY_ENTER,			"JOY4_BUTT_0");
-	addBinding(KEY_ENTER,			"JOY4_BUTT_1");
-	addBinding(KEY_ENTER,			"JOY4_BUTT_2");
-	addBinding(KEY_ENTER,			"JOY4_BUTT_3");
-	addBinding(KEY_ENTER,			"JOY4_BUTT_4");
-	addBinding(KEY_ENTER,			"JOY4_BUTT_5");
-	addBinding(KEY_ENTER,			"JOY4_BUTT_6");
+	addBinding(KEY_MENU,			"JOY1_BUTT_8");
+	addBinding(KEY_MENU,			"JOY2_BUTT_8");
+	addBinding(KEY_MENU,			"JOY3_BUTT_8");
+	addBinding(KEY_MENU,			"JOY4_BUTT_8");
+	addBinding(KEY_ENTER,			"JOY1_BUTT_13");
+	addBinding(KEY_ENTER,			"JOY2_BUTT_13");
+	addBinding(KEY_ENTER,			"JOY3_BUTT_13");
+	addBinding(KEY_ENTER,			"JOY4_BUTT_13");
 	addBinding(KEY_EDITOR_WALK_FWD,	"JOY1_AXIS_Y-");
 	addBinding(KEY_EDITOR_WALK_REV,	"JOY1_AXIS_Y+");
 	addBinding(KEY_EDITOR_WALK_LEFT,	"JOY1_AXIS_X-");
@@ -396,7 +384,9 @@ bool Controller::isKeyDown(ACTION_CODE actionCode)
 			{
 				JoyDir* joyDir = joymap[keyName];
 				if(hasJoyEventOccured(joyDir))
+				{
 					return true;
+				}
 			}
 
 			++i;
@@ -444,7 +434,7 @@ bool Controller::getKey(size_t &key, bool &shift)
 
 bool Controller::hasJoyEventOccured(JoyDir* subfunct)
 {
-	ASSERT(subfunct!=0, "subfunct was null");
+	ASSERT(subfunct, "subfunct was null");
 
 	switch(subfunct->Type)
 	{

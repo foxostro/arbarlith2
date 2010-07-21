@@ -193,6 +193,12 @@ public:
 	*/
 	virtual void walkTowards(const vec3 &target, float speed);
 
+	/** Removes all controller actions and bindings for this player */
+	void deleteController(void);
+
+	/** Setup controller actions and bindings for this player */
+	void setupController(void);
+
 public:
 	/** Action code for player walk */
 	ACTION_CODE KEY_PLAYER_WALK_FWD;
@@ -236,17 +242,11 @@ protected:
 	/** Directly control the player */
 	virtual void directControl(void);
 
-	/** Removes all controller actions and bindings for this player */
-	void deleteController(void);
-
 	/**
 	Helper for deleteController. Deletes all controller action names for this player
 	@param playerNumber Player number, starts at zero
 	*/
 	virtual void deleteControllerActions(int playerNumber);
-
-	/** Setup controller actions and bindings for this player */
-	void setupController(void);
 
 	/**
 	Helper for setupController. Sets up controller action names

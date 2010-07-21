@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "MyPlayer.h"
 
-#define DEBUG_PLAYER 0
+#define DEBUG_PLAYER (0)
 
 extern bool _PLAYER_ONE_HAS_NO_JOYSTICK_;	// Set to 1 in order to force player 1 to the keyboard, player 2 to joystick 1, etc
 
@@ -110,13 +110,13 @@ void MyPlayer::setupControllerBindings(int playerNumber)
         if(playerNumber>0) // player 2 is on joystick 1, and so forth
 	    {
 		    string num = Engine::itoa(playerNumber);
-		    g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
+		    g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_14"); // Y on my gamepad
 	    }
     }
     else
     {
         string num = Engine::itoa(playerNumber+1);
-	    g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_3");
+	    g_Keys.addBinding(KEY_PLAYER_CAST_SPELL, "JOY" + num + "_BUTT_14"); // Y on my gamepad
     }
 
 	Player::setupControllerBindings(playerNumber);

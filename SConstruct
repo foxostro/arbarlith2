@@ -26,4 +26,6 @@ else:
     env.Append(LIBS = [ 'GL', 'GLU', 'GLEW', 'IL', 'ILU', 'ILUT', 'SDL', 'SDL_mixer' ])
 
 
+os.system("gcc src/ListenForDevices.c -o redist/share/arbarlith2/ListenForDevices -framework IOkit -framework CoreFoundation");
+
 env.Program(target = 'redist/bin/arbarlith2', source = SOURCES)

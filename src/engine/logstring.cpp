@@ -42,7 +42,8 @@ namespace Engine {
 
 void PrintStringToLog(const string &s)
 {
-	printf("%s\n\n", s.c_str());
+	fprintf(stdout, "%s\n\n", s.c_str());
+	fflush(stdout);
 }
 
 void Log(const string &message,

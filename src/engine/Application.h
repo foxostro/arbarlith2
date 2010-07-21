@@ -219,6 +219,15 @@ private:
 	/** Load the font data files */
 	void loadFonts(void);
 
+	/** Start the helper program that listens for changes to USB devices */
+	void startDeviceListener(void);
+
+	/** Listens for devices being added or removed (i.e. Joysticks, Gamepads) */
+	void listenForDevices(void);
+
+	/** Clear the device notification cookie file without taking further action. */
+	void clearJoystickCookie(void);
+
 	/**
 	Frees and removes dead tasks from the task queue
 	@param tasks The task queue
@@ -282,6 +291,9 @@ public:
 
 	/** Tahoma Font */
 	TextWriter fontLarge;
+
+	/** Child process listens for USB device events */
+	pid_t deviceListener;
 
 private:
 	/** the frame timer */

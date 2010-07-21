@@ -527,6 +527,16 @@ Player* World::getPlayerPtr(size_t playerNum)
 	return player[playerNum];
 }
 
+void World::joystickAdded(int joystickNumber)
+{
+	TRACE("TODO: Spawn a new player and connect him to the new joystick.");
+}
+
+void World::joystickRemoved(int joystickNumber)
+{
+	TRACE("TODO: Joystick removed! Pause the game or something.");
+}
+
 void World::reloadPlayers(const PropertyBag &playerBag)
 {
 	TRACE("Reloading all the players...");
