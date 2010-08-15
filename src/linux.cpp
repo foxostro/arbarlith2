@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -61,6 +61,7 @@ extern "C" void handler(int, siginfo_t*, void*)
 {
 	printBackTrace(stdout);
 	printf("Handler done.\n");
+	abort();
 }
 
 void setupSignalHandler(void)
@@ -71,23 +72,15 @@ void setupSignalHandler(void)
 	sigemptyset(&SignalAction.sa_mask);
 	SignalAction.sa_flags = SA_SIGINFO;
 	sigaction(SIGSEGV, &SignalAction, 0);
-	sigaction(SIGABRT, &SignalAction, 0);
 }
 
 int main(int argc, char *argv[])
 {
 	setupSignalHandler();
 
-    // Allocate space for the Application object
     g_pApplication = new Engine::Application();
-
-    // Loads game resources
     g_pApplication->start();
-
-    // Runs the game for a while
     g_pApplication->run();
-
-    // Free memory
     delete g_pApplication;
 
 	return EXIT_SUCCESS;
