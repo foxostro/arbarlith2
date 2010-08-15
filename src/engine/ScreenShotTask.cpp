@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -44,41 +44,54 @@ namespace Engine {
 
 int stoi(const string &s); // stdafx.cpp
 
-ScreenShotTask::ScreenShotTask(void)
-:screenShotDebounce(false)
-{}
+ScreenShotTask::ScreenShotTask(void) : screenShotDebounce(false)
+{ /* do nothing */ }
 
 void ScreenShotTask::update(float)
 {
 	// Take a screen shot and save it to file
-	if(g_Keys.isKeyDown(KEY_SCREENSHOT) )
-	{
-		if(screenShotDebounce == false)
-		{
+	if(g_Keys.isKeyDown(KEY_SCREENSHOT)) {
+		if(screenShotDebounce == false) {
 			screenShotDebounce = true;
-
 			takeScreenShot();
 		}
-	}
-	else
-	{
+	} else {
 		screenShotDebounce = false;
 	}
 }
 
 void ScreenShotTask::takeScreenShot(void)
 {
-	ILuint handle=0;
-	ilGenImages(1, &handle);
+	ILuint ViewPort[4] = { 0 };
+	ILuint handle = 0;
+	ILubyte * data = NULL;
 
+	ilGenImages(1, &handle);
 	ilBindImage(handle);
-	ilutGLScreen();
+
+	glGetIntegerv(GL_VIEWPORT, (GLint*)ViewPort);
+
+	if(!ilTexImage(ViewPort[2], ViewPort[3], 1, 3,
+		IL_RGB, IL_UNSIGNED_BYTE, NULL)) {
+		return;
+	}
+
+	ilSetInteger(IL_ORIGIN_MODE, IL_ORIGIN_LOWER_LEFT);
+
+	data = ilGetData(); // direct RW pointer to the IL image buffer
+
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glReadPixels(0, 0, ViewPort[2], ViewPort[3], GL_RGB, GL_UNSIGNED_BYTE,
+	             data);
 
 	createDirectory("sshots/");
 
-	char *pszScreenShotFileName = strdup(getScreenShotFileName());
-	ilSaveImage(pszScreenShotFileName);
-	delete[] pszScreenShotFileName;
+	// Save the image to file
+	{
+		char * pszScreenShotFileName = strdup(getScreenShotFileName());
+		ilSaveImage(pszScreenShotFileName);
+		delete [] pszScreenShotFileName;
+	}
 
 	ilDeleteImages(1, &handle);
 }
@@ -92,17 +105,15 @@ string ScreenShotTask::getScreenShotFileName(void)
 
 	vector<string> files = SearchFile("sshots/", ext);
 
-	for(vector<string>::const_iterator iter=files.begin();
-	    iter!=files.end();
-	    ++iter)
+	for(vector<string>::const_iterator iter = files.begin();
+	    iter != files.end(); ++iter)
 	{
-		const string &fileName =(*iter);
+		const string &fileName = (*iter);
 		const string strNum = fileName.substr(screen.length(),
 		fileName.length() - screen.length() - ext.length());
 		const int number = stoi(strNum);
 
-		if(number>highestNumber)
-		{
+		if(number>highestNumber) {
 			highestNumber = number;
 		}
 	}
