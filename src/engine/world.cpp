@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2003-2007,2009 Game Creation Society
+Copyright (c) 2003-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -186,22 +186,39 @@ void World::load(const PropertyBag &bag)
 	destroy();
 	TRACE("...destroyed existing World data first...");
 
-	name = bag.getString("name");
+	bag.get("name", name);
 
 	// Load the music set
-	music.load( bag.getBag("music") );
+	{
+		PropertyBag musicBag;
+		bag.get("music", musicBag);
+		music.load(musicBag);
+	}
 	music.update();
 
 	// Load the fog
-	fog.load( bag.getBag("fog") );
+	{
+		PropertyBag fogBag;
+		bag.get("fog", fogBag);
+		fog.load(fogBag);
+	}
 
 	// Load the ambient lighting intensity for the World
 	Light::BRIGHTNESS = 1.0f;
 	Dimmer::alphaBlur = 0.0f;
-	getLightManager().ambientLight = bag.getFloat("ambientLight");
+
+	{
+		float ambientLight = 0.0;
+		bag.get("ambientLight", ambientLight);
+		getLightManager().ambientLight = ambientLight;
+	}
 
 	// Load the map
-	worldMap.create(bag.getBag("map"));
+	{
+		PropertyBag mapBag;
+		bag.get("map", mapBag);
+		worldMap.create(mapBag);
+	}
 
 	// Initialize the lighting system
 	lightManager.create();
@@ -209,10 +226,18 @@ void World::load(const PropertyBag &bag)
 	shadowManager.setZone(this);
 
 	// Load the objects bags
-	getObjects().load(bag.getBag("objects"), this);
+	{
+		PropertyBag objectsBag;
+		bag.get("objects", objectsBag);
+		getObjects().load(objectsBag, this);
+	}
 
 	// Load the players
-	reloadPlayers( bag.getBag("player") );
+	{
+		PropertyBag playerBag;
+		bag.get("player", playerBag);
+		reloadPlayers(playerBag);
+	}
 
 	TRACE("...finished (Loading \"" + getName() + ")");
 }

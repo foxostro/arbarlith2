@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -93,25 +93,31 @@ AnimationController* _3dsLoader::loadFromFile(const string &fileName) const
 	string skin;
 	xml.get("forceSkin", skin);
 
-	for(size_t i=0, numAnimations=xml.getNumInstances("animation"); i<numAnimations; ++i)
+	for(size_t i=0, numAnimations=xml.count("animation"); i<numAnimations; ++i)
 	{
-		PropertyBag animation = xml.getBag("animation", i);
-		string name = animation.getString("name");
-		float fps = animation.getFloat("fps");
-
+		PropertyBag animation;
+		string name;
+		float fps = 0.0;
+		
 		// Optional properties
 		bool looping = false;
 		float priority = 0.0f;
+
+		xml.get("animation", animation, i);
+		xml.get("name", name);
+		xml.get("fps", fps);
 
 		animation.get("looping", looping);
 		animation.get("priority", priority);
 
 		// Load all the keyframes
 		vector<KeyFrame> keyFrames;
-		const size_t length=animation.getNumInstances("keyframe");
+		const size_t length=animation.count("keyframe");
 		for(size_t j=0; j<length; ++j)
 		{
-			string keyFrameFile = animation.getString("keyframe", j);
+			string keyFrameFile;
+
+			animation.get("keyframe", keyFrameFile, j);
 
 			Model keyFrame = loadKeyFrame(keyFrameFile);
 

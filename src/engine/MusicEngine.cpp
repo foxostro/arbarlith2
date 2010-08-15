@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2005,2007,2009 Game Creation Society
+Copyright (c) 2005,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -52,7 +52,7 @@ void MusicEngine::loadMusicTag(const PropertyBag &bag, vector<string> &music) co
 {
 	music.clear();
 
-	const size_t n = bag.getNumInstances("clip");
+	const size_t n = bag.count("clip");
 	for(size_t i=0; i<n; ++i)
 	{
 		string file;

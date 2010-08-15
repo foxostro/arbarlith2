@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2003-2007,2009 Game Creation Society
+Copyright (c) 2003-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -649,7 +649,7 @@ void Actor::load(const PropertyBag &Bag)
 
 	// Set the orientation matrix
 	vec3 zAxis (0,0,1), yAxis(0,1,0), xAxis(1,0,0);
-	Bag.get("look", &zAxis);
+	Bag.get("look", zAxis);
 
             // Flatten (Note: Prevents rotation about any axis other than the Y-Axis)
             zAxis.y=0;
@@ -663,7 +663,7 @@ void Actor::load(const PropertyBag &Bag)
 	orientation.setPos(vec3(0,0,0));
 
 	// Set the spawn point and location of the object
-	Bag.get("pos", &position);
+	Bag.get("pos", position);
 	spawnPoint = validatedPos = position;
 
 	ASSERT(getZone().getMap().onATile(position.x, position.z), "position is outside of the bounds of the map");
@@ -784,7 +784,7 @@ void Actor::loadList(const PropertyBag& xml, const string& name, vector<string>&
 
 	if(xml.get(name, bag))
 	{
-		const size_t numberOfFiles = bag.getNumInstances("file");
+		const size_t numberOfFiles = bag.count("file");
 		for(size_t i=0; i<numberOfFiles; ++i)
 		{
 			string fileName;
