@@ -32,7 +32,8 @@ public:
 
 	//Mouse/keystate
 	int MouseX, MouseY, MouseWheelDelta;
-	bool MouseLeft, MouseMiddle, MouseRight, Keys[SDLK_LAST], Quit;
+	bool MouseLeft, MouseMiddle, MouseRight, Quit;
+	map<SDLKey,bool> Keys; // SDLKey values are not consecutive in the newer versions of SDL
 
 	int LastMouseX, LastMouseY;
 	int DeltaMouseX, DeltaMouseY;

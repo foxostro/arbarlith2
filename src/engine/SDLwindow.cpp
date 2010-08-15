@@ -151,13 +151,11 @@ SDLInput::SDLInput()
 {
 	MouseX = MouseY = MouseWheelDelta = 0;
 	MouseLeft = MouseMiddle = MouseRight = resizePending = Quit = false;
-	for(size_t s = 0; s < SDLK_LAST; ++s)
-		Keys[s] = false;
-
 	LastMouseX = 0;
 	LastMouseY = 0;
 	DeltaMouseX = 0;
 	DeltaMouseY = 0;
+	Keys.clear();
 }
 
 void SDLInput::Pump()
