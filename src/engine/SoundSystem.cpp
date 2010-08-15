@@ -144,6 +144,7 @@ void SoundSystem::play(const string &fileName)
 
 void SoundSystem::playMusic(const string &fileName)
 {
+#if 0
 	if(music != 0)
 	{
 		Mix_HaltMusic();
@@ -164,6 +165,9 @@ void SoundSystem::playMusic(const string &fileName)
 	Mix_PlayMusic((Mix_Music*)music, -1);
 
 	TRACE("Playing music: " + fileName);
+#else
+	TRACE("Music has been disabled at compilation. Not playing " + fileName);
+#endif
 }
 
 void SoundSystem::setSoundEffectVolume(float volume)
