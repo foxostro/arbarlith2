@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -80,14 +80,14 @@ void TileGate::load(const PropertyBag &xml)
 {
 	Actor::load(xml);
 
-	xml.getSym(lockedHeight);
-	xml.getSym(unlockedHeight);
-	xml.getSym(lockTime);
-	xml.getSym(unlockTime);
-	xml.getSym(reactionDelay);
-	xml.getSym(initiallyLocked);
-	xml.getSym(unlockSfx);
-	xml.getSym(lockSfx);
+	xml.get("lockedHeight", lockedHeight);
+	xml.get("unlockedHeight", unlockedHeight);
+	xml.get("lockTime", lockTime);
+	xml.get("unlockTime", unlockTime);
+	xml.get("reactionDelay", reactionDelay);
+	xml.get("initiallyLocked", initiallyLocked);
+	xml.get("unlockSfx", unlockSfx);
+	xml.get("lockSfx", lockSfx);
 
 	// the tile gate should be made impassable only by its height
 	getTile().setPassable(true);

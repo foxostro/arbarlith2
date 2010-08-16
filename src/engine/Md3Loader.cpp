@@ -320,12 +320,12 @@ AnimationController* Md3Loader::loadFromFile(const string &fileName) const
 		float fps=0;
 
 		xml.get("animation", animation, i);
-		animation.getSym(name);
-		animation.getSym(priority);
-		animation.getSym(looping);
-		animation.getSym(start);
-		animation.getSym(length);
-		animation.getSym(fps);
+		animation.get("name", name);
+		animation.get("priority", priority);
+		animation.get("looping", looping);
+		animation.get("start", start);
+		animation.get("length", length);
+		animation.get("fps", fps);
 
 		// Add it to the controller
 		AnimationSequence animationSequence(keyFrames, name, priority, looping, start, length, fps);

@@ -127,12 +127,5 @@ public:
 
 } // namespace Engine
 
-// Gets a value from XML when the tag name and symbol name are the same
-#define getSym(SYMBOL) get(STRINGIFY(SYMBOL), (SYMBOL))
-
-// Puts a value from XML when the tag name and symbol name are the same
-#define addSym(SYMBOL) add(STRINGIFY(SYMBOL), (SYMBOL))
-
-
 #endif
 

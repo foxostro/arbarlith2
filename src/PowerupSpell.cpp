@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -59,7 +59,7 @@ void PowerupSpell::load(const PropertyBag &xml)
 {
 	Powerup::load(xml);
 
-	xml.getSym(spellIdx);
+	xml.get("spellIdx", spellIdx);
 }
 
 bool PowerupSpell::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const

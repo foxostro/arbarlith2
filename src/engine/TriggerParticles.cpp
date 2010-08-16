@@ -66,8 +66,8 @@ void TriggerParticles::load(const PropertyBag &xml)
 {
 	Trigger::load(xml);
 
-	xml.getSym(pfxFileName);
-	xml.getSym(pfxLocation);
+	xml.get("pfxFileName", pfxFileName);
+	xml.get("pfxLocation", pfxLocation);
 
 	showModel = false;
 }

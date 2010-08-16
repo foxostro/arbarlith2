@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -88,11 +88,11 @@ void Spell::load(PropertyBag &xml, Engine::World *world, Engine::OBJECT_ID owner
 
 	destroy();
 
-	xml.getSym(descriptionText);
-	xml.getSym(castTime);
-	xml.getSym(coolDownTime);
-	xml.getSym(activeIcon);
-	xml.getSym(inactiveIcon);
+	xml.get("descriptionText", descriptionText);
+	xml.get("castTime", castTime);
+	xml.get("coolDownTime", coolDownTime);
+	xml.get("activeIcon", activeIcon);
+	xml.get("inactiveIcon", inactiveIcon);
 
 	loadIcon(activeIcon, inactiveIcon);
 
@@ -117,8 +117,8 @@ void Spell::create(PropertyBag &xml)
 {
 	destroy();
 
-	xml.getSym(castTime);
-	xml.getSym(coolDownTime);
+	xml.get("castTime", castTime);
+	xml.get("coolDownTime", coolDownTime);
 }
 
 void Spell::drawIcon(bool active, const vec3 &center, float size) const

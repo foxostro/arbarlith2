@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2003-2007,2009 Game Creation Society
+Copyright (c) 2003-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -400,18 +400,18 @@ void Creature::load(const PropertyBag &Bag)
 {
 	Actor::load(Bag);
 
-	Bag.getSym(healthPoints);
-	Bag.getSym(maxHealthPoints);
-	Bag.getSym(attackDamage);
-	Bag.getSym(weaponMultiplier);
-	Bag.getSym(armorMultiplier);
-	Bag.getSym(attackCoolDown);
-	Bag.getSym(attackCoolDownMultiplier);
-	Bag.getSym(spellCoolDownMultiplier);
-	Bag.getSym(attackChargeTime);
-	Bag.getSym(damagePercentToStun);
-	Bag.getSym(maxKnockBackTime);
-	Bag.getSym(knockBackSpeed);
+	Bag.get("healthPoints", healthPoints);
+	Bag.get("maxHealthPoints", maxHealthPoints);
+	Bag.get("attackDamage", attackDamage);
+	Bag.get("weaponMultiplier", weaponMultiplier);
+	Bag.get("armorMultiplier", armorMultiplier);
+	Bag.get("attackCoolDown", attackCoolDown);
+	Bag.get("attackCoolDownMultiplier", attackCoolDownMultiplier);
+	Bag.get("spellCoolDownMultiplier", spellCoolDownMultiplier);
+	Bag.get("attackChargeTime", attackChargeTime);
+	Bag.get("damagePercentToStun", damagePercentToStun);
+	Bag.get("maxKnockBackTime", maxKnockBackTime);
+	Bag.get("knockBackSpeed", knockBackSpeed);
 
 	// Load sound FX lists
 	loadList(Bag, "dyingSounds",  dyingSounds);

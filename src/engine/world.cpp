@@ -559,17 +559,17 @@ void World::reloadPlayers(const PropertyBag &playerBag)
 
 	string file, type;
 
-	if(playerBag.getSym(file))
+	if(playerBag.get("file", file))
 	{
 		// The type is defined in an external file
 		PropertyBag external;
 		external.loadFromFile(file);
-		external.getSym(type);
+		external.get("type", type);
 	}
 	else
 	{
 		// No exernal data file
-		playerBag.getSym(type);
+		playerBag.get("type", type);
 	}
 
 	const int numOfJoysticks = SDL_NumJoysticks();

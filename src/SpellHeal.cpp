@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -48,9 +48,9 @@ void SpellHeal::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ow
 {
 	Spell::load(xml, zone, ownerID);
 
-	xml.getSym(healValue);
-	xml.getSym(healTime);
-	xml.getSym(spellRadius);
+	xml.get("healValue", healValue);
+	xml.get("healTime", healTime);
+	xml.get("spellRadius", spellRadius);
 }
 
 void SpellHeal::castSpell(void)

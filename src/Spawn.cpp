@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -92,10 +92,10 @@ void Spawn::load(const PropertyBag &xml)
 {
 	Listener::load(xml);
 
-	xml.getSym(monsterDataFile);
-	xml.getSym(minMonsters);
-	xml.getSym(maxMonsters);
-	xml.getSym(separationDistance);
+	xml.get("monsterDataFile", monsterDataFile);
+	xml.get("minMonsters", minMonsters);
+	xml.get("maxMonsters", maxMonsters);
+	xml.get("separationDistance", separationDistance);
 }
 
 bool Spawn::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

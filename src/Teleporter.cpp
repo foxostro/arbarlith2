@@ -88,7 +88,7 @@ void Teleporter::load(const PropertyBag &xml)
 {
 	Switch::load(xml);
 
-	xml.getSym(destinationPosition);
+	xml.get("destinationPosition", destinationPosition);
 }
 
 bool Teleporter::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

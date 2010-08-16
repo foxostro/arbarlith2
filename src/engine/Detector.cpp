@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -96,9 +96,9 @@ void Detector::load(const PropertyBag &xml)
 {
 	Trigger::load(xml);
 
-	xml.getSym(signalSuccess);
-	xml.getSym(signalFail);
-	xml.getSym(onlyTripOnce);
+	xml.get("signalSuccess", signalSuccess);
+	xml.get("signalFail", signalFail);
+	xml.get("onlyTripOnce", onlyTripOnce);
 }
 
 bool Detector::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

@@ -642,10 +642,10 @@ void Actor::load(const PropertyBag &Bag)
 	Bag.get("speed",  topSpeed);
 	Bag.get("name",   m_strName);
 
-	Bag.getSym(showModel);
-	Bag.getSym(solid);
-	Bag.getSym(floating);
-	Bag.getSym(frictionAcceleration);
+	Bag.get("showModel", showModel);
+	Bag.get("solid", solid);
+	Bag.get("floating", floating);
+	Bag.get("frictionAcceleration", frictionAcceleration);
 
 	// Set the orientation matrix
 	vec3 zAxis (0,0,1), yAxis(0,1,0), xAxis(1,0,0);
@@ -675,8 +675,8 @@ void Actor::load(const PropertyBag &Bag)
 	}
 
 	// Is the object supposed to be lit?
-	Bag.getSym(isLit);
-	Bag.getSym(castShadows);
+	Bag.get("isLit", isLit);
+	Bag.get("castShadows", castShadows);
 }
 
 bool Actor::ChangeAnimation(const string &name, float speed)
