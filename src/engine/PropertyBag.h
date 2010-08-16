@@ -3,9 +3,13 @@
 
 #include <string>
 #include <map>
-#include <boost/any.hpp>
+#include <boost/lexical_cast.hpp>
+
+#include "myassert.h"
 
 namespace Engine {
+
+class PropertyBag_XML; // class protoype
 
 /** Base exception type for errors encountered by PropertyBag */
 class PropertyBagException : public std::exception
@@ -26,6 +30,9 @@ public:
 /** Maps from string names to arbitrary values. Used for configuration data. */
 class PropertyBag
 {
+private:
+	PropertyBag_XML * xml;
+
 public:
 	~PropertyBag(void);
 	PropertyBag(void);
@@ -50,7 +57,7 @@ public:
 	void removeAll(const std::string & key);
 
 	/**
-	Remove a single instances of the indicated property.
+	Remove a single instance of the indicated property.
 	@param key Name of the property to remove
 	@param idx Index of the instance to remove
 	*/
@@ -62,39 +69,63 @@ public:
 	/** Returns true if any number of properties exist with the given name. */
 	bool exists(const std::string & k) const;
 
-	template<typename T>
-	void set(const std::string & k, const T & p)
-	{
-		set_any(k, boost::any(p));
-	}
+	// For adding and getting PropertyBag objects
+	void add(const std::string & k, const PropertyBag & p);
+	bool get(const std::string & k, PropertyBag & p, size_t idx = 0) const;
+	
+	// For adding and getting boolean objects
+	void add(const std::string & k, bool p);
+	bool get(const std::string & k, bool & p, size_t idx = 0) const;
+	
+	// For adding and getting string objects
+	void add(const std::string & k, const std::string & p);
+	bool get(const std::string & k, std::string & p, size_t idx = 0) const;
 
+	// For adding generic-typed objects: anything that can be lexical_cast'd
 	template<typename T>
 	void add(const std::string & k, const T & p)
 	{
-		set_any(k, boost::any(p));
+		try
+		{
+			add(k, boost::lexical_cast<std::string>(p));
+		}
+		catch(boost::bad_lexical_cast & e)
+		{
+			std::string what = std::string("Could not add \"") + k
+				+ std::string("\" to bag: ")
+				+ std::string(e.what());
+			throw PropertyBagException(what);
+		}
 	}
 
-	/** Return true if the property was found. */
+	// For getting generic-typed objects: anything that can be lexical_cast'd
 	template<typename T>
 	bool get(const std::string & k, T & p, size_t idx = 0) const
 	{
-		boost::any a;
+		std::string str;
 
-		if(get_any(k, a, idx)) {
-			p = boost::any_cast<T>(a);
+		if(get(k, str, idx)) {
+			try
+			{
+				p = boost::lexical_cast<T>(str);
+			}
+			catch(boost::bad_lexical_cast & e)
+			{
+				std::string what = std::string("For key \"") + k
+					+ std::string("\" got value \"")
+					+ std::string("\", but don't know what to do with it: ")
+					+ std::string(e.what());
+				throw PropertyBagException(what);
+			}
+
 			return true;
+		} else {
+			return false;
 		}
-
-		return false;
 	}
-	
-	bool get_any(const std::string & k, boost::any & p, size_t idx=0) const;
-	void set_any(const std::string & k, boost::any p);
 };
 
 } // namespace Engine
-
-
 
 // Gets a value from XML when the tag name and symbol name are the same
 #define getSym(SYMBOL) get(STRINGIFY(SYMBOL), (SYMBOL))

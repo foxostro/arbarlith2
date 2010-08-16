@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2005-2007,2009 Game Creation Society
+Copyright (c) 2005-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -34,8 +34,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cmath>
 #include <cfloat>
 #include <boost/tokenizer.hpp>
-
-#include "primitivedatatypes.h"
 
 namespace Engine {
 
@@ -119,14 +117,13 @@ Represents a mathematical vector in space up to four dimensions.
 @author Andrew Fox
 @version January 2006
 */
-class vec4 : public XmlDataType
+class vec4
 {
 public:
 	float x, y, z, w;
 
 	/**	Default constructor. Sets all coordinates to zero */
 	vec4(void)
-	: XmlDataType()
 	{
 	    x = 0.0f;
 	    y = 0.0f;
@@ -139,7 +136,6 @@ public:
 	@param vec The vector to copy
 	*/
 	vec4(const vec4 &vec)
-	: XmlDataType()
 	{
 		set(vec);
 	}
@@ -150,7 +146,6 @@ public:
 	@param p The point
 	*/
 	vec4(const Point2 &p)
-	: XmlDataType()
 	{
 		set(p);
 	}
@@ -161,7 +156,6 @@ public:
 	@param p The point
 	*/
 	vec4(const Point3 &p)
-	: XmlDataType()
 	{
 		set(p);
 	}
@@ -171,7 +165,6 @@ public:
 	@param p The point
 	*/
 	vec4(const Point4 &p)
-	: XmlDataType()
 	{
 		set(p);
 	}
@@ -184,7 +177,6 @@ public:
 	@param w W-Coordinate
 	*/
 	vec4(float x, float y, float z=0.0f, float w=0.0f)
-	: XmlDataType()
 	{
 		this->x = x;
 		this->y = y;
@@ -599,10 +591,7 @@ public:
 	Serializes the vector as a string
 	@return The string to represent the vector
 	*/
-	string ToString(void) const
-	{
-		return string("&vec(") + ftoa(x, 4) + ", " + ftoa(y, 4) + ", " + ftoa(z, 4) + ")";
-	}
+	string ToString(void) const;
 };
 
 /**
@@ -620,5 +609,10 @@ Three-Dimensional vector
 typedef vec4 vec3;
 
 } // namespace Engine
+
+
+istream& operator>>(istream &in, Engine::vec4 & v);
+ostream& operator<<(ostream &out, const Engine::vec4 & v);
+
 
 #endif

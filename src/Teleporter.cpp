@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2003-2007,2009 Game Creation Society
+Copyright (c) 2003-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -77,11 +77,11 @@ void Teleporter::createToolBar(ListPaneWidget *pane)
 {
 	// hide options from base classes other than the Actor
 
-	pane->addElement(new ToggleWidgetText(		"Lit",				&isLit));
-	pane->addElement(new ListElementTweaker<float>(	"Height (m)",			&m_desiredHeight));
-	pane->addElement(new ListElementTweakerString(	"Model",			&m_strModelFilename));
-	pane->addElement(new ListElementTweakerXML(	"Position",			&position));
-	pane->addElement(new ListElementTweakerXML(	"Destination Position",	&destinationPosition));
+	pane->addElement(new ToggleWidgetText("Lit", &isLit));
+	pane->addElement(new ListElementTweaker<float>("Height (m)", &m_desiredHeight));
+	pane->addElement(new ListElementTweakerString("Model", &m_strModelFilename));
+	pane->addElement(new ListElementTweaker<vec4>("Position", &position));
+	pane->addElement(new ListElementTweaker<vec4>("Destination Position", &destinationPosition));
 }
 
 void Teleporter::load(const PropertyBag &xml)

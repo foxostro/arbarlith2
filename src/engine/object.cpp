@@ -741,13 +741,12 @@ void Actor::createToolBar(ListPaneWidget *pane)
 	ASSERT(pane!=0, "The actor pane was expected to have been created before now!");
 
 	// Create a new tool bar
-	pane->addElement(new ToggleWidgetText(		"Cast Shadows",	&castShadows));
-	pane->addElement(new ToggleWidgetText(		"Lit",			&isLit));
-	pane->addElement(new ListElementTweakerString(	"Name",			&m_strName));
-	pane->addElement(new ListElementTweaker<float>(	"Height (m)",		&m_desiredHeight));
-	pane->addElement(new ToggleWidgetText(		"Visible",		&showModel));
-	/*pane->addElement(new ListElementTweakerString("Model",		&m_strModelFilename));*/
-	pane->addElement(new ListElementTweakerXML(	"Position",		&position));
+	pane->addElement(new ToggleWidgetText("Cast Shadows", &castShadows));
+	pane->addElement(new ToggleWidgetText("Lit", &isLit));
+	pane->addElement(new ListElementTweakerString("Name", &m_strName));
+	pane->addElement(new ListElementTweaker<float>("Height (m)", &m_desiredHeight));
+	pane->addElement(new ToggleWidgetText("Visible", &showModel));
+	pane->addElement(new ListElementTweaker<vec3>("Position", &position));
 }
 
 void Actor::sync(void)

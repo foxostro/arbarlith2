@@ -8,9 +8,11 @@
 namespace Engine {
 
 PropertyBag::~PropertyBag(void)
-{}
+{
+	clear();
+}
 
-PropertyBag::PropertyBag(void)
+PropertyBag::PropertyBag(void) : xml(NULL)
 {
 	clear();
 }
@@ -22,44 +24,50 @@ PropertyBag::PropertyBag(const PropertyBag &copyMe)
 
 void PropertyBag::clear(void)
 {
-	STUB;
+	delete xml;
+	xml = new PropertyBag_XML();
 }
 
 void PropertyBag::copy(const PropertyBag & copyMe)
 {
-	STUB;
+	clear();
+	ASSERT(copyMe.xml, "copyMe.xml was NULL which is never expected");
+	(*xml) = (*copyMe.xml);
 }
 
 PropertyBag PropertyBag::clone(void)
 {
-	STUB;
-	return *((PropertyBag *)NULL);
+	return PropertyBag(*this);
 }
 
 void PropertyBag::removeAll(const std::string &key)
 {
-	STUB;
+	ASSERT(xml, "xml was NULL which is never expected");
+	xml->remove(key);
 }
 
 void PropertyBag::remove(const std::string &key, size_t idx)
 {
-	STUB;
+	ASSERT(xml, "xml was NULL which is never expected");
+	xml->remove(key, idx);
 }
 
 void PropertyBag::saveToFile(const std::string & fileName) const
 {
-	STUB;
+	ASSERT(xml, "xml was NULL which is never expected");
+	xml->saveToFile(fileName);
 }
 
-void PropertyBag::loadFromFile(const std::string & filename)
+void PropertyBag::loadFromFile(const std::string & fileName)
 {
-	STUB;
+	ASSERT(xml, "xml was NULL which is never expected");
+	xml->loadFromFile(fileName);
 }
 
 size_t PropertyBag::count(const std::string &key) const
 {
-	STUB;
-	return 0;
+	ASSERT(xml, "xml was NULL which is never expected");
+	return xml->getNumInstances(key);
 }
 
 bool PropertyBag::exists(const std::string & k) const
@@ -69,25 +77,51 @@ bool PropertyBag::exists(const std::string & k) const
 
 bool PropertyBag::operator==(const PropertyBag &r) const
 {
-	STUB;
-	return false;
+	ASSERT(xml, "xml was NULL which is never expected");
+	ASSERT(r.xml, "r.xml was NULL which is never expected");
+	return (*r.xml) == (*xml);
 }
 
 PropertyBag & PropertyBag::operator=(const PropertyBag &r)
 {
-	STUB;
+	copy(r);
 	return(*this);
 }
 
-bool PropertyBag::get_any(const string & k, boost::any & p, size_t idx) const
+void PropertyBag::add(const std::string & k, const PropertyBag & p)
 {
-	STUB;
-	return false;
+	ASSERT(xml, "xml was NULL; should never be NULL.");
+	xml->add(k, *p.xml);
 }
 
-void PropertyBag::set_any(const string & k, boost::any p)
+bool PropertyBag::get(const std::string & k, PropertyBag & p, size_t idx) const
 {
-	STUB;
+	ASSERT(xml, "xml was NULL; should never be NULL.");
+	return xml->get(k, *p.xml, idx);
+}
+
+void PropertyBag::add(const string & k, bool p)
+{
+	ASSERT(xml, "xml was NULL which is never expected");
+	xml->add(k, p);
+}
+
+bool PropertyBag::get(const string& k, bool & p, size_t idx) const
+{
+	ASSERT(xml, "xml was NULL which is never expected");
+	return xml->get(k, p, idx);
+}
+
+void PropertyBag::add(const string & k, const std::string & p)
+{
+	ASSERT(xml, "xml was NULL which is never expected");
+	xml->add(k, p);
+}
+
+bool PropertyBag::get(const string& k, std::string & p, size_t idx) const
+{
+	ASSERT(xml, "xml was NULL which is never expected");
+	return xml->get(k, p, idx);
 }
 
 } // namespace Engine
