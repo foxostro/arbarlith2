@@ -1,5 +1,5 @@
 /*
-Modified by Andrew Fox in 2003-2007
+Modified by Andrew Fox in 2003-2007,2010
 E-Mail: mailto:foxostro@gmail.com
 
 Original Source:
@@ -16,8 +16,6 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 
 using std::string;
 using std::multimap;
-
-#include "primitivedatatypes.h"
 
 namespace Engine {
 
@@ -226,16 +224,7 @@ public:
 	@param key Key value
 	@return The number of times the key is present in the data
 	*/
-	size_t getNumInstances(const string &key) const;
-
-	/** Adds a generic XmlDataType */
-	inline void add(const string &key, const XmlDataType &data)
-	{
-		add(key, (const XmlDataType*)(&data));
-	}
-
-	/** Adds a generic XmlDataType */
-	void add(const string &key, const XmlDataType *data);
+	size_t count(const string &key) const;
 
 	/** Adds a C string */
 	void add(const string& key, const char* data, bool convert = true);
@@ -261,15 +250,6 @@ public:
 	/** Adds a PropertyBagImpl */
 	void add(const string &key, const PropertyBagImpl &contents);
 
-	/** Gets a generic XmlDataType */
-	inline bool get(const string &key, XmlDataType &dest, size_t instance = 0) const
-	{
-		return get(key, (XmlDataType*)(&dest), instance);
-	}
-
-	/** Gets a generic XmlDataType */
-	bool get(const string &key, XmlDataType *dest, size_t instance = 0) const;
-
 	/** Gets a string */
 	bool get(const string &key, string &dest, size_t instance = 0) const;
 
@@ -293,30 +273,6 @@ public:
 
 	/** Gets a PropertyBagImpl */
 	bool get(const string &key, PropertyBagImpl &dest, size_t instance = 0) const;
-
-	/** Gets a string */
-	string getString(const string &key, size_t instance = 0) const;
-
-	/** Gets an int */
-	int getInt(const string &key, size_t instance = 0) const;
-	
-	/** Gets a uint */
-	unsigned int getUint(const string &key, size_t instance = 0) const;
-
-	/** Gets a size_t */
-	size_t getSizeT(const string &key, size_t instance = 0) const;
-
-	/** Gets a double */
-	double getDouble(const string &key, size_t instance = 0) const;
-
-	/** Gets a float */
-	float getFloat(const string &key, size_t instance = 0) const;
-
-	/** Gets a bool */
-	bool getBool(const string &key, size_t instance = 0) const;
-
-	/** Gets a PropertyBagImpl */
-	PropertyBagImpl getBag(const string &key, size_t instance = 0) const;
 
 private:
 	/**

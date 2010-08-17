@@ -65,7 +65,7 @@ void PropertyBag::loadFromFile(const std::string & fileName)
 size_t PropertyBag::count(const std::string &key) const
 {
 	ASSERT(pimpl, "pimpl was NULL which is never expected");
-	return pimpl->getNumInstances(key);
+	return pimpl->count(key);
 }
 
 bool PropertyBag::exists(const std::string & k) const

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -33,14 +33,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "TweakerWidget.h"
 #include "ListElementWidget.h"
-#include "primitivedatatypes.h"
 
 
 namespace Engine {
 
 
 
-/** This is a tweaker widet that may be used as an element in a list widget */
+/** This is a tweaker widget that may be used as an element in a list widget */
 template<class TYPE>
 class ListElementTweaker : public ListElementWidget
 {
@@ -94,7 +93,9 @@ public:
 
 
 
-/** This is a tweaker widet that may be used as an element in a list widget */
+/** This is a tweaker widget that may be used as an element in a list widget.
+ * @todo Can the ListElementTweakerString class be axed entirely?
+ */
 class ListElementTweakerString : public ListElementWidget
 {
 private:
@@ -109,58 +110,6 @@ public:
 	ListElementTweakerString(const string &label, string *value)
 	{
 		tweaker = new TweakerWidgetString(label, value, vec2(12.0f,1.0f));
-		tweaker->dumb = true;
-		AddChild(tweaker);
-	}
-
-	/**
-	Processes the widget
-	@param deltaTime The milliseconds since the last update
-	*/
-	virtual void update(float deltaTime)
-	{
-		// Process the widget events
-		ListElementWidget::update(deltaTime);
-	}
-
-	/** Called in the even of a mouse enter event */
-	virtual void onMouseEnter(void)
-	{
-		tweaker->onMouseEnter();
-		ListElementWidget::onMouseEnter();
-	}
-
-	/** Called in the even of a mouse exit event */
-	virtual void onMouseExit(void)
-	{
-		tweaker->onMouseExit();
-		ListElementWidget::onMouseExit();
-	}
-
-	/** Called in the even of a mouse click */
-	virtual void onMouseClick(void)
-	{
-		tweaker->onMouseClick();
-		ListElementWidget::onMouseClick();
-	}
-};
-
-
-/** This is a tweaker widet that may be used as an element in a list widget */
-class ListElementTweakerXML : public ListElementWidget
-{
-private:
-	TweakerWidgetXML *tweaker;
-
-public:
-	/**
-	Constructs the widget
-	@param label The label for the watched value
-	@param value The value that will be watched
-	*/
-	ListElementTweakerXML(const string &label, XmlDataType *value)
-	{
-		tweaker = new TweakerWidgetXML(label, value, vec2(12.0f,1.0f));
 		tweaker->dumb = true;
 		AddChild(tweaker);
 	}

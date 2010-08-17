@@ -1,5 +1,5 @@
 /*
-Modified by Andrew Fox in 2003-2007,2009
+Modified by Andrew Fox in 2003-2007,2009,2010
 E-Mail: mailto:foxostro@gmail.com
 
 Original Source:
@@ -179,15 +179,6 @@ void PropertyBagImpl::add(const string& key, float data)
 	add(key, ftoa(data, 4));
 }
 
-void PropertyBagImpl::add(const string& key, const XmlDataType *pData)
-{
-	ASSERT(pData!=0, "Cannot add a NULL object to the Prop Bag");
-
-	data.insert(make_pair(key, new PropertyBagString(key,
-	                                                 pData->ToString(),
-	                                                 false)));
-}
-
 void PropertyBagImpl::add(const string& key, const PropertyBagImpl &contents)
 {
 	if(!contents.data.empty())
@@ -205,7 +196,7 @@ void PropertyBagImpl::remove(const string &key)
 		data.erase(i);
 	}
 
-	ASSERT(getNumInstances(key)==0,
+	ASSERT(count(key)==0,
 	       "Failed to remove items sharing key: " + key);
 }
 
@@ -450,15 +441,15 @@ bool PropertyBagImpl::loadMergeFromString(const string &data, bool allowInherita
 			// Remove the <@inherit> ... </@inherit> element
 			data.remove(inheritTag);
 
-            /*
-            And replace it with another special tag.
-            The aim is to prevent re-inheritance of the same base,
-            and still allow clients to see lineage.
-            */
-            if(data.getNumInstances("@parentFileName") < 1) // only the topmost ancestor
-            {
-                data.add("@parentFileName", parentFileName);
-            }
+			/*
+			And replace it with another special tag.
+			The aim is to prevent re-inheritance of the same base,
+			and still allow clients to see lineage.
+			*/
+			if(data.count("@parentFileName") < 1) // only the topmost ancestor
+			{
+				data.add("@parentFileName", parentFileName);
+			}
 
 			// 'data' contains the entire merged structure
 			(*this) = data;
@@ -553,20 +544,8 @@ bool PropertyBagImpl::get(const string& key, bool &dest, size_t instance) const
 }
 
 bool PropertyBagImpl::get(const string& key,
-					  XmlDataType *dest,
-					  size_t instance) const
-{
-	ASSERT(dest!=0, "Cannot save to a NULL object");
-
-	string str;
-	if (!get(key, str, instance)) return(false);
-	dest->FromString(str.c_str());
-	return(true);
-}
-
-bool PropertyBagImpl::get(const string& key,
-					  PropertyBagImpl &dest,
-					  size_t instance) const
+                          PropertyBagImpl &dest,
+                          size_t instance) const
 {
 	if(data.find(key)==data.end())
 		return false;
@@ -574,7 +553,7 @@ bool PropertyBagImpl::get(const string& key,
 	PropertyMap::const_iterator iter;
 
 	// check that the desired instance exists
-	ASSERT(instance<getNumInstances(key),
+	ASSERT(instance < count(key),
 		   "parameter \'instance\' is incorrect: " + itoa((int)instance));
 
 	// go to the desired instance
@@ -597,101 +576,7 @@ bool PropertyBagImpl::get(const string& key,
 	}
 }
 
-string PropertyBagImpl::getString(const string &key, size_t instance) const
-{
-    ASSERT(getNumInstances(key) > instance,
-           "Not enough instances of key: " + key +
-           " (wanted instance #" + itoa((int)instance) +
-           " of only " + itoa((int)getNumInstances(key)) + ")");
-
-	string x = "nill";
-	if(!get(key, x, instance))
-	{
-        FAIL("Failed to get string from PropertyBagImpl: " + key +
-             " (wanted instance #" + itoa((int)instance) +
-             " of " + itoa((int)getNumInstances(key)) + ")");
-	}
-	return x;
-}
-
-int PropertyBagImpl::getInt(const string &key, size_t instance) const
-{
-	int x = 0xdeadbeaf;
-	if(!get(key, x, instance))
-	{
-		FAIL("Failed to get int from PropertyBagImpl: " + key +
-		     " (instance #)" + itoa((int)instance));
-	}
-	return x;
-}
-
-unsigned int PropertyBagImpl::getUint(const string &key, size_t instance) const
-{
-	unsigned int x = 0xdeadbeaf;
-	if(!get(key, x, instance))
-	{
-		FAIL("Failed to get int from PropertyBagImpl: " + key +
-		     " (instance #)" + itoa((int)instance));
-	}
-	return x;
-}
-
-size_t PropertyBagImpl::getSizeT(const string &key, size_t instance) const
-{
-	size_t x = 0xdeadbeaf;
-	if(!get(key, x, instance))
-	{
-		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
-		     " (instance #)" + itoa((int)instance) );
-	}
-	return x;
-}
-
-double PropertyBagImpl::getDouble(const string &key, size_t instance) const
-{
-	double x = 0.0;
-	if(!get(key, x, instance))
-	{
-		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
-		     " (instance #)" + itoa((int)instance) );
-	}
-	return x;
-}
-
-float PropertyBagImpl::getFloat(const string &key, size_t instance) const
-{
-	float x = 0.0f;
-	if(!get(key, x, instance))
-	{
-		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
-		     " (instance #)" + itoa((int)instance) );
-	}
-	return x;
-}
-
-bool PropertyBagImpl::getBool(const string &key, size_t instance) const
-{
-	bool x = false;
-	if(!get(key, x, instance))
-	{
-		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
-		     " (instance #)" + itoa((int)instance) );
-	}
-	return x;
-}
-
-PropertyBagImpl PropertyBagImpl::getBag(const string &key, size_t instance) const
-{
-	PropertyBagImpl x;
-	if(!get(key, x, instance))
-	{
-		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
-		     " (instance #)" + itoa((int)instance) );
-	}
-	return x;
-}
-
-size_t PropertyBagImpl::getNumInstances(const string &key) const
+size_t PropertyBagImpl::count(const string &key) const
 {
 	return data.count(key);
 }
