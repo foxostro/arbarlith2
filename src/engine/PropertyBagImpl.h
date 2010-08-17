@@ -226,6 +226,12 @@ public:
 	*/
 	size_t count(const string &key) const;
 
+	/** Determines whether the key exists or not. */
+	inline bool exists(const string &key) const
+	{
+		return data.find(key) != data.end();
+	}
+
 	/** Adds a string */
 	void add(const string &key, const string &data, bool convert = true);
 

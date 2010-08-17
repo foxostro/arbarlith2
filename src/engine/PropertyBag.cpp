@@ -70,7 +70,8 @@ size_t PropertyBag::count(const std::string &key) const
 
 bool PropertyBag::exists(const std::string & k) const
 {
-	return count(k) > 0;
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	return pimpl->exists(k);
 }
 
 bool PropertyBag::operator==(const PropertyBag &r) const
