@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -345,8 +345,13 @@ void ActorSet::spawnNow(const string &dataFile, const vec3 &position, World *zon
 
 Actor& ActorSet::spawnNow(const PropertyBag &data, World *zone)
 {
-	OBJECT_ID id = create(data.getString("type"), zone);
-	Actor &object = get(id);
+	string type;
+	OBJECT_ID id;
+
+	data.get("type", type);
+	id = create(type, zone);
+	
+	Actor & object = get(id);
 	object.load(data);
 
 	return object;
@@ -363,12 +368,10 @@ void ActorSet::load(const PropertyBag &xml, World *world)
 
 	TRACE("Loading ActorSet...");
 
-	for(size_t i=0, numObjects=xml.getNumInstances("object"); i<numObjects; ++i)
+	for(size_t i=0, numObjects=xml.count("object"); i<numObjects; ++i)
 	{
 		PropertyBag ThisObjBag;
-
 		xml.get("object", ThisObjBag, i);
-
 		spawnNow(ThisObjBag, world);
 	}
 

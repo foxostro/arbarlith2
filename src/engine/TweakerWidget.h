@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _TWEAKER_WIDGET_H_
 #define _TWEAKER_WIDGET_H_
 
-#include "primitivedatatypes.h"
 #include "EditWidget.h"
 #include <sstream>
 #include <string>
@@ -162,68 +161,6 @@ public:
 	}
 
 	/** Called in the event that focus is lost */
-	virtual void onLostFocus(void)
-	{
-		EditWidget::onLostFocus();
-		getValue();
-	}
-};
-
-class TweakerWidgetXML : public EditWidget
-{
-private:
-	XmlDataType *myValue;
-	string myLabel;
-
-public:
-	TweakerWidgetXML(const string &label, XmlDataType *value, const vec2 &pos)
-	:EditWidget("null", pos)
-	{
-		myLabel = label;
-		myValue = value;
-	}
-
-	virtual void update(float deltaTime)
-	{
-		EditWidget::update(deltaTime);
-
-		if(!hasFocus())
-		{
-			string label = myLabel + string(": ") + getString();
-
-			// If the text is too long, we have to cut it off
-			if(label.size() > 27)
-			{
-				label = label.substr(0,23) + "...";
-			}
-
-			setLabel(label);
-		}
-	}
-
-	virtual string getString(void)
-	{
-		XmlDataType *value = static_cast<XmlDataType*>(myValue);
-		string ret = value->ToString();
-		return ret;
-	}
-
-	virtual void getValue(void)
-	{
-		string str = getLabel();
-
-		XmlDataType *value = static_cast<XmlDataType*>(myValue);
-		value->FromString(str);
-	}
-
-	/**	Called in the event that focus is acquired */
-	virtual void onAcquireFocus(void)
-	{
-		EditWidget::onAcquireFocus();
-		setLabel(getString());
-	}
-
-	/**	Called in the event that focus is lost */
 	virtual void onLostFocus(void)
 	{
 		EditWidget::onLostFocus();

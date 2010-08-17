@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -47,8 +47,8 @@ void SpellIncinerate::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT
 {
 	Spell::load(xml, zone, ownerID);
 
-	xml.getSym(damageValue);
-	xml.getSym(spellRadius);
+	xml.get("damageValue", damageValue);
+	xml.get("spellRadius", spellRadius);
 }
 
 void SpellIncinerate::castSpell(void)

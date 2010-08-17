@@ -5,7 +5,7 @@ E-Mail: mailto:foxostro@gmail.com
 2006 Richard Halstead
 E-mail: mailto:rhalstea@andrew.cmu.edu
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -551,47 +551,42 @@ protected:
 	@param data The data to save
 	*/
 	template<class T>
-	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const string &tagName, T data) const
+	bool saveTag(PropertyBag &xml,
+	             PropertyBag &editorData,
+	             const string &tagName,
+	             T data) const
 	{
 		T defaultValue;
-		bool contains = editorData.get(tagName, defaultValue);
-		if(!contains || (contains && defaultValue!=data))
-		{
+		bool contains = editorData.exists(tagName);
+
+		if(contains) {
+			editorData.get(tagName, defaultValue);
+		}
+
+		if(!contains || (contains && defaultValue!=data)) {
 			xml.add(tagName, data);
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
 
-	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const string &tagName, string data) const
+	bool saveTag(PropertyBag &xml,
+	             PropertyBag &editorData,
+	             const string &tagName,
+	             string data) const
 	{
 		string defaultValue;
-		bool contains = editorData.get(tagName, defaultValue);
-		if(!contains || (contains && defaultValue!=data))
-		{
-			xml.add(tagName, data);
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
+		bool contains = editorData.exists(tagName);
 
-	bool saveTag(PropertyBag &xml, PropertyBag &editorData, const string &tagName, vec4 data) const
-	{
-		vec4 defaultValue;
-		bool contains = editorData.get(tagName, defaultValue);
-		if(!contains || (contains && defaultValue!=data))
-		{
+		if(contains) {
+			editorData.get(tagName, defaultValue);
+		}
+
+		if(!contains || (contains && defaultValue!=data)) {
 			xml.add(tagName, data);
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}

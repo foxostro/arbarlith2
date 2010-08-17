@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2004-2007,2009 Game Creation Society
+Copyright (c) 2004-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -58,38 +58,38 @@ typedef ParticleElement* ELEMENT_PTR;
 
 ParticleBody::ParticleBody(void)
 : position(0,0,0),
-initialVelocity(0,0,0),
-initialOutwardVelocity(0),
-age(0),
-initialPosition(0,0,0),
-constantAcceleration(0,0,0)
+  initialVelocity(0,0,0),
+  initialOutwardVelocity(0),
+  age(0),
+  initialPosition(0,0,0),
+  constantAcceleration(0,0,0)
 {}
 
 ParticleBody::ParticleBody(const PropertyBag &Bag)
 : position(0,0,0),
-initialVelocity(0,0,0),
-initialOutwardVelocity(0),
-age(0),
-initialPosition(0,0,0),
-constantAcceleration(0,0,0)
+  initialVelocity(0,0,0),
+  initialOutwardVelocity(0),
+  age(0),
+  initialPosition(0,0,0),
+  constantAcceleration(0,0,0)
 {
 	load(Bag);
 }
 
 ParticleBody::ParticleBody(const ParticleBody &body)
 : position(body.position),
-initialVelocity(body.initialVelocity),
-initialOutwardVelocity(body.initialOutwardVelocity),
-age(body.age),
-initialPosition(body.initialPosition),
-constantAcceleration(body.constantAcceleration)
+  initialVelocity(body.initialVelocity),
+  initialOutwardVelocity(body.initialOutwardVelocity),
+  age(body.age),
+  initialPosition(body.initialPosition),
+  constantAcceleration(body.constantAcceleration)
 {}
 
 void ParticleBody::load(const PropertyBag &Bag)
 {
-	Bag.get("position",              &initialPosition);
-	Bag.get("acceleration",          &constantAcceleration);
-	Bag.get("initialRadialVelocity",  initialOutwardVelocity);
+	Bag.get_optional("position",              initialPosition);
+	Bag.get_optional("acceleration",          constantAcceleration);
+	Bag.get_optional("initialRadialVelocity", initialOutwardVelocity);
 
 	position = initialPosition;
 
@@ -145,7 +145,7 @@ void ParticleGraph::load(const PropertyBag &xml)
 	min = vec2(0,0);
 	max = vec2(0,0);
 
-	const size_t numberOfPoints = xml.getNumInstances("point");
+	const size_t numberOfPoints = xml.count("point");
 	for(size_t i=0; i<numberOfPoints; ++i)
 	{
 		PropertyBag PointBag;
@@ -362,16 +362,28 @@ ParticleEmitter::ParticleEmitter(const PropertyBag &data, ParticleSystem &Owner)
   looping(false),
   numberOfLifeCycles(0)
 {
-	particleTemplate = owner->getTemplate(data.getString("template"));
+	{
+		string t;
+		data.get("template", t);
+		particleTemplate = owner->getTemplate(t);
+	}
 
-	graphEmissionRate.load(data.getBag("rate"));
-	graphSizeMultiplier.load(data.getBag("sizemul"));
-	graphLifeSpan.load(data.getBag("lifespan"));
+	{
+		PropertyBag rate, sizemul, lifespan;
 
-	radiusFalloff = data.getFloat("falloff");
-	lifeSpan = data.getFloat("length");
-	looping = data.getBool("looping");
-	numberOfLifeCycles = data.getInt("cycles");
+		data.get("rate", rate);
+		data.get("sizemul", sizemul);
+		data.get("lifespan", lifespan);
+
+		graphEmissionRate.load(rate);
+		graphSizeMultiplier.load(sizemul);
+		graphLifeSpan.load(lifespan);
+	}
+
+	data.get("falloff", radiusFalloff);
+	data.get("length", lifeSpan);
+	data.get("looping", looping);
+	data.get("cycles", numberOfLifeCycles);
 }
 
 ParticleEmitter::ParticleEmitter(const ParticleEmitter &emitter)
@@ -535,9 +547,9 @@ void ParticleSystem::load(PropertyBag &Bag)
 	materials.clear();
 
 	// Get the number of tags to expect
-	const size_t nMaterials = Bag.getNumInstances("material");
-	const size_t nTemplates = Bag.getNumInstances("template");
-	const size_t nEmitters = Bag.getNumInstances("emitter");
+	const size_t nMaterials = Bag.count("material");
+	const size_t nTemplates = Bag.count("template");
+	const size_t nEmitters = Bag.count("emitter");
 
 	ASSERT(nMaterials>0, "particle system does not specify any materials");
 	ASSERT(nTemplates>0, "particle system does not specify any templates");
@@ -555,13 +567,24 @@ void ParticleSystem::load(PropertyBag &Bag)
 	// Load the materials from XML for particles
 	for(size_t i=0; i<nMaterials; ++i)
 	{
-		PropertyBag MatBag = Bag.getBag("material", i);
-
 		Material mat;
+		PropertyBag MatBag;
 
-		mat.glow = MatBag.getBool("glow");
-		mat.setName(MatBag.getString("name"));
-		mat.loadTexture(MatBag.getString("image"), 0);
+		Bag.get("material", MatBag, i);
+
+		MatBag.get("glow", mat.glow);
+
+		{
+			string name;
+			MatBag.get("name", name);
+			mat.setName(name);
+		}
+
+		{
+			string image;
+			MatBag.get("image", image);
+			mat.loadTexture(image, 0);
+		}
 
 		materials.push_back(mat);
 	}
@@ -569,14 +592,18 @@ void ParticleSystem::load(PropertyBag &Bag)
 	// Load the particle templates
 	for(size_t i = 0; i < nTemplates; ++i)
 	{
-		ParticleElement element(Bag.getBag("template", i), *this);
+		PropertyBag bag;
+		Bag.get("template", bag, i);
+		ParticleElement element(bag, *this);
 		templatesByName.insert(make_pair(element.getName(), element));
 	}
 
 	// Load the emitters
 	for(size_t i=0; i<nEmitters; ++i)
 	{
-		ParticleEmitter emitter(Bag.getBag("emitter", i), *this);
+		PropertyBag bag;
+		Bag.get("emitter", bag, i);
+		ParticleEmitter emitter(bag, *this);
 		emitters.push_back(emitter);
 	}
 

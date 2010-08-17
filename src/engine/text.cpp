@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2005-2007,2009 Game Creation Society
+Copyright (c) 2005-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -103,11 +103,8 @@ void TextWriter::setup(PropertyBag &xml)
 	fontSize.insert(make_pair(FONT_SIZE_NORMAL, n));
 	fontSize.insert(make_pair(FONT_SIZE_SMALL, s));
 
-	/*spacing = 0.75f;
-	FontBag.getSym(spacing);*/
-
 	lineHeight = 1.20f;
-	FontBag.getSym(lineHeight);
+	FontBag.get("lineHeight", lineHeight);
 
 	// Load the font image into a buffer
 	Image fontImage(fontImageFileName);

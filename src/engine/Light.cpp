@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2005-2007,2009 Game Creation Society
+Copyright (c) 2005-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -94,19 +94,15 @@ bool Light::fromXml(PropertyBag &xml)
 {
 	destroy();
 
-	xml.getSym(constantAttenuation);
-	xml.getSym(linearAttenuation);
-	xml.getSym(quadraticAttenuation);
-	xml.getSym(lightPosition);;
-	xml.getSym(pointLight);
-	xml.getSym(lightDirection);
-	xml.getSym(spotAngle);
-	xml.getSym(spotExponent);
-	xml.getSym(enable);
-	
-	/*xml.getSym(diffuse);
-	xml.getSym(ambient);
-	xml.getSym(specular);*/
+	xml.get("constantAttenuation", constantAttenuation);
+	xml.get("linearAttenuation", linearAttenuation);
+	xml.get("quadraticAttenuation", quadraticAttenuation);
+	xml.get("lightPosition", lightPosition);;
+	xml.get("pointLight", pointLight);
+	xml.get("lightDirection", lightDirection);
+	xml.get("spotAngle", spotAngle);
+	xml.get("spotExponent", spotExponent);
+	xml.get("enable", enable);
 
 	calculateMatrices();
 
@@ -117,19 +113,15 @@ PropertyBag Light::toXml(void)
 {
 	PropertyBag xml;
 
-	xml.addSym(constantAttenuation);
-	xml.addSym(linearAttenuation);
-	xml.addSym(quadraticAttenuation);
-	xml.addSym(lightPosition);;
-	xml.addSym(pointLight);
-	xml.addSym(lightDirection);
-	xml.addSym(spotAngle);
-	xml.addSym(spotExponent);
-	xml.addSym(enable);
-
-	/*xml.addSym(diffuse);
-	xml.addSym(ambient);
-	xml.addSym(specular);*/
+	xml.add("constantAttenuation", constantAttenuation);
+	xml.add("linearAttenuation", linearAttenuation);
+	xml.add("quadraticAttenuation", quadraticAttenuation);
+	xml.add("lightPosition", lightPosition);;
+	xml.add("pointLight", pointLight);
+	xml.add("lightDirection", lightDirection);
+	xml.add("spotAngle", spotAngle);
+	xml.add("spotExponent", spotExponent);
+	xml.add("enable", enable);
 	
 	return xml;
 }

@@ -1,5 +1,5 @@
 /*
-Modified in 2004-2007 by Andrew Fox
+Modified in 2004-2007,2010 by Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
 Original Author:
@@ -8,8 +8,27 @@ DigiBen@GameTutorials.com
 Co-Web Host of www.GameTutorials.com
 */
 
+#include <boost/tokenizer.hpp>
+
 #include "stdafx.h"
 #include "3dmath.h"
+
+istream& operator>>(istream &in, Engine::vec4 & v)
+{
+	string str;
+	std::getline(in, str, ')');
+	str += ")"; // we actually need to keep the delimiter
+	v.FromString(str);
+	return in;
+}
+
+ostream& operator<<(ostream &out, const Engine::vec4 & v)
+{
+	out << v.ToString();
+	return out;
+}
+
+
 
 namespace Engine {
 
@@ -34,6 +53,20 @@ bool vec4::FromString(string _s)
 	w = 0.0f;
 
 	return true;
+}
+
+string vec4::ToString(void) const
+{
+	string _x, _y, _z;
+
+	_x = boost::lexical_cast<std::string>(x);
+	_y = boost::lexical_cast<std::string>(y);
+	_z = boost::lexical_cast<std::string>(z);
+
+	return string("&vec(")
+	       + _x + string(",")
+		   + _y + string(",")
+		   + _z + string(")");
 }
 
 bool IntersectedPlane(vec3 vPoly[], vec3 vLine[], vec3 &vNormal, float &originDistance)

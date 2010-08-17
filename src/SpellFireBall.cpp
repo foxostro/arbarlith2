@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -60,14 +60,14 @@ void SpellFireBall::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_I
 {
 	Spell::load(xml, zone, ownerID);
 
-	xml.getSym(damageValue);
-	xml.getSym(bulletSpeed);
-	xml.getSym(particleFile);
-	xml.getSym(explosionParticleFile);
-	xml.getSym(explosionSoundEffectFile);
-	xml.getSym(causesFreeze);
-	xml.getSym(knockbackMagnitude);
-	xml.getSym(height);
+	xml.get("damageValue", damageValue);
+	xml.get("bulletSpeed", bulletSpeed);
+	xml.get("particleFile", particleFile);
+	xml.get("explosionParticleFile", explosionParticleFile);
+	xml.get("explosionSoundEffectFile", explosionSoundEffectFile);
+	xml.get("causesFreeze", causesFreeze);
+	xml.get("knockbackMagnitude", knockbackMagnitude);
+	xml.get("height", height);
 }
 
 void SpellFireBall::castSpell(void)

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -62,8 +62,8 @@ void Switch::load(const PropertyBag &xml)
 {
 	Trigger::load(xml);
 
-	xml.getSym(actionLabel);
-	xml.getSym(time);
+	xml.get("actionLabel", actionLabel);
+	xml.get("time", time);
 }
 
 bool Switch::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2005-2007,2009 Game Creation Society
+Copyright (c) 2005-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -701,7 +701,8 @@ void EditorToolBar::onLeftMouseDown()
 			PropertyBag ThisObjBag;
             ThisObjBag.loadFromFile(editorDataFile);
 
-			string rtti = ThisObjBag.getString("type");
+			string rtti;
+			ThisObjBag.get("type", rtti);
 
 			// Create the object inside the game world
 			OBJECT_ID id = objects.create(rtti, world);

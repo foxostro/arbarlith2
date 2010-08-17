@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -66,8 +66,8 @@ void TriggerParticles::load(const PropertyBag &xml)
 {
 	Trigger::load(xml);
 
-	xml.getSym(pfxFileName);
-	xml.getSym(pfxLocation);
+	xml.get("pfxFileName", pfxFileName);
+	xml.get("pfxLocation", pfxLocation);
 
 	showModel = false;
 }
@@ -78,8 +78,8 @@ void TriggerParticles::createToolBar(ListPaneWidget *pane)
 	Trigger::createToolBar(pane);
 
 	// Add to the tool bar
-	pane->addElement(new ListElementTweakerString(	"Particle FX",	&pfxFileName));
-	pane->addElement(new ListElementTweakerXML(	"PFX Location",	&pfxLocation));
+	pane->addElement(new ListElementTweakerString("Particle FX",  &pfxFileName));
+	pane->addElement(new ListElementTweaker<vec4>("PFX Location", &pfxLocation));
 }
 
 }; // namespace

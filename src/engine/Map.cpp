@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -97,13 +97,15 @@ void Map::loadMaterialsLegend(const PropertyBag &materialsLegend)
 
 	destroyMaterialsLegend();
 
-	const size_t numberOfEntries = materialsLegend.getNumInstances("material");
+	const size_t numberOfEntries = materialsLegend.count("material");
 
 	TRACE("Expecting to find " + itoa((int)numberOfEntries) + " materials");
 
 	for(size_t i = 0; i < numberOfEntries; ++i)
 	{
-		loadMapMaterial(materialsLegend.getString("material", i), true);
+		string material;
+		materialsLegend.get("material", material, i);
+		loadMapMaterial(material, true);
 	}
 
 	TRACE("...finished (Loading materials legend)");
@@ -169,17 +171,22 @@ void Map::create(const PropertyBag &xml)
 	destroy();
 
 	// Get the scaling of the map along the X and Z directions
-	tileMetersX = xml.getFloat("tileMetersX");
+	xml.get("tileMetersX", tileMetersX);
 
 	// Load materials used in this map
-	loadMaterialsLegend( xml.getBag("materialsLegend") );
+	{
+		PropertyBag bag;
+		xml.get("materialsLegend", bag);
+		loadMaterialsLegend(bag);
+	}
 
 	// Get the dimensions of the map
-	width = xml.getInt("width");
-	height = xml.getInt("height");
+	xml.get("width", width);
+	xml.get("height", height);
 
 	// Get the name of the binary map file
-	const string tileDataFileName = xml.getString("tileDataFileName");
+	string tileDataFileName;
+	xml.get("tileDataFileName", tileDataFileName);
 	TRACE("Loading tile data: " + tileDataFileName);
 
 	// Allocate tile data

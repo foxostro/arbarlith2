@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -294,7 +294,7 @@ AnimationController* Md3Loader::loadFromFile(const string &fileName) const
 	vector<KeyFrame> keyFrames = loadKeyFrames(md3);
 
 	// Get the rest of the key frames
-	const size_t numMD3 = xml.getNumInstances("md3");
+	const size_t numMD3 = xml.count("md3");
 	for(size_t i=1; i<numMD3; ++i)
 	{
 		xml.get("md3", md3, i);
@@ -308,7 +308,7 @@ AnimationController* Md3Loader::loadFromFile(const string &fileName) const
 	}
 
 	// Build the animations from these keyframes
-	const size_t numAnimations = xml.getNumInstances("animation");
+	const size_t numAnimations = xml.count("animation");
 	for(size_t i=0; i<numAnimations; ++i)
 	{
 		PropertyBag animation;
@@ -320,12 +320,14 @@ AnimationController* Md3Loader::loadFromFile(const string &fileName) const
 		float fps=0;
 
 		xml.get("animation", animation, i);
-		animation.getSym(name);
-		animation.getSym(priority);
-		animation.getSym(looping);
-		animation.getSym(start);
-		animation.getSym(length);
-		animation.getSym(fps);
+		animation.get("name", name);
+		animation.get_optional("priority", priority);
+		animation.get_optional("looping", looping);
+		animation.get("start", start);
+		animation.get("length", length);
+		animation.get("fps", fps);
+
+		TRACE(string("Adding MD3 animation \"") + name + string("\" from ") + fileName);
 
 		// Add it to the controller
 		AnimationSequence animationSequence(keyFrames, name, priority, looping, start, length, fps);

@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2006,2007,2009 Game Creation Society
+Copyright (c) 2006,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -126,8 +126,10 @@ void Trigger::load(const PropertyBag &xml)
 	Actor::load(xml);
 
 	loadList(xml, "sounds", sounds);
-	if(!xml.getSym(triggerRadius))
-	{
+
+	if(xml.exists("triggerRadius")) {
+		xml.get("triggerRadius", triggerRadius);
+	} else {
 		triggerRadius = getCylinderRadius(); // default
 	}
 }

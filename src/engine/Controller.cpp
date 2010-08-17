@@ -1,5 +1,5 @@
 /*
-Originally written 2004-2007 Andrew Fox
+Originally written 2004-2007,2010 Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
 Modified to port to SDL and compactify the key lookup tables by Tom Cauchois Feb 2006
@@ -498,17 +498,23 @@ bool Controller::load(const string &fileName)
 
 	setDefaults();
 
-	for(size_t j=0, numActions=Bag.getNumInstances("action"); j<numActions; ++j)
+	for(size_t j=0, numActions=Bag.count("action"); j<numActions; ++j)
 	{
-		PropertyBag actionBag = Bag.getBag("action", j);
-		string actionName = actionBag.getString("name");
+		PropertyBag actionBag;
+		string actionName;
+		ACTION_CODE actionCode;
+		
+		Bag.get("action", actionBag, j);
+		actionBag.get("name", actionName);
 
-		ACTION_CODE actionCode = createAction(actionName);
+		actionCode = createAction(actionName);
 
 		// Load one or more keys for this action
-		for(size_t i=0, numBindings=Bag.getNumInstances("binding"); i<numBindings; ++i)
+		for(size_t i=0, numBindings=Bag.count("binding"); i<numBindings; ++i)
 		{
-			bindings.insert(  make_pair(actionCode, Bag.getString(actionName, i))  );
+			string s;
+			Bag.get(actionName, s, i);
+			bindings.insert(make_pair(actionCode, s));
 		}
 	}
 

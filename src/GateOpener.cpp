@@ -2,7 +2,7 @@
 Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -77,8 +77,8 @@ void GateOpener::load(const PropertyBag &xml)
 {
 	Listener::load(xml);
 
-	xml.getSym(gateName);
-	xml.getSym(open);
+	xml.get("gateName", gateName);
+	xml.get("open", open);
 }
 
 bool GateOpener::saveTidy(PropertyBag &xml, PropertyBag &editorData) const

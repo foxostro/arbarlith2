@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2003-2007,2009 Game Creation Society
+Copyright (c) 2003-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -101,10 +101,10 @@ void Lamp::load(const PropertyBag &xml)
 {
 	Switch::load(xml);
 
-	xml.getSym(active);
-	xml.getSym(constant);
-	xml.getSym(linear);
-	xml.getSym(quadratic);
+	xml.get("active", active);
+	xml.get("constant", constant);
+	xml.get("linear", linear);
+	xml.get("quadratic", quadratic);
 
 	// Create a light object
 	Light *newLight = new Light;

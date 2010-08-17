@@ -6,7 +6,7 @@ Modified to use SDL windowing and get rid of ControlData February 2006
 by Tom Cauchois
 E-Mail: mailto:tcauchoi@andrew.cmu.edu
 
-Copyright (c) 2003-2007,2009 Game Creation Society
+Copyright (c) 2003-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -392,12 +392,12 @@ void Application::startOpenGL()
 		xml.loadFromFile(defaultSetupFileName);
 	}
 
-	if(xml.getSym(window))
-	{
-		window.getSym(width);
-		window.getSym(height);
-		window.getSym(depth);
-		window.getSym(fullscreen);
+	if(xml.exists("window")) {
+		xml.get("window", window);
+		window.get("width", width);
+		window.get("height", height);
+		window.get("depth", depth);
+		window.get("fullscreen", fullscreen);
 	}
 
 	// Create an OpenGL context
@@ -424,17 +424,17 @@ void Application::saveXmlConfigFiles(void)
 	PropertyBag BaseBag, FogBag, PerfBag, window;
 
 	// Save the mouse sensitivity value
-	BaseBag.addSym(mouseSensitivity);
+	BaseBag.add("mouseSensitivity", mouseSensitivity);
 
-	BaseBag.addSym(unlockedWorld);
-	BaseBag.addSym(menuMusic);
-	BaseBag.addSym(soundEnabled);
+	BaseBag.add("unlockedWorld", unlockedWorld);
+	BaseBag.add("menuMusic", menuMusic);
+	BaseBag.add("soundEnabled", soundEnabled);
 
 	// Save settings
-	PerfBag.addSym(useParticleEffects);
-	PerfBag.addSym(useBlurEffects);
-	PerfBag.addSym(textureFilter);
-	PerfBag.addSym(aniostropy);
+	PerfBag.add("useParticleEffects", useParticleEffects);
+	PerfBag.add("useBlurEffects", useBlurEffects);
+	PerfBag.add("textureFilter", textureFilter);
+	PerfBag.add("aniostropy", aniostropy);
 
 	BaseBag.add("performance", PerfBag);
 
@@ -443,7 +443,7 @@ void Application::saveXmlConfigFiles(void)
 	window.add("height", (int)g_Window.GetHeight());
 	window.add("depth", (int)g_Window.GetColorDepth());
 	window.add("fullscreen", (bool)g_Window.GetFullscreen());
-	BaseBag.addSym(window);
+	BaseBag.add("window", window);
 
 	// We'll save settings to the home directory
     BaseBag.saveToFile(pathAppend(getAppDataDirectory(),
@@ -468,18 +468,18 @@ void Application::loadXmlConfigFiles(void)
 		BaseBag.loadFromFile(defaultSetupFileName);
 	}
 
-	BaseBag.getSym(mouseSensitivity);
+	BaseBag.get("mouseSensitivity", mouseSensitivity);
 
-	BaseBag.getSym(unlockedWorld);
-	BaseBag.getSym(menuMusic);
-	BaseBag.getSym(soundEnabled);
+	BaseBag.get("unlockedWorld", unlockedWorld);
+	BaseBag.get("menuMusic", menuMusic);
+	BaseBag.get("soundEnabled", soundEnabled);
 
 	// Load settings
 	BaseBag.get("performance", PerfBag);
-	PerfBag.getSym(useParticleEffects);
-	PerfBag.getSym(useBlurEffects);
-	PerfBag.getSym(textureFilter);
-	PerfBag.getSym(aniostropy);
+	PerfBag.get("useParticleEffects", useParticleEffects);
+	PerfBag.get("useBlurEffects", useBlurEffects);
+	PerfBag.get("textureFilter", textureFilter);
+	PerfBag.get("aniostropy", aniostropy);
 
 	if(!supportsAniostropy && textureFilter==2)
 		textureFilter = 1;

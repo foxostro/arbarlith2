@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2007,2009 Game Creation Society
+Copyright (c) 2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -115,7 +115,7 @@ void Listener::load(const PropertyBag &xml)
 {
 	Trigger::load(xml);
 
-	xml.getSym(expression);
+	xml.get("expression", expression);
 	setupSignals(expression);
 }
 
