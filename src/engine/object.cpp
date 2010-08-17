@@ -627,14 +627,17 @@ void Actor::load(const PropertyBag &Bag)
 	// Free any used memory and destroy the old object
 	destroy();
 
-    // When we save out again, we need to be able to properly write out @inherit
-    if(Bag.get("@parentFileName", editorDataFile))
-    {
-        TRACE("Remembering that we are derived from: " + editorDataFile);
-    }
+	// When we save out again, we need to be able to properly write out @inherit
+	if(Bag.exists("@parentFileName")) {
+		Bag.get("@parentFileName", editorDataFile);
+		TRACE("Remembering that we are derived from: " + editorDataFile);
+	}
 
 	// kept to support previous versions of the file format
-	if(Bag.get("radius", m_desiredHeight)) m_desiredHeight*=2.0f;
+	if(Bag.exists("radius")) {
+		Bag.get("radius", m_desiredHeight);
+		m_desiredHeight*=2.0f;
+	}
 
 	// Load the object data
 	Bag.get("height", m_desiredHeight);
@@ -645,7 +648,7 @@ void Actor::load(const PropertyBag &Bag)
 	Bag.get("showModel", showModel);
 	Bag.get("solid", solid);
 	Bag.get("floating", floating);
-	Bag.get("frictionAcceleration", frictionAcceleration);
+	Bag.get_optional("frictionAcceleration", frictionAcceleration);
 
 	// Set the orientation matrix
 	vec3 zAxis (0,0,1), yAxis(0,1,0), xAxis(1,0,0);
@@ -663,48 +666,32 @@ void Actor::load(const PropertyBag &Bag)
 	orientation.setPos(vec3(0,0,0));
 
 	// Set the spawn point and location of the object
-	Bag.get("pos", position);
+	Bag.get_optional("pos", position); // may be specified some other way
 	spawnPoint = validatedPos = position;
 
 	ASSERT(getZone().getMap().onATile(position.x, position.z), "position is outside of the bounds of the map");
 
 	// Load model data from xml, then load the specified resources
-	if(Bag.get("model", m_strModelFilename) == true)
-	{
+	if(Bag.exists("model")) {
+		Bag.get("model", m_strModelFilename);
 		LoadModel(m_strModelFilename);
 	}
 
 	// Is the object supposed to be lit?
-	Bag.get("isLit", isLit);
+	Bag.get_optional("isLit", isLit);
 	Bag.get("castShadows", castShadows);
 }
 
 bool Actor::ChangeAnimation(const string &name, float speed)
 {
-	ASSERT(m_pModel!=0, "Actor::ChangeAnimation  ->  Null Pointer: m_pModel.");
-
-	if(m_pModel != 0)
-	{
-		return m_pModel->requestAnimationChange(name, speed);
-	}
-	else
-	{
-		return false;
-	}
+	ASSERT(m_pModel, "Actor::ChangeAnimation  ->  Null Pointer: m_pModel.");
+	return m_pModel->requestAnimationChange(name, speed);	
 }
 
 bool Actor::ChangeAnimation(size_t nIdx, float Speed)
 {
-	ASSERT(m_pModel!=0, "Actor::ChangeAnimation  ->  Null Pointer: m_pModel.");
-
-	if(m_pModel)
-	{
-		return m_pModel->requestAnimationChange(nIdx, Speed);
-	}
-	else
-	{
-		return true;
-	}
+	ASSERT(m_pModel, "Actor::ChangeAnimation  ->  Null Pointer: m_pModel.");
+	return m_pModel->requestAnimationChange(nIdx, Speed);
 }
 
 #ifdef _DEBUG
@@ -779,17 +766,18 @@ void Actor::saveList(PropertyBag& xml, const string& name, const vector<string>&
 
 void Actor::loadList(const PropertyBag& xml, const string& name, vector<string>& list)
 {
-	PropertyBag bag;
+	if(!xml.exists(name)) {
+		return;
+	}
 
-	if(xml.get(name, bag))
+	PropertyBag bag;
+	xml.get(name, bag);
+	const size_t numberOfFiles = bag.count("file");
+	for(size_t i=0; i<numberOfFiles; ++i)
 	{
-		const size_t numberOfFiles = bag.count("file");
-		for(size_t i=0; i<numberOfFiles; ++i)
-		{
-			string fileName;
-			bag.get("file", fileName, i);
-			list.push_back(fileName);
-		}
+		string fileName;
+		bag.get("file", fileName, i);
+		list.push_back(fileName);
 	}
 }
 

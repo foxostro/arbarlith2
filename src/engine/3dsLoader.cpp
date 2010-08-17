@@ -83,32 +83,32 @@ const unsigned short OBJECT_UV = 0x4140;
 AnimationController* _3dsLoader::loadFromFile(const string &fileName) const
 {
 	PropertyBag xml;
+	bool truespaceModel = false;
+	string skin;
+
+	TRACE(string("Loading 3DS model from \"") + fileName + string("\""));
+	
 	xml.loadFromFile(fileName);
 
 	AnimationController* controller = new AnimationController();
 
-	bool truespaceModel = false;
-	xml.get("Truespace", truespaceModel);
-
-	string skin;
-	xml.get("forceSkin", skin);
+	xml.get_optional("Truespace", truespaceModel);
+	xml.get_optional("forceSkin", skin);
 
 	for(size_t i=0, numAnimations=xml.count("animation"); i<numAnimations; ++i)
 	{
 		PropertyBag animation;
 		string name;
 		float fps = 0.0;
-		
-		// Optional properties
 		bool looping = false;
 		float priority = 0.0f;
 
 		xml.get("animation", animation, i);
-		xml.get("name", name);
-		xml.get("fps", fps);
 
-		animation.get("looping", looping);
-		animation.get("priority", priority);
+		animation.get("name", name);
+		animation.get_optional("fps", fps);
+		animation.get_optional("looping", looping);
+		animation.get_optional("priority", priority);
 
 		// Load all the keyframes
 		vector<KeyFrame> keyFrames;
@@ -129,6 +129,8 @@ AnimationController* _3dsLoader::loadFromFile(const string &fileName) const
 
 			keyFrames.push_back(keyFrame);
 		}
+
+		TRACE(string("Adding 3DS animation \"") + name + string("\" from ") + fileName);
 
 		// Add it to the controller
 		AnimationSequence animationSequence(keyFrames, name, priority, looping, 0, length, fps);

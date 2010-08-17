@@ -56,11 +56,8 @@ void MusicEngine::loadMusicTag(const PropertyBag &bag, vector<string> &music) co
 	for(size_t i=0; i<n; ++i)
 	{
 		string file;
-
-		if(bag.get("clip", file, i))
-		{
-			music.push_back(file);
-		}
+		bag.get("clip", file, i);
+		music.push_back(file);
 	}
 }
 
@@ -75,8 +72,8 @@ void MusicEngine::load(const PropertyBag &bag)
 {
 	PropertyBag clipsBag;
 
-	if(bag.get("clips", clipsBag))
-	{
+	if(bag.exists("clips")) {
+		bag.get("clips", clipsBag);
 		loadMusicTag(clipsBag, clips);
 	}
 }
@@ -90,8 +87,9 @@ void MusicEngine::update(void)
 		size_t max = clips.size()-1;
 		size_t idx = 0;
 
-		if(max>min)
+		if(max>min) {
 			IRAND_RANGE(min, max);
+		}
 
 		string clip = clips[idx];
 

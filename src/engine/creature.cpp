@@ -228,7 +228,9 @@ void Creature::applyKnockBack(const vec3 &direction)
 }
 
 void Creature::OnKnockBack(void)
-{}
+{
+	// do nothing
+}
 
 void Creature::update(float deltaTime)
 {
@@ -377,16 +379,16 @@ void Creature::createToolBar(ListPaneWidget *pane)
 
 bool Creature::saveTidy(PropertyBag &xml, PropertyBag &dataFile) const
 {
-	saveTag(xml, dataFile, "healthPoints",				healthPoints);
-	saveTag(xml, dataFile, "maxHealthPoints",			maxHealthPoints);
-	saveTag(xml, dataFile, "attackDamage",				attackDamage);
-	saveTag(xml, dataFile, "weaponMultiplier",			weaponMultiplier);
-	saveTag(xml, dataFile, "armorMultiplier",			armorMultiplier);
-	saveTag(xml, dataFile, "attackCoolDown",			attackCoolDown);
-	saveTag(xml, dataFile, "attackCoolDownMultiplier",	attackCoolDownMultiplier);
-	saveTag(xml, dataFile, "spellCoolDownMultiplier",	spellCoolDownMultiplier);
-	saveTag(xml, dataFile, "attackChargeTime",			attackChargeTime);
-	saveTag(xml, dataFile, "damagePercentToStun",		damagePercentToStun);
+	saveTag(xml, dataFile, "healthPoints",             healthPoints);
+	saveTag(xml, dataFile, "maxHealthPoints",          maxHealthPoints);
+	saveTag(xml, dataFile, "attackDamage",             attackDamage);
+	saveTag(xml, dataFile, "weaponMultiplier",         weaponMultiplier);
+	saveTag(xml, dataFile, "armorMultiplier",          armorMultiplier);
+	saveTag(xml, dataFile, "attackCoolDown",           attackCoolDown);
+	saveTag(xml, dataFile, "attackCoolDownMultiplier", attackCoolDownMultiplier);
+	saveTag(xml, dataFile, "spellCoolDownMultiplier",  spellCoolDownMultiplier);
+	saveTag(xml, dataFile, "attackChargeTime",         attackChargeTime);
+	saveTag(xml, dataFile, "damagePercentToStun",      damagePercentToStun);
 
 	saveList(xml, "dyingSounds",	dyingSounds);
 	saveList(xml, "painSounds",	painSounds);
@@ -400,18 +402,18 @@ void Creature::load(const PropertyBag &Bag)
 {
 	Actor::load(Bag);
 
-	Bag.get("healthPoints", healthPoints);
-	Bag.get("maxHealthPoints", maxHealthPoints);
-	Bag.get("attackDamage", attackDamage);
-	Bag.get("weaponMultiplier", weaponMultiplier);
-	Bag.get("armorMultiplier", armorMultiplier);
-	Bag.get("attackCoolDown", attackCoolDown);
-	Bag.get("attackCoolDownMultiplier", attackCoolDownMultiplier);
-	Bag.get("spellCoolDownMultiplier", spellCoolDownMultiplier);
-	Bag.get("attackChargeTime", attackChargeTime);
-	Bag.get("damagePercentToStun", damagePercentToStun);
-	Bag.get("maxKnockBackTime", maxKnockBackTime);
-	Bag.get("knockBackSpeed", knockBackSpeed);
+	Bag.get_optional("healthPoints", healthPoints);
+	Bag.get_optional("maxHealthPoints", maxHealthPoints);
+	Bag.get_optional("attackDamage", attackDamage);
+	Bag.get_optional("weaponMultiplier", weaponMultiplier);
+	Bag.get_optional("armorMultiplier", armorMultiplier);
+	Bag.get_optional("attackCoolDown", attackCoolDown);
+	Bag.get_optional("attackCoolDownMultiplier", attackCoolDownMultiplier);
+	Bag.get_optional("spellCoolDownMultiplier", spellCoolDownMultiplier);
+	Bag.get_optional("attackChargeTime", attackChargeTime);
+	Bag.get_optional("damagePercentToStun", damagePercentToStun);
+	Bag.get_optional("maxKnockBackTime", maxKnockBackTime);
+	Bag.get_optional("knockBackSpeed", knockBackSpeed);
 
 	// Load sound FX lists
 	loadList(Bag, "dyingSounds",  dyingSounds);
@@ -424,7 +426,7 @@ void Creature::load(const PropertyBag &Bag)
 		string strFSM = "none";
 		delete(m_pFSM);
 
-		Bag.get("fsm", strFSM);
+		Bag.get_optional("fsm", strFSM);
 		setFSM(strFSM);
 	}
 
@@ -433,22 +435,16 @@ void Creature::load(const PropertyBag &Bag)
 
 void Creature::setFSM(const string &strFSM)
 {
-	if(strFSM == "none")
-	{
+	if(strFSM == "none") {
 		SetStateMachine(0);
-	}
-	else
-	{
+	} else {
 		StateMachine *stateMachine = getStateMachineFactory().createPtr(strFSM);
 
 		ASSERT(stateMachine != 0, "Failed to create state machine: " + strFSM);
 
-		if(stateMachine == 0)
-		{
+		if(stateMachine == 0) {
 			SetStateMachine(0);
-		}
-		else
-		{
+		} else {
 			stateMachine->setOwner(this);
 			SetStateMachine(stateMachine);
 		}
@@ -462,31 +458,21 @@ void Creature::walkTowards(const vec3 &target, float speed)
 
 	if(canMove())
 	{
-#if 0
-		velocity = vec3(target-getPos()).getNormal() * getTopSpeed() * speed;
-#else
 		velocity.zero(); // reset
 
-		if(target.x > position.x)
-		{
+		if(target.x > position.x) {
 			velocity.x = 1;
-		}
-		else if(target.x < position.x)
-		{
+		} else if(target.x < position.x) {
 			velocity.x = -1;
 		}
 
-		if(target.z > position.z)
-		{
+		if(target.z > position.z) {
 			velocity.z = 1;
-		}
-		else if(target.z < position.z)
-		{
+		} else if(target.z < position.z) {
 			velocity.z = -1;
 		}
 
 		velocity = velocity.getNormal() * (getTopSpeed()*speed);
-#endif
 
 		lookAt(target);
 	}

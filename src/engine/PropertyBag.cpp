@@ -92,10 +92,12 @@ void PropertyBag::add(const std::string & k, const PropertyBag & p)
 	pimpl->add(k, *p.pimpl);
 }
 
-bool PropertyBag::get(const std::string & k, PropertyBag & p, size_t idx) const
+void PropertyBag::get(const std::string & k, PropertyBag & p, size_t idx) const
 {
 	ASSERT(pimpl, "pimpl was NULL; should never be NULL.");
-	return pimpl->get(k, *p.pimpl, idx);
+	if(!pimpl->get(k, *p.pimpl, idx)) {
+		throw PropertyBag_PropertyNotFound_Exception(k);
+	}
 }
 
 void PropertyBag::add(const string & k, bool p)
@@ -104,10 +106,12 @@ void PropertyBag::add(const string & k, bool p)
 	pimpl->add(k, p);
 }
 
-bool PropertyBag::get(const string& k, bool & p, size_t idx) const
+void PropertyBag::get(const string& k, bool & p, size_t idx) const
 {
 	ASSERT(pimpl, "pimpl was NULL which is never expected");
-	return pimpl->get(k, p, idx);
+	if(!pimpl->get(k, p, idx)) {
+		throw PropertyBag_PropertyNotFound_Exception(k);
+	}
 }
 
 void PropertyBag::add(const string & k, const std::string & p)
@@ -116,10 +120,12 @@ void PropertyBag::add(const string & k, const std::string & p)
 	pimpl->add(k, p);
 }
 
-bool PropertyBag::get(const string& k, std::string & p, size_t idx) const
+void PropertyBag::get(const string& k, std::string & p, size_t idx) const
 {
 	ASSERT(pimpl, "pimpl was NULL which is never expected");
-	return pimpl->get(k, p, idx);
+	if(!pimpl->get(k, p, idx)) {
+		throw PropertyBag_PropertyNotFound_Exception(k);
+	}
 }
 
 } // namespace Engine

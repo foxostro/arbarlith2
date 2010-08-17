@@ -182,9 +182,9 @@ void Player::load(const PropertyBag &xml)
 	Creature::load(xml);
 
 	// Load the inventory
-	PropertyBag invBag;
-	if(xml.get("inventory", invBag))
-	{
+	if(xml.exists("inventory")) {
+		PropertyBag invBag;
+		xml.get("inventory", invBag);
 		inventory.load(invBag, &getZone());
 	}
 	selectedItem = INVALID_ID;

@@ -392,8 +392,8 @@ void Application::startOpenGL()
 		xml.loadFromFile(defaultSetupFileName);
 	}
 
-	if(xml.get("window", window))
-	{
+	if(xml.exists("window")) {
+		xml.get("window", window);
 		window.get("width", width);
 		window.get("height", height);
 		window.get("depth", depth);

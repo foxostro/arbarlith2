@@ -559,15 +559,13 @@ void World::reloadPlayers(const PropertyBag &playerBag)
 
 	string file, type;
 
-	if(playerBag.get("file", file))
-	{
+	if(playerBag.exists("file")) {
 		// The type is defined in an external file
 		PropertyBag external;
+		playerBag.get("file", file);
 		external.loadFromFile(file);
 		external.get("type", type);
-	}
-	else
-	{
+	} else {
 		// No exernal data file
 		playerBag.get("type", type);
 	}

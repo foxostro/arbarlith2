@@ -48,9 +48,15 @@ void SpellHeal::load(PropertyBag &xml, Engine::World *zone, Engine::OBJECT_ID ow
 {
 	Spell::load(xml, zone, ownerID);
 
-	xml.get("healValue", healValue);
-	xml.get("healTime", healTime);
-	xml.get("spellRadius", spellRadius);
+	// default values
+	healValue = 30;
+	healTime = 2000.0f;
+	spellRadius = 5.0f;
+
+	// replace defaults where available
+	xml.get_optional("healValue", healValue);
+	xml.get_optional("healTime", healTime);
+	xml.get_optional("spellRadius", spellRadius);
 }
 
 void SpellHeal::castSpell(void)

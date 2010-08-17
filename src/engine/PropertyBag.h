@@ -27,6 +27,14 @@ public:
 	}
 };
 
+/** The specified property could not be found. */
+class PropertyBag_PropertyNotFound_Exception : public PropertyBagException
+{
+public:
+	PropertyBag_PropertyNotFound_Exception(const std::string & _s)
+		: PropertyBagException(_s) {}
+};
+
 /** Maps from string names to arbitrary values. Used for configuration data. */
 class PropertyBag
 {
@@ -71,15 +79,15 @@ public:
 
 	// For adding and getting PropertyBag objects
 	void add(const std::string & k, const PropertyBag & p);
-	bool get(const std::string & k, PropertyBag & p, size_t idx = 0) const;
+	void get(const std::string & k, PropertyBag & p, size_t idx = 0) const;
 	
 	// For adding and getting boolean objects
 	void add(const std::string & k, bool p);
-	bool get(const std::string & k, bool & p, size_t idx = 0) const;
+	void get(const std::string & k, bool & p, size_t idx = 0) const;
 	
 	// For adding and getting string objects
 	void add(const std::string & k, const std::string & p);
-	bool get(const std::string & k, std::string & p, size_t idx = 0) const;
+	void get(const std::string & k, std::string & p, size_t idx = 0) const;
 
 	// For adding generic-typed objects: anything that can be lexical_cast'd
 	template<typename T>
@@ -100,27 +108,35 @@ public:
 
 	// For getting generic-typed objects: anything that can be lexical_cast'd
 	template<typename T>
-	bool get(const std::string & k, T & p, size_t idx = 0) const
+	void get(const std::string & k, T & p, size_t idx = 0) const
 	{
 		std::string str;
 
-		if(get(k, str, idx)) {
-			try
-			{
-				p = boost::lexical_cast<T>(str);
-			}
-			catch(boost::bad_lexical_cast & e)
-			{
-				std::string what = std::string("For key \"") + k
-					+ std::string("\" got value \"")
-					+ std::string("\", but don't know what to do with it: ")
-					+ std::string(e.what());
-				throw PropertyBagException(what);
-			}
+		get(k, str, idx);
 
-			return true;
-		} else {
+		try
+		{
+			p = boost::lexical_cast<T>(str);
+		}
+		catch(boost::bad_lexical_cast & e)
+		{
+			std::string what = std::string("For key \"") + k
+				+ std::string("\" got value \"")
+				+ std::string("\", but don't know what to do with it: ")
+				+ std::string(e.what());
+			throw PropertyBagException(what);
+		}
+	}
+
+	// Sometimes, we don't really care if the property is missing
+	template<typename T>
+	bool get_optional(const std::string & k, T & p, size_t idx = 0) const
+	{
+		if(!exists(k)) {
 			return false;
+		} else {
+			get(k, p, idx);
+			return true;
 		}
 	}
 };

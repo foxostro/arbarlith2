@@ -58,38 +58,38 @@ typedef ParticleElement* ELEMENT_PTR;
 
 ParticleBody::ParticleBody(void)
 : position(0,0,0),
-initialVelocity(0,0,0),
-initialOutwardVelocity(0),
-age(0),
-initialPosition(0,0,0),
-constantAcceleration(0,0,0)
+  initialVelocity(0,0,0),
+  initialOutwardVelocity(0),
+  age(0),
+  initialPosition(0,0,0),
+  constantAcceleration(0,0,0)
 {}
 
 ParticleBody::ParticleBody(const PropertyBag &Bag)
 : position(0,0,0),
-initialVelocity(0,0,0),
-initialOutwardVelocity(0),
-age(0),
-initialPosition(0,0,0),
-constantAcceleration(0,0,0)
+  initialVelocity(0,0,0),
+  initialOutwardVelocity(0),
+  age(0),
+  initialPosition(0,0,0),
+  constantAcceleration(0,0,0)
 {
 	load(Bag);
 }
 
 ParticleBody::ParticleBody(const ParticleBody &body)
 : position(body.position),
-initialVelocity(body.initialVelocity),
-initialOutwardVelocity(body.initialOutwardVelocity),
-age(body.age),
-initialPosition(body.initialPosition),
-constantAcceleration(body.constantAcceleration)
+  initialVelocity(body.initialVelocity),
+  initialOutwardVelocity(body.initialOutwardVelocity),
+  age(body.age),
+  initialPosition(body.initialPosition),
+  constantAcceleration(body.constantAcceleration)
 {}
 
 void ParticleBody::load(const PropertyBag &Bag)
 {
-	Bag.get("position",              initialPosition);
-	Bag.get("acceleration",          constantAcceleration);
-	Bag.get("initialRadialVelocity", initialOutwardVelocity);
+	Bag.get_optional("position",              initialPosition);
+	Bag.get_optional("acceleration",          constantAcceleration);
+	Bag.get_optional("initialRadialVelocity", initialOutwardVelocity);
 
 	position = initialPosition;
 

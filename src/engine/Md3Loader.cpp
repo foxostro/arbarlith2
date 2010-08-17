@@ -321,11 +321,13 @@ AnimationController* Md3Loader::loadFromFile(const string &fileName) const
 
 		xml.get("animation", animation, i);
 		animation.get("name", name);
-		animation.get("priority", priority);
-		animation.get("looping", looping);
+		animation.get_optional("priority", priority);
+		animation.get_optional("looping", looping);
 		animation.get("start", start);
 		animation.get("length", length);
 		animation.get("fps", fps);
+
+		TRACE(string("Adding MD3 animation \"") + name + string("\" from ") + fileName);
 
 		// Add it to the controller
 		AnimationSequence animationSequence(keyFrames, name, priority, looping, start, length, fps);

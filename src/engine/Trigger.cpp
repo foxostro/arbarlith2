@@ -126,8 +126,10 @@ void Trigger::load(const PropertyBag &xml)
 	Actor::load(xml);
 
 	loadList(xml, "sounds", sounds);
-	if(!xml.get("triggerRadius", triggerRadius))
-	{
+
+	if(xml.exists("triggerRadius")) {
+		xml.get("triggerRadius", triggerRadius);
+	} else {
 		triggerRadius = getCylinderRadius(); // default
 	}
 }

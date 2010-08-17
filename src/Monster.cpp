@@ -99,7 +99,11 @@ void Monster::load(const PropertyBag &xml)
 {
 	Creature::load(xml);
 
-	xml.get("preferredSpell", preferredSpell);
+	if(xml.exists("preferredSpell")) {
+		xml.get_optional("preferredSpell", preferredSpell);
+	} else {
+		preferredSpell = 0;
+	}
 
 	switch(preferredSpell)
 	{
