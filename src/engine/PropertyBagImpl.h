@@ -142,7 +142,7 @@ private:
 };
 
 /** Contains property bag items */
-class PropertyBag_XML : public PropertyBagItem
+class PropertyBagImpl : public PropertyBagItem
 {
 private:
 	/** string -> PropertyBagItem */
@@ -153,28 +153,28 @@ private:
 
 public:
 	/** Destructor */
-	virtual ~PropertyBag_XML(void);
+	virtual ~PropertyBagImpl(void);
 
 	/** Constructor */
-	PropertyBag_XML(void);
+	PropertyBagImpl(void);
 
 	/** Copy constructor */
-	PropertyBag_XML(const PropertyBag_XML &r);
+	PropertyBagImpl(const PropertyBagImpl &r);
 
 	/**
 	Construct from a string
 	@param s String from which to accept data
 	*/
-	PropertyBag_XML(const string &s);
+	PropertyBagImpl(const string &s);
 
 	/** Clear out the property bag */
 	void clear(void);
 
 	/** Assignment operator */
-	PropertyBag_XML &operator=(const PropertyBag_XML &r);
+	PropertyBagImpl &operator=(const PropertyBagImpl &r);
 
 	/** Equality operator against CPropBag */
-	virtual bool operator==(const PropertyBag_XML &r) const;
+	virtual bool operator==(const PropertyBagImpl &r) const;
 
 	/**
 	Equality operator
@@ -258,8 +258,8 @@ public:
 	/** Adds a bool */
 	void add(const string &key, bool data);
 
-	/** Adds a PropertyBag_XML */
-	void add(const string &key, const PropertyBag_XML &contents);
+	/** Adds a PropertyBagImpl */
+	void add(const string &key, const PropertyBagImpl &contents);
 
 	/** Gets a generic XmlDataType */
 	inline bool get(const string &key, XmlDataType &dest, size_t instance = 0) const
@@ -291,8 +291,8 @@ public:
 	/** Gets a bool */
 	bool get(const string &key, bool &dest, size_t instance = 0) const;
 
-	/** Gets a PropertyBag_XML */
-	bool get(const string &key, PropertyBag_XML &dest, size_t instance = 0) const;
+	/** Gets a PropertyBagImpl */
+	bool get(const string &key, PropertyBagImpl &dest, size_t instance = 0) const;
 
 	/** Gets a string */
 	string getString(const string &key, size_t instance = 0) const;
@@ -315,8 +315,8 @@ public:
 	/** Gets a bool */
 	bool getBool(const string &key, size_t instance = 0) const;
 
-	/** Gets a PropertyBag_XML */
-	PropertyBag_XML getBag(const string &key, size_t instance = 0) const;
+	/** Gets a PropertyBagImpl */
+	PropertyBagImpl getBag(const string &key, size_t instance = 0) const;
 
 private:
 	/**
@@ -336,18 +336,18 @@ private:
 	bool loadMergeFromString(const string &newStuff, bool allowInheritance);
 
 	/**
-	Merges the contents of another PropertyBag_XML with this one
+	Merges the contents of another PropertyBagImpl with this one
 	@param newStuff Contains additional data
 	@param overwrite If true, then conflicts are resolved by overwriting
 	the existing elements.
 	*/
-	void merge(const PropertyBag_XML &newStuff, bool overwrite = true);
+	void merge(const PropertyBagImpl &newStuff, bool overwrite = true);
 
 	/**
 	Copies the contents of this bag from another
 	@param r Bag to copy
 	*/
-	void copy(const PropertyBag_XML &r);
+	void copy(const PropertyBagImpl &r);
 };
 
 } // namespace Engine

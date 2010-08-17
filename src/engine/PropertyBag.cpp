@@ -1,9 +1,7 @@
 #include <boost/lexical_cast.hpp>
 
 #include "PropertyBag.h"
-#include "PropertyBag_XML.h"
-
-#define STUB throw PropertyBagException("STUB")
+#include "PropertyBagImpl.h"
 
 namespace Engine {
 
@@ -12,7 +10,7 @@ PropertyBag::~PropertyBag(void)
 	clear();
 }
 
-PropertyBag::PropertyBag(void) : xml(NULL)
+PropertyBag::PropertyBag(void) : pimpl(NULL)
 {
 	clear();
 }
@@ -24,15 +22,15 @@ PropertyBag::PropertyBag(const PropertyBag &copyMe)
 
 void PropertyBag::clear(void)
 {
-	delete xml;
-	xml = new PropertyBag_XML();
+	delete pimpl;
+	pimpl = new PropertyBagImpl();
 }
 
 void PropertyBag::copy(const PropertyBag & copyMe)
 {
 	clear();
-	ASSERT(copyMe.xml, "copyMe.xml was NULL which is never expected");
-	(*xml) = (*copyMe.xml);
+	ASSERT(copyMe.pimpl, "copyMe.pimpl was NULL which is never expected");
+	(*pimpl) = (*copyMe.pimpl);
 }
 
 PropertyBag PropertyBag::clone(void)
@@ -42,32 +40,32 @@ PropertyBag PropertyBag::clone(void)
 
 void PropertyBag::removeAll(const std::string &key)
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	xml->remove(key);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	pimpl->remove(key);
 }
 
 void PropertyBag::remove(const std::string &key, size_t idx)
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	xml->remove(key, idx);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	pimpl->remove(key, idx);
 }
 
 void PropertyBag::saveToFile(const std::string & fileName) const
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	xml->saveToFile(fileName);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	pimpl->saveToFile(fileName);
 }
 
 void PropertyBag::loadFromFile(const std::string & fileName)
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	xml->loadFromFile(fileName);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	pimpl->loadFromFile(fileName);
 }
 
 size_t PropertyBag::count(const std::string &key) const
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	return xml->getNumInstances(key);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	return pimpl->getNumInstances(key);
 }
 
 bool PropertyBag::exists(const std::string & k) const
@@ -77,9 +75,9 @@ bool PropertyBag::exists(const std::string & k) const
 
 bool PropertyBag::operator==(const PropertyBag &r) const
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	ASSERT(r.xml, "r.xml was NULL which is never expected");
-	return (*r.xml) == (*xml);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	ASSERT(r.pimpl, "r.pimpl was NULL which is never expected");
+	return (*r.pimpl) == (*pimpl);
 }
 
 PropertyBag & PropertyBag::operator=(const PropertyBag &r)
@@ -90,38 +88,38 @@ PropertyBag & PropertyBag::operator=(const PropertyBag &r)
 
 void PropertyBag::add(const std::string & k, const PropertyBag & p)
 {
-	ASSERT(xml, "xml was NULL; should never be NULL.");
-	xml->add(k, *p.xml);
+	ASSERT(pimpl, "pimpl was NULL; should never be NULL.");
+	pimpl->add(k, *p.pimpl);
 }
 
 bool PropertyBag::get(const std::string & k, PropertyBag & p, size_t idx) const
 {
-	ASSERT(xml, "xml was NULL; should never be NULL.");
-	return xml->get(k, *p.xml, idx);
+	ASSERT(pimpl, "pimpl was NULL; should never be NULL.");
+	return pimpl->get(k, *p.pimpl, idx);
 }
 
 void PropertyBag::add(const string & k, bool p)
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	xml->add(k, p);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	pimpl->add(k, p);
 }
 
 bool PropertyBag::get(const string& k, bool & p, size_t idx) const
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	return xml->get(k, p, idx);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	return pimpl->get(k, p, idx);
 }
 
 void PropertyBag::add(const string & k, const std::string & p)
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	xml->add(k, p);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	pimpl->add(k, p);
 }
 
 bool PropertyBag::get(const string& k, std::string & p, size_t idx) const
 {
-	ASSERT(xml, "xml was NULL which is never expected");
-	return xml->get(k, p, idx);
+	ASSERT(pimpl, "pimpl was NULL which is never expected");
+	return pimpl->get(k, p, idx);
 }
 
 } // namespace Engine

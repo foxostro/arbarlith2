@@ -9,7 +9,7 @@
 
 namespace Engine {
 
-class PropertyBag_XML; // class protoype
+class PropertyBagImpl; // class protoype
 
 /** Base exception type for errors encountered by PropertyBag */
 class PropertyBagException : public std::exception
@@ -31,7 +31,7 @@ public:
 class PropertyBag
 {
 private:
-	PropertyBag_XML * xml;
+	PropertyBagImpl * pimpl;
 
 public:
 	~PropertyBag(void);

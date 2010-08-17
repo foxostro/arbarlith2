@@ -13,7 +13,7 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 #include "stdafx.h"
 #include "file.h"
 #include "profile.h"
-#include "PropertyBag_XML.h"
+#include "PropertyBagImpl.h"
 
 namespace Engine {
 
@@ -117,52 +117,52 @@ PropertyBagString::PropertyBagString(const string &name,
 PropertyBagString::~PropertyBagString(void)
 {}
 
-PropertyBag_XML::PropertyBag_XML(void)
+PropertyBagImpl::PropertyBagImpl(void)
 {
 	clear();
 }
 
-PropertyBag_XML::PropertyBag_XML(const PropertyBag_XML &r)
+PropertyBagImpl::PropertyBagImpl(const PropertyBagImpl &r)
 : PropertyBagItem(r)
 {
 	copy(r);
 }
 
-PropertyBag_XML::PropertyBag_XML(const string &s)
+PropertyBagImpl::PropertyBagImpl(const string &s)
 {
 	clear();
 	loadMergeFromString(s, true);
 }
 
-PropertyBag_XML::~PropertyBag_XML(void)
+PropertyBagImpl::~PropertyBagImpl(void)
 {}
 
-void PropertyBag_XML::add(const string& key, const char* contents, bool convert)
+void PropertyBagImpl::add(const string& key, const char* contents, bool convert)
 {
 	add(key, string(contents), convert);
 }
 
-void PropertyBag_XML::add(const string& key, const string &contents, bool convert)
+void PropertyBagImpl::add(const string& key, const string &contents, bool convert)
 {
 	data.insert(make_pair(key, new PropertyBagString(key, contents, convert)));
 }
 
-void PropertyBag_XML::add(const string& key, int data)
+void PropertyBagImpl::add(const string& key, int data)
 {
 	add(key, itoa(data));
 }
 
-void PropertyBag_XML::add(const string& key, size_t data)
+void PropertyBagImpl::add(const string& key, size_t data)
 {
 	add(key, itoa((int)data));
 }
 
-void PropertyBag_XML::add(const string& key, double data)
+void PropertyBagImpl::add(const string& key, double data)
 {
 	add(key, ftoa((float)data, 4));
 }
 
-void PropertyBag_XML::add(const string& key, bool data)
+void PropertyBagImpl::add(const string& key, bool data)
 {
 	if(data)
 	{
@@ -174,12 +174,12 @@ void PropertyBag_XML::add(const string& key, bool data)
 	}
 }
 
-void PropertyBag_XML::add(const string& key, float data)
+void PropertyBagImpl::add(const string& key, float data)
 {
 	add(key, ftoa(data, 4));
 }
 
-void PropertyBag_XML::add(const string& key, const XmlDataType *pData)
+void PropertyBagImpl::add(const string& key, const XmlDataType *pData)
 {
 	ASSERT(pData!=0, "Cannot add a NULL object to the Prop Bag");
 
@@ -188,15 +188,15 @@ void PropertyBag_XML::add(const string& key, const XmlDataType *pData)
 	                                                 false)));
 }
 
-void PropertyBag_XML::add(const string& key, const PropertyBag_XML &contents)
+void PropertyBagImpl::add(const string& key, const PropertyBagImpl &contents)
 {
 	if(!contents.data.empty())
 	{
-		data.insert(make_pair(key, new PropertyBag_XML(contents)));
+		data.insert(make_pair(key, new PropertyBagImpl(contents)));
 	}
 }
 
-void PropertyBag_XML::remove(const string &key)
+void PropertyBagImpl::remove(const string &key)
 {
 	while(data.count(key)!=0)
 	{
@@ -209,7 +209,7 @@ void PropertyBag_XML::remove(const string &key)
 	       "Failed to remove items sharing key: " + key);
 }
 
-void PropertyBag_XML::remove(const string &key, int instance)
+void PropertyBagImpl::remove(const string &key, int instance)
 {
 	if(data.empty()) return;
 
@@ -233,14 +233,14 @@ void PropertyBag_XML::remove(const string &key, int instance)
 	}
 }
 
-void PropertyBag_XML::saveToFile(const string &fileName, int indentLevel) const
+void PropertyBagImpl::saveToFile(const string &fileName, int indentLevel) const
 {
 	File file;
 	file.write(save(indentLevel));
 	file.saveFile(fileName, false);
 }
 
-string PropertyBag_XML::save(int indentlevel) const
+string PropertyBagImpl::save(int indentlevel) const
 {
 	string out;
 	string indent(indentlevel, '\t');
@@ -254,7 +254,7 @@ string PropertyBag_XML::save(int indentlevel) const
 		string withname; // <TagName>TagValue</TagName> in here
 
 		// Dynamic cast will return NULL if data is not a CPropBag object
-		bool IsBag = dynamic_cast<PropertyBag_XML*>(data) != NULL;
+		bool IsBag = dynamic_cast<PropertyBagImpl*>(data) != NULL;
 
 		/*
 		Get the tag value as a string.  CPropItem::Save() does this for us.
@@ -298,7 +298,7 @@ string PropertyBag_XML::save(int indentlevel) const
 	return(out);
 }
 
-void PropertyBag_XML::loadFromFile(const string &filename, bool merge)
+void PropertyBagImpl::loadFromFile(const string &filename, bool merge)
 {
 	if(!File::isFileOnDisk(filename))
 	{
@@ -338,7 +338,7 @@ void PropertyBag_XML::loadFromFile(const string &filename, bool merge)
 	}
 }
 
-bool PropertyBag_XML::loadMergeFromString(const string &data, bool allowInheritance)
+bool PropertyBagImpl::loadMergeFromString(const string &data, bool allowInheritance)
 {
 	enum eElanPropBagReadState
 	{
@@ -440,7 +440,7 @@ bool PropertyBag_XML::loadMergeFromString(const string &data, bool allowInherita
 		string parentFileName = "nill";
 		if(get(inheritTag, parentFileName))
 		{
-			PropertyBag_XML data, prototype;
+			PropertyBagImpl data, prototype;
 			prototype.loadFromFile(parentFileName); // may recurse
 
 			// Merge or add data specific to this creature
@@ -468,14 +468,14 @@ bool PropertyBag_XML::loadMergeFromString(const string &data, bool allowInherita
 	return(true);
 }
 
-void PropertyBag_XML::insertTag(const string &tagName, const string &tagValue)
+void PropertyBagImpl::insertTag(const string &tagName, const string &tagValue)
 {
 	PropertyBagItem *item = 0;
 
 	// a < and > mean it's a bag within a bag
 	if(tagValue.find("<") != string::npos && tagValue.find(">") != string::npos)
 	{
-		item = new PropertyBag_XML(tagValue);
+		item = new PropertyBagImpl(tagValue);
 	}
 	else
 	{
@@ -485,7 +485,7 @@ void PropertyBag_XML::insertTag(const string &tagName, const string &tagValue)
 	data.insert(make_pair(tagName, item));
 }
 
-bool PropertyBag_XML::get(const string& key, string &dest, size_t instance) const
+bool PropertyBagImpl::get(const string& key, string &dest, size_t instance) const
 {
 	if(data.find(key) == data.end())
 		return(false);
@@ -499,7 +499,7 @@ bool PropertyBag_XML::get(const string& key, string &dest, size_t instance) cons
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key, int &dest, size_t instance) const
+bool PropertyBagImpl::get(const string& key, int &dest, size_t instance) const
 {
 	string str;
 	if (!get(key, str, instance)) return(false);
@@ -507,7 +507,7 @@ bool PropertyBag_XML::get(const string& key, int &dest, size_t instance) const
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key, unsigned int &dest, size_t instance) const
+bool PropertyBagImpl::get(const string& key, unsigned int &dest, size_t instance) const
 {
 	string str;
 	if (!get(key, str, instance)) return(false);
@@ -515,7 +515,7 @@ bool PropertyBag_XML::get(const string& key, unsigned int &dest, size_t instance
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key, size_t &dest, size_t instance) const
+bool PropertyBagImpl::get(const string& key, size_t &dest, size_t instance) const
 {
 	string str;
 	if (!get(key, str, instance)) return(false);
@@ -523,7 +523,7 @@ bool PropertyBag_XML::get(const string& key, size_t &dest, size_t instance) cons
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key, double &dest, size_t instance) const
+bool PropertyBagImpl::get(const string& key, double &dest, size_t instance) const
 {
 	string str;
 	if (!get(key, str, instance)) return(false);
@@ -531,7 +531,7 @@ bool PropertyBag_XML::get(const string& key, double &dest, size_t instance) cons
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key, float &dest, size_t instance) const
+bool PropertyBagImpl::get(const string& key, float &dest, size_t instance) const
 {
 	string str;
 	if (!get(key, str, instance)) return(false);
@@ -539,7 +539,7 @@ bool PropertyBag_XML::get(const string& key, float &dest, size_t instance) const
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key, bool &dest, size_t instance) const
+bool PropertyBagImpl::get(const string& key, bool &dest, size_t instance) const
 {
 	string str;
 
@@ -552,7 +552,7 @@ bool PropertyBag_XML::get(const string& key, bool &dest, size_t instance) const
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key,
+bool PropertyBagImpl::get(const string& key,
 					  XmlDataType *dest,
 					  size_t instance) const
 {
@@ -564,8 +564,8 @@ bool PropertyBag_XML::get(const string& key,
 	return(true);
 }
 
-bool PropertyBag_XML::get(const string& key,
-					  PropertyBag_XML &dest,
+bool PropertyBagImpl::get(const string& key,
+					  PropertyBagImpl &dest,
 					  size_t instance) const
 {
 	if(data.find(key)==data.end())
@@ -581,14 +581,14 @@ bool PropertyBag_XML::get(const string& key,
 	iter = data.lower_bound(key);
 	for(size_t q=0; q < instance; q++) iter++;
 
-	ASSERT(dynamic_cast<PropertyBag_XML*>(iter->second)!=0,
-	       "iter->second cannot be cast to a PropertyBag_XML object: " \
+	ASSERT(dynamic_cast<PropertyBagImpl*>(iter->second)!=0,
+	       "iter->second cannot be cast to a PropertyBagImpl object: " \
 	       "key = \"" + key + "\"");
 
 	// I would rather have invalid behavior than a crash
-	if(dynamic_cast<PropertyBag_XML*>(iter->second)!=0)
+	if(dynamic_cast<PropertyBagImpl*>(iter->second)!=0)
 	{
-		dest = dynamic_cast<PropertyBag_XML&>(*iter->second);
+		dest = dynamic_cast<PropertyBagImpl&>(*iter->second);
 		return true;
 	}
 	else
@@ -597,7 +597,7 @@ bool PropertyBag_XML::get(const string& key,
 	}
 }
 
-string PropertyBag_XML::getString(const string &key, size_t instance) const
+string PropertyBagImpl::getString(const string &key, size_t instance) const
 {
     ASSERT(getNumInstances(key) > instance,
            "Not enough instances of key: " + key +
@@ -607,96 +607,96 @@ string PropertyBag_XML::getString(const string &key, size_t instance) const
 	string x = "nill";
 	if(!get(key, x, instance))
 	{
-        FAIL("Failed to get string from PropertyBag_XML: " + key +
+        FAIL("Failed to get string from PropertyBagImpl: " + key +
              " (wanted instance #" + itoa((int)instance) +
              " of " + itoa((int)getNumInstances(key)) + ")");
 	}
 	return x;
 }
 
-int PropertyBag_XML::getInt(const string &key, size_t instance) const
+int PropertyBagImpl::getInt(const string &key, size_t instance) const
 {
 	int x = 0xdeadbeaf;
 	if(!get(key, x, instance))
 	{
-		FAIL("Failed to get int from PropertyBag_XML: " + key +
+		FAIL("Failed to get int from PropertyBagImpl: " + key +
 		     " (instance #)" + itoa((int)instance));
 	}
 	return x;
 }
 
-unsigned int PropertyBag_XML::getUint(const string &key, size_t instance) const
+unsigned int PropertyBagImpl::getUint(const string &key, size_t instance) const
 {
 	unsigned int x = 0xdeadbeaf;
 	if(!get(key, x, instance))
 	{
-		FAIL("Failed to get int from PropertyBag_XML: " + key +
+		FAIL("Failed to get int from PropertyBagImpl: " + key +
 		     " (instance #)" + itoa((int)instance));
 	}
 	return x;
 }
 
-size_t PropertyBag_XML::getSizeT(const string &key, size_t instance) const
+size_t PropertyBagImpl::getSizeT(const string &key, size_t instance) const
 {
 	size_t x = 0xdeadbeaf;
 	if(!get(key, x, instance))
 	{
-		FAIL("Failed to get size_t from PropertyBag_XML: " + key +
+		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
 		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-double PropertyBag_XML::getDouble(const string &key, size_t instance) const
+double PropertyBagImpl::getDouble(const string &key, size_t instance) const
 {
 	double x = 0.0;
 	if(!get(key, x, instance))
 	{
-		FAIL("Failed to get size_t from PropertyBag_XML: " + key +
+		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
 		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-float PropertyBag_XML::getFloat(const string &key, size_t instance) const
+float PropertyBagImpl::getFloat(const string &key, size_t instance) const
 {
 	float x = 0.0f;
 	if(!get(key, x, instance))
 	{
-		FAIL("Failed to get size_t from PropertyBag_XML: " + key +
+		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
 		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-bool PropertyBag_XML::getBool(const string &key, size_t instance) const
+bool PropertyBagImpl::getBool(const string &key, size_t instance) const
 {
 	bool x = false;
 	if(!get(key, x, instance))
 	{
-		FAIL("Failed to get size_t from PropertyBag_XML: " + key +
+		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
 		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-PropertyBag_XML PropertyBag_XML::getBag(const string &key, size_t instance) const
+PropertyBagImpl PropertyBagImpl::getBag(const string &key, size_t instance) const
 {
-	PropertyBag_XML x;
+	PropertyBagImpl x;
 	if(!get(key, x, instance))
 	{
-		FAIL("Failed to get size_t from PropertyBag_XML: " + key +
+		FAIL("Failed to get size_t from PropertyBagImpl: " + key +
 		     " (instance #)" + itoa((int)instance) );
 	}
 	return x;
 }
 
-size_t PropertyBag_XML::getNumInstances(const string &key) const
+size_t PropertyBagImpl::getNumInstances(const string &key) const
 {
 	return data.count(key);
 }
 
-void PropertyBag_XML::clear(void)
+void PropertyBagImpl::clear(void)
 {
 	for(PropertyMap::iterator propIter = data.begin();
 		propIter != data.end(); ++propIter)
@@ -706,7 +706,7 @@ void PropertyBag_XML::clear(void)
 	data.clear();
 }
 
-void PropertyBag_XML::copy(const PropertyBag_XML &copyMe)
+void PropertyBagImpl::copy(const PropertyBagImpl &copyMe)
 {
 	clear();
 
@@ -727,9 +727,9 @@ void PropertyBag_XML::copy(const PropertyBag_XML &copyMe)
 		}
 		else
 		{
-			const PropertyBag_XML *pBag = dynamic_cast<const PropertyBag_XML*>(tagItem);
+			const PropertyBagImpl *pBag = dynamic_cast<const PropertyBagImpl*>(tagItem);
 
-			if(pBag) // if the item is a PropertyBag_XML
+			if(pBag) // if the item is a PropertyBagImpl
 			{
 				add(tagName, *pBag);
 			}
@@ -739,7 +739,7 @@ void PropertyBag_XML::copy(const PropertyBag_XML &copyMe)
 	ASSERT(copyMe == (*this), "Failed to copy bag");
 }
 
-void PropertyBag_XML::merge(const PropertyBag_XML &newstuff, bool overwrite)
+void PropertyBagImpl::merge(const PropertyBagImpl &newstuff, bool overwrite)
 {
 	for(PropertyMap::const_iterator newiter = newstuff.data.begin();
 	    newiter != newstuff.data.end();
@@ -753,7 +753,7 @@ void PropertyBag_XML::merge(const PropertyBag_XML &newstuff, bool overwrite)
 
 		const PropertyBagString *pStr =
 				dynamic_cast<const PropertyBagString*>(tagItem);
-		const PropertyBag_XML *pBag = dynamic_cast<const PropertyBag_XML*>(tagItem);
+		const PropertyBagImpl *pBag = dynamic_cast<const PropertyBagImpl*>(tagItem);
 
 		if(pStr) // if the item is a PropertyBagString
 		{
@@ -768,7 +768,7 @@ void PropertyBag_XML::merge(const PropertyBag_XML &newstuff, bool overwrite)
 			}
 		}
 
-		if(pBag) // if the item is a PropertyBag_XML
+		if(pBag) // if the item is a PropertyBagImpl
 		{
 			// if it doesn't exist, just add the bag (easy!)
 			if(!tagAlreadyExists)
@@ -781,7 +781,7 @@ void PropertyBag_XML::merge(const PropertyBag_XML &newstuff, bool overwrite)
 				ASSERT(originalItem != 0, "originalItem was null!");
 
 				/*
-				The tag we are trying to add is a PropertyBag_XML,
+				The tag we are trying to add is a PropertyBagImpl,
 				but it is possible that the existing tag is a
 				PropertyBagString.  If this is the case, we
 				should *always* overwrite the existing tag.
@@ -794,7 +794,7 @@ void PropertyBag_XML::merge(const PropertyBag_XML &newstuff, bool overwrite)
 				}
 				else
 				{
-					(dynamic_cast<PropertyBag_XML&>(*originalItem)).merge(*pBag,
+					(dynamic_cast<PropertyBagImpl&>(*originalItem)).merge(*pBag,
 																	overwrite);
 				}
 			}
@@ -802,7 +802,7 @@ void PropertyBag_XML::merge(const PropertyBag_XML &newstuff, bool overwrite)
 	} // loop
 }
 
-bool PropertyBag_XML::operator==(const PropertyBag_XML &r) const
+bool PropertyBagImpl::operator==(const PropertyBagImpl &r) const
 {
 	if(r.data.size() != data.size())
 		return false;
@@ -822,12 +822,12 @@ bool PropertyBag_XML::operator==(const PropertyBag_XML &r) const
 	return true;
 }
 
-bool PropertyBag_XML::operator==( const PropertyBagItem &r ) const
+bool PropertyBagImpl::operator==( const PropertyBagItem &r ) const
 {
-	return(  (*this) == dynamic_cast<const PropertyBag_XML &>(r)  );
+	return(  (*this) == dynamic_cast<const PropertyBagImpl &>(r)  );
 }
 
-PropertyBag_XML & PropertyBag_XML::operator=( const PropertyBag_XML &r )
+PropertyBagImpl & PropertyBagImpl::operator=( const PropertyBagImpl &r )
 {
 	copy(r);
 	return(*this);
