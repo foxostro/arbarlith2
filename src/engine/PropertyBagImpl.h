@@ -226,23 +226,8 @@ public:
 	*/
 	size_t count(const string &key) const;
 
-	/** Adds a C string */
-	void add(const string& key, const char* data, bool convert = true);
-
 	/** Adds a string */
 	void add(const string &key, const string &data, bool convert = true);
-
-	/** Adds an int */
-	void add(const string &key, int data);
-
-	/** Adds a size_t */
-	void add(const string &key, size_t data);
-
-	/** Adds a double */
-	void add(const string &key, double data);
-
-	/** Adds a float */
-	void add(const string &key, float data);
 
 	/** Adds a bool */
 	void add(const string &key, bool data);
@@ -252,21 +237,6 @@ public:
 
 	/** Gets a string */
 	bool get(const string &key, string &dest, size_t instance = 0) const;
-
-	/** Gets an int */
-	bool get(const string &key, int &dest, size_t instance = 0) const;
-
-	/** Gets a uint */
-	bool get(const string &key, unsigned int &dest, size_t instance = 0) const;
-	
-	/** Gets a size_t */
-	bool get(const string &key, size_t &dest, size_t instance = 0) const;
-
-	/** Gets a double */
-	bool get(const string &key, double &dest, size_t instance = 0) const;
-
-	/** Gets a float */
-	bool get(const string &key, float &dest, size_t instance = 0) const;
 
 	/** Gets a bool */
 	bool get(const string &key, bool &dest, size_t instance = 0) const;

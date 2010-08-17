@@ -137,46 +137,14 @@ PropertyBagImpl::PropertyBagImpl(const string &s)
 PropertyBagImpl::~PropertyBagImpl(void)
 {}
 
-void PropertyBagImpl::add(const string& key, const char* contents, bool convert)
-{
-	add(key, string(contents), convert);
-}
-
 void PropertyBagImpl::add(const string& key, const string &contents, bool convert)
 {
 	data.insert(make_pair(key, new PropertyBagString(key, contents, convert)));
 }
 
-void PropertyBagImpl::add(const string& key, int data)
-{
-	add(key, itoa(data));
-}
-
-void PropertyBagImpl::add(const string& key, size_t data)
-{
-	add(key, itoa((int)data));
-}
-
-void PropertyBagImpl::add(const string& key, double data)
-{
-	add(key, ftoa((float)data, 4));
-}
-
 void PropertyBagImpl::add(const string& key, bool data)
 {
-	if(data)
-	{
-		add(key, "true");
-	}
-	else
-	{
-		add(key, "false");
-	}
-}
-
-void PropertyBagImpl::add(const string& key, float data)
-{
-	add(key, ftoa(data, 4));
+	add(key, data ? string("true") : string("false"));
 }
 
 void PropertyBagImpl::add(const string& key, const PropertyBagImpl &contents)
@@ -487,46 +455,6 @@ bool PropertyBagImpl::get(const string& key, string &dest, size_t instance) cons
 
 	dest = (iter->second)->save();
 
-	return(true);
-}
-
-bool PropertyBagImpl::get(const string& key, int &dest, size_t instance) const
-{
-	string str;
-	if (!get(key, str, instance)) return(false);
-	dest = stoi(str);
-	return(true);
-}
-
-bool PropertyBagImpl::get(const string& key, unsigned int &dest, size_t instance) const
-{
-	string str;
-	if (!get(key, str, instance)) return(false);
-	dest = boost::lexical_cast<unsigned int>(str);
-	return(true);
-}
-
-bool PropertyBagImpl::get(const string& key, size_t &dest, size_t instance) const
-{
-	string str;
-	if (!get(key, str, instance)) return(false);
-	dest = boost::lexical_cast<size_t>(str);
-	return(true);
-}
-
-bool PropertyBagImpl::get(const string& key, double &dest, size_t instance) const
-{
-	string str;
-	if (!get(key, str, instance)) return(false);
-	dest = stof(str);
-	return(true);
-}
-
-bool PropertyBagImpl::get(const string& key, float &dest, size_t instance) const
-{
-	string str;
-	if (!get(key, str, instance)) return(false);
-	dest = stof(str);
 	return(true);
 }
 
