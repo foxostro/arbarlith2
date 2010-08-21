@@ -1,5 +1,6 @@
 ﻿<mouseSensitivity>100</mouseSensitivity>
 <menuMusic>data/music/Rachel01.mp3</menuMusic>
+<soundEnabled>true</soundEnabled>
 <performance>
 	<aniostropy>4.0000</aniostropy>
 	<textureFilter>1</textureFilter>

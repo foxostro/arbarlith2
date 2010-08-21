@@ -5,9 +5,9 @@
 
 <height>1.7</height>
 <mass>80.0</mass>
-<pos>&vec(20.0, 0.0, 20.0)</pos>
-<look>&vec(0.0, 0.0, 1.0)</look>
-<up>&vec(0.0, 1.0, 0.0)</up>
+<pos>vec(20.0, 0.0, 20.0)</pos>
+<look>vec(0.0, 0.0, 1.0)</look>
+<up>vec(0.0, 1.0, 0.0)</up>
 <castShadows>true</castShadows>
 <isLit>false</isLit>
 <speed>5.0</speed>
@@ -42,9 +42,9 @@
 <armorMultiplier>1</armorMultiplier>
 <attackCoolDownMultiplier>1</attackCoolDownMultiplier>
 <floating>false</floating>
-<look>&vec(0.0, 0.0, 1.0)</look>
+<look>vec(0.0, 0.0, 1.0)</look>
 <showModel>true</showModel>
 <solid>true</solid>
 <spellCoolDownMultiplier>1</spellCoolDownMultiplier>
-<up>&vec(0, 1, 0)</up>
+<up>vec(0, 1, 0)</up>
 <weaponMultiplier>1</weaponMultiplier>

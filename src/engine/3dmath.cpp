@@ -44,7 +44,7 @@ bool vec4::FromString(string _s)
 	if(i == tokens.end())
         return false;
     
-    if(string(*i) != "&vec")
+    if(string(*i) != "vec")
         return false;
 
     x = stof(*(++i));

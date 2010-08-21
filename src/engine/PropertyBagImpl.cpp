@@ -1,16 +1,8 @@
-/*
-Modified by Andrew Fox in 2003-2007,2009,2010
-E-Mail: mailto:foxostro@gmail.com
-
-Original Source:
-McCuskey, Mason. "Game Programming Tricks of the Trade".
-	"Trick 15: Serialization Using XML Property Bags".
-	Premier Press. 2002.
-*/
-
 #include <boost/lexical_cast.hpp>
-#include <map>
 #include <string>
+#include <memory> // std::auto_ptr
+
+#include "tinyxml/tinyxml.h"
 
 #include "stdafx.h"
 #include "file.h"
@@ -18,109 +10,28 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 #include "PropertyBagImpl.h"
 
 using std::string;
-using std::multimap;
 
 namespace Engine {
 
-PropertyBagItem::~PropertyBagItem(void) {}
-
-PropertyBagItem::PropertyBagItem(void) {}
-
-bool PropertyBagItem::operator!=( const PropertyBagItem &r )
+static string getElementContentsAsString(TiXmlElement * el)
 {
-	return(!((*this) == r));
-}
+	ASSERT(el, "el was NULL");
 
-string PropertyBagString::save(int) const
-{
-	return(itemData);
-}
-
-string PropertyBagString::makeStringSafe(const string &str)
-{
-	/*
-	replace all &'s with &amp's
-	replace all <'s with &lt's
-	replace all >'s with &gt's
-	*/
-
-	return replace(replace(replace(str, "&", "&amp;"),
-										"<", "&lt;"),
-										">", "&gt;");
-}
-
-string PropertyBagString::restoreFromSafeString(const string &str)
-{
-	/*
-	replace all &amp's with &'s
-	replace all &lt's with <'s
-	replace all &gt's with >'s
-	*/
-
-	return replace (replace(replace(str, "&amp;", "&"),
-					                     "&lt;",  "<"),
-					                     "&gt;",  ">");
-}
-
-bool PropertyBagString::operator==( const PropertyBagItem &r ) const
-{
-	return(itemData == static_cast<const PropertyBagString &>(r).itemData);
-}
-
-const string& PropertyBagString::getName( void ) const
-{
-	return itemName;
-}
-
-const string& PropertyBagString::setName( const string &name )
-{
-	itemName = name;
-	return itemName;
-}
-
-const string& PropertyBagString::setData( const string &data, bool convert )
-{
-	if(convert)
+	TiXmlNode * child = NULL;
+	string s;
+	
+	for(child = el->FirstChild(); child; child = child->NextSibling())
 	{
-		itemData = makeStringSafe(data);
-		itemHasBeenConverted = true;
+		TiXmlPrinter printer;
+		printer.SetStreamPrinting();
+		child->Accept(&printer);
+		s += printer.CStr();
 	}
-	else
-	{
-		itemData = data;
-		itemHasBeenConverted = false;
-	}
-
-	return itemData;
+	
+	return s;
 }
 
-string PropertyBagString::getData( void ) const
-{
-	if(itemHasBeenConverted)
-	{
-		return restoreFromSafeString(itemData);
-	}
-	else
-	{
-		return itemData;
-	}
-}
-
-PropertyBagString::PropertyBagString(const string &data, bool convert)
-{
-	setData(data, convert);
-}
-
-PropertyBagString::PropertyBagString(const string &name,
-                                     const string &data,
-                                     bool convert )
-{
-	setData(data, convert);
-	setName(name);
-}
-
-PropertyBagString::~PropertyBagString(void)
-{}
+PropertyBagImpl::~PropertyBagImpl() { /* do nothing */ }
 
 PropertyBagImpl::PropertyBagImpl(void)
 {
@@ -128,23 +39,16 @@ PropertyBagImpl::PropertyBagImpl(void)
 }
 
 PropertyBagImpl::PropertyBagImpl(const PropertyBagImpl &r)
-: PropertyBagItem(r)
 {
 	copy(r);
 }
 
-PropertyBagImpl::PropertyBagImpl(const string &s)
+void PropertyBagImpl::add(const string & key, const string & contents)
 {
-	clear();
-	loadMergeFromString(s, true);
-}
-
-PropertyBagImpl::~PropertyBagImpl(void)
-{}
-
-void PropertyBagImpl::add(const string& key, const string &contents, bool convert)
-{
-	data.insert(make_pair(key, new PropertyBagString(key, contents, convert)));
+	TiXmlElement * el_key = new TiXmlElement(key);
+	TiXmlText * el_value = new TiXmlText(contents);
+	el_key->LinkEndChild(el_value);
+	xml->LinkEndChild(el_key);
 }
 
 void PropertyBagImpl::add(const string& key, bool data)
@@ -152,503 +56,260 @@ void PropertyBagImpl::add(const string& key, bool data)
 	add(key, data ? string("true") : string("false"));
 }
 
-void PropertyBagImpl::add(const string& key, const PropertyBagImpl &contents)
+void PropertyBagImpl::add(const string & key, const PropertyBagImpl & bag)
 {
-	if(!contents.data.empty())
+	TiXmlNode * child = NULL;
+	TiXmlNode * container = new TiXmlElement(key);
+
+	// clone all children of the other bag and insert into a container
+	for(child = bag.xml->FirstChild(); child; child = child->NextSibling())
 	{
-		data.insert(make_pair(key, new PropertyBagImpl(contents)));
+		container->LinkEndChild(child->Clone());
 	}
+
+	xml->LinkEndChild(container);
 }
 
-void PropertyBagImpl::remove(const string &key)
+void PropertyBagImpl::remove(const string & key)
 {
-	while(data.count(key)!=0)
-	{
-		PropertyMap::iterator i = data.lower_bound(key);
-		delete(i->second);
-		data.erase(i);
-	}
-
-	ASSERT(count(key)==0,
-	       "Failed to remove items sharing key: " + key);
+	xml->RemoveChild(xml->FirstChild(key));
+	ASSERT(count(key)==0, "Failed to remove items sharing key: " + key);
 }
 
-void PropertyBagImpl::remove(const string &key, int instance)
+TiXmlNode * PropertyBagImpl::findChild(const string & key, int n) const
 {
-	if(data.empty()) return;
+	int i = 0;
+	TiXmlNode * root = xml.get();
+	TiXmlNode * child = NULL;
 
-	PropertyMap::iterator i;
-	PropertyMap::iterator stop = data.upper_bound(key);
-	stop++;
-
-	i = data.lower_bound(key);
-
-	if(i == data.end()) return; // nothing to remove
-
-	for(int q=0; q < instance; q++, i++);
-
-	if(i != data.end())
-	{
-		do
-		{
-			delete((*i).second);
-			data.erase(i);
-		} while (data.size() && i++ != stop);
-	}
-}
-
-void PropertyBagImpl::saveToFile(const string &fileName, int indentLevel) const
-{
-	File file;
-	file.write(save(indentLevel));
-	file.saveFile(fileName, false);
-}
-
-string PropertyBagImpl::save(int indentlevel) const
-{
-	string out;
-	string indent(indentlevel, '\t');
-
-	// Cycle through all the tags in this bag
-	for (PropertyMap::const_iterator i = data.begin(); i != data.end(); i++)
-	{
-		PropertyBagItem *data = (*i).second; // Tag Value can be retrieved
-		string key = (*i).first; // Tag Name
-		string line; // TagValue is put in here
-		string withname; // <TagName>TagValue</TagName> in here
-
-		// Dynamic cast will return NULL if data is not a CPropBag object
-		bool IsBag = dynamic_cast<PropertyBagImpl*>(data) != NULL;
-
-		/*
-		Get the tag value as a string.  CPropItem::Save() does this for us.
-		Note that if the data is a CPropString, then line is simple the
-		string's value. However, if the data is a CPropBag, then this function
-		recurses to make line = bag (If the conversion exists, have the data
-		be indented like a property bag should be)
-		*/
-		line = data->save(IsBag ? indentlevel+1 : indentlevel);
-
-		if(IsBag)
-		{
-			// Put a new line after the opening tag, then indent and put the data
-			withname  = indent;
-			withname += "<";
-			withname += key;
-			withname += ">\n";
-			withname += line;
-			withname += indent;
-			withname += "</";
-			withname += key;
-			withname += ">\n";
-		}
-		else
-		{
-			// Everything on one line
-			withname  = indent;
-			withname += "<";
-			withname += key;
-			withname += ">";
-			withname += line;
-			withname += "</";
-			withname += key;
-			withname += ">\n";
-		}
-
-		// Add this tag to the total string dump of the property bag
-		out += withname;
+	if(!root) {
+		return NULL;
 	}
 
-	return(out);
-}
-
-void PropertyBagImpl::loadFromFile(const string &filename, bool merge)
-{
-	if(!File::isFileOnDisk(filename))
+	// Find the child by linearly iterating until we get the n-th child
+	for(i = 0, child = root->FirstChild(key); child;
+	    child = child->NextSibling())
 	{
-		FAIL("File not found: " + filename);
-		return;
-	}
-
-	File file(filename, false);
-
-	if(!file.loaded())
-	{
-		FAIL("File failed to load: " + filename);
-		return;
-	}
-
-	string fileContents;
-
-	fileContents.resize(file.getSize()); // Resize to fit the data
-
-	// Copy file data
-	{
-		char *buffer = new char[file.getSize()];
-		file.read(buffer, file.getSize());
-		fileContents = buffer;
-		delete [] buffer;
-	}
-
-	// Load / Merge the data
-	if(!merge)
-	{
-		data.clear();
-	}
-
-	if(!loadMergeFromString(fileContents, true))
-	{
-		FAIL("Failed to merge file contents on load: " + filename);
-	}
-}
-
-bool PropertyBagImpl::loadMergeFromString(const string &data, bool allowInheritance)
-{
-	enum eElanPropBagReadState
-	{
-		SearchingForOpenTag,
-		ReadingOpenTag,
-		ReadingTagContents
-	} curstate = SearchingForOpenTag;
-
-	string tagname;
-	string tagvalue;
-	string closetag;
-
-	unsigned char previous=0;
-	string possibleClosingTag;
-	bool isPossibleClosingTag=false;
-
-	for(string::const_iterator iter = data.begin(); iter != data.end(); ++iter)
-	{
-		const unsigned char b = (unsigned char)(*iter);
-
-		switch(curstate)
-		{
-			case SearchingForOpenTag:
-			{
-				if (b == '<')
-				{
-					// we've found our open tag!
-					curstate = ReadingOpenTag;
-				}
+		if(key == child->Value()) {
+			if(i++ == n) {
+				return child;
 			}
-			break;
-
-			case ReadingOpenTag:
-			{
-				if (b == '>')
-				{
-					// end of tag
-					curstate = ReadingTagContents;
-					closetag = "</" + tagname + ">";
-				}
-				else
-				{
-					// add the character to the name of the tag
-					tagname += b;
-				}
-			}
-			break;
-
-			case ReadingTagContents:
-			{
-				// Add the character to the contents of the tag
-				tagvalue += b;
-
-				// If we are possibly reading the closing tag now
-				if(isPossibleClosingTag)
-				{
-					// Build the string for what may be the closing tag
-					possibleClosingTag += b;
-
-					// Otherwise, search for the real closing tag
-					if(possibleClosingTag == closetag)
-					{
-						// Remove that closing tag from the tag contents
-						tagvalue = replace(tagvalue, closetag, "");
-
-						// Put the completed tag into the bag here
-						insertTag(tagname, tagvalue);
-
-						// Reset the state
-						curstate = SearchingForOpenTag;
-						tagname = "";
-						tagvalue = "";
-					}
-
-					// Has it become impossible that this is the closing tag?
-					if(b == '>')
-					{
-						isPossibleClosingTag = false;
-					}
-				}
-
-				// Have we begun to encounter what may be the closing tag?
-				if(previous == '<' && b == '/')
-				{
-					isPossibleClosingTag = true;
-					possibleClosingTag = "</";
-				}
-			}
-			break;
-		}; // end switch
-
-		previous = b;
-	}
-
-	// Possibly inherit properties from another file
-	if(allowInheritance)
-	{
-		const string inheritTag = "@inherit";
-		string parentFileName = "nill";
-		if(get(inheritTag, parentFileName))
-		{
-			PropertyBagImpl data, prototype;
-			prototype.loadFromFile(parentFileName); // may recurse
-
-			// Merge or add data specific to this creature
-			data = prototype;
-			data.merge(*this, true);
-
-			// Remove the <@inherit> ... </@inherit> element
-			data.remove(inheritTag);
-
-			/*
-			And replace it with another special tag.
-			The aim is to prevent re-inheritance of the same base,
-			and still allow clients to see lineage.
-			*/
-			if(data.count("@parentFileName") < 1) // only the topmost ancestor
-			{
-				data.add("@parentFileName", parentFileName);
-			}
-
-			// 'data' contains the entire merged structure
-			(*this) = data;
 		}
 	}
 
-	return(true);
+	return NULL;
 }
 
-void PropertyBagImpl::insertTag(const string &tagName, const string &tagValue)
+void PropertyBagImpl::remove(const string & key, int n)
 {
-	PropertyBagItem *item = 0;
-
-	// a < and > mean it's a bag within a bag
-	if(tagValue.find("<") != string::npos && tagValue.find(">") != string::npos)
-	{
-		item = new PropertyBagImpl(tagValue);
-	}
-	else
-	{
-		item = new PropertyBagString(tagName, tagValue, false);
-	}
-
-	data.insert(make_pair(tagName, item));
+	xml->RootElement()->RemoveChild(findChild(key, n));
 }
 
-bool PropertyBagImpl::get(const string& key, string &dest, size_t instance) const
+void PropertyBagImpl::saveToFile(const string &fileName) const
 {
-	if(data.find(key) == data.end())
-		return(false);
-
-	PropertyMap::const_iterator iter = data.lower_bound(key);
-
-	for(size_t q=0; q < instance; q++) iter++;
-
-	dest = (iter->second)->save();
-
-	return(true);
+	xml->SaveFile(fileName);
 }
 
-bool PropertyBagImpl::get(const string& key, bool &dest, size_t instance) const
+string PropertyBagImpl::save(void) const
+{
+	TiXmlPrinter printer;
+	xml->Accept(&printer);
+	return printer.Str();
+}
+
+void PropertyBagImpl::loadFromFile(const string &fileName)
+{
+	xml.reset(new TiXmlDocument);
+	xml->LoadFile(fileName);
+	while(resolveInheritTags());
+}
+
+bool PropertyBagImpl::get(const string & key,
+                          string & dest,
+                          size_t instance) const
+{
+	TiXmlNode * node = NULL;
+	TiXmlElement * child = NULL;
+	TiXmlNode * valNode = NULL;
+	
+	node = findChild(key, instance);
+	if(!node) {
+		return false;
+	}
+
+	child = node->ToElement();
+	if(!child) {
+		return false;
+	}
+
+	valNode = child->FirstChild();
+	if(!valNode) {
+		return false;
+	}
+	
+	dest = valNode->Value();
+	return true;
+}
+
+bool PropertyBagImpl::get(const string & key,
+                          bool & dest,
+                          size_t instance) const
 {
 	string str;
 
-	if (!get(key, str, instance)) return(false);
+	if (!get(key, str, instance)) {
+		return false;
+	}
 
 	str = toLowerCase(str);
 
 	dest = (str == "true");
 
-	return(true);
+	return true;
 }
 
-bool PropertyBagImpl::get(const string& key,
-                          PropertyBagImpl &dest,
+bool PropertyBagImpl::get(const string & key,
+                          PropertyBagImpl & dest,
                           size_t instance) const
 {
-	if(data.find(key)==data.end())
-		return false;
+	TiXmlNode * node = NULL;
+	TiXmlElement * el = NULL;
 
-	PropertyMap::const_iterator iter;
-
-	// check that the desired instance exists
-	ASSERT(instance < count(key),
-		   "parameter \'instance\' is incorrect: " + itoa((int)instance));
-
-	// go to the desired instance
-	iter = data.lower_bound(key);
-	for(size_t q=0; q < instance; q++) iter++;
-
-	ASSERT(dynamic_cast<PropertyBagImpl*>(iter->second)!=0,
-	       "iter->second cannot be cast to a PropertyBagImpl object: " \
-	       "key = \"" + key + "\"");
-
-	// I would rather have invalid behavior than a crash
-	if(dynamic_cast<PropertyBagImpl*>(iter->second)!=0)
-	{
-		dest = dynamic_cast<PropertyBagImpl&>(*iter->second);
-		return true;
-	}
-	else
-	{
+	node = findChild(key, instance);
+	if(!node) {
 		return false;
 	}
-}
 
-size_t PropertyBagImpl::count(const string &key) const
-{
-	return data.count(key);
-}
-
-void PropertyBagImpl::clear(void)
-{
-	for(PropertyMap::iterator propIter = data.begin();
-		propIter != data.end(); ++propIter)
-	{
-		delete(propIter->second);
-	}
-	data.clear();
-}
-
-void PropertyBagImpl::copy(const PropertyBagImpl &copyMe)
-{
-	clear();
-
-	for(PropertyMap::const_iterator iter = copyMe.data.begin();
-	    iter != copyMe.data.end();
-	    ++iter)
-	{
-		// alias the iterator's pair
-		const string &tagName = iter->first;
-		const PropertyBagItem *tagItem = iter->second;
-
-		const PropertyBagString *pStr =
-				dynamic_cast<const PropertyBagString*>(tagItem);
-
-		if(pStr) // if the item is a PropertyBagString
-		{
-			add(tagName, pStr->getData(), false);
-		}
-		else
-		{
-			const PropertyBagImpl *pBag = dynamic_cast<const PropertyBagImpl*>(tagItem);
-
-			if(pBag) // if the item is a PropertyBagImpl
-			{
-				add(tagName, *pBag);
-			}
-		}
-	} // loop
-
-	ASSERT(copyMe == (*this), "Failed to copy bag");
-}
-
-void PropertyBagImpl::merge(const PropertyBagImpl &newstuff, bool overwrite)
-{
-	for(PropertyMap::const_iterator newiter = newstuff.data.begin();
-	    newiter != newstuff.data.end();
-	    ++newiter)
-	{
-		// alias the iterator's pair
-		const string &tagName = newiter->first;
-		const PropertyBagItem *tagItem = newiter->second;
-
-		const bool tagAlreadyExists = data.find(tagName)!=data.end();
-
-		const PropertyBagString *pStr =
-				dynamic_cast<const PropertyBagString*>(tagItem);
-		const PropertyBagImpl *pBag = dynamic_cast<const PropertyBagImpl*>(tagItem);
-
-		if(pStr) // if the item is a PropertyBagString
-		{
-			if(!tagAlreadyExists)
-			{
-				add(tagName, pStr->getData(), false);
-			}
-			else if(overwrite && tagAlreadyExists)
-			{
-				remove(tagName);
-				add(tagName, pStr->getData(), false);
-			}
-		}
-
-		if(pBag) // if the item is a PropertyBagImpl
-		{
-			// if it doesn't exist, just add the bag (easy!)
-			if(!tagAlreadyExists)
-			{
-				add(tagName, *pBag);
-			}
-			else
-			{
-				PropertyBagItem *originalItem = data.find(tagName)->second;
-				ASSERT(originalItem != 0, "originalItem was null!");
-
-				/*
-				The tag we are trying to add is a PropertyBagImpl,
-				but it is possible that the existing tag is a
-				PropertyBagString.  If this is the case, we
-				should *always* overwrite the existing tag.
-				*/
-
-				if(dynamic_cast<const PropertyBagString*>(originalItem) != 0)
-				{
-					remove(tagName);
-					add(tagName, *pBag);
-				}
-				else
-				{
-					(dynamic_cast<PropertyBagImpl&>(*originalItem)).merge(*pBag,
-																	overwrite);
-				}
-			}
-		}
-	} // loop
-}
-
-bool PropertyBagImpl::operator==(const PropertyBagImpl &r) const
-{
-	if(r.data.size() != data.size())
+	el = node->ToElement();
+	if(!el) {
 		return false;
-
-	PropertyMap::const_iterator riter = r.data.begin();
-	PropertyMap::const_iterator liter = data.begin();
-
-	for(; riter != r.data.end() && liter != data.end(); ++riter, ++liter)
-	{
-		if((liter->first) != (riter->first))
-			return(false);
-
-		if(*(liter->second) != *(riter->second))
-			return(false);
 	}
+
+	dest.clear();
+	dest.xml->Parse(getElementContentsAsString(el).c_str());
 
 	return true;
 }
 
-bool PropertyBagImpl::operator==( const PropertyBagItem &r ) const
+size_t PropertyBagImpl::count(const string & key) const
 {
-	return(  (*this) == dynamic_cast<const PropertyBagImpl &>(r)  );
+	size_t i = 0;
+	TiXmlNode * child = NULL;
+	
+	// Find the child by linearly iterating until we count them all
+	for(i = 0, child = xml->FirstChild(key); child;
+	    child = child->NextSibling())
+	{
+		if(key == child->ValueStr()) {
+			++i;
+		}
+	}
+
+	return i;
 }
 
-PropertyBagImpl & PropertyBagImpl::operator=( const PropertyBagImpl &r )
+bool PropertyBagImpl::exists(const std::string &key) const
+{
+	return xml->FirstChild(key) != NULL;
+}
+
+void PropertyBagImpl::clear(void)
+{
+	xml.reset(new TiXmlDocument);
+}
+
+void PropertyBagImpl::copy(const PropertyBagImpl &copyMe)
+{
+	xml.reset(new TiXmlDocument(*copyMe.xml));
+	ASSERT(copyMe == (*this), "Failed to copy bag");
+}
+
+bool PropertyBagImpl::operator==(const PropertyBagImpl &r) const
+{
+	throw std::logic_error("Oh? Is someone actually calling this?");
+	return true;
+}
+
+PropertyBagImpl & PropertyBagImpl::operator=(const PropertyBagImpl &r)
 {
 	copy(r);
 	return(*this);
+}
+
+bool PropertyBagImpl::findFirstDescendent(const string & key,
+                                          TiXmlNode * root,
+                                          TiXmlNode ** parent,
+                                          TiXmlNode ** node) const
+{
+	TiXmlNode * n = NULL;
+
+	assert(root);
+	assert(parent);
+	assert(node);
+
+	for(n = root->FirstChild(); n; n = n->NextSibling())
+	{
+		if(key == n->Value()) {
+			//found it!
+			(*parent) = root;
+			(*node) = n;
+			return true;
+		} else if(findFirstDescendent(key, n, parent, node)) {
+			// found it through recursion
+			return true;
+		}
+	}
+	
+	// did find it in this branch
+	return false;
+}
+
+bool PropertyBagImpl::resolveInheritTags(void)
+{
+	// XXX: The entire concept of the INHERIT tag seems to be placed at too low of a level. It's been here forever, though, so I can't really get rid of it without a major effort. :(
+
+	TiXmlNode * parent = NULL;
+	TiXmlNode * node = NULL;
+
+	// find the first inherit tag
+	if(!findFirstDescendent("INHERIT", xml.get(), &parent, &node)) {
+		return false;
+	}
+
+	// what filename is this referencing?
+	TiXmlNode * fileNameNode = node->FirstChild();
+	if(!fileNameNode) {
+		throw std::runtime_error("Format of INHERIT tag was unexpected (1)");
+	}
+	TiXmlText * fileNameTextNode = fileNameNode->ToText();
+	if(!fileNameTextNode) {
+		throw std::runtime_error("Format of INHERIT tag was unexpected (2)");
+	}
+
+	// load the data referenced from the other file
+	string fileName = fileNameTextNode->Value();
+	TiXmlDocument subdoc;
+	subdoc.LoadFile(fileName);
+
+	// now replace the inherit tag with the data we just loaded
+	parent->RemoveChild(node);
+	
+	{
+		TiXmlNode * child = NULL;
+		TiXmlNode * cursor = parent->FirstChild();
+
+		assert(cursor);
+
+		// insert children which are not present in this context
+		for(child = subdoc.FirstChild(); child; child = child->NextSibling())
+		{
+			if(!parent->FirstChild(child->Value())) {
+				parent->InsertBeforeChild(cursor, *child);
+			}
+		}
+	}
+	
+	return true;
 }
 
 } // namespace Engine

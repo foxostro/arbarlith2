@@ -37,10 +37,6 @@ Chelsea Hostetter   Writer
 
 Special Thanks
 --------------
-Mason McCuskey
-XML Property Bags
-_Game Programming Tricks of the Trade_
-
 Paul Baker <paul@paulsprojects.net>
 Various math utilities
 http://www.paulsprojects.net
