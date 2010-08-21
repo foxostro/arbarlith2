@@ -8,14 +8,8 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 	Premier Press. 2002.
 */
 
-#ifndef _PROPERTY_BAG_XML_H_
-#define _PROPERTY_BAG_XML_H_
-
-#include <map>
-#include <string>
-
-using std::string;
-using std::multimap;
+#ifndef _PROPERTY_BAG_IMPL_H_
+#define _PROPERTY_BAG_IMPL_H_
 
 namespace Engine {
 
@@ -34,7 +28,7 @@ public:
 	represents this item.
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	virtual string save(int indentlevel=0) const = 0;
+	virtual std::string save(int indentlevel=0) const = 0;
 
 	/**
 	Equality operator
@@ -63,7 +57,7 @@ public:
 	@param data The string data to accept
 	@param convert If true, the string should be made safe for an XML file
 	*/
-	PropertyBagString(const string &data, bool convert = true);
+	PropertyBagString(const std::string &data, bool convert = true);
 
 	/**
 	Constructor
@@ -71,14 +65,14 @@ public:
 	@param data The string data to accept
 	@param convert If true, the string should be made safe for an XML file
 	*/
-	PropertyBagString(const string &name, const string &data, bool convert = true);
+	PropertyBagString(const std::string &name, const std::string &data, bool convert = true);
 
 	/**
 	Return a string representation of some XML structure that in turn
 	represents this item.
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	virtual string save(int indentlevel=0) const;
+	virtual std::string save(int indentlevel=0) const;
 
 	/**
 	Equality operator
@@ -91,7 +85,7 @@ public:
 	Gets the data from the item, converted as appropriate.
 	@return data from this item
 	*/
-	string getData(void) const;
+	std::string getData(void) const;
 
 	/**
 	Sets data for the item
@@ -100,17 +94,17 @@ public:
 	a form safe for XML.
 	@return The actual data stored for this item
 	*/
-	const string& setData(const string &data, bool convert);
+	const std::string& setData(const std::string &data, bool convert);
 
 	/**
 	Sets the name of the item
 	@param name The new name of the item
 	@return The name actually set for the item
 	*/
-	const string& setName(const string &name);
+	const std::string& setName(const std::string &name);
 
 	/** Gets the name of the item */
-	const string& getName(void) const;
+	const std::string& getName(void) const;
 
 	/**
 	Makes a string safe for insertion into an XML file by replacing special
@@ -118,7 +112,7 @@ public:
 	@param str String parameter
 	@return Safe string
 	*/
-	static string makeStringSafe(const string &str);
+	static std::string makeStringSafe(const std::string &str);
 
 	/**
 	Takes a string made safe for an XML file and replaces the entities like
@@ -126,17 +120,17 @@ public:
 	@param str String parameter
 	@return Original string
 	*/
-	static string restoreFromSafeString(const string &str);
+	static std::string restoreFromSafeString(const std::string &str);
 
 private:
 	/** Has the item been converted to a safe form? */
 	bool itemHasBeenConverted;
 
 	/** Name of the item */
-	string itemName;
+	std::string itemName;
 
 	/** Data stored for this item*/
-	string itemData;
+	std::string itemData;
 };
 
 /** Contains property bag items */
@@ -144,7 +138,7 @@ class PropertyBagImpl : public PropertyBagItem
 {
 private:
 	/** string -> PropertyBagItem */
-	typedef multimap<string, PropertyBagItem *> PropertyMap;
+	typedef std::multimap<std::string, PropertyBagItem *> PropertyMap;
 
 	/** Property bag content */
 	PropertyMap data;
@@ -163,7 +157,7 @@ public:
 	Construct from a string
 	@param s String from which to accept data
 	*/
-	PropertyBagImpl(const string &s);
+	PropertyBagImpl(const std::string &s);
 
 	/** Clear out the property bag */
 	void clear(void);
@@ -186,14 +180,14 @@ public:
 	represents this item.
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	virtual string save(int indentlevel=0) const;
+	virtual std::string save(int indentlevel=0) const;
 
 	/**
 	Saves to file some XML structure that in turn represents this item.
 	@param fileName Name of the file to write
 	@param indentlevel Indentation level of the resultant XML code
 	*/
-	void saveToFile(const string &fileName, int indentLevel=0) const;
+	void saveToFile(const std::string &fileName, int indentLevel=0) const;
 
 	/**
 	Loads the contents of the property bag from file.  It is possible to
@@ -204,51 +198,51 @@ public:
 	@param merge If true, then the contents of the file are merged with any
 	existing contents of this bag.
 	*/
-	void loadFromFile(const string &fileName, bool merge = false);
+	void loadFromFile(const std::string &fileName, bool merge = false);
 
 	/**
 	Remove all instances of the item
 	@param key Name of the key to remove
 	*/
-	void remove(const string &key);
+	void remove(const std::string &key);
 
 	/**
 	Remove all instances of the item
 	@param key Name of the key to remove
 	@param instance Index of the instance to remove
 	*/
-	void remove(const string &key, int instance);
+	void remove(const std::string &key, int instance);
 
 	/**
 	Gets the number of instances of data elements paired with the given key
 	@param key Key value
 	@return The number of times the key is present in the data
 	*/
-	size_t count(const string &key) const;
+	size_t count(const std::string &key) const;
 
 	/** Determines whether the key exists or not. */
-	inline bool exists(const string &key) const
+	inline bool exists(const std::string &key) const
 	{
 		return data.find(key) != data.end();
 	}
 
 	/** Adds a string */
-	void add(const string &key, const string &data, bool convert = true);
+	void add(const std::string &key, const std::string &data, bool convert = true);
 
 	/** Adds a bool */
-	void add(const string &key, bool data);
+	void add(const std::string &key, bool data);
 
 	/** Adds a PropertyBagImpl */
-	void add(const string &key, const PropertyBagImpl &contents);
+	void add(const std::string &key, const PropertyBagImpl &contents);
 
 	/** Gets a string */
-	bool get(const string &key, string &dest, size_t instance = 0) const;
+	bool get(const std::string &key, std::string &dest, size_t instance = 0) const;
 
 	/** Gets a bool */
-	bool get(const string &key, bool &dest, size_t instance = 0) const;
+	bool get(const std::string &key, bool &dest, size_t instance = 0) const;
 
 	/** Gets a PropertyBagImpl */
-	bool get(const string &key, PropertyBagImpl &dest, size_t instance = 0) const;
+	bool get(const std::string &key, PropertyBagImpl &dest, size_t instance = 0) const;
 
 private:
 	/**
@@ -256,7 +250,7 @@ private:
 	@param tagName Name of the tag
 	@param tagContent Content if the tag
 	*/
-	void insertTag(const string &tagName, const string &tagContent);
+	void insertTag(const std::string &tagName, const std::string &tagContent);
 
 	/**
 	Interprets the contents of the string as property bag contents and
@@ -265,7 +259,7 @@ private:
 	@param allowInheritance If true, allows @inherit tags to evaluate
 	@return true if successful, false otherwise
 	*/
-	bool loadMergeFromString(const string &newStuff, bool allowInheritance);
+	bool loadMergeFromString(const std::string &newStuff, bool allowInheritance);
 
 	/**
 	Merges the contents of another PropertyBagImpl with this one

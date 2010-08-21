@@ -1,4 +1,8 @@
 #include <boost/lexical_cast.hpp>
+#include <map>
+#include <string>
+
+using std::string;
 
 #include "PropertyBag.h"
 #include "PropertyBagImpl.h"

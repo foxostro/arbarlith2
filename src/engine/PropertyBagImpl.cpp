@@ -9,11 +9,16 @@ McCuskey, Mason. "Game Programming Tricks of the Trade".
 */
 
 #include <boost/lexical_cast.hpp>
+#include <map>
+#include <string>
 
 #include "stdafx.h"
 #include "file.h"
 #include "profile.h"
 #include "PropertyBagImpl.h"
+
+using std::string;
+using std::multimap;
 
 namespace Engine {
 
