@@ -52,932 +52,932 @@
 <name>World3</name>
 <objects>
 	<object>
-		<@inherit>data/objects/SPAWN-spider.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-spider.xml</INHERIT>
 		<expression>any: 1</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(39.33, 2.4, 27.62)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(39.33, 2.4, 27.62)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.68</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-spider.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-spider.xml</INHERIT>
 		<expression>any: 2</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(21.71, 0, 44.78)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(21.71, 0, 44.78)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.68</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>false</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>300</lockTime>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>null</name>
-		<pos>&vec(22.25, 0, 37.75)</pos>
+		<pos>vec(22.25, 0, 37.75)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>false</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>300</lockTime>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>gate1</name>
-		<pos>&vec(23.56, 0, 37.71)</pos>
+		<pos>vec(23.56, 0, 37.71)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/GateOpener.xml</@inherit>
+		<INHERIT>data/objects/GateOpener.xml</INHERIT>
 		<expression>2</expression>
 		<frictionAcceleration>32</frictionAcceleration>
 		<gateName>gate1</gateName>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<open>false</open>
-		<pos>&vec(21.52, 0, 37.01)</pos>
+		<pos>vec(21.52, 0, 37.01)</pos>
 		<speed>2</speed>
 		<triggerRadius>0.4956</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0.3808, 0, 0.9246)</look>
+		<look>vec(0.3808, 0, 0.9246)</look>
 		<mass>0</mass>
-		<pos>&vec(39, 0.1605, 45.25)</pos>
+		<pos>vec(39, 0.1605, 45.25)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0.3808, 0, 0.9246)</look>
+		<look>vec(0.3808, 0, 0.9246)</look>
 		<mass>0</mass>
-		<pos>&vec(40.25, 0.1605, 34)</pos>
+		<pos>vec(40.25, 0.1605, 34)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0.3808, 0, 0.9246)</look>
+		<look>vec(0.3808, 0, 0.9246)</look>
 		<mass>0</mass>
-		<pos>&vec(17.25, 0.1605, 33.75)</pos>
+		<pos>vec(17.25, 0.1605, 33.75)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0.9219, 0, 0.3875)</look>
+		<look>vec(0.9219, 0, 0.3875)</look>
 		<mass>0</mass>
-		<pos>&vec(15.5, 0.1605, 34.75)</pos>
+		<pos>vec(15.5, 0.1605, 34.75)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0.3808, 0, 0.9246)</look>
+		<look>vec(0.3808, 0, 0.9246)</look>
 		<mass>0</mass>
-		<pos>&vec(18.5, 0.1605, 34.5)</pos>
+		<pos>vec(18.5, 0.1605, 34.5)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-skeleton.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-skeleton.xml</INHERIT>
 		<expression>any: 1 ; 2 ; 3 ; 4 ; 5</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(38.5, 0, 39.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(38.5, 0, 39.5)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5236</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0.3808, 0, 0.9246)</look>
+		<look>vec(0.3808, 0, 0.9246)</look>
 		<mass>0</mass>
-		<pos>&vec(37.25, 0.1605, 33.5)</pos>
+		<pos>vec(37.25, 0.1605, 33.5)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/DetectorProximityPlayer.xml</@inherit>
+		<INHERIT>data/objects/DetectorProximityPlayer.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>null</name>
-		<pos>&vec(22, 0, 22)</pos>
+		<pos>vec(22, 0, 22)</pos>
 		<signalFail>-1</signalFail>
 		<signalSuccess>1</signalSuccess>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-spider.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-spider.xml</INHERIT>
 		<expression>any: 1</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(45.5, 2.4, 55)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(45.5, 2.4, 55)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.68</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-skeleton.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-skeleton.xml</INHERIT>
 		<expression>any: 1</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(27, 0, 42.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(27, 0, 42.5)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5236</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-theodore.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-theodore.xml</INHERIT>
 		<expression>any: 5</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(16.25, 0, 22.25)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(16.25, 0, 22.25)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.1947</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-theodore.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-theodore.xml</INHERIT>
 		<expression>any: 5</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(23.75, 0, 12.11)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(23.75, 0, 12.11)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.1947</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-theodore.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-theodore.xml</INHERIT>
 		<expression>5</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(22.06, 0, 14.9)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(22.06, 0, 14.9)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.1947</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-skeleton.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-skeleton.xml</INHERIT>
 		<expression>any: 1</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(33.93, 0, 47.89)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(33.93, 0, 47.89)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5236</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-otis.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-otis.xml</INHERIT>
 		<expression>any: 1</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(37.66, 0, 36.53)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(37.66, 0, 36.53)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.174</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/DetectorProximityPlayer.xml</@inherit>
+		<INHERIT>data/objects/DetectorProximityPlayer.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(16.12, 0, 28.1)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(16.12, 0, 28.1)</pos>
 		<signalFail>-1</signalFail>
 		<signalSuccess>5</signalSuccess>
 		<speed>2</speed>
 		<triggerRadius>2.5</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/DetectorProximityPlayer.xml</@inherit>
+		<INHERIT>data/objects/DetectorProximityPlayer.xml</INHERIT>
 		<castShadows>true</castShadows>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(16.6, 0, 44.68)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(16.6, 0, 44.68)</pos>
 		<signalFail>-1</signalFail>
 		<signalSuccess>2</signalSuccess>
 		<speed>2</speed>
 		<triggerRadius>1</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-wizard.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-wizard.xml</INHERIT>
 		<expression>any: 1</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(49.75, 2.4, 27.74)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(49.75, 2.4, 27.74)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5975</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/StoneHenge.xml</@inherit>
+		<INHERIT>data/objects/StoneHenge.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>5</height>
-		<look>&vec(0.7071, 0, 0.7071)</look>
-		<pos>&vec(35.19, 0, 12.73)</pos>
+		<look>vec(0.7071, 0, 0.7071)</look>
+		<pos>vec(35.19, 0, 12.73)</pos>
 		<showModel>false</showModel>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Teleporter.xml</@inherit>
+		<INHERIT>data/objects/Teleporter.xml</INHERIT>
 		<actionLabel>enter.</actionLabel>
-		<destinationPosition>&vec(100, 0, 100)</destinationPosition>
+		<destinationPosition>vec(100, 0, 100)</destinationPosition>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>0.1</height>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<model>data/evilbook/model.md3xml</model>
-		<pos>&vec(31.85, 0.1, 15.04)</pos>
+		<pos>vec(31.85, 0.1, 15.04)</pos>
 		<speed>2</speed>
 		<time>1000</time>
 		<triggerRadius>0.9913</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/StoneHenge.xml</@inherit>
+		<INHERIT>data/objects/StoneHenge.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>5</height>
-		<look>&vec(0.7071, 0, 0.7071)</look>
-		<pos>&vec(29.81, 0, 17.79)</pos>
+		<look>vec(0.7071, 0, 0.7071)</look>
+		<pos>vec(29.81, 0, 17.79)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-beast.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-beast.xml</INHERIT>
 		<expression>any: 2</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(16.77, 0, 41.66)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(16.77, 0, 41.66)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.265</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/StoneHenge.xml</@inherit>
+		<INHERIT>data/objects/StoneHenge.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>5</height>
-		<look>&vec(-0.7996, 0, 0.6005)</look>
-		<pos>&vec(29.02, 0, 11.66)</pos>
+		<look>vec(-0.7996, 0, 0.6005)</look>
+		<pos>vec(29.02, 0, 11.66)</pos>
 		<showModel>false</showModel>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/StoneHenge.xml</@inherit>
+		<INHERIT>data/objects/StoneHenge.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>5</height>
-		<look>&vec(-0.7835, 0, 0.6214)</look>
-		<pos>&vec(34.52, 0, 18.85)</pos>
+		<look>vec(-0.7835, 0, 0.6214)</look>
+		<pos>vec(34.52, 0, 18.85)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-BOSS-beast.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-BOSS-beast.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(128.2, 0.25, 100.4)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(128.2, 0.25, 100.4)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.012</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-1</name>
-		<pos>&vec(108.8, 1.776e-015, 101.5)</pos>
+		<pos>vec(108.8, 1.776e-015, 101.5)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-2</name>
-		<pos>&vec(108.8, 1.776e-015, 100.3)</pos>
+		<pos>vec(108.8, 1.776e-015, 100.3)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-1</name>
-		<pos>&vec(108.8, 0, 99)</pos>
+		<pos>vec(108.8, 0, 99)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-2</name>
-		<pos>&vec(107.5, -1.776e-015, 99)</pos>
+		<pos>vec(107.5, -1.776e-015, 99)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-1</name>
-		<pos>&vec(107.5, 0, 100.3)</pos>
+		<pos>vec(107.5, 0, 100.3)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-2</name>
-		<pos>&vec(107.5, 0, 101.5)</pos>
+		<pos>vec(107.5, 0, 101.5)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-1</name>
-		<pos>&vec(106.3, 1.776e-015, 101.5)</pos>
+		<pos>vec(106.3, 1.776e-015, 101.5)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-2</name>
-		<pos>&vec(106.3, 0, 100.3)</pos>
+		<pos>vec(106.3, 0, 100.3)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>2</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Room-Gate-1</name>
-		<pos>&vec(106.3, 0, 99)</pos>
+		<pos>vec(106.3, 0, 99)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
 		<unlockedHeight>0.1</unlockedHeight>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/GateOpener.xml</@inherit>
+		<INHERIT>data/objects/GateOpener.xml</INHERIT>
 		<expression>any: 6</expression>
 		<frictionAcceleration>32</frictionAcceleration>
 		<gateName>Boss-Room-Gate-1</gateName>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(104.5, 0, 100.8)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(104.5, 0, 100.8)</pos>
 		<speed>2</speed>
 		<triggerRadius>0.4956</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/GateOpener.xml</@inherit>
+		<INHERIT>data/objects/GateOpener.xml</INHERIT>
 		<expression>any: 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
 		<gateName>Boss-Room-Gate-2</gateName>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(104.8, 0, 99.25)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(104.8, 0, 99.25)</pos>
 		<speed>2</speed>
 		<triggerRadius>0.4956</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-wizard.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-wizard.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(113, 0, 89.25)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(113, 0, 89.25)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5975</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-wizard.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-wizard.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(118.8, 0, 88.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(118.8, 0, 88.5)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5975</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-wizard.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-wizard.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(124, 0, 88.75)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(124, 0, 88.75)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5975</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-wizard.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-wizard.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(114, 0, 113.3)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(114, 0, 113.3)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5975</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-wizard.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-wizard.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(118.8, 0, 113.8)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(118.8, 0, 113.8)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5975</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-wizard.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-wizard.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(123.8, 0, 113.8)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(123.8, 0, 113.8)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5975</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-beast.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-beast.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(119.5, 0, 104.8)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(119.5, 0, 104.8)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.265</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-beast.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-beast.xml</INHERIT>
 		<expression>6 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(120, 0, 96.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(120, 0, 96.5)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.265</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(-0.5571, 0, -0.8305)</look>
+		<look>vec(-0.5571, 0, -0.8305)</look>
 		<mass>0</mass>
-		<pos>&vec(97.08, 0.1605, 111.4)</pos>
+		<pos>vec(97.08, 0.1605, 111.4)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupHeal.xml</@inherit>
+		<INHERIT>data/objects/PowerupHeal.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(-0.5571, 0, -0.8305)</look>
+		<look>vec(-0.5571, 0, -0.8305)</look>
 		<mass>0</mass>
-		<pos>&vec(96.51, 0.1605, 113.4)</pos>
+		<pos>vec(96.51, 0.1605, 113.4)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-skeleton.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-skeleton.xml</INHERIT>
 		<expression>any: 8</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(98, 0, 117.3)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(98, 0, 117.3)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5236</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/SPAWN-skeleton.xml</@inherit>
+		<INHERIT>data/objects/SPAWN-skeleton.xml</INHERIT>
 		<expression>any: 8</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(103.7, 0, 117.9)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(103.7, 0, 117.9)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5236</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/PowerupSpell.xml</@inherit>
+		<INHERIT>data/objects/PowerupSpell.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(-0.5571, 0, -0.8305)</look>
+		<look>vec(-0.5571, 0, -0.8305)</look>
 		<mass>0</mass>
-		<pos>&vec(100.3, 0.4561, 114.5)</pos>
+		<pos>vec(100.3, 0.4561, 114.5)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
 		</sounds>
 		<speed>2</speed>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/DetectorProximityPlayer.xml</@inherit>
+		<INHERIT>data/objects/DetectorProximityPlayer.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<onlyTripOnce>true</onlyTripOnce>
-		<pos>&vec(100, 0, 100)</pos>
+		<pos>vec(100, 0, 100)</pos>
 		<signalFail>-1</signalFail>
 		<signalSuccess>8</signalSuccess>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Boulder3.xml</@inherit>
+		<INHERIT>data/objects/Boulder3.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(89.5, 0, 85)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(89.5, 0, 85)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Boulder2.xml</@inherit>
+		<INHERIT>data/objects/Boulder2.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(-0.5092, 0, 0.8606)</look>
-		<pos>&vec(90.5, 0, 82.5)</pos>
+		<look>vec(-0.5092, 0, 0.8606)</look>
+		<pos>vec(90.5, 0, 82.5)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(-0.8913, 0, 0.4534)</look>
-		<pos>&vec(82.75, 0, 91.75)</pos>
+		<look>vec(-0.8913, 0, 0.4534)</look>
+		<pos>vec(82.75, 0, 91.75)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(117.3, 0, 79.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(117.3, 0, 79.5)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(113.3, 0, 78.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(113.3, 0, 78.5)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
-		<frictionAcceleration>32</frictionAcceleration>
-		<height>3.5</height>
-		<look>&vec(0.2731, 0, 0.962)</look>
-		<pos>&vec(90, 0, 108.3)</pos>
-		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
-	</object>
-	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
-		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0.7834, 0, -0.6215)</look>
-		<pos>&vec(107.5, 0, 91.75)</pos>
-		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
-	</object>
-	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
-		<frictionAcceleration>32</frictionAcceleration>
-		<height>4.5</height>
-		<look>&vec(-0.9475, 0, -0.3198)</look>
-		<pos>&vec(107, 0, 94.5)</pos>
-		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
-	</object>
-	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>3.5</height>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(105, 0, 93)</pos>
+		<look>vec(0.2731, 0, 0.962)</look>
+		<pos>vec(90, 0, 108.3)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(91.75, 0, 96.25)</pos>
+		<look>vec(0.7834, 0, -0.6215)</look>
+		<pos>vec(107.5, 0, 91.75)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Tree.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>4.5</height>
-		<look>&vec(-0.7943, 0, -0.6075)</look>
-		<pos>&vec(95, 0, 92.75)</pos>
+		<look>vec(-0.9475, 0, -0.3198)</look>
+		<pos>vec(107, 0, 94.5)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Boulder1.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(105, 0, 107.3)</pos>
+		<height>3.5</height>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(105, 0, 93)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Boulder3.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(106.5, 0, 106.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(91.75, 0, 96.25)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Boulder1.xml</@inherit>
+		<INHERIT>data/objects/Tree.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(107.5, 0, 108.5)</pos>
+		<height>4.5</height>
+		<look>vec(-0.7943, 0, -0.6075)</look>
+		<pos>vec(95, 0, 92.75)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Boulder1.xml</@inherit>
+		<INHERIT>data/objects/Boulder1.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(91, 0, 91.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(105, 0, 107.3)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Boulder1.xml</@inherit>
+		<INHERIT>data/objects/Boulder3.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(116, 0, 79.75)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(106.5, 0, 106.5)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/DetectorProximityPlayer.xml</@inherit>
+		<INHERIT>data/objects/Boulder1.xml</INHERIT>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(107.5, 0, 108.5)</pos>
+		<speed>2</speed>
+		<up>vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<INHERIT>data/objects/Boulder1.xml</INHERIT>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(91, 0, 91.5)</pos>
+		<speed>2</speed>
+		<up>vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<INHERIT>data/objects/Boulder1.xml</INHERIT>
+		<frictionAcceleration>32</frictionAcceleration>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(116, 0, 79.75)</pos>
+		<speed>2</speed>
+		<up>vec(0, 1, 0)</up>
+	</object>
+	<object>
+		<INHERIT>data/objects/DetectorProximityPlayer.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>0.25</height>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(100.3, 0, 83.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(100.3, 0, 83.5)</pos>
 		<signalFail>-1</signalFail>
 		<signalSuccess>6</signalSuccess>
 		<speed>2</speed>
 		<triggerRadius>1</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/DetectorProximityPlayer.xml</@inherit>
+		<INHERIT>data/objects/DetectorProximityPlayer.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>0.2</height>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(84.75, 0, 100.3)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(84.75, 0, 100.3)</pos>
 		<signalFail>-1</signalFail>
 		<signalSuccess>7</signalSuccess>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>0.25</height>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>0.4</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Switch-1</name>
-		<pos>&vec(84.75, 0, 100.5)</pos>
+		<pos>vec(84.75, 0, 100.5)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/TileGate.xml</@inherit>
+		<INHERIT>data/objects/TileGate.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
 		<height>0.25</height>
 		<initiallyLocked>true</initiallyLocked>
 		<lockSfx>nill</lockSfx>
 		<lockTime>1000</lockTime>
 		<lockedHeight>0.4</lockedHeight>
-		<look>&vec(0, 0, 1)</look>
+		<look>vec(0, 0, 1)</look>
 		<name>Boss-Switch-2</name>
-		<pos>&vec(100.3, 1.776e-015, 83.75)</pos>
+		<pos>vec(100.3, 1.776e-015, 83.75)</pos>
 		<reactionDelay>0</reactionDelay>
 		<speed>2</speed>
 		<unlockSfx>nill</unlockSfx>
 		<unlockTime>1000</unlockTime>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/GateOpener.xml</@inherit>
+		<INHERIT>data/objects/GateOpener.xml</INHERIT>
 		<expression>any: 7</expression>
 		<frictionAcceleration>32</frictionAcceleration>
 		<gateName>Boss-Switch-1</gateName>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(85, 0, 102.3)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(85, 0, 102.3)</pos>
 		<speed>2</speed>
 		<triggerRadius>0.4956</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/GateOpener.xml</@inherit>
+		<INHERIT>data/objects/GateOpener.xml</INHERIT>
 		<expression>any: 6</expression>
 		<frictionAcceleration>32</frictionAcceleration>
 		<gateName>Boss-Switch-2</gateName>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(98.75, 0, 84.5)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(98.75, 0, 84.5)</pos>
 		<speed>2</speed>
 		<triggerRadius>0.4956</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Barrel.xml</@inherit>
+		<INHERIT>data/objects/Barrel.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(24.85, 0, 8.77)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(24.85, 0, 8.77)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Barrel.xml</@inherit>
+		<INHERIT>data/objects/Barrel.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(23.99, 0, 8.95)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(23.99, 0, 8.95)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Barrel.xml</@inherit>
+		<INHERIT>data/objects/Barrel.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(26.29, 0, 37.57)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(26.29, 0, 37.57)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Barrel.xml</@inherit>
+		<INHERIT>data/objects/Barrel.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(25.95, 0, 38.26)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(25.95, 0, 38.26)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data/objects/Barrel.xml</@inherit>
+		<INHERIT>data/objects/Barrel.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(25.66, 0, 37.77)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(25.66, 0, 37.77)</pos>
 		<speed>2</speed>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data\objects\PowerupSpell.xml</@inherit>
+		<INHERIT>data\objects\PowerupSpell.xml</INHERIT>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(-0.2963, 0, 0.9551)</look>
+		<look>vec(-0.2963, 0, 0.9551)</look>
 		<mass>0</mass>
-		<pos>&vec(16.67, 0.2561, 44.73)</pos>
+		<pos>vec(16.67, 0.2561, 44.73)</pos>
 		<showModel>true</showModel>
 		<sounds>
 			<file>data/sound/player/pickup.wav</file>
@@ -985,71 +985,71 @@
 		<speed>2</speed>
 		<spellIdx>3</spellIdx>
 		<time>1000</time>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data\objects\SPAWN-blob.xml</@inherit>
+		<INHERIT>data\objects\SPAWN-blob.xml</INHERIT>
 		<expression>any: 8</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(84.49, 0, 97.65)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(84.49, 0, 97.65)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data\objects\SPAWN-blob.xml</@inherit>
+		<INHERIT>data\objects\SPAWN-blob.xml</INHERIT>
 		<expression>any: 8</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(86.7, 0, 102)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(86.7, 0, 102)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>0.5</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data\objects\SPAWN-BOSS-spider.xml</@inherit>
+		<INHERIT>data\objects\SPAWN-BOSS-spider.xml</INHERIT>
 		<expression>any: 8</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(97.79, 0, 87.33)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(97.79, 0, 87.33)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.68</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data\objects\SPAWN-otis.xml</@inherit>
+		<INHERIT>data\objects\SPAWN-otis.xml</INHERIT>
 		<expression>any: 8</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(102.7, 0, 82.75)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(102.7, 0, 82.75)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.174</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 	<object>
-		<@inherit>data\objects\SPAWN-otis.xml</@inherit>
+		<INHERIT>data\objects\SPAWN-otis.xml</INHERIT>
 		<expression>any: 8</expression>
 		<frictionAcceleration>32</frictionAcceleration>
-		<look>&vec(0, 0, 1)</look>
-		<pos>&vec(101.4, 0, 86.4)</pos>
+		<look>vec(0, 0, 1)</look>
+		<pos>vec(101.4, 0, 86.4)</pos>
 		<separationDistance>2</separationDistance>
 		<triggerRadius>1.174</triggerRadius>
-		<up>&vec(0, 1, 0)</up>
+		<up>vec(0, 1, 0)</up>
 	</object>
 </objects>
 <player>
-	<@inherit>data/monsters/startingPlayer.xml</@inherit>
+	<INHERIT>data/monsters/startingPlayer.xml</INHERIT>
 	<attackSounds>
 		<file>data/sound/player/attack.wav</file>
 	</attackSounds>
 	<dyingSounds>
 		<file>data/sound/player/dying.wav</file>
 	</dyingSounds>
-	<look>&vec(0, 0, 1)</look>
+	<look>vec(0, 0, 1)</look>
 	<painSounds>
 		<file>data/sound/player/flinch5.wav</file>
 	</painSounds>
-	<pos>&vec(22, 0.1, 22)</pos>
-	<up>&vec(0, 1, 0)</up>
+	<pos>vec(22, 0.1, 22)</pos>
+	<up>vec(0, 1, 0)</up>
 </player>

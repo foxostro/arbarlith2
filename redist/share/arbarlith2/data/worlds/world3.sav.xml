@@ -2,5 +2,5 @@
 			
 <player>
 	<file>data/monsters/startingPlayer.xml</file>
-	<pos>&vec(22, 0, 22)</pos>
+	<pos>vec(22, 0, 22)</pos>
 </player>
