@@ -3,7 +3,7 @@
 
 import glob, os, platform
 
-SOURCES = glob.glob('src/*.cpp') + glob.glob('src/engine/*.cpp')
+SOURCES = glob.glob('src/*.cpp') + glob.glob('src/engine/*.cpp') + glob.glob('src/engine/tinyxml/*.cpp')
 
 env = Environment(ENV=os.environ)
 
