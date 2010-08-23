@@ -1,27 +1,19 @@
 TODO
 =====
+The game, as written, is not very fun. Much can be done to improve the gameplay. Even so, the point of this project is not to
+improve the gameplay in major ways, but to focus on improvements to infrastructure. The gameplay may be tweaked, but no major
+elements will be added, removed, or drastically modified. Those sorts of changes would be best saved for another game which
+forks from this game.
+
 * Needs a better Mac app icon
-* Bootstrap script that fetches all apps from permalinks.
-* Bootstrap script with decent error checking.
-* Bootstrap script patches DevIL for Mac OS 10.6
-* Bootstrap script cleans up after `make install' and removes unecessary files.
-* Remove PropertyBag beast, replacing with some other XML library.
 * Use only 1 image format. Probably PNG.
 * Use only 1 model format. Probably MD3 or something custom.
 * Fix collision detection bugs and implement proper sliding against walls
-* Rewrite enemy AI. Use real pathfinding and interesting behavior.
-* Rework animations so that things like particle effects and spells are tied more closely to the movement of the character.
-* Rework, rethink game scripting
-* Rework, rethink map format. Want Towers, Airships, Floating Islands. Need more than simple dungeons.
+* It's possible to quickly switch between player animations in a way that's really disconcerting.
+* Needs a minimum attack rate.
+* No decent indication is given to the user that attacks can be Charged Up.
+* Hit sparks
+* Improved enemy AI. That is, real pathfinding, varied behaviors, &c.
+* Controller hotplugging
 * Rigidly separate Model, View, and Controller
 * Load faster
-* Controller hotplugging
-* Serious soul searching as to the element of Fun.
-* It's fun to fight enemy spawners: Houses, Necromancers, Summoners
-* Zelda-esque block pushing puzzles and teleportation?
-* The "chained" idea may be able to be partially incorporated.
-* The "rock'n'roll brawler" idea may be able to be partially incorporated.
-* The "darkness" gameplay mechanic may be able to support part of one level.
-* The "Floating Islands / Little Prince" idea may be able to be incorporated by merging with the "Airships" idea.
-* Current spells are sorta boring elemental cliches. Can these be improved?
-
