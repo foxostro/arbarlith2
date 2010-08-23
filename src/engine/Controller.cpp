@@ -408,18 +408,17 @@ bool Controller::isKeyDown(ACTION_CODE actionCode)
 
 bool Controller::isAnyKeyDown(void)
 {
-	for(size_t i=0; i<sizeof(g_Input.Keys); ++i)
+	for(map<SDLKey,bool>::const_iterator i = g_Input.Keys.begin();
+	    i != g_Input.Keys.end(); ++i)
 	{
-		if(g_Input.Keys[i])
-		{
+		if(i->second) {
 			return true;
 		}
 	}
 
 	for(map<string, JoyDir*>::const_iterator i = joymap.begin(); i != joymap.end(); ++i)
 	{
-		if(hasJoyEventOccured(i->second))
-		{
+		if(hasJoyEventOccured(i->second)) {
 			return true;
 		}
 	}
@@ -429,12 +428,12 @@ bool Controller::isAnyKeyDown(void)
 
 bool Controller::getKey(size_t &key, bool &shift)
 {
-	for(size_t i=0; i<sizeof(g_Input.Keys); ++i)
+	for(map<SDLKey,bool>::const_iterator i = g_Input.Keys.begin();
+	    i != g_Input.Keys.end(); ++i)
 	{
-		if(g_Input.Keys[i])
-		{
+		if(i->second) {
 			shift = g_Input.Keys[SDLK_LSHIFT] || g_Input.Keys[SDLK_RSHIFT];
-			key = i;
+			key = (size_t)(i->first);
 			return true;
 		}
 	}
