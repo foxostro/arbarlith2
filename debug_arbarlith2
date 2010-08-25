@@ -1,5 +1,5 @@
 #!/bin/sh
-# Launches the game, 'Arbarlith 2,' when run on the command-line
+# Launches the game under the debugger
 #
 # The game expects certain environment variables to be set so that it can
 # locate resources &c. This script ensures those are set and launches the
@@ -23,4 +23,4 @@ else
 fi
 
 # Now launch the game, passing our args to the game.
-exec $CMD $@
+exec gdb $CMD $@
