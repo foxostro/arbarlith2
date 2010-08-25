@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2003-2007,2009 Game Creation Society
+Copyright (c) 2003-2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -31,16 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _LOGSTRING_H_
 #define _LOGSTRING_H_
 
-#include <fstream>
-
 namespace Engine {
-
-/**
-Prints a string directly to the log stream.
-Also prints it to stdout and (if possible) the debugger output window.
-@param s String to log
-*/
-void PrintStringToLog(const string &s);
 
 /**
 Prints a message to the log stream with a string to identify the message origin.
@@ -49,10 +40,10 @@ Prints a message to the log stream with a string to identify the message origin.
 @param file File of message origin.  Usually you pass __FILE__ as the value
 @param line Line of message origin.  Usually you pass __LINE__ as the value
 */
-void Log(const string &message,
-         const string &function,
-         const string &file,
-         const int line);
+void Log(const std::string & message,
+         const std::string & function,
+         const std::string & file,
+         int line);
 
 } // namespace Engine
 

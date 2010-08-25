@@ -2,7 +2,7 @@
 Original Author: Andrew Fox
 E-Mail: mailto:foxostro@gmail.com
 
-Copyright (c) 2003,2007,2009 Game Creation Society
+Copyright (c) 2003,2007,2009,2010 Game Creation Society
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -28,44 +28,47 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "stdafx.h"
-#include "file.h"
-
+#include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <ctime>
+#include <string>
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
+using std::string;
 
-namespace Engine {
 
-void PrintStringToLog(const string &s)
+
+// Returns a formatted timestamp for the current time.
+static string Timestamp(void)
 {
-	printf("%s\n\n", s.c_str());
-}
-
-void Log(const string &message,
-         const string &function,
-         const string &file,
-         const int line)
-{
-	// Format the time stamp.
 	time_t curTime = std::time(NULL);
 	char timestamp[32];
 	std::strftime(timestamp,
 	              sizeof(timestamp),
-				  "%Y.%m.%dT%H:%M:%S",
+				  "%Y%m%dT%H%M%S",
 				  localtime(&curTime));
+	return string(timestamp);
+}
 
-	PrintStringToLog
-	(
-		function + "  ->  " + message +
 
-        "\n\t" + File::getFilenameNoPath(file) + ":" + itoa(line) +
 
-		"\n\t" + timestamp + "\n"
-	);
+namespace Engine {
+
+void Log(const string & msg, const string & fun, const string & fil, int ln)
+{
+	static FILE * log = NULL;
+
+	string ts = Timestamp();
+	
+	if(!log) {
+		/* XXX: Not thread-safe! Since we aren't using threads during
+		 * initialization, that's probably OK for now.
+		 */
+		string f = string("arbarlith2_") + ts + string(".log");
+		log = fopen(f.c_str(), "w");
+	}
+
+	fprintf(log, "%s\t%s:%d\t%s\t%s\n", ts.c_str(), fil.c_str(), ln,
+	        fun.c_str(), msg.c_str());
 }
 
 } // namespace Engine
